@@ -279,6 +279,11 @@ input,select,textarea{font-weight:400}
 }
 @media (min-width:900px) and (max-width:1100px){.areas{grid-template-columns:repeat(4,1fr)}}
 
+.sw{width:46px;height:28px;border-radius:14px;background:#e6dadd;position:relative;flex:none;transition:.2s}.sw i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}.sw.on{background:var(--sage)}.sw.on i{left:21px}
+.nrow{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;text-align:left;padding:8px 0}
+.nsub{border-top:1px solid var(--line);margin-top:10px;padding-top:8px}
+.wb{display:flex;gap:12px;background:linear-gradient(135deg,#f7e5e9,#fbf3ee);border:1px solid #f0d6dc;border-radius:22px;padding:18px;margin-bottom:16px}
+.wbt{font-family:var(--serif);font-size:21px;text-transform:lowercase}
 @media print{nav.bar,.hicons,.noprint,#toastBox{display:none!important}body{background:#fff;padding:0}.card,.hero{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
@@ -497,7 +502,7 @@ S.home=()=>{
   const areas=`<h2 class="sec">Suas áreas</h2><div class="areas">${area('cal',C.rose,'Agenda',ev.length+' hoje','agenda')}${area('task',C.sky,'Tarefas',openT+' abertas','tarefas')}${area('sprout',C.sage,'Hábitos',`${hd} de ${hs.length}`,'habitos')}${area('wallet',C.sand,'Finanças',money(f.left).replace(',00',''),'financas')}${area('heart',C.health,'Saúde',(water/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})+' L','saude')}${area('list',C.lav,'Listas',mk+(mk===1?' lista':' listas'),'listas')}${area('book',C.sand,'Leitura',pagesOn(t)?pagesOn(t)+' pág. hoje':state.books.filter(b=>b.status==='lendo').length+' lendo','leitura')}${area('devo','#f3ead2','Devocional',hasDevo(t)?'feito hoje ✓':(devoStreak()?devoStreak()+'d seguidos':'hoje'),'devocional')}</div><button class="mitem" style="margin-top:10px" data-a="go" data-to="relatorios"><div class="tic" style="background:${C.rose};width:40px;height:40px">${ic('chart',19)}</div><div class="grow"><b style="font-weight:500">Relatórios</b><div class="small muted">Seu resumo por categoria e período</div></div>${ic('chevR',18)}</button>`;
   const todayItems=ev.map(e=>evRow(e)).join('')+tk.map(x=>tkRow(x)).join('');
   const todayBox=`<h2 class="sec">Hoje <button class="btn sm soft" data-a="sheet" data-s="fab">${ic('plus',14)} Adicionar</button></h2><div class="card" style="margin-top:0;padding-top:6px;padding-bottom:6px">${todayItems||'<div class="empty">Nada marcado pra hoje. Dia leve ✨</div>'}</div>`;
-  return {h,b:hero+quickForm()+chips+areas+todayBox};
+  return {h,b:welcomeBack()+hero+quickForm()+chips+areas+todayBox};
 };
 
 S.agenda=()=>{
@@ -653,13 +658,13 @@ S.menu=()=>{
   const it=(icon,bg,name,sub,to)=>`<button class="mitem" data-a="go" data-to="${to}"><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div><div class="grow"><b style="font-weight:500">${name}</b><div class="small muted">${sub}</div></div>${ic('chevR',18)}</button>`;
   const syncTxt={nuvem:'Seus dados estão salvos na sua conta e aparecem em qualquer aparelho em que você entrar.',conectando:'Conectando à sua conta…',local:'Salvando só neste aparelho. Faça backup de vez em quando.',erro:'Não consegui salvar na nuvem agora; os dados seguem salvos neste aparelho.'}[ui.sync];
   const b=`<div class="card" style="margin-top:0;display:flex;align-items:center;gap:16px"><div class="bigav">${state.avatar?`<img src="${state.avatar}" alt="">`:esc((state.name||'A').charAt(0).toUpperCase())}</div><div class="grow"><div style="font-family:var(--serif);font-size:22px">${esc(state.name||'')}</div><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><label class="btn sm soft" style="cursor:pointer">${ic('edit',14)} ${state.avatar?'Trocar foto':'Adicionar foto'}<input type="file" id="avatarIn" accept="image/*" style="display:none"></label>${state.avatar?'<button class="btn sm ghost" data-a="rmAvatar">Remover</button>':''}</div></div></div>`+it('task',C.sky,'Tarefas','Todas as suas tarefas','tarefas')+it('heart',C.health,'Saúde','Água, sono, remédios e consultas','saude')+it('wallet',C.sand,'Finanças','Receitas, contas e gastos','financas')+it('list',C.lav,'Listas','Mercado, desejos e checklists','listas')+it('devo','#f3ead2','Devocional','Versículo, reflexão e conquistas','devocional')+it('book',C.sand,'Leitura','Livros, páginas e meta do ano','leitura')+it('chart',C.rose,'Relatórios','Resumo por categoria e período','relatorios')+it('bolt',C.rose,'Adição rápida','Como escrever pra o app entender','rapido')+
-  `<h2 class="sec">Ajustes</h2><div class="card" style="margin-top:0"><form data-f="settings"><label class="fld"><span>Seu nome</span><input name="name" value="${esc(state.name)}"></label><div class="two"><label class="fld"><span>Meta de água (ml)</span><input name="water" inputmode="numeric" value="${state.settings.waterGoal}"></label><label class="fld"><span>Copo padrão (ml)</span><input name="cup" inputmode="numeric" value="${state.settings.cup}"></label></div><label class="fld"><span>Meta de sono (horas)</span><input name="sleep" inputmode="decimal" value="${(state.settings.sleepGoal/60).toLocaleString('pt-BR')}"></label><button class="btn primary full">Salvar ajustes</button></form></div>
+  `${notifCard()}<h2 class="sec">Ajustes</h2><div class="card" style="margin-top:0"><form data-f="settings"><label class="fld"><span>Seu nome</span><input name="name" value="${esc(state.name)}"></label><div class="two"><label class="fld"><span>Meta de água (ml)</span><input name="water" inputmode="numeric" value="${state.settings.waterGoal}"></label><label class="fld"><span>Copo padrão (ml)</span><input name="cup" inputmode="numeric" value="${state.settings.cup}"></label></div><label class="fld"><span>Meta de sono (horas)</span><input name="sleep" inputmode="decimal" value="${(state.settings.sleepGoal/60).toLocaleString('pt-BR')}"></label><button class="btn primary full">Salvar ajustes</button></form></div>
   <h2 class="sec">Seus dados</h2><div class="card" style="margin-top:0"><div class="small" style="line-height:1.5">${syncTxt}</div><div class="btnrow"><button class="btn ghost" data-a="copyBackup">${ic('copy',15)} Copiar backup</button><button class="btn ghost" data-a="sheet" data-s="import">Restaurar</button></div><div class="note">Dica: no iPhone, abra no Safari → Compartilhar → “Adicionar à Tela de Início” pra usar como app.</div></div>${cloud&&session?`<h2 class="sec">Conta</h2><div class="card" style="margin-top:0"><div class="small muted">Conectada(o) como</div><div style="margin:2px 0 12px;word-break:break-all">${esc(session.user.email)}</div><button class="btn ghost full" data-a="logout">Sair da conta</button></div>`:''}`;
   return {h:`<div class="top" style="align-items:center"><div class="titleRow">${logoFull(40)}</div>${hIcons()}</div>`,b};
 };
 
 
-const SUG=[['Beber água','Saúde',[0,1,2,3,4,5,6],'water'],['Treinar','Corpo',[1,2,3,4,5]],['Leitura','Mente',[0,1,2,3,4,5,6]],['Devocional','Espiritual',[0,1,2,3,4,5,6]],['Meditar','Mente',[0,1,2,3,4,5,6]],['Skincare','Beleza',[0,1,2,3,4,5,6]],['Alongar','Corpo',[0,1,2,3,4,5,6]],['Comer frutas','Saúde',[0,1,2,3,4,5,6]],['Dormir antes das 23h','Rotina',[0,1,2,3,4,5,6]],['Planejar o dia','Rotina',[1,2,3,4,5]]];
+const SUG=[['Beber água','Saúde',[0,1,2,3,4,5,6],'water'],['Treinar','Corpo',[1,2,3,4,5]],['Leitura','Mente',[0,1,2,3,4,5,6]],['Devocional','Espiritual',[0,1,2,3,4,5,6]],['Meditar','Mente',[0,1,2,3,4,5,6]],['Skincare','Beleza',[0,1,2,3,4,5,6]],['Alongar','Corpo',[0,1,2,3,4,5,6]],['Comer frutas','Saúde',[0,1,2,3,4,5,6]],['Dormir antes das 23h','Rotina',[0,1,2,3,4,5,6]],['Planejar o dia','Rotina',[1,2,3,4,5]],['Caminhar','Corpo',[0,1,2,3,4,5,6]],['Tomar vitaminas','Saúde',[0,1,2,3,4,5,6]],['Sem celular antes de dormir','Rotina',[0,1,2,3,4,5,6]],['Estudar','Mente',[1,2,3,4,5]]];
 S.welcome=()=>{
   if(ui.obStep===0&&!(cloud&&session))return `<div class="welcome">${logoFull(72)}<div class="tag">sua rotina <span class="script">leve</span>,<br>num lugar só.</div><p>Agenda, tarefas, hábitos, saúde, finanças e listas organizados do seu jeito. Leva 1 minuto pra começar.</p>
   <div class="feat"><div>${ic('cal',20)}Agenda</div><div>${ic('sprout',20)}Hábitos</div><div>${ic('drop',20)}Saúde</div><div>${ic('wallet',20)}Finanças</div><div>${ic('list',20)}Listas</div><div>${ic('bolt',20)}Adição rápida</div></div>
@@ -667,9 +672,10 @@ S.welcome=()=>{
   return `<div style="padding-top:3vh"><div class="steps"><i class="on"></i><i class="on"></i></div><div style="text-align:center;margin-bottom:18px">${logoMark(44)}<div class="ttl" style="margin-top:10px">vamos te conhecer</div></div>
   <form data-f="onboard"><div class="card" style="margin-top:0">${fld('Como você quer ser chamada(o)?',`<input name="name" required placeholder="Seu nome" autocomplete="given-name">`)}
   <div class="two">${fld('Meta de água por dia',`<select name="water">${[1500,2000,2500,3000,3500,4000].map(v=>`<option value="${v}" ${v===2000?'selected':''}>${(v/1000).toLocaleString('pt-BR')} L</option>`).join('')}</select>`)}${fld('Meta de sono',`<select name="sleep">${[6,6.5,7,7.5,8,8.5,9].map(v=>`<option value="${v*60}" ${v===8?'selected':''}>${fmtDur(v*60)}</option>`).join('')}</select>`)}</div></div>
-  <div class="card"><h4 style="margin-bottom:4px">quais hábitos você quer acompanhar?</h4><div class="small muted" style="margin-bottom:12px">Escolha poucos pra começar. Consistência vale mais que perfeição.</div><div class="pick">${SUG.map((s,i)=>`<label><input type="checkbox" name="h" value="${i}" ${i<3?'checked':''}><span>${s[0]}</span></label>`).join('')}</div>
-  <div class="addrow" style="margin-top:12px"><input name="other" placeholder="Outro hábito (opcional)"></div></div>
-  <button class="btn primary full" style="margin-top:16px">Entrar no GO!</button><button type="button" class="btn full" style="margin-top:6px;background:none;color:var(--muted)" data-a="obBack">Voltar</button></form></div>`;
+  <div class="card"><h4 style="margin-bottom:4px">quais hábitos você quer acompanhar?</h4><div class="small muted" style="margin-bottom:12px">Toque nas sugestões que fazem sentido pra você ou crie os seus. Pode começar com poucos (ou nenhum) e ajustar depois.</div><div class="small" style="color:var(--rose-d);font-weight:500;margin:4px 0 8px">Sugestões</div><div class="pick">${SUG.map((s,i)=>`<label><input type="checkbox" name="h" value="${i}"><span>${s[0]}</span></label>`).join('')}</div>
+  <div class="small" style="color:var(--rose-d);font-weight:500;margin:16px 0 8px">Meus hábitos</div><div class="pick" id="obMine"><span class="small muted" id="obNone">Nenhum ainda. Escreva abaixo e toque em +.</span></div>
+  <div class="addrow" style="margin-top:10px"><input id="obOther" placeholder="Ex.: tomar vitamina, caminhar 20 min" autocomplete="off" enterkeyhint="done"><button type="button" class="btn primary" data-a="obAdd" aria-label="Adicionar hábito">${ic('plus',16)}</button></div></div>
+  <div class="small muted" style="text-align:center;margin-top:14px" id="obCount">Nenhum hábito escolhido. Tudo bem, dá pra criar depois.</div><button class="btn primary full" style="margin-top:10px">Entrar no GO!</button><button type="button" class="btn full" style="margin-top:6px;background:none;color:var(--muted)" data-a="obBack">Voltar</button></form></div>`;
 };
 
 
@@ -691,6 +697,7 @@ function render(){
   const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(!state.onboarded?'welcome':null);
   if(gate){$('#nav').style.display='none';$('#hdr').innerHTML='';$('#main').innerHTML=gate==='splash'?`<div class="splash">${logoFull(64)}<div class="small muted">carregando…</div></div>`:gate==='auth'?S.auth():S.welcome();return}
   $('#nav').style.display='';
+  try{pingActive()}catch(e){}
   if(ui.screen!==NAVH.last){if(NAVH.last!==null&&!NAVH.popping){try{history.pushState({s:ui.screen},'')}catch(e){}}else{try{history.replaceState({s:ui.screen},'')}catch(e){}}NAVH.last=ui.screen}
   const s=allStreak();if(s>(state.habitRecord||0)){state.habitRecord=s;writeLocal()}
   const r=(S[ui.screen]||S.home)();
@@ -868,7 +875,7 @@ const F={
     ui.authBusy=false;render()},
   onboard:(v,f)=>{const t=today(),sel=new FormData(f).getAll('h').map(Number);state.name=v.name.trim();state.settings.waterGoal=+v.water;state.settings.sleepGoal=+v.sleep;
     state.habits=sel.map(i=>{const s=SUG[i],o={id:uid(),name:s[0],cat:s[1],type:'do',days:s[2],created:t,log:{}};if(s[3]==='water'){o.auto='water';o.name=`Beber ${(state.settings.waterGoal/1000).toLocaleString('pt-BR')}L de água`}return o});
-    if(v.other&&v.other.trim())state.habits.push({id:uid(),name:v.other.trim(),cat:'Rotina',type:'do',days:[0,1,2,3,4,5,6],created:t,log:{}});
+    new FormData(f).getAll('hc').forEach(n=>{n=n.trim();n=n.charAt(0).toUpperCase()+n.slice(1);if(n)state.habits.push({id:uid(),name:n,cat:'Rotina',type:'do',days:[0,1,2,3,4,5,6],created:t,log:{}})});const pend=(document.getElementById('obOther')||{}).value;if(pend&&pend.trim())state.habits.push({id:uid(),name:pend.trim().charAt(0).toUpperCase()+pend.trim().slice(1),cat:'Rotina',type:'do',days:[0,1,2,3,4,5,6],created:t,log:{}});
     if(!state.lists.length)state.lists=[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}];
     state.onboarded=true;ui.screen='home';save();window.scrollTo(0,0);toast(`Bem-vinda(o) ao GO!, ${state.name} ✨`)},
   quick:(v,f)=>{const r=quick(v.q);if(!r)return;const s=snap();r.run();state.quickLog.unshift({in:v.q,out:r.out});state.quickLog=state.quickLog.slice(0,20);save();toast('✓ '+r.out,s);const i=$('#main .quick input');if(i)i.value=''},
@@ -1172,6 +1179,81 @@ document.addEventListener('change',ev=>{
   img.onerror=()=>{URL.revokeObjectURL(url);toast('Não consegui abrir essa imagem')};img.src=url;
 });
 A.rmAvatar=()=>{const s=snap();delete state.avatar;save();toast('Foto removida',s)};
+
+
+/* ---------- pré-cadastro: hábitos escolhidos pela pessoa ---------- */
+function obCount(){const el=document.getElementById('obCount');if(!el)return;const n=document.querySelectorAll('#main .pick input:checked').length;el.textContent=n?`${n} ${n===1?'hábito escolhido':'hábitos escolhidos'}. Dá pra mudar quando quiser.`:'Nenhum hábito escolhido. Tudo bem, dá pra criar depois.'}
+A.obAdd=()=>{const i=document.getElementById('obOther');if(!i)return;const v=i.value.trim();if(!v){i.focus();return}
+  const box=document.getElementById('obMine'),none=document.getElementById('obNone');if(none)none.remove();
+  const l=document.createElement('label');l.innerHTML=`<input type="checkbox" name="hc" value="${esc(v)}" checked><span>${esc(v.charAt(0).toUpperCase()+v.slice(1))}</span>`;box.appendChild(l);i.value='';i.focus();obCount()};
+document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='obOther'&&e.key==='Enter'){e.preventDefault();A.obAdd()}});
+document.addEventListener('change',e=>{if(e.target&&e.target.closest&&e.target.closest('#main .pick'))obCount()});
+
+/* ---------- recado ao voltar + notificações ---------- */
+const CLOUD=(typeof cloud!=='undefined')&&cloud;
+const VAPID_PUB='BKe-LjrIEolDwJzrPg1qoft6YddwMeqCtBZ5Gs5I4IPCcAueL1fe5fhdvBy4GXho7jwKR-RYFk-g4HFUjHTaZw4';
+const IS_IOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const pushOK=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+const NDEF={enabled:false,daily:true,time:'08:00',miss:true,missDays:3};
+const nf=()=>{state.notif=Object.assign({},NDEF,state.notif||{});return state.notif};
+if(CLOUD&&'serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+function b64u(s){s=s.replace(/-/g,'+').replace(/_/g,'/');const r=atob(s+'='.repeat((4-s.length%4)%4));return Uint8Array.from([...r].map(c=>c.charCodeAt(0)))}
+let npT=null;
+async function syncPrefs(){if(!CLOUD||!session)return;const n=nf();try{await sb.from('notif_prefs').upsert({user_id:session.user.id,enabled:!!n.enabled,daily:!!n.daily,daily_time:n.time||'08:00',miss:!!n.miss,miss_days:+n.missDays||3,tz:(Intl.DateTimeFormat().resolvedOptions().timeZone)||'America/Sao_Paulo',name:state.name||'',last_active:today(),updated_at:new Date().toISOString()})}catch(e){}}
+function pingActive(){if(!CLOUD||!session||!nf().enabled||ui._pinged===today())return;ui._pinged=today();syncPrefs()}
+async function enableNotif(){
+  if(!CLOUD){toast('As notificações funcionam no app publicado, instalado na Tela de Início');return}
+  if(!session){toast('Entre na sua conta primeiro');return}
+  if(!pushOK()){if(IS_IOS&&!STANDALONE)openSheet('iosinstall');else toast('Este navegador não aceita notificações');return}
+  let perm;try{perm=await Notification.requestPermission()}catch(e){perm='denied'}
+  if(perm!=='granted'){toast(IS_IOS?'Permissão negada. Libere em Ajustes → Notificações → GO!':'Permissão negada. Libere nas configurações do navegador');return}
+  try{
+    const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
+    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUB)});
+    const j=sub.toJSON();const {error}=await sb.from('push_subs').upsert({user_id:session.user.id,endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth},{onConflict:'endpoint'});
+    if(error)throw error;
+    nf().enabled=true;save();await syncPrefs();toast('Notificações ativadas 🔔');
+  }catch(e){toast('Não consegui ativar agora. Tente de novo em instantes')}
+}
+async function disableNotif(){
+  nf().enabled=false;save();await syncPrefs();
+  try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();if(sub){await sb.from('push_subs').delete().eq('endpoint',sub.endpoint);await sub.unsubscribe()}}catch(e){}
+  toast('Notificações desligadas');
+}
+async function testNotif(){
+  if(!CLOUD||!session)return;toast('Enviando…');
+  try{const {data}=await sb.auth.getSession();const r=await fetch(CFG.supabaseUrl+'/functions/v1/go-push',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+data.session.access_token,'apikey':CFG.supabaseKey},body:JSON.stringify({test:true})});const j=await r.json();
+    toast(j.sent?'Enviada! Confere aí 🔔':'Este aparelho ainda não está ativado. Toque em “Ativar neste aparelho”.')}catch(e){toast('Não consegui enviar o teste agora')}
+}
+const sw_=on=>`<span class="sw ${on?'on':''}"><i></i></span>`;
+function notifCard(){
+  const n=nf();
+  if(!CLOUD)return `<h2 class="sec">Notificações</h2><div class="card" style="margin-top:0"><div class="small" style="line-height:1.55">As notificações (lembrete diário e “sentimos sua falta”) funcionam no app publicado, <b>goapp-fawn.vercel.app</b>, adicionado à Tela de Início.</div></div>`;
+  let b=`<h2 class="sec">Notificações</h2><div class="card" style="margin-top:0"><button class="nrow" data-a="ntoggle"><div class="grow"><b style="font-weight:500">Receber notificações</b><div class="small muted">Você escolhe o que quer receber. Dá pra desligar quando quiser.</div></div>${sw_(n.enabled)}</button>`;
+  if(n.enabled){
+    b+=`<div class="nsub"><button class="nrow" data-a="nset" data-k="daily"><div class="grow"><b style="font-weight:500">Lembrete diário</b><div class="small muted">Um empurrãozinho carinhoso pra fazer seu check-in</div></div>${sw_(n.daily)}</button>
+    ${n.daily?`<label class="fld" style="margin:4px 0 12px"><span>Horário</span><input type="time" data-np="time" value="${esc(n.time)}"></label>`:''}
+    <button class="nrow" data-a="nset" data-k="miss"><div class="grow"><b style="font-weight:500">Sentimos sua falta</b><div class="small muted">Se você ficar alguns dias sem abrir o app</div></div>${sw_(n.miss)}</button>
+    ${n.miss?`<label class="fld" style="margin:4px 0 12px"><span>Avisar depois de</span><select data-np="missDays">${[2,3,5,7].map(d=>`<option value="${d}" ${+n.missDays===d?'selected':''}>${d} dias sem usar</option>`).join('')}</select></label>`:''}
+    <div class="btnrow"><button class="btn ghost" data-a="ntest">${ic('bell',15)} Enviar teste</button><button class="btn ghost" data-a="nhere">Ativar neste aparelho</button></div>
+    <div class="note">Se usar o GO! em mais de um aparelho, toque em “Ativar neste aparelho” em cada um.</div></div>`;
+  }
+  return b+`</div>`;
+}
+document.addEventListener('change',ev=>{const k=ev.target&&ev.target.dataset&&ev.target.dataset.np;if(!k)return;nf()[k]=ev.target.value;save();clearTimeout(npT);npT=setTimeout(syncPrefs,500)});
+Object.assign(A,{
+  ntoggle:()=>{nf().enabled?disableNotif():enableNotif()},
+  nset:d=>{const n=nf();n[d.k]=!n[d.k];save();syncPrefs()},
+  ntest:()=>testNotif(),
+  nhere:()=>enableNotif(),
+  wbClose:()=>{state.wbSeen=today();save()}
+});
+SH.iosinstall=()=>`<h3>falta só um passo</h3><div style="font-size:14px;line-height:1.65">No iPhone, as notificações só funcionam com o GO! adicionado à Tela de Início:<ol style="margin:10px 0 0 18px"><li>Abra este endereço no <b>Safari</b></li><li>Toque em <b>Compartilhar</b> (o quadrado com a setinha)</li><li>Escolha <b>Adicionar à Tela de Início</b></li><li>Abra o GO! pelo ícone e ative as notificações no Menu</li></ol></div><button class="btn primary full" style="margin-top:18px" data-a="closeSheet">Entendi</button>`;
+function welcomeBack(){
+  const t=today(),prev=Object.keys(state.activeDays||{}).filter(d=>d<t).sort().pop();if(!prev||state.wbSeen===t)return '';
+  const gap=daysBetween(prev,t);if(gap<3)return '';
+  return `<div class="wb"><div class="grow"><div class="wbt">que bom te ver de novo${state.name?`, <span class="script">${esc(state.name.split(' ')[0])}</span>`:''} 💛</div><div class="small" style="line-height:1.55;margin-top:4px">Fazia ${gap} dias. Recomeçar também é avançar: nada se perdeu, tudo o que você já fez continua aqui.</div><div class="btnrow" style="margin-top:12px"><button class="btn primary sm" data-a="go" data-to="habitos">Marcar um hábito</button><button class="btn sm ghost" data-a="wbClose">Fechar</button></div></div></div>`;
+}
 
 writeLocal();render();
 </script>
