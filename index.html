@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#faf5f3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>GO!</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600&family=Playfair+Display&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+@font-face{font-family:'Gazpacho';src:url('fonts/Gazpacho-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+:root{--serif:'Gazpacho','Playfair Display',Georgia,serif;--script:'Dancing Script',cursive;
+  --bg:#faf5f3;--card:#fff;--ink:#2b2023;--plum:#3a2a2e;--plum2:#4a3639;
+  --rose:#d89aa8;--rose-d:#bf7486;--rose-l:#f7e5e9;
+  --sage:#9cc5a1;--sage-l:#e4f0e5;--sky:#a9c6d3;--sky-l:#e2edf2;
+  --sand:#c9b38f;--sand-l:#f1e9dc;--lav:#b9a7d1;--lav-l:#ece6f4;
+  --muted:#8a7a7e;--line:#efe4e4;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg)}
+body{font-family:Poppins,system-ui,-apple-system,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:calc(112px + env(safe-area-inset-bottom));font-size:15px}
+button{font:inherit;cursor:pointer;color:inherit}
+.wrap{max-width:480px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 18px 0}
+.top{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-d);font-weight:600}
+.hi{font-family:var(--serif);font-weight:400;font-size:28px;margin-top:6px;line-height:1.15}
+.hi em{color:var(--rose-d)}
+.streak{font-size:13px;color:var(--muted);margin-top:6px;display:flex;gap:6px;align-items:center}
+.streak svg{color:var(--rose-d)}
+.titleRow{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.tic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none;color:var(--plum)}
+.ttl{font-family:var(--serif);font-size:26px;font-weight:400}
+.hicons{display:flex;gap:4px;align-items:center;margin-left:auto;flex:none}
+.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:none;border:0;position:relative;flex:none}
+.ib.sm{width:32px;height:32px;color:var(--muted)}
+.badge{position:absolute;top:2px;right:2px;background:var(--rose-d);color:#fff;font-size:10px;font-weight:600;border-radius:9px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px;border:2px solid var(--bg)}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--rose);color:#fff;font-weight:600;display:grid;place-items:center;border:0;font-size:16px}
+.hero{background:var(--plum);color:#fff;border-radius:26px;padding:18px;position:relative;overflow:hidden}
+.hero:before{content:'';position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.07);top:-60px;right:-50px}
+.hero:after{content:'';position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.04);bottom:-80px;right:60px}
+.hero>*{position:relative;z-index:1}
+.htabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:-2px -4px 16px;padding:0 4px}
+.htabs::-webkit-scrollbar{display:none}
+.htabs button{flex:none;background:rgba(255,255,255,.09);color:#fff;border:0;border-radius:20px;padding:7px 13px;font-size:13px}
+.htabs button.on{background:var(--rose);color:var(--plum);font-weight:600}
+.hmain{display:flex;gap:16px;align-items:center;min-height:100px}
+.ring{position:relative;width:96px;height:96px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .lbl{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font-family:var(--serif);font-weight:400;font-size:22px}
+.ring b sup{font-size:13px}
+.ring small{font-size:9px;letter-spacing:.12em;opacity:.7;text-transform:uppercase}
+.hk{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.hk.g{color:var(--sage)}.hk.s{color:var(--sand)}
+.hT{font-family:var(--serif);font-size:22px;margin:4px 0;line-height:1.2}
+.hS{font-size:13px;opacity:.82;line-height:1.4}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.stats.two{grid-template-columns:1fr 1fr}
+.stat{background:rgba(255,255,255,.09);border-radius:16px;padding:12px}
+.stat b{font-size:19px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat span{font-size:12px;opacity:.75}
+.dots{display:flex;gap:5px;justify-content:center;margin-top:14px}
+.dots i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.25);transition:.2s}
+.dots i.on{width:22px;background:var(--rose)}
+.hlink{background:rgba(255,255,255,.12);border:0;color:#fff;border-radius:14px;padding:5px 11px;font-size:12px;margin-top:8px}
+.moods{display:flex;gap:6px;margin-top:8px}
+.moods button{width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.1);font-size:19px}
+.moods button.on{background:var(--rose)}
+.quick{display:flex;align-items:center;gap:10px;background:#fff;border-radius:30px;padding:6px 6px 6px 16px;box-shadow:0 4px 18px rgba(58,42,46,.08);margin-top:18px;border:1px solid var(--line)}
+.quick svg.lead{color:var(--rose-d);flex:none}
+.quick input{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:none;min-width:0;color:var(--ink)}
+.quick button{width:44px;height:44px;border-radius:50%;background:var(--rose);border:0;color:#fff;display:grid;place-items:center;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 14px;font-size:13px;flex:none}
+.chip.on{background:var(--plum);color:#fff;border-color:var(--plum)}
+.sec{font-family:var(--serif);font-weight:400;font-size:22px;margin:28px 0 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.areas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.area{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px 6px 12px;text-align:center}
+.area .tic{margin:0 auto 8px}
+.area b{font-size:14px;font-weight:600;display:block}
+.area span{font-size:11.5px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin-top:14px}
+.card h4{font-family:var(--serif);font-weight:400;font-size:19px}
+.cardHead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.grow{flex:1;min-width:0}
+.rt{font-size:15px;line-height:1.3;word-break:break-word}
+.time{font-size:13px;font-weight:600;color:var(--rose-d);width:44px;flex:none}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:30px;padding:4px;gap:2px;max-width:100%;overflow-x:auto}
+.seg button{border:0;background:none;padding:8px 14px;border-radius:24px;font-size:13.5px;color:var(--muted);flex:none;display:flex;gap:6px;align-items:center}
+.seg button.on{background:var(--plum);color:#fff}
+.btn{border:0;border-radius:24px;padding:11px 18px;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.btn.primary{background:var(--rose);color:#fff}
+.btn.ghost{background:#fff;border:1px solid var(--line)}
+.btn.soft{background:var(--rose-l);color:var(--rose-d)}
+.btn.ok{background:var(--sage);color:#fff}
+.btn.full{width:100%}
+.btn.sm{padding:7px 13px;font-size:12.5px}
+.btnrow{display:flex;gap:8px;margin-top:14px}
+.btnrow .btn{flex:1}
+.cb{width:24px;height:24px;border-radius:8px;border:1.6px solid #d8c9cc;display:grid;place-items:center;flex:none;background:#fff;color:#fff;padding:0}
+.cb.on{background:var(--sage);border-color:var(--sage)}
+.done-t{text-decoration:line-through;color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:12.5px}
+.empty{color:var(--muted);font-size:14px;padding:12px 0;text-align:center}
+.dayhead{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:16px 0 2px}
+.dayhead.today{color:var(--rose-d)}
+.navrow{display:flex;align-items:center;gap:8px;margin-top:18px}
+.pill{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 12px;font-size:13px}
+.circ{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;padding:0;flex:none}
+.wk{display:flex;gap:6px;margin-top:14px}
+.wk button{flex:1;border-radius:18px;border:1px solid var(--line);background:#fff;padding:9px 0 7px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.wk small{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.wk b{font-size:16px;font-weight:600}
+.wk i{width:5px;height:5px;border-radius:50%;background:transparent}
+.wk i.has{background:var(--rose)}
+.wk .on{background:var(--rose);border-color:var(--rose);color:#fff}
+.wk .on small{color:#fff}.wk .on i.has{background:#fff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}
+.cal .h{font-size:10.5px;color:var(--muted);text-align:center;padding-bottom:4px;text-transform:uppercase}
+.cal button{aspect-ratio:1;border:0;border-radius:12px;background:#fff;font-size:13px;position:relative;display:grid;place-items:center}
+.cal button.out{opacity:.3}
+.cal button.today{outline:1.5px solid var(--rose);}
+.cal button.sel{background:var(--rose);color:#fff}
+.cal button i{position:absolute;bottom:5px;left:50%;margin-left:-2.5px;width:5px;height:5px;border-radius:50%;background:var(--rose-d)}
+.cal button.sel i{background:#fff}
+.hw{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px;text-align:center}
+.hw div{height:30px;border-radius:10px;background:rgba(255,255,255,.1);overflow:hidden;display:flex;align-items:flex-end}
+.hw div em{display:block;width:100%;background:var(--sage)}
+.hw span{font-size:11px;opacity:.7;display:block;margin-top:5px}
+.hw span.t{opacity:1;font-weight:600}
+.hcard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:12px 12px 12px 14px;margin-top:10px}
+.hrow{display:flex;align-items:center;gap:10px}
+.hic{width:36px;height:36px;border-radius:50%;background:var(--sage-l);color:#6e9f75;display:grid;place-items:center;flex:none}
+.hcard b{font-weight:500;font-size:15px}
+.sagec{color:#6e9f75}.fl{color:#d98b4a;font-weight:600}
+.grid28{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:12px}
+.grid28 i{aspect-ratio:1;border-radius:4px;background:#f2eaeb}
+.grid28 i.on{background:var(--sage)}.grid28 i.off{background:transparent;border:1px dashed #eadfe0}
+.bar{height:9px;border-radius:5px;background:#f2e8ea;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.cups{display:flex;gap:7px;margin:14px 0;flex-wrap:wrap}
+.cups svg{color:var(--sky)}.cups svg.f{color:#7fa9bb;fill:#d6e6ee}
+.sbars{display:flex;align-items:flex-end;gap:8px;height:90px;margin-top:14px;position:relative;border-bottom:1px solid var(--line)}
+.sbars .goal{position:absolute;left:0;right:0;border-top:1.5px dashed var(--rose);opacity:.6}
+.sbars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.sbars em{display:block;width:100%;max-width:30px;border-radius:9px 9px 3px 3px;background:var(--lav-l)}
+.sbars em.l{background:var(--lav)}
+.slabels{display:flex;gap:8px;margin-top:5px}.slabels span{flex:1;text-align:center;font-size:10.5px;color:var(--muted)}
+.big{font-family:var(--serif);font-size:22px}
+.big small{font-size:13px;color:var(--muted)}
+.subcard{background:var(--bg);border-radius:16px;padding:14px;margin-top:12px}
+.amt{font-weight:600;font-size:14px;white-space:nowrap}
+.amt.in{color:#5f9467}
+.paid{font-size:11px;border-radius:10px;padding:3px 8px;border:0;background:var(--rose-l);color:var(--rose-d);font-weight:600}
+.paid.on{background:var(--sage-l);color:#5f9467}
+.lcard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin-top:12px;display:block;width:100%;text-align:left}
+.lcard ul{list-style:none;margin:12px 0}
+.lcard li{font-size:13.5px;padding:2px 0;display:flex;gap:8px;align-items:center}
+.lcard li:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--sage);flex:none}
+.lcard li.d{color:#b9aaad;text-decoration:line-through}.lcard li.d:before{background:#e3d8da}
+.lic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-top:12px;color:var(--muted)}
+.search input{flex:1;border:0;outline:0;background:none;font:inherit;font-size:16px;padding:12px 0;color:var(--ink)}
+.addrow{display:flex;gap:8px;margin-top:10px}
+.addrow input{flex:1;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;font-size:16px;outline:0;background:#fff;min-width:0}
+.ex{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.ex button{text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.ex button span{color:var(--muted);font-size:12px;white-space:nowrap}
+.mitem{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 14px;margin-top:10px;width:100%;text-align:left}
+nav.bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom));width:min(456px,calc(100% - 24px));background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:30px;box-shadow:0 8px 30px rgba(58,42,46,.13);display:grid;grid-template-columns:repeat(6,1fr);align-items:center;padding:8px 4px;z-index:20}
+nav.bar button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--muted)}
+nav.bar button.on{color:var(--ink);font-weight:600}
+nav.bar button.on svg{color:var(--rose-d)}
+nav.bar .fab{width:56px;height:56px;border-radius:50%;background:var(--rose);color:#fff;margin:-30px auto 0;box-shadow:0 6px 18px rgba(216,154,168,.6);justify-content:center}
+.ov{position:fixed;inset:0;background:rgba(43,32,35,.38);z-index:40;display:none;align-items:flex-end;justify-content:center}
+.ov.show{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:10px 20px calc(24px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto;animation:up .22s ease}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.grab{width:40px;height:4px;border-radius:2px;background:#e3d6d8;margin:4px auto 14px}
+.sheet h3{font-family:var(--serif);font-weight:400;font-size:23px;margin-bottom:14px}
+.fld{display:block;margin-bottom:12px}
+.fld>span{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+.fld input,.fld select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;font:inherit;font-size:16px;color:var(--ink);outline:0;-webkit-appearance:none;appearance:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.days{display:flex;gap:5px}
+.days label{flex:1}.days input{display:none}
+.days span{display:block;text-align:center;padding:10px 0;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:12px}
+.days input:checked+span{background:var(--plum);color:#fff;border-color:var(--plum)}
+.tog{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:14px}
+.tog input{width:20px;height:20px;accent-color:var(--rose-d)}
+.fabgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fabgrid button{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:13px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(98px + env(safe-area-inset-bottom));background:var(--plum);color:#fff;padding:12px 16px;border-radius:16px;font-size:13.5px;display:flex;gap:14px;align-items:center;z-index:60;width:max-content;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast button{background:none;border:0;color:var(--rose);font-weight:600;flex:none}
+.note{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:10px}
+/* tipografia da marca */
+body{font-weight:300}
+b,strong,.btn,.chip.on,.seg button.on,.stat b,.amt,.time,nav.bar button.on{font-weight:500}
+.ttl,.sec,.sheet h3,.hi,.card h4{text-transform:lowercase}
+.hi em,.script{font-family:var(--script);font-weight:600;font-style:normal;text-transform:none;font-size:1.18em;color:var(--rose-d)}
+input,select,textarea{font-weight:400}
+/* logo + boas-vindas */
+.logo{display:inline-flex;align-items:center;gap:10px}
+.logo .wm{font-family:var(--serif);font-size:30px;letter-spacing:.01em;color:var(--plum);line-height:1}
+.splash{min-height:80vh;display:grid;place-content:center;text-align:center;gap:14px}
+.welcome{padding-top:6vh;text-align:center}
+.welcome .tag{font-family:var(--serif);font-size:26px;line-height:1.25;margin:22px 0 10px;text-transform:lowercase}
+.welcome p{color:var(--muted);font-size:14px;line-height:1.6;max-width:320px;margin:0 auto}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:26px 0}
+.feat div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 4px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick label input{display:none}
+.pick label span{display:block;background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 13px;font-size:13px}
+.pick label input:checked+span{background:var(--plum);color:#fff;border-color:var(--plum)}
+.steps{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
+.steps i{width:22px;height:5px;border-radius:3px;background:#eadfe1}.steps i.on{background:var(--rose)}
+.areas{grid-template-columns:repeat(4,1fr);gap:8px}
+.area{padding:12px 4px 10px;border-radius:18px}.area .tic{width:40px;height:40px;border-radius:13px}.area b{font-size:12.5px}.area span{font-size:10.5px}
+.rcard{padding:18px}.rhead{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.kpis div{background:var(--bg);border-radius:14px;padding:10px 11px}
+.kpis b{display:block;font-size:16px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpis span{font-size:11px;color:var(--muted)}.kpis i{display:block;font-style:normal;font-size:11px;margin-top:2px}
+.up{color:#5f9467}.down{color:var(--rose-d)}
+.rbars{display:flex;align-items:flex-end;gap:3px;height:110px;position:relative;margin-top:14px;border-bottom:1px solid var(--line)}
+.rbars div{flex:1;height:100%;display:flex;align-items:flex-end;justify-content:center}
+.rbars em{width:100%;max-width:24px;border-radius:6px 6px 2px 2px;display:block}
+.rbars .goal{position:absolute;left:0;right:0;border-top:1.5px dashed var(--rose);opacity:.6}
+.rlab{display:flex;gap:3px;margin-top:5px}.rlab span{flex:1;text-align:center;font-size:10px;color:var(--muted);white-space:nowrap}
+.rsub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:18px 0 4px}
+.hrow2{display:flex;align-items:center;gap:10px;padding:7px 0}.hrow2 .nm{width:40%;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hrow2 .bar{flex:1;height:8px}.hrow2 .pc{width:44px;text-align:right;font-size:12px;color:var(--muted)}
+.legend{display:flex;flex-direction:column;gap:7px;flex:1;min-width:0}
+.legend div{display:flex;align-items:center;gap:8px;font-size:12.5px}.legend i{width:9px;height:9px;border-radius:3px;flex:none}.legend span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.legend b{font-weight:500;font-size:12px}
+.faces{display:flex;justify-content:space-between;margin-top:8px}.faces div{text-align:center;font-size:22px}.faces small{display:block;font-size:11px;color:var(--muted)}
+.bcard{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:10px}
+.spine{width:54px;height:78px;border-radius:5px 10px 10px 5px;display:grid;place-items:center;color:#fff;font-family:var(--serif);font-size:26px;flex:none;box-shadow:inset 6px 0 0 rgba(0,0,0,.08)}
+.brow{display:flex;align-items:center;gap:4px;margin-top:10px}.stars{color:#d9a54a;letter-spacing:2px;margin-top:6px;font-size:15px}
+.starpick{display:flex;justify-content:center;gap:10px;margin:8px 0 18px}.starpick button{background:none;border:0;font-size:38px;color:#d9a54a}
+@media print{nav.bar,.hicons,.noprint,#toastBox{display:none!important}body{background:#fff;padding:0}.card,.hero{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="hdr"></div><main id="main"></main></div>
+<nav class="bar" id="nav"></nav>
+<div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
+<div id="toastBox"></div>
+<script>
+/* ---------- utilidades ---------- */
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4);
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=()=>iso(new Date());
+const parseISO=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const addDays=(s,n)=>{const d=parseISO(s);d.setDate(d.getDate()+n);return iso(d)};
+const WD=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const WDS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const money=v=>(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const ym=s=>s.slice(0,7);
+const shiftMonth=(m,n)=>{const[y,mo]=m.split('-').map(Number);const d=new Date(y,mo-1+n,1);return d.getFullYear()+'-'+pad(d.getMonth()+1)};
+const monthLabel=m=>{const[y,mo]=m.split('-').map(Number);return cap(MES[mo-1])+' de '+y};
+const nowHM=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
+const fmtDur=m=>m==null?'—':`${Math.floor(m/60)}h${pad(Math.round(m%60))}`;
+const parseAmt=v=>{v=String(v).trim().replace(/r\$\s*/i,'');if(v.includes(','))v=v.replace(/\./g,'').replace(',','.');const n=parseFloat(v);return isNaN(n)?0:n};
+const dateLabel=s=>{const t=today();if(s===t)return 'Hoje';if(s===addDays(t,1))return 'Amanhã';if(s===addDays(t,-1))return 'Ontem';const d=parseISO(s);return `${WDS[d.getDay()]}, ${d.getDate()} ${MES[d.getMonth()].slice(0,3)}`};
+const longDate=s=>{const d=parseISO(s);return `${cap(WD[d.getDay()])}, ${d.getDate()} de ${MES[d.getMonth()]} de ${d.getFullYear()}`};
+const weekStart=s=>{const d=parseISO(s);return addDays(s,-((d.getDay()+6)%7))};
+
+/* ---------- ícones ---------- */
+const I={
+home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',minus:'<path d="M5 12h14"/>',
+sprout:'<path d="M12 21v-8"/><path d="M12 13c0-4 3-6.5 7.5-6.5 0 4-3 6.5-7.5 6.5z"/><path d="M12 15c0-3-2.2-5.5-6.5-5.5 0 3.2 2.2 5.5 6.5 5.5z"/>',
+bolt:'<path d="M13 2 4.5 14H11l-1 8 8.5-12H12z"/>',
+grid:'<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>',
+bell:'<path d="M6 9a6 6 0 0 1 12 0c0 6.5 2.5 8 2.5 8h-17S6 15.5 6 9"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
+task:'<rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+drop:'<path d="M12 3.5s6 6.3 6 10.7a6 6 0 0 1-12 0C6 9.8 12 3.5 12 3.5z"/>',
+moon:'<path d="M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10z"/>',
+pill:'<path d="M10.5 20.5a5 5 0 0 1-7-7l6-6a5 5 0 0 1 7 7z"/><path d="m8.5 8.5 7 7"/>',
+wallet:'<rect x="3.5" y="6" width="17" height="13.5" rx="2.5"/><path d="M3.5 10h17M15.5 14.5h2"/><path d="M6 6l9-2.5 1 2.5"/>',
+list:'<path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="m3.5 6.5 1.3 1.3L7 5.5M3.5 12l1.3 1.3L7 11M3.5 17.5l1.3 1.3L7 16.5"/>',
+heart:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/><path d="M8 12h2l1-2 2 4 1-2h2"/>',
+trash:'<path d="M4.5 7h15M10 11v6M14 11v6M6.5 7l1 13h9l1-13M9.5 7V4.5h5V7"/>',
+edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+chevL:'<path d="m14.5 6-6 6 6 6"/>',chevR:'<path d="m9.5 6 6 6-6 6"/>',chevD:'<path d="m6 9.5 6 6 6-6"/>',
+search:'<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/>',
+flame:'<path d="M12 21.5a6.5 6.5 0 0 0 6.5-6.5c0-4.3-3.5-6.5-4.5-11-2.2 2.2-3.3 4.4-3.3 6.6C9.5 9.5 8.5 8.5 8.2 7.2 6.2 9.3 5.5 11.6 5.5 15a6.5 6.5 0 0 0 6.5 6.5z"/>',
+pin:'<path d="M12 16.5V21M8 3.5h8l-1 6 3.5 4h-13l3.5-4z"/>',
+cart:'<path d="M3 4h2.2l2.3 11h11L21 7.5H6.2"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>',
+gem:'<path d="M6.5 4h11L21 9l-9 11L3 9z"/><path d="M3 9h18M9.5 4 12 9l2.5-5M12 9v11"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M2.5 12h3M18.5 12h3M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/>',
+glass:'<path d="M6 4h12l-1.6 16H7.6z"/>',
+x:'<path d="M6 6l12 12M18 6 6 18"/>',
+arrowUp:'<path d="M12 19V5M6 11l6-6 6 6"/>',
+copy:'<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/>',
+smile:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/>',
+stop:'<circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/>',
+book:'<path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v12.5H8.5A3.5 3.5 0 0 1 5 17z"/><path d="M5 17a3.5 3.5 0 0 1 3.5-3.5H19"/>',
+chart:'<path d="M4 20h16"/><path d="M7 16.5V11M12 16.5V6M17 16.5v-8"/>',
+download:'<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
+devo:'<path d="M12 7C10 5.6 7.2 5.2 4 5.6V18c3.2-.4 6 0 8 1.4 2-1.4 4.8-1.8 8-1.4V5.6c-3.2-.4-6 0-8 1.4z"/><path d="M12 7v12.4"/><path d="M16 2.5v4M14 4.5h4"/>'
+};
+const ic=(n,s=20,w=1.7)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${I[n]||''}</svg>`;
+function logoMark(s=40){return `<svg width="${s}" height="${s}" viewBox="0 0 48 48" aria-label="GO!"><rect width="48" height="48" rx="14" fill="#f7e5e9"/><path d="M21.468 27.582C21.026 27.608 19.986 27.738 19.466 27.816C18.972 27.842 18.088 27.92 17.594 27.92C16.19 27.92 14.994 27.764 14.812000000000001 26.854C14.63 26.048000000000002 15.384 25.19 16.632 24.644C17.724 25.086 19.076 25.294 20.662 25.268C22.794 25.242 24.536 24.722 25.914 23.76C27.292 22.772 27.994 21.498 27.994 19.912C28.02 17.936 27.084 16.506 25.212 15.622C25.342 14.998000000000001 25.68 14.608 26.174 14.426C26.434 14.348 26.668 14.296000000000001 26.85 14.270000000000001C27.266 14.192 28.072 14.166 28.306 14.14C28.514 14.114 28.696 14.062000000000001 28.852 13.984000000000002C29.19 13.75 29.294 13.490000000000002 29.138 13.152000000000001C28.904 12.71 28.358 12.606000000000002 27.474 12.814C25.836 13.152000000000001 25.03 14.4 24.822000000000003 15.466000000000001C23.73 15.024000000000001 22.43 14.816 20.896 14.842C18.738 14.894 16.996000000000002 15.414000000000001 15.644 16.402C14.318000000000001 17.39 13.642000000000001 18.664 13.642000000000001 20.224C13.642000000000001 22.122 14.448 23.526 16.060000000000002 24.384C15.462 24.618000000000002 14.864 24.982 14.266000000000002 25.502C13.694 25.996000000000002 13.434000000000001 26.62 13.486 27.348C13.564 28.44 14.396 29.064 15.982000000000001 29.246C14.838000000000001 29.636 13.876000000000001 30.546 13.902000000000001 31.716C13.928 32.47 14.266000000000002 33.094 14.916 33.588C16.268 34.602 18.218 34.914 20.714 34.94C24.951999999999998 34.94 29.06 33.614 29.06 30.312C29.06 27.478 26.044 27.114 21.468 27.582ZM20.506 15.414000000000001C23.444000000000003 15.31 25.472 17.052 25.602 19.938000000000002C25.68 21.316000000000003 25.316000000000003 22.46 24.458 23.344C23.6 24.201999999999998 22.508000000000003 24.67 21.130000000000003 24.696C18.114 24.774 16.216 23.084 16.034 20.094C15.852 17.312 17.516000000000002 15.518 20.506 15.414000000000001ZM20.714 34.342C19.206 34.368 17.932000000000002 34.16 16.918 33.718C15.904 33.275999999999996 15.41 32.6 15.436 31.637999999999998C15.462 30.468 16.034 29.688 17.152 29.298000000000002C17.672 29.298000000000002 19.024 29.194 21.234 28.986C25.186 28.57 26.98 29.116 26.98 30.91C26.98 33.12 24.458 34.316 20.714 34.342Z" fill="#3a2a2e"/><path d="M32 17 V27.5" stroke="#bf7486" stroke-width="1.3" stroke-linecap="round"/><circle cx="32" cy="31.2" r="1.2" fill="#bf7486"/></svg>`}
+const logoFull=(s=40)=>`<span class="logo">${logoMark(s)}<span class="wm" style="font-size:${Math.round(s*.8)}px">GO!</span></span>`;
+const C={rose:'#f3d9df',sky:'#dbe8ee',sage:'#dcecdd',sand:'#efe5d4',lav:'#e8e1f2',health:'#e1eee2'};
+
+/* ---------- estado ---------- */
+const KEY='ritmo-app-v1';
+const CATS=[['Moradia','#b9a7d1'],['Mercado','#9cc5a1'],['Delivery','#d89aa8'],['Restaurante','#e5b58f'],['Transporte','#a9c6d3'],['Saúde','#8fbfb0'],['Educação','#c9b38f'],['Lazer','#f0c27b'],['Beleza','#e8a8c0'],['Compras','#c4a3a8'],['Contas','#9fb0c8'],['Outros','#cfc4c6']];
+const catColor=c=>(CATS.find(x=>x[0]===c)||CATS[CATS.length-1])[1];
+function guessCat(desc){const n=norm(desc||'');const R=[['Moradia',/aluguel|condominio|iptu|moradia|financiamento/],['Mercado',/mercado|feira|hortifruti|acougue|padaria|sacolao/],['Delivery',/ifood|delivery|rappi|pedido/],['Restaurante',/restaurante|lanche|almoco|jantar|cafe|pizza|hamburguer|bar /],['Transporte',/uber|\b99\b|taxi|gasolina|combustivel|onibus|metro|estacionamento|pedagio|carro/],['Saúde',/farmacia|remedio|medic|consulta|exame|academia|plano de saude|dentista|terapia|suplemento/],['Educação',/faculdade|curso|escola|livro|mensalidade|pos-grad/],['Lazer',/cinema|show|viagem|netflix|spotify|streaming|passeio|ingresso/],['Beleza',/salao|cabelo|unha|manicure|skincare|maquiagem|estetica|sobrancelha/],['Compras',/roupa|loja|shopee|amazon|mercado livre|presente|shein|sapato/],['Contas',/luz|agua|internet|celular|telefone|\bgas\b|energia|conta/]];for(const[c,re] of R)if(re.test(n))return c;return 'Outros'}
+function defaultState(){
+  const t=today();
+  const H=(name,cat,days,extra={})=>({id:uid(),name,cat,type:'do',days,created:t,log:{},...extra});
+  return {v:1,updatedAt:0,onboarded:false,name:'',settings:{waterGoal:2000,sleepGoal:480,cup:250,readGoal:12},
+    events:[],tasks:[],
+    habits:[],
+    habitRecord:0,water:{},sleep:{},meds:[],medLog:{},mood:{},
+    fin:{entries:[],paid:{}},
+    lists:[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}],
+    activeDays:{},quickLog:[],books:[],devo:{entries:{}}};
+}
+function migrate(s){if(s.onboarded===undefined)s.onboarded=!!(s.updatedAt||(s.name&&s.habits&&s.habits.length));const d=defaultState();for(const k in d)if(s[k]===undefined)s[k]=d[k];for(const k in d.settings)if(s.settings[k]===undefined)s.settings[k]=d.settings[k];if(!s.fin.paid)s.fin.paid={};(s.fin.entries||[]).forEach(e=>{if(e.type==='out'&&!e.cat)e.cat=guessCat(e.desc)});return s}
+let state=null;
+try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+state=migrate(state&&state.v?state:defaultState());
+state.activeDays[today()]=true;
+const ui={devoTab:'hoje',devoDate:null,repPeriod:'mes',repOff:0,repCat:'tudo',bookTab:'lendo',ready:true,obStep:0,authMode:null,authErr:'',authBusy:false,screen:'home',heroTab:0,agView:'timeline',selDay:today(),healthTab:'geral',finMonth:ym(today()),listFilter:'todas',listSearch:'',openList:null,habitTab:'do',habitView:'lista',expanded:{},taskFilter:'hoje',sync:'local'};
+
+/* ---------- persistência: Supabase (login + banco) ou só no aparelho ---------- */
+const CFG=window.GO_CONFIG||{};
+const cloud=!!(window.supabase&&CFG.supabaseUrl&&CFG.supabaseKey&&!/COLE/.test(CFG.supabaseUrl+CFG.supabaseKey));
+let sb=null,session=null,saveT=null;
+const lkey=()=>KEY+(session?':'+session.user.id:'');
+function loadLocal(){try{return JSON.parse(localStorage.getItem(lkey()))}catch(e){return null}}
+function writeLocal(){try{localStorage.setItem(lkey(),JSON.stringify(state))}catch(e){}}
+async function pushRemote(){if(!sb||!session)return;const uid_=session.user.id;const {error}=await sb.from('app_state').upsert({user_id:uid_,data:state,updated_at:new Date().toISOString()});ui.sync=error?'erro':'nuvem'}
+function save(){state.updatedAt=Date.now();state.activeDays[today()]=true;writeLocal();clearTimeout(saveT);saveT=setTimeout(pushRemote,600);render()}
+async function pullRemote(force){
+  if(!sb||!session)return;
+  const {data,error}=await sb.from('app_state').select('data').eq('user_id',session.user.id).maybeSingle();
+  if(error){ui.sync='erro';return}
+  const remote=data&&data.data&&data.data.v?data.data:null,local=loadLocal();
+  const cur=force?null:state;
+  let best=remote;
+  [local,cur].forEach(s=>{if(s&&s.v&&s._uid===session.user.id&&(!best||(s.updatedAt||0)>(best.updatedAt||0)))best=s});
+  state=migrate(best?JSON.parse(JSON.stringify(best)):defaultState());
+  state._uid=session.user.id;state.activeDays[today()]=true;writeLocal();
+  if(!remote||(state.updatedAt||0)>(remote.updatedAt||0))await pushRemote();else ui.sync='nuvem';
+}
+if(cloud){
+  sb=supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);
+  ui.ready=false;
+  sb.auth.onAuthStateChange((ev,s)=>{setTimeout(async()=>{
+    if(ev==='PASSWORD_RECOVERY'){session=s;ui.authMode='reset';ui.ready=true;render();return}
+    const before=session&&session.user.id;session=s;
+    if(s&&s.user.id!==before){ui.screen='home';await pullRemote(true);if(ui.authMode!=='reset')ui.authMode=null}
+    if(!s){state=migrate(defaultState());ui.obStep=0}
+    ui.ready=true;render();
+  },0)});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&session)pullRemote().then(render)});
+}else{ui.sync='local';ui.ready=true}
+
+/* ---------- regras de domínio ---------- */
+const doHabits=()=>state.habits.filter(h=>h.type!=='quit');
+const quitHabits=()=>state.habits.filter(h=>h.type==='quit');
+const sched=(h,d)=>d>=h.created&&h.days.includes(parseISO(d).getDay());
+const hDone=(h,d)=>!!h.log[d]||(h.auto==='water'&&(state.water[d]||0)>=state.settings.waterGoal);
+function hStreak(h){let d=today(),n=0;if(sched(h,d)&&!hDone(h,d))d=addDays(d,-1);for(let i=0;i<500&&d>=h.created;i++){if(sched(h,d)){if(hDone(h,d))n++;else break}d=addDays(d,-1)}return n}
+function dayRatio(d){const hs=doHabits().filter(h=>sched(h,d));if(!hs.length)return null;return hs.filter(h=>hDone(h,d)).length/hs.length}
+function allStreak(){const first=doHabits().reduce((m,h)=>h.created<m?h.created:m,today());let d=today(),n=0;if(dayRatio(d)!==1)d=addDays(d,-1);for(let i=0;i<500&&d>=first;i++){const r=dayRatio(d);if(r===1)n++;else if(r!==null)break;d=addDays(d,-1)}return n}
+function monthHabitPct(){const t=today();let s=0,dn=0;for(let d=t.slice(0,8)+'01';d<=t;d=addDays(d,1)){doHabits().forEach(h=>{if(sched(h,d)){s++;if(hDone(h,d))dn++}})}return s?Math.round(dn/s*100):0}
+function appStreak(){let d=today(),n=0;if(!state.activeDays[d])d=addDays(d,-1);while(state.activeDays[d]){n++;d=addDays(d,-1)}return n}
+const sortEv=(a,b)=>(a.date+(a.time||'00:00')).localeCompare(b.date+(b.time||'00:00'));
+const eventsOn=d=>state.events.filter(e=>e.date===d).sort(sortEv);
+const tasksOn=d=>state.tasks.filter(t=>t.date===d);
+const daysBetween=(a,b)=>Math.round((parseISO(b)-parseISO(a))/864e5);
+function finMonth(m){
+  const es=state.fin.entries.filter(e=>e.recurring?(ym(e.date)<=m&&(!e.end||e.end>=m)):ym(e.date)===m);
+  const inc=es.filter(e=>e.type==='in'),out=es.filter(e=>e.type==='out');
+  const fixed=out.filter(e=>e.recurring),vari=out.filter(e=>!e.recurring).sort((a,b)=>b.date.localeCompare(a.date));
+  const sum=a=>a.reduce((s,e)=>s+e.amount,0);
+  const paid=state.fin.paid[m]||{};const toPay=fixed.filter(e=>!paid[e.id]);
+  const I_=sum(inc),O=sum(out);
+  return {inc,fixed,vari,paid,toPay,totIn:I_,totOut:O,totFixed:sum(fixed),totVar:sum(vari),left:I_-O,toPaySum:sum(toPay),pct:I_>0?Math.max(0,Math.round((I_-O)/I_*100)):0};
+}
+const dueDate=(e,m)=>{const[y,mo]=m.split('-').map(Number);const last=new Date(y,mo,0).getDate();return m+'-'+pad(Math.min(e.day||1,last))};
+function alerts(){
+  const t=today(),a=[];
+  state.tasks.filter(x=>!x.done&&x.date&&x.date<=t).forEach(x=>a.push({k:x.date<t?'Atrasada':'Hoje',txt:x.title,go:'tarefas'}));
+  const m=ym(t),f=finMonth(m);
+  f.toPay.forEach(e=>{const dd=dueDate(e,m);if(dd<=addDays(t,3))a.push({k:dd<t?'Conta vencida':'Vence '+dateLabel(dd).toLowerCase(),txt:`${e.desc} · ${money(e.amount)}`,go:'financas'})});
+  const ml=state.medLog[t]||{};state.meds.forEach(md=>{if(!ml[md.id]&&(!md.time||md.time<=nowHM()))a.push({k:'Remédio '+(md.time||''),txt:md.name,go:'saude'})});
+  return a;
+}
+
+/* ---------- componentes ---------- */
+function ring(p,color,big,small,size=96){const r=size/2-7,c=2*Math.PI*r,o=c*(1-Math.min(1,Math.max(0,p)));return `<div class="ring" style="width:${size}px;height:${size}px"><svg width="${size}" height="${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" stroke="rgba(255,255,255,.12)" stroke-width="7" fill="none"/><circle cx="${size/2}" cy="${size/2}" r="${r}" stroke="${color}" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${o}"/></svg><div class="lbl"><b>${big}</b><small>${small}</small></div></div>`}
+const pctBig=n=>`${n}<sup>%</sup>`;
+const stats=(arr,cls='')=>`<div class="stats ${cls}">${arr.map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('')}</div>`;
+function hIcons(){const n=alerts().length;return `<div class="hicons"><button class="ib" data-a="sheet" data-s="bell" aria-label="Avisos">${ic('bell',20)}${n?`<span class="badge">${n}</span>`:''}</button><button class="avatar" data-a="go" data-to="menu" aria-label="Menu">${esc((state.name||'A').charAt(0).toUpperCase())}</button></div>`}
+const titleHdr=(icon,title,bg)=>`<div class="top" style="align-items:center"><div class="titleRow"><div class="tic" style="background:${bg}">${ic(icon,21)}</div><div class="ttl">${title}</div></div>${hIcons()}</div>`;
+const backHdr=(title,to)=>`<div class="top" style="align-items:center"><div class="titleRow"><button class="circ" data-a="go" data-to="${to}">${ic('chevL',18)}</button><div class="ttl" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(title)}</div></div>${hIcons()}</div>`;
+const catLbl={geral:'Geral',saude:'Saúde',trabalho:'Trabalho',pessoal:'Pessoal'};
+function evRow(e,showDate){return `<div class="row"><div class="time">${e.time||'Dia'}</div><div class="grow"><div class="rt">${esc(e.title)}</div><div class="small muted">${showDate?dateLabel(e.date)+' · ':''}${catLbl[e.cat]||'Geral'}</div></div><button class="ib sm" data-a="editEvent" data-id="${e.id}">${ic('edit',16)}</button><button class="ib sm" data-a="delEvent" data-id="${e.id}">${ic('trash',16)}</button></div>`}
+function tkRow(x,showDate){const late=!x.done&&x.date&&x.date<today();return `<div class="row"><button class="cb ${x.done?'on':''}" data-a="toggleTask" data-id="${x.id}" aria-label="Concluir">${x.done?ic('check',14,2.4):''}</button><div class="grow" data-a="editTask" data-id="${x.id}"><div class="rt ${x.done?'done-t':''}">${esc(x.title)}</div>${showDate&&x.date?`<div class="small" style="color:${late?'var(--rose-d)':'var(--muted)'}">${late?'Atrasada · ':''}${dateLabel(x.date)}</div>`:''}</div><button class="ib sm" data-a="delTask" data-id="${x.id}">${ic('trash',16)}</button></div>`}
+const quickForm=(ph='Escreva e o GO! organiza')=>`<form class="quick" data-f="quick">${ic('bolt',19)}<input name="q" placeholder="${ph}" autocomplete="off" enterkeyhint="send"><button aria-label="Adicionar">${ic('arrowUp',20,2)}</button></form>`;
+const daysText=d=>d.length===7?'Todos os dias':(d.join()==='1,2,3,4,5'?'Seg a Sex':(d.join()==='1,2,3,4,5,6'?'Seg a Sáb':d.map(i=>WDS[i]).join(', ')));
+
+/* ---------- telas ---------- */
+const S={};
+function greet(){const h=new Date().getHours();return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'}
+
+S.home=()=>{
+  const t=today(),d=new Date(),st=appStreak();
+  const h=`<div class="top"><div style="flex:1;min-width:0"><div class="eyebrow">${WD[d.getDay()].split('-')[0]}, ${d.getDate()} de ${MES[d.getMonth()]}</div><h1 class="hi">${greet()}${state.name?`, <em>${esc(state.name)}</em>`:''}</h1><div class="streak">${ic('flame',14)} ${st} ${st===1?'dia seguido':'dias seguidos'}</div></div>${hIcons()}</div>`;
+  const ev=eventsOn(t),tk=tasksOn(t),hs=doHabits().filter(x=>sched(x,t)),hd=hs.filter(x=>hDone(x,t)).length;
+  const f=finMonth(ym(t)),water=state.water[t]||0;
+  const tabs=['Hoje','Semana','Hábitos','Sono','Humor','Dinheiro'];
+  let c='';
+  if(ui.heroTab===0){
+    const hasWaterHabit=hs.some(x=>x.auto==='water');
+    const total=tk.length+hs.length+(hasWaterHabit?0:1),done=tk.filter(x=>x.done).length+hd+(!hasWaterHabit&&water>=state.settings.waterGoal?1:0);
+    const p=total?done/total:0,nx=ev.find(e=>!e.time||e.time>=nowHM());
+    c=`<div class="hmain">${ring(p,'var(--rose)',pctBig(Math.round(p*100)),'do dia')}<div><div class="hk">A seguir</div><div class="hT">${nx?esc(nx.title):'Agenda livre'}</div><div class="hS">${nx?(nx.time?'às '+nx.time:'Dia todo'):'Nenhum compromisso pela frente hoje'}</div></div></div>${stats([[ev.length,ev.length===1?'compromisso':'compromissos'],[tk.filter(x=>!x.done).length,'tarefas'],[`${hd}/${hs.length}`,'hábitos']])}`;
+  }else if(ui.heroTab===1){
+    const end=addDays(t,6),evs=state.events.filter(e=>e.date>=t&&e.date<=end),tks=state.tasks.filter(x=>x.date&&x.date>=t&&x.date<=end);
+    const p=tks.length?tks.filter(x=>x.done).length/tks.length:0;let perfect=0;for(let i=0;i<7;i++)if(dayRatio(addDays(t,-i))===1)perfect++;
+    c=`<div class="hmain">${ring(p,'var(--rose)',pctBig(Math.round(p*100)),'tarefas')}<div><div class="hk">Próximos 7 dias</div><div class="hT">${evs.length} ${evs.length===1?'compromisso':'compromissos'}</div><button class="hlink" data-a="go" data-to="agenda" data-view="semana">Planejar a semana ›</button></div></div>${stats([[evs.length,'eventos'],[tks.filter(x=>!x.done).length,'tarefas abertas'],[perfect+'/7','dias perfeitos']])}`;
+  }else if(ui.heroTab===2){
+    const p=hs.length?hd/hs.length:0;
+    c=`<div class="hmain">${ring(p,'var(--sage)',pctBig(Math.round(p*100)),'feito')}<div><div class="hk g">Hábitos hoje</div><div class="hT">${hd} de ${hs.length} feitos</div><div class="hS">${ic('flame',12)} Sequência de ${allStreak()} dias · recorde ${state.habitRecord||0}</div></div></div>${stats([[monthHabitPct()+'%','no mês'],[doHabits().filter(x=>hStreak(x)>0).length,'em dia'],[doHabits().length,'hábitos']])}`;
+  }else if(ui.heroTab===3){
+    const last=state.sleep[t]??state.sleep[addDays(t,-1)];let s=0,n=0;for(let i=0;i<7;i++){const v=state.sleep[addDays(t,-i)];if(v!=null){s+=v;n++}}
+    c=`<div class="hmain">${ring(last!=null?last/state.settings.sleepGoal:0,'var(--lav)',last!=null?fmtDur(last):'—','sono')}<div><div class="hk" style="color:var(--lav)">Última noite</div><div class="hT">${last!=null?fmtDur(last)+' dormidas':'Sem registro'}</div><button class="hlink" data-a="sheet" data-s="sleep">Registrar sono</button></div></div>${stats([[n?fmtDur(s/n):'—','média 7 dias'],[fmtDur(state.settings.sleepGoal),'meta'],[n+'/7','noites']])}`;
+  }else if(ui.heroTab===4){
+    const mv=state.mood[t],faces=['😣','😕','😐','🙂','😄'];let s=0,n=0;for(let i=0;i<7;i++){const v=state.mood[addDays(t,-i)];if(v){s+=v;n++}}
+    c=`<div class="hmain">${ring(mv?mv/5:0,'var(--rose)',mv?faces[mv-1]:'—','hoje')}<div><div class="hk">Humor</div><div class="hT">Como você está?</div><div class="moods">${faces.map((f_,i)=>`<button class="${mv===i+1?'on':''}" data-a="mood" data-v="${i+1}">${f_}</button>`).join('')}</div></div></div>${stats([[n?faces[Math.round(s/n)-1]:'—','média semana'],[n+'/7','dias registrados']],'two')}`;
+  }else{
+    c=`<div class="hmain">${ring(f.pct/100,'var(--sand)',pctBig(f.pct),'guardado')}<div><div class="hk s">${cap(MES[d.getMonth()])}</div><div class="hT">Sobrando ${money(f.left)}</div><div class="hS">${f.toPay.length} contas a pagar · ${money(f.toPaySum)}</div></div></div>${stats([[money(f.totIn),'receitas'],[money(f.totOut),'despesas']],'two')}`;
+  }
+  const hero=`<div class="hero" id="heroCard"><div class="htabs">${tabs.map((x,i)=>`<button class="${ui.heroTab===i?'on':''}" data-a="hero" data-i="${i}">${x}</button>`).join('')}</div>${c}<div class="dots">${tabs.map((_,i)=>`<i class="${ui.heroTab===i?'on':''}"></i>`).join('')}</div></div>`;
+  const chips=`<div class="chips"><button class="chip" data-a="sheet" data-s="expense">Anotar um gasto</button><button class="chip" data-a="openMarket">Lista de mercado</button><button class="chip" data-a="go" data-to="agenda" data-view="semana">Planejar a semana</button></div>`;
+  const openT=state.tasks.filter(x=>!x.done).length,mk=state.lists.length;
+  const area=(icon,bg,name,sub,to)=>`<button class="area" data-a="go" data-to="${to}"><div class="tic" style="background:${bg}">${ic(icon,21)}</div><b>${name}</b><span>${sub}</span></button>`;
+  const areas=`<h2 class="sec">Suas áreas</h2><div class="areas">${area('cal',C.rose,'Agenda',ev.length+' hoje','agenda')}${area('task',C.sky,'Tarefas',openT+' abertas','tarefas')}${area('sprout',C.sage,'Hábitos',`${hd} de ${hs.length}`,'habitos')}${area('wallet',C.sand,'Finanças',money(f.left).replace(',00',''),'financas')}${area('heart',C.health,'Saúde',(water/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})+' L','saude')}${area('list',C.lav,'Listas',mk+(mk===1?' lista':' listas'),'listas')}${area('book',C.sand,'Leitura',pagesOn(t)?pagesOn(t)+' pág. hoje':state.books.filter(b=>b.status==='lendo').length+' lendo','leitura')}${area('devo','#f3ead2','Devocional',hasDevo(t)?'feito hoje ✓':(devoStreak()?devoStreak()+'d seguidos':'hoje'),'devocional')}</div><button class="mitem" style="margin-top:10px" data-a="go" data-to="relatorios"><div class="tic" style="background:${C.rose};width:40px;height:40px">${ic('chart',19)}</div><div class="grow"><b style="font-weight:500">Relatórios</b><div class="small muted">Seu resumo por categoria e período</div></div>${ic('chevR',18)}</button>`;
+  const todayItems=ev.map(e=>evRow(e)).join('')+tk.map(x=>tkRow(x)).join('');
+  const todayBox=`<h2 class="sec">Hoje <button class="btn sm soft" data-a="sheet" data-s="fab">${ic('plus',14)} Adicionar</button></h2><div class="card" style="margin-top:0;padding-top:6px;padding-bottom:6px">${todayItems||'<div class="empty">Nada marcado pra hoje. Dia leve ✨</div>'}</div>`;
+  return {h,b:hero+quickForm()+chips+areas+todayBox};
+};
+
+S.agenda=()=>{
+  const t=today(),evT=eventsOn(t),left=evT.filter(e=>!e.time||e.time>=nowHM());
+  const n7=state.events.filter(e=>e.date>t&&e.date<=addDays(t,7)).length;
+  const hero=`<div class="hero"><div class="hk">Hoje</div><div class="hT">${left.length?`${left.length} ${left.length===1?'compromisso':'compromissos'} pela frente`:'Sem mais compromissos hoje'}</div><div class="hS">${longDate(t).replace(/ de \d{4}$/,'')}</div>${stats([[evT.length,'hoje'],[n7,'próx. 7 dias'],[tasksOn(t).filter(x=>!x.done).length,'tarefas hoje']])}</div>`;
+  const views=[['timeline','Timeline'],['dia','Dia'],['semana','Semana'],['mes','Mês']];
+  const seg=`<div style="margin-top:16px"><div class="seg">${views.map(([k,l])=>`<button class="${ui.agView===k?'on':''}" data-a="agView" data-v="${k}">${l}</button>`).join('')}</div></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn primary" data-a="sheet" data-s="event">${ic('plus',16)} Novo evento</button></div>`;
+  const und=state.tasks.filter(x=>!x.date&&!x.done);
+  const org=`<div class="card"><div class="cardHead"><h4>Para organizar</h4><span class="small muted">${und.length} sem data</span></div><div class="small muted">Tarefas que ainda não têm dia. Escolha quando fazer.</div>${und.map(x=>`<div class="row"><span style="color:var(--sky)">${ic('task',18)}</span><div class="grow rt">${esc(x.title)}</div><button class="btn sm soft" data-a="sheet" data-s="schedule" data-id="${x.id}">Agendar</button></div>`).join('')||'<div class="empty" style="padding-bottom:0">Tudo organizado 👏</div>'}</div>`;
+  let v='';
+  const dayItems=d=>eventsOn(d).map(e=>evRow(e)).join('')+tasksOn(d).map(x=>tkRow(x)).join('');
+  if(ui.agView==='timeline'){
+    const late=state.tasks.filter(x=>!x.done&&x.date&&x.date<t);
+    if(late.length)v+=`<div class="dayhead" style="color:var(--rose-d)">Atrasadas</div>`+late.map(x=>tkRow(x,true)).join('');
+    for(let i=0;i<21;i++){const d=addDays(t,i),it=dayItems(d);if(it)v+=`<div class="dayhead ${i===0?'today':''}">${dateLabel(d)}</div>${it}`}
+    v=`<div class="card">${v||'<div class="empty">Nada marcado nas próximas 3 semanas.</div>'}</div>`;
+  }else if(ui.agView==='dia'){
+    const ws=weekStart(ui.selDay);
+    v=`<div class="navrow"><button class="circ" data-a="shift" data-n="-1">${ic('chevL',16)}</button><button class="pill" data-a="selDay" data-d="${t}">Hoje</button><button class="circ" data-a="shift" data-n="1">${ic('chevR',16)}</button><div class="grow small" style="font-weight:500;padding-left:4px">${longDate(ui.selDay)}</div></div>
+    <div class="wk">${[0,1,2,3,4,5,6].map(i=>{const d=addDays(ws,i),has=eventsOn(d).length||tasksOn(d).length;return `<button class="${d===ui.selDay?'on':''}" data-a="selDay" data-d="${d}"><small>${WDS[parseISO(d).getDay()]}</small><b>${parseISO(d).getDate()}</b><i class="${has?'has':''}"></i></button>`}).join('')}</div>
+    <div class="card"><div class="cardHead"><h4>${dateLabel(ui.selDay)}</h4><button class="btn sm soft" data-a="sheet" data-s="event" data-date="${ui.selDay}">${ic('plus',14)} Novo neste dia</button></div>${dayItems(ui.selDay)||'<div class="empty">Dia livre.</div>'}</div>`;
+  }else if(ui.agView==='semana'){
+    const ws=weekStart(ui.selDay),we=addDays(ws,6),a=parseISO(ws),b=parseISO(we);
+    v=`<div class="navrow"><button class="circ" data-a="shift" data-n="-7">${ic('chevL',16)}</button><button class="pill" data-a="selDay" data-d="${t}">Hoje</button><button class="circ" data-a="shift" data-n="7">${ic('chevR',16)}</button><div class="grow small" style="font-weight:500;padding-left:4px">${a.getDate()} ${MES[a.getMonth()].slice(0,3)} – ${b.getDate()} ${MES[b.getMonth()].slice(0,3)}</div></div><div class="card">`+
+    [0,1,2,3,4,5,6].map(i=>{const d=addDays(ws,i),it=dayItems(d);return `<div class="dayhead ${d===t?'today':''}" style="display:flex;justify-content:space-between;align-items:center">${dateLabel(d)}<button class="ib sm" data-a="sheet" data-s="event" data-date="${d}">${ic('plus',15)}</button></div>${it||'<div class="small muted" style="padding:4px 0 8px">—</div>'}`}).join('')+`</div>`;
+  }else{
+    const m=ym(ui.selDay),first=m+'-01',gs=weekStart(first);
+    let cells=WDS.slice(1).concat('Dom').map(x=>`<div class="h">${x}</div>`).join('');
+    for(let i=0;i<42;i++){const d=addDays(gs,i);if(i>=35&&ym(d)!==m)break;const has=eventsOn(d).length||tasksOn(d).filter(x=>!x.done).length;cells+=`<button class="${ym(d)!==m?'out':''} ${d===t?'today':''} ${d===ui.selDay?'sel':''}" data-a="selDay" data-d="${d}" data-view="dia">${parseISO(d).getDate()}${has?'<i></i>':''}</button>`}
+    v=`<div class="navrow"><button class="circ" data-a="shiftM" data-n="-1">${ic('chevL',16)}</button><button class="pill" data-a="selDay" data-d="${t}">Hoje</button><button class="circ" data-a="shiftM" data-n="1">${ic('chevR',16)}</button><div class="grow small" style="font-weight:500;padding-left:4px">${monthLabel(m)}</div></div><div class="cal">${cells}</div>`;
+  }
+  return {h:titleHdr('cal','Agenda',C.rose),b:hero+seg+org+v};
+};
+
+S.tarefas=()=>{
+  const t=today(),fl=[['hoje','Hoje'],['proximas','Próximas'],['semdata','Sem data'],['atrasadas','Atrasadas'],['feitas','Feitas']];
+  const F={hoje:x=>!x.done&&x.date===t,proximas:x=>!x.done&&x.date>t,semdata:x=>!x.done&&!x.date,atrasadas:x=>!x.done&&x.date&&x.date<t,feitas:x=>x.done};
+  let L=state.tasks.filter(F[ui.taskFilter]);
+  L.sort((a,b)=>ui.taskFilter==='feitas'?(b.doneAt||0)-(a.doneAt||0):(a.date||'9').localeCompare(b.date||'9'));
+  if(ui.taskFilter==='feitas')L=L.slice(0,40);
+  const b=`${quickForm('Ex.: ligar pro contador sexta')}<div class="chips scroll" style="margin-top:16px">${fl.map(([k,l])=>`<button class="chip ${ui.taskFilter===k?'on':''}" data-a="taskF" data-v="${k}">${l} <span class="muted" style="${ui.taskFilter===k?'color:#fff;opacity:.7':''}">${state.tasks.filter(F[k]).length}</span></button>`).join('')}</div>
+  <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="btn primary" data-a="sheet" data-s="task">${ic('plus',16)} Nova tarefa</button></div>
+  <div class="card">${L.map(x=>tkRow(x,true)).join('')||'<div class="empty">Nada aqui.</div>'}</div>${ui.taskFilter==='feitas'&&L.length?'<button class="btn ghost full" style="margin-top:12px" data-a="clearDone">Limpar concluídas</button>':''}`;
+  return {h:titleHdr('task','Tarefas',C.sky),b};
+};
+
+S.habitos=()=>{
+  const t=today(),tab=`<div class="seg" style="margin-bottom:16px"><button class="${ui.habitTab==='do'?'on':''}" data-a="habitTab" data-v="do">Meus hábitos</button><button class="${ui.habitTab==='quit'?'on':''}" data-a="habitTab" data-v="quit">Parar de...</button></div>`;
+  let b=tab;
+  if(ui.habitTab==='do'){
+    const hs=doHabits().filter(x=>sched(x,t)),hd=hs.filter(x=>hDone(x,t)).length,p=hs.length?hd/hs.length:0,ws=weekStart(t);
+    const week=[0,1,2,3,4,5,6].map(i=>{const d=addDays(ws,i),r=d>t?0:(dayRatio(d)||0);return `<div><div><em style="height:${Math.round(r*100)}%"></em></div><span class="${d===t?'t':''}">${WDS[parseISO(d).getDay()]}</span></div>`}).join('');
+    b+=`<div class="hero"><div class="hmain">${ring(p,'var(--sage)',pctBig(Math.round(p*100)),'feito')}<div><div class="hk g">Hoje</div><div class="hT">${hd} de ${hs.length} hábitos feitos</div><div class="hS">${ic('flame',12)} Sequência de ${allStreak()} dias · recorde ${state.habitRecord||0}</div></div></div>${stats([[monthHabitPct()+'%','no mês'],[doHabits().filter(x=>hStreak(x)>0).length,'em dia'],[doHabits().length,'hábitos']])}<div class="hw">${week}</div></div>`;
+    b+=`<h2 class="sec">Meus hábitos</h2><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div class="seg"><button class="${ui.habitView==='lista'?'on':''}" data-a="habitView" data-v="lista">${ic('list',15)} Lista</button><button class="${ui.habitView==='cal'?'on':''}" data-a="habitView" data-v="cal">${ic('cal',15)} Calendário</button></div><button class="btn primary sm" style="margin-left:auto" data-a="sheet" data-s="habit">${ic('plus',14)} Novo</button></div>`;
+    if(ui.habitView==='lista'){
+      b+=doHabits().map(h=>{const dn=hDone(h,t),sc=sched(h,t),st=hStreak(h),ex=ui.expanded[h.id];
+        let grid='';if(ex){grid='<div class="grid28">';for(let i=27;i>=0;i--){const d=addDays(t,-i);grid+=`<i class="${!sched(h,d)?'off':hDone(h,d)?'on':''}" title="${d}"></i>`}grid+='</div><div class="small muted" style="margin-top:6px">Últimos 28 dias</div>'}
+        return `<div class="hcard"><div class="hrow"><div class="hic">${ic('sprout',17)}</div><div class="grow"><b>${esc(h.name)}</b><div class="small"><span class="sagec">${esc(h.cat)}</span> <span class="fl">${ic('flame',11)} ${st}d</span></div><div class="small muted">${daysText(h.days)}${!sc?' · folga hoje':''}${h.auto==='water'?' · automático pela água':''}</div></div><button class="btn sm ${dn?'ok':'ghost'}" data-a="habitDone" data-id="${h.id}">${dn?ic('check',13,2.4)+' Feito':'Marcar'}</button></div><div style="display:flex;justify-content:flex-end;gap:2px;margin-top:4px"><button class="ib sm" data-a="sheet" data-s="habit" data-id="${h.id}">${ic('edit',15)}</button><button class="ib sm" data-a="delHabit" data-id="${h.id}">${ic('trash',15)}</button><button class="ib sm" data-a="expand" data-id="${h.id}" style="${ex?'transform:rotate(180deg)':''}">${ic('chevD',16)}</button></div>${grid}</div>`}).join('')||'<div class="empty">Crie seu primeiro hábito.</div>';
+    }else{
+      const m=ym(t),gs=weekStart(m+'-01');let cells=WDS.slice(1).concat('Dom').map(x=>`<div class="h">${x}</div>`).join('');
+      for(let i=0;i<42;i++){const d=addDays(gs,i);if(i>=35&&ym(d)!==m)break;const r=d>t?null:dayRatio(d);const bg=r==null?'#fff':`rgba(156,197,161,${.15+r*.85})`;cells+=`<button class="${ym(d)!==m?'out':''} ${d===t?'today':''}" style="background:${bg};${r===1?'color:#fff;font-weight:600':''}">${parseISO(d).getDate()}</button>`}
+      b+=`<div class="card"><div class="cardHead"><h4>${monthLabel(m)}</h4><span class="small muted">quanto mais verde, mais hábitos feitos</span></div><div class="cal">${cells}</div></div>`;
+    }
+  }else{
+    b+=`<div class="card" style="margin-top:0"><div class="small muted">Acompanhe o que você quer deixar pra trás: refrigerante, doce à noite, rolar o feed antes de dormir… Conta os dias desde a última vez.</div></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn primary sm" data-a="sheet" data-s="habit" data-type="quit">${ic('plus',14)} Novo</button></div>`;
+    b+=quitHabits().map(h=>{const n=daysBetween(h.since,t),best=Math.max(h.best||0,n);return `<div class="hcard"><div class="hrow"><div class="hic" style="background:var(--rose-l);color:var(--rose-d)">${ic('stop',17)}</div><div class="grow"><b>${esc(h.name)}</b><div class="small muted">Recorde: ${best} ${best===1?'dia':'dias'}</div></div><div style="text-align:right"><div class="big">${n}</div><div class="small muted">${n===1?'dia sem':'dias sem'}</div></div></div><div style="display:flex;justify-content:flex-end;gap:4px;margin-top:6px"><button class="btn sm ghost" data-a="sheet" data-s="relapse" data-id="${h.id}">Recaí</button><button class="ib sm" data-a="delHabit" data-id="${h.id}">${ic('trash',15)}</button></div></div>`}).join('')||'<div class="empty">Nenhum ainda.</div>';
+  }
+  return {h:titleHdr('sprout','Hábitos',C.sage),b};
+};
+
+function waterCard(){
+  const t=today(),w=state.water[t]||0,g=state.settings.waterGoal,cup=state.settings.cup,n=Math.min(14,Math.ceil(g/cup)),full=Math.floor(w/cup);
+  return `<div class="card"><div class="hrow"><div class="hic" style="background:var(--sky-l);color:#7fa9bb">${ic('drop',17)}</div><div class="grow"><b class="serif" style="font-family:var(--serif);font-size:18px;font-weight:400">Água</b><div class="small muted">Meta de ${(g/1000).toLocaleString('pt-BR')} L por dia</div></div><div class="big">${(w/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})}<small> L</small></div></div>
+  <div class="bar" style="margin-top:14px"><i style="width:${Math.min(100,w/g*100)}%;background:var(--sky)"></i></div>
+  <div class="cups">${Array.from({length:n},(_,i)=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" class="${i<full?'f':''}">${I.glass}</svg>`).join('')}</div>
+  <div style="display:flex;gap:10px"><button class="circ" style="width:46px;height:46px" data-a="water" data-n="-${cup}">${ic('minus',18)}</button><button class="btn full" style="background:var(--sky);color:#fff" data-a="water" data-n="${cup}">${ic('plus',16)} ${cup} ml</button><button class="btn ghost" data-a="water" data-n="500">500</button></div></div>`;
+}
+function sleepCard(){
+  const t=today(),g=state.settings.sleepGoal,last=state.sleep[t]??state.sleep[addDays(t,-1)];
+  const days=[6,5,4,3,2,1,0].map(i=>addDays(t,-i)),max=Math.max(g*1.25,...days.map(d=>state.sleep[d]||0));
+  return `<div class="card"><div class="hrow"><div class="hic" style="background:var(--lav-l);color:#8f7bb0">${ic('moon',17)}</div><div class="grow"><b style="font-family:var(--serif);font-size:18px;font-weight:400">Sono</b><div class="small muted">${state.sleep[t]!=null?'Última noite registrada: hoje':'Registre como foi sua noite'}</div></div><div class="big">${fmtDur(last)}</div></div>
+  <div class="sbars"><span class="goal" style="bottom:${g/max*100}%"></span>${days.map(d=>{const v=state.sleep[d];return `<div><em class="${d===t?'l':''}" style="height:${v?Math.max(6,v/max*100):4}%;${v?'':'opacity:.4'}"></em></div>`}).join('')}</div>
+  <div class="slabels">${days.map(d=>`<span>${WDS[parseISO(d).getDay()]}</span>`).join('')}</div>
+  <button class="btn soft full" style="margin-top:14px;background:var(--lav-l);color:#7d6a9e" data-a="sheet" data-s="sleep">${ic('plus',15)} Registrar sono</button></div>`;
+}
+function medsCard(){
+  const t=today(),ml=state.medLog[t]||{};
+  return `<div class="card"><div class="cardHead"><h4>Remédios e suplementos</h4><button class="ib sm" data-a="sheet" data-s="med">${ic('plus',17)}</button></div>${state.meds.slice().sort((a,b)=>(a.time||'').localeCompare(b.time||'')).map(m=>`<div class="row"><button class="cb ${ml[m.id]?'on':''}" data-a="med" data-id="${m.id}">${ml[m.id]?ic('check',14,2.4):''}</button><div class="grow"><div class="rt ${ml[m.id]?'done-t':''}">${esc(m.name)}</div><div class="small muted">${m.time||'Sem horário'}</div></div><button class="ib sm" data-a="delMed" data-id="${m.id}">${ic('trash',15)}</button></div>`).join('')||'<div class="empty">Cadastre seus remédios ou suplementos (creatina, vitamina D…)</div>'}</div>`;
+}
+S.saude=()=>{
+  const t=today(),w=state.water[t]||0,g=state.settings.waterGoal,last=state.sleep[t]??state.sleep[addDays(t,-1)],ml=state.medLog[t]||{};
+  const cons=state.events.filter(e=>e.cat==='saude'&&e.date>=t&&e.date<=addDays(t,60)).length;
+  const tabs=[['geral','Visão geral','heart'],['agua','Água e sono','drop'],['rem','Remédios','pill']];
+  let b=`<div class="seg" style="margin-bottom:16px">${tabs.map(([k,l,i])=>`<button class="${ui.healthTab===k?'on':''}" data-a="healthTab" data-v="${k}">${ic(i,15)} ${l}</button>`).join('')}</div>`;
+  b+=`<div class="hero"><div class="hmain">${ring(w/g,'var(--sage)',pctBig(Math.round(Math.min(1,w/g)*100)),'água')}<div><div class="hk g">Seu corpo hoje</div><div class="hT">${(w/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L de ${(g/1000).toLocaleString('pt-BR')} L de água</div><div class="hS">Cuidar de você também entra na rotina.</div></div></div>${stats([[fmtDur(last),'última noite'],[`${state.meds.filter(m=>ml[m.id]).length}/${state.meds.length}`,'remédios hoje'],[cons,cons===1?'consulta':'consultas']])}</div>`;
+  if(ui.healthTab==='geral')b+=waterCard()+sleepCard()+medsCard();
+  else if(ui.healthTab==='agua'){
+    const days=[6,5,4,3,2,1,0].map(i=>addDays(t,-i));
+    b+=waterCard()+`<div class="card"><h4>Água nos últimos 7 dias</h4>${days.map(d=>{const v=state.water[d]||0;return `<div class="row" style="padding:8px 0"><div style="width:58px" class="small">${dateLabel(d).split(',')[0]}</div><div class="grow"><div class="bar"><i style="width:${Math.min(100,v/g*100)}%;background:${v>=g?'var(--sage)':'var(--sky)'}"></i></div></div><div class="small" style="width:52px;text-align:right">${(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L</div></div>`}).join('')}</div>`+sleepCard();
+  }else b+=medsCard()+`<div class="card"><div class="cardHead"><h4>Consultas e exames</h4><button class="ib sm" data-a="sheet" data-s="event" data-cat="saude">${ic('plus',17)}</button></div>${state.events.filter(e=>e.cat==='saude'&&e.date>=t).sort(sortEv).map(e=>evRow(e,true)).join('')||'<div class="empty">Nenhuma consulta marcada. Eventos com a categoria Saúde aparecem aqui.</div>'}</div>`;
+  return {h:titleHdr('heart','Saúde',C.health),b};
+};
+
+S.financas=()=>{
+  const m=ui.finMonth,f=finMonth(m);
+  const fx=f.totOut?Math.round(f.totFixed/f.totOut*100):0;
+  const entRow=(e,isFixed)=>`<div class="row" style="padding:9px 0"><div class="grow"><div class="rt" style="font-size:14px">${esc(e.desc)}</div><div class="small muted">${e.cat?`<span style="color:${catColor(e.cat)}">●</span> ${e.cat} · `:''}${isFixed?'Todo dia '+(e.day||1):dateLabel(e.date)}${e.recurring&&e.type==='in'?' · mensal':''}</div></div>${isFixed?`<button class="paid ${f.paid[e.id]?'on':''}" data-a="paid" data-id="${e.id}">${f.paid[e.id]?'Pago':'A pagar'}</button>`:''}<span class="amt ${e.type==='in'?'in':''}">${e.type==='in'?'+':''}${money(e.amount)}</span><button class="ib sm" data-a="delEntry" data-id="${e.id}">${ic('trash',15)}</button></div>`;
+  const b=`<div class="navrow" style="margin-top:0"><div class="seg" style="align-items:center"><button data-a="finM" data-n="-1">${ic('chevL',15)}</button><span style="padding:0 8px;font-size:14px;font-weight:500">${monthLabel(m)}</span><button data-a="finM" data-n="1">${ic('chevR',15)}</button></div></div>
+  <div class="btnrow"><button class="btn ghost" data-a="sheet" data-s="income">${ic('plus',15)} Receita</button><button class="btn ghost" data-a="sheet" data-s="bill">${ic('plus',15)} Conta</button><button class="btn primary" data-a="sheet" data-s="expense">${ic('plus',15)} Gasto</button></div>
+  <div class="hero" style="margin-top:16px"><div class="hmain">${ring(f.pct/100,'var(--sand)',pctBig(f.pct),'guardado')}<div><div class="hk s">${monthLabel(m)}</div><div class="hT">Sobrando ${money(f.left)}</div><div class="hS">${f.toPay.length} ${f.toPay.length===1?'conta':'contas'} a pagar · ${money(f.toPaySum)}</div></div></div>${stats([[money(f.totIn),'receitas'],[money(f.totOut),'despesas']],'two')}</div>
+  <div class="card"><div class="cardHead"><b style="font-weight:500">Gastos fixos e variáveis</b><span class="small muted">Total: ${money(f.totOut)}</span></div><div class="bar" style="margin-top:8px"><i style="width:${fx}%;background:var(--lav)"></i><i style="width:${f.totOut?100-fx:0}%;background:var(--rose)"></i></div><div style="display:flex;justify-content:space-between;margin-top:6px" class="small muted"><span>● Fixos ${fx}%</span><span>Variáveis ${f.totOut?100-fx:0}% ●</span></div>
+  <div class="subcard"><div class="cardHead"><div><div class="small muted">Gastos fixos</div><div class="big">${money(f.totFixed)}</div></div><span class="small muted">${f.fixed.length} lanç.</span></div>${f.fixed.map(e=>entRow(e,true)).join('')||'<div class="small muted">Use “+ Conta” para aluguel, faculdade, academia…</div>'}</div>
+  <div class="subcard"><div class="cardHead"><div><div class="small muted">Gastos variáveis</div><div class="big">${money(f.totVar)}</div></div><span class="small muted">${f.vari.length} lanç.</span></div>${f.vari.map(e=>entRow(e)).join('')||'<div class="small muted">Nenhum gasto variável neste mês.</div>'}</div></div>
+  <div class="card"><div class="cardHead"><h4>Receitas</h4><span class="amt in">${money(f.totIn)}</span></div>${f.inc.map(e=>entRow(e)).join('')||'<div class="empty">Adicione seu salário ou entradas do mês.</div>'}</div>`;
+  return {h:titleHdr('wallet','Finanças',C.sand),b};
+};
+
+const listMeta={mercado:['Supermercado','cart',C.sage,'#7fae86'],wishlist:['Wishlist','gem',C.rose,'var(--rose-d)'],checklist:['Checklist','task',C.sky,'#7fa9bb']};
+function listCards(){
+  let L=state.lists.filter(l=>ui.listFilter==='todas'||l.type===ui.listFilter);
+  if(ui.listSearch){const q=norm(ui.listSearch);L=L.filter(l=>norm(l.name).includes(q)||l.items.some(i=>norm(i.text).includes(q)))}
+  L.sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+  return L.map(l=>{const[mt,icn,bg,col]=listMeta[l.type]||listMeta.checklist,dn=l.items.filter(i=>i.done).length;
+    return `<button class="lcard" data-a="openList" data-id="${l.id}"><div class="hrow"><div class="lic" style="background:${bg};color:${col}">${ic(icn,17)}</div><div class="grow"><div style="font-family:var(--serif);font-size:18px">${esc(l.name)}</div><div class="small muted">${mt} · ${l.items.length} ${l.items.length===1?'item':'itens'}</div></div>${l.pinned?`<span style="color:var(--rose-d)">${ic('pin',16)}</span>`:''}</div>${l.items.length?`<ul>${l.items.slice(0,4).map(i=>`<li class="${i.done?'d':''}">${esc(i.text)}</li>`).join('')}${l.items.length>4?`<li style="color:var(--muted)">+${l.items.length-4}</li>`:''}</ul><div class="bar" style="height:6px"><i style="width:${dn/l.items.length*100}%;background:${col}"></i></div><div class="small muted" style="margin-top:6px">${dn} de ${l.items.length}</div>`:'<div class="small muted" style="margin-top:10px">Lista vazia</div>'}</button>`}).join('')||'<div class="empty">Nenhuma lista encontrada.</div>';
+}
+S.listas=()=>{
+  const fl=[['todas','Todas'],['mercado','Supermercado'],['wishlist','Wishlist'],['checklist','Checklist']];
+  const b=`<div class="chips scroll" style="margin-top:0">${fl.map(([k,l])=>`<button class="chip ${ui.listFilter===k?'on':''}" data-a="listF" data-v="${k}">${l}</button>`).join('')}</div><label class="search">${ic('search',18)}<input id="lsearch" placeholder="Buscar lista ou item" value="${esc(ui.listSearch)}"></label><button class="btn primary full" style="margin-top:12px" data-a="sheet" data-s="list">${ic('plus',16)} Nova lista</button><div id="lgrid">${listCards()}</div>`;
+  return {h:titleHdr('list','Listas',C.lav),b};
+};
+S.lista=()=>{
+  const l=state.lists.find(x=>x.id===ui.openList);if(!l){ui.screen='listas';return S.listas()}
+  const[mt,,,col]=listMeta[l.type]||listMeta.checklist,dn=l.items.filter(i=>i.done).length;
+  const open=l.items.filter(i=>!i.done),done=l.items.filter(i=>i.done);
+  const row=i=>`<div class="row"><button class="cb ${i.done?'on':''}" data-a="itemT" data-id="${i.id}">${i.done?ic('check',14,2.4):''}</button><div class="grow rt ${i.done?'done-t':''}">${esc(i.text)}</div><button class="ib sm" data-a="itemDel" data-id="${i.id}">${ic('x',15)}</button></div>`;
+  const b=`<div class="small muted">${mt} · ${dn} de ${l.items.length} ${l.type==='mercado'?'no carrinho':'concluídos'}</div><div class="bar" style="margin-top:8px"><i style="width:${l.items.length?dn/l.items.length*100:0}%;background:${col}"></i></div>
+  <form class="addrow" data-f="item"><input name="t" placeholder="Adicionar item (separe vários por vírgula)" autocomplete="off" enterkeyhint="done"><button class="btn primary">${ic('plus',16)}</button></form>
+  <div class="card">${open.map(row).join('')||'<div class="empty">Tudo marcado ✓</div>'}</div>${done.length?`<div class="card"><div class="cardHead"><span class="small muted">Marcados (${done.length})</span><button class="btn sm ghost" data-a="clearItems">Limpar marcados</button></div>${done.map(row).join('')}</div>`:''}
+  <div class="btnrow"><button class="btn ghost" data-a="pinList">${ic('pin',15)} ${l.pinned?'Desafixar':'Fixar'}</button><button class="btn ghost" data-a="sheet" data-s="list" data-id="${l.id}">${ic('edit',15)} Editar</button><button class="btn ghost" data-a="delList">${ic('trash',15)} Excluir</button></div>`;
+  return {h:backHdr(l.name,'listas'),b};
+};
+
+S.rapido=()=>{
+  const ex=[['gastei 32,90 ifood','gasto'],['recebi 1500 consultas','receita'],['conta luz 186 dia 10','conta fixa'],['bebi 500ml','água'],['dormi 7h30','sono'],['dentista sexta 9h30','evento'],['ligar pro contador amanhã','tarefa'],['mercado: frango, ovos, banana','lista'],['fiz devocional','hábito'],['li 25 páginas','leitura'],['versículo Salmos 46:10','devocional'],['conquista: terminei o relatório','conquista']];
+  const b=`<div class="card" style="margin-top:0"><div class="small muted" style="line-height:1.55">Escreva do jeito que você fala. O GO! reconhece a primeira palavra e a data/hora e já coloca no lugar certo. Se errar, é só tocar em <b>Desfazer</b>.</div></div>${quickForm('O que você quer anotar?')}
+  <h2 class="sec">Exemplos <span class="small muted" style="font-family:Poppins">toque pra usar</span></h2><div class="ex">${ex.map(([e,k])=>`<button data-a="ex" data-t="${esc(e)}">${esc(e)}<span>${k}</span></button>`).join('')}</div>
+  ${state.quickLog.length?`<h2 class="sec">Últimos registros</h2><div class="card" style="margin-top:0">${state.quickLog.slice(0,10).map(q=>`<div class="row" style="padding:9px 0"><div class="grow"><div class="rt" style="font-size:14px">${esc(q.in)}</div><div class="small" style="color:var(--rose-d)">→ ${esc(q.out)}</div></div></div>`).join('')}</div>`:''}`;
+  return {h:titleHdr('bolt','Adição rápida',C.rose),b};
+};
+
+S.menu=()=>{
+  const it=(icon,bg,name,sub,to)=>`<button class="mitem" data-a="go" data-to="${to}"><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div><div class="grow"><b style="font-weight:500">${name}</b><div class="small muted">${sub}</div></div>${ic('chevR',18)}</button>`;
+  const syncTxt={nuvem:'Seus dados estão salvos na sua conta e aparecem em qualquer aparelho em que você entrar.',conectando:'Conectando à sua conta…',local:'Salvando só neste aparelho. Faça backup de vez em quando.',erro:'Não consegui salvar na nuvem agora; os dados seguem salvos neste aparelho.'}[ui.sync];
+  const b=it('task',C.sky,'Tarefas','Todas as suas tarefas','tarefas')+it('heart',C.health,'Saúde','Água, sono, remédios e consultas','saude')+it('wallet',C.sand,'Finanças','Receitas, contas e gastos','financas')+it('list',C.lav,'Listas','Mercado, desejos e checklists','listas')+it('devo','#f3ead2','Devocional','Versículo, reflexão e conquistas','devocional')+it('book',C.sand,'Leitura','Livros, páginas e meta do ano','leitura')+it('chart',C.rose,'Relatórios','Resumo por categoria e período','relatorios')+it('bolt',C.rose,'Adição rápida','Como escrever pra o app entender','rapido')+
+  `<h2 class="sec">Ajustes</h2><div class="card" style="margin-top:0"><form data-f="settings"><label class="fld"><span>Seu nome</span><input name="name" value="${esc(state.name)}"></label><div class="two"><label class="fld"><span>Meta de água (ml)</span><input name="water" inputmode="numeric" value="${state.settings.waterGoal}"></label><label class="fld"><span>Copo padrão (ml)</span><input name="cup" inputmode="numeric" value="${state.settings.cup}"></label></div><label class="fld"><span>Meta de sono (horas)</span><input name="sleep" inputmode="decimal" value="${(state.settings.sleepGoal/60).toLocaleString('pt-BR')}"></label><button class="btn primary full">Salvar ajustes</button></form></div>
+  <h2 class="sec">Seus dados</h2><div class="card" style="margin-top:0"><div class="small" style="line-height:1.5">${syncTxt}</div><div class="btnrow"><button class="btn ghost" data-a="copyBackup">${ic('copy',15)} Copiar backup</button><button class="btn ghost" data-a="sheet" data-s="import">Restaurar</button></div><div class="note">Dica: no iPhone, abra no Safari → Compartilhar → “Adicionar à Tela de Início” pra usar como app.</div></div>${cloud&&session?`<h2 class="sec">Conta</h2><div class="card" style="margin-top:0"><div class="small muted">Conectada(o) como</div><div style="margin:2px 0 12px;word-break:break-all">${esc(session.user.email)}</div><button class="btn ghost full" data-a="logout">Sair da conta</button></div>`:''}`;
+  return {h:`<div class="top" style="align-items:center"><div class="titleRow">${logoFull(40)}</div>${hIcons()}</div>`,b};
+};
+
+
+const SUG=[['Beber água','Saúde',[0,1,2,3,4,5,6],'water'],['Treinar','Corpo',[1,2,3,4,5]],['Leitura','Mente',[0,1,2,3,4,5,6]],['Devocional','Espiritual',[0,1,2,3,4,5,6]],['Meditar','Mente',[0,1,2,3,4,5,6]],['Skincare','Beleza',[0,1,2,3,4,5,6]],['Alongar','Corpo',[0,1,2,3,4,5,6]],['Comer frutas','Saúde',[0,1,2,3,4,5,6]],['Dormir antes das 23h','Rotina',[0,1,2,3,4,5,6]],['Planejar o dia','Rotina',[1,2,3,4,5]]];
+S.welcome=()=>{
+  if(ui.obStep===0&&!(cloud&&session))return `<div class="welcome">${logoFull(72)}<div class="tag">sua rotina <span class="script">leve</span>,<br>num lugar só.</div><p>Agenda, tarefas, hábitos, saúde, finanças e listas organizados do seu jeito. Leva 1 minuto pra começar.</p>
+  <div class="feat"><div>${ic('cal',20)}Agenda</div><div>${ic('sprout',20)}Hábitos</div><div>${ic('drop',20)}Saúde</div><div>${ic('wallet',20)}Finanças</div><div>${ic('list',20)}Listas</div><div>${ic('bolt',20)}Adição rápida</div></div>
+  ${cloud&&!session?`<button class="btn primary full" data-a="authMode" data-m="signup">Criar minha conta</button><button class="btn ghost full" style="margin-top:8px" data-a="authMode" data-m="login">Já tenho conta</button>`:`<button class="btn primary full" data-a="obNext">${cloud?'Completar meu cadastro':'Criar meu cadastro'}</button>`}<div class="note">Cada pessoa tem sua própria conta e vê só os seus dados.</div></div>`;
+  return `<div style="padding-top:3vh"><div class="steps"><i class="on"></i><i class="on"></i></div><div style="text-align:center;margin-bottom:18px">${logoMark(44)}<div class="ttl" style="margin-top:10px">vamos te conhecer</div></div>
+  <form data-f="onboard"><div class="card" style="margin-top:0">${fld('Como você quer ser chamada(o)?',`<input name="name" required placeholder="Seu nome" autocomplete="given-name">`)}
+  <div class="two">${fld('Meta de água por dia',`<select name="water">${[1500,2000,2500,3000,3500,4000].map(v=>`<option value="${v}" ${v===2000?'selected':''}>${(v/1000).toLocaleString('pt-BR')} L</option>`).join('')}</select>`)}${fld('Meta de sono',`<select name="sleep">${[6,6.5,7,7.5,8,8.5,9].map(v=>`<option value="${v*60}" ${v===8?'selected':''}>${fmtDur(v*60)}</option>`).join('')}</select>`)}</div></div>
+  <div class="card"><h4 style="margin-bottom:4px">quais hábitos você quer acompanhar?</h4><div class="small muted" style="margin-bottom:12px">Escolha poucos pra começar. Consistência vale mais que perfeição.</div><div class="pick">${SUG.map((s,i)=>`<label><input type="checkbox" name="h" value="${i}" ${i<3?'checked':''}><span>${s[0]}</span></label>`).join('')}</div>
+  <div class="addrow" style="margin-top:12px"><input name="other" placeholder="Outro hábito (opcional)"></div></div>
+  <button class="btn primary full" style="margin-top:16px">Entrar no GO!</button><button type="button" class="btn full" style="margin-top:6px;background:none;color:var(--muted)" data-a="obBack">Voltar</button></form></div>`;
+};
+
+
+const AUTH_T={signup:['criar conta','Crie seu acesso com e-mail e senha.','Criar conta'],login:['entrar','Que bom te ver de novo.','Entrar'],forgot:['recuperar senha','Enviaremos um link pro seu e-mail.','Enviar link'],reset:['nova senha','Escolha uma senha nova.','Salvar senha'],check:['confira seu e-mail','',''],sent:['link enviado','','']};
+S.auth=()=>{
+  const m=ui.authMode,[t,sub,btn]=AUTH_T[m]||AUTH_T.login;
+  const head=`<div style="text-align:center;padding-top:6vh;margin-bottom:20px">${logoMark(52)}<div class="ttl" style="margin-top:12px">${t}</div>${sub?`<div class="small muted" style="margin-top:4px">${sub}</div>`:''}</div>`;
+  if(m==='check'||m==='sent')return head+`<div class="card" style="text-align:center"><div style="font-size:14px;line-height:1.6">${m==='check'?'Enviamos um link de confirmação pro seu e-mail. Toque nele e depois volte aqui pra entrar.':'Se esse e-mail tiver conta, você vai receber um link pra criar uma senha nova.'}</div></div><button class="btn primary full" style="margin-top:16px" data-a="authMode" data-m="login">Ir para o login</button>`;
+  return head+`<form data-f="auth"><div class="card" style="margin-top:0">${m!=='reset'?fld('E-mail',`<input type="email" name="email" required autocomplete="email" inputmode="email" value="${esc(ui.authEmail||'')}">`):''}${m!=='forgot'?fld(m==='reset'?'Nova senha':'Senha',`<input type="password" name="password" required minlength="6" autocomplete="${m==='login'?'current-password':'new-password'}" placeholder="mínimo 6 caracteres">`):''}
+  ${ui.authErr?`<div class="small" style="color:var(--rose-d);margin-bottom:10px">${esc(ui.authErr)}</div>`:''}<button class="btn primary full" ${ui.authBusy?'disabled style="opacity:.6"':''}>${ui.authBusy?'Aguarde…':btn}</button></div></form>
+  <div style="text-align:center;margin-top:14px;display:flex;flex-direction:column;gap:6px" class="small">${m==='login'?`<button class="btn" style="background:none;color:var(--rose-d)" data-a="authMode" data-m="forgot">Esqueci minha senha</button><button class="btn" style="background:none" data-a="authMode" data-m="signup">Não tenho conta · criar agora</button>`:''}${m==='signup'?`<button class="btn" style="background:none" data-a="authMode" data-m="login">Já tenho conta · entrar</button>`:''}${m!=='reset'?`<button class="btn" style="background:none;color:var(--muted)" data-a="authMode" data-m="">Voltar</button>`:''}</div>`;
+};
+const authMsg=e=>{const s=(e&&e.message)||'';if(/Invalid login/i.test(s))return 'E-mail ou senha incorretos.';if(/not confirmed/i.test(s))return 'Confirme seu e-mail pelo link que enviamos antes de entrar.';if(/already registered|already exists/i.test(s))return 'Esse e-mail já tem conta. Tente entrar.';if(/at least 6|Password should/i.test(s))return 'A senha precisa ter pelo menos 6 caracteres.';if(/rate limit|too many/i.test(s))return 'Muitas tentativas. Espere um pouco e tente de novo.';if(/valid email|invalid email/i.test(s))return 'Confira o e-mail digitado.';return 'Não deu certo: '+s};
+
+/* ---------- render ---------- */
+const NAV=[['home','Início','home'],['agenda','Agenda','cal'],['fab','',''],['habitos','Hábitos','sprout'],['rapido','Rápido','bolt'],['menu','Menu','grid']];
+const navOf={tarefas:'menu',saude:'menu',financas:'menu',listas:'menu',lista:'menu',leitura:'menu',relatorios:'menu',devocional:'menu'};
+function render(){
+  const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(!state.onboarded?'welcome':null);
+  if(gate){$('#nav').style.display='none';$('#hdr').innerHTML='';$('#main').innerHTML=gate==='splash'?`<div class="splash">${logoFull(64)}<div class="small muted">carregando…</div></div>`:gate==='auth'?S.auth():S.welcome();return}
+  $('#nav').style.display='';
+  const s=allStreak();if(s>(state.habitRecord||0)){state.habitRecord=s;writeLocal()}
+  const r=(S[ui.screen]||S.home)();
+  $('#hdr').innerHTML=r.h;$('#main').innerHTML=r.b;
+  const cur=navOf[ui.screen]||ui.screen;
+  $('#nav').innerHTML=NAV.map(([k,l,i])=>k==='fab'?`<button class="fab" data-a="sheet" data-s="fab" aria-label="Adicionar">${ic('plus',26,2)}</button>`:`<button class="${cur===k?'on':''}" data-a="go" data-to="${k}">${ic(i,22)}<span>${l}</span></button>`).join('');
+}
+
+/* ---------- toast + desfazer ---------- */
+let toastT;
+function toast(msg,snap){clearTimeout(toastT);$('#toastBox').innerHTML=`<div class="toast"><span>${esc(msg)}</span>${snap?'<button data-a="undo">Desfazer</button>':''}</div>`;window._undo=snap;toastT=setTimeout(()=>{$('#toastBox').innerHTML='';window._undo=null},snap?5000:2600)}
+const snap=()=>JSON.stringify(state);
+
+/* ---------- folhas (bottom sheets) ---------- */
+const fld=(l,inner)=>`<label class="fld"><span>${l}</span>${inner}</label>`;
+const hid=(n,v)=>`<input type="hidden" name="${n}" value="${esc(v||'')}">`;
+const SH={
+  fab:()=>{const o=(icon,bg,l,a,extra='')=>`<button data-a="${a}" ${extra}><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div>${l}</button>`;
+    return `<h3>Adicionar</h3><div class="fabgrid">${o('cal',C.rose,'Evento','sheet','data-s="event"')}${o('task',C.sky,'Tarefa','sheet','data-s="task"')}${o('wallet',C.sand,'Gasto','sheet','data-s="expense"')}${o('wallet',C.sage,'Receita','sheet','data-s="income"')}${o('wallet',C.lav,'Conta fixa','sheet','data-s="bill"')}${o('sprout',C.sage,'Hábito','sheet','data-s="habit"')}${o('drop',C.sky,'+ Água','water','data-n="'+state.settings.cup+'" data-close="1"')}${o('moon',C.lav,'Sono','sheet','data-s="sleep"')}${o('list',C.lav,'Lista','sheet','data-s="list"')}</div>`},
+  bell:()=>{const a=alerts();return `<h3>Avisos</h3>${a.map(x=>`<button class="mitem" data-a="go" data-to="${x.go}" data-close="1"><div class="grow"><div class="small" style="color:var(--rose-d);font-weight:600">${esc(x.k)}</div><div>${esc(x.txt)}</div></div>${ic('chevR',16)}</button>`).join('')||'<div class="empty">Nenhum aviso agora. Tudo em dia 🌿</div>'}`},
+  event:d=>{const e=state.events.find(x=>x.id===d.id)||{};const cat=e.cat||d.cat||'geral';
+    return `<h3>${e.id?'Editar evento':'Novo evento'}</h3><form data-f="event">${hid('id',e.id)}${fld('Título',`<input name="title" required value="${esc(e.title)}" placeholder="Ex.: Consulta com paciente">`)}<div class="two">${fld('Data',`<input type="date" name="date" required value="${e.date||d.date||ui.selDay||today()}">`)}${fld('Horário',`<input type="time" name="time" value="${e.time||''}">`)}</div>${fld('Categoria',`<select name="cat">${Object.entries(catLbl).map(([k,l])=>`<option value="${k}" ${k===cat?'selected':''}>${l}</option>`).join('')}</select>`)}<button class="btn primary full">Salvar</button></form>`},
+  task:d=>{const x=state.tasks.find(t=>t.id===d.id)||{};return `<h3>${x.id?'Editar tarefa':'Nova tarefa'}</h3><form data-f="task">${hid('id',x.id)}${fld('Tarefa',`<input name="title" required value="${esc(x.title)}" placeholder="O que precisa ser feito?">`)}${fld('Data (opcional)',`<input type="date" name="date" value="${x.id?(x.date||''):(ui.taskFilter==='semdata'?'':today())}">`)}<button class="btn primary full">Salvar</button></form>`},
+  schedule:d=>{const x=state.tasks.find(t=>t.id===d.id);return `<h3>Agendar</h3><div class="small muted" style="margin:-6px 0 14px">${esc(x?.title)}</div><form data-f="schedule">${hid('id',d.id)}${fld('Quando?',`<input type="date" name="date" required value="${today()}">`)}<div class="chips" style="margin:-4px 0 14px"><button type="button" class="chip" data-a="setDate" data-n="0">Hoje</button><button type="button" class="chip" data-a="setDate" data-n="1">Amanhã</button><button type="button" class="chip" data-a="setDate" data-n="7">Semana que vem</button></div><button class="btn primary full">Agendar</button></form>`},
+  expense:()=>`<h3>Novo gasto</h3><form data-f="entry">${hid('type','out')}${fld('Descrição',`<input name="desc" required placeholder="Ex.: mercado, uber, ifood">`)}<div class="two">${fld('Valor (R$)',`<input name="amount" required inputmode="decimal" placeholder="0,00">`)}${fld('Data',`<input type="date" name="date" value="${today()}">`)}</div>${catSel('Outros')}<label class="tog"><input type="checkbox" name="recurring"> Repete todo mês (gasto fixo)</label><button class="btn primary full">Salvar gasto</button></form>`,
+  income:()=>`<h3>Nova receita</h3><form data-f="entry">${hid('type','in')}${fld('Descrição',`<input name="desc" required placeholder="Ex.: consultas, salário">`)}<div class="two">${fld('Valor (R$)',`<input name="amount" required inputmode="decimal" placeholder="0,00">`)}${fld('Data',`<input type="date" name="date" value="${today()}">`)}</div><label class="tog"><input type="checkbox" name="recurring"> Entra todo mês</label><button class="btn primary full">Salvar receita</button></form>`,
+  bill:()=>`<h3>Nova conta fixa</h3><div class="small muted" style="margin:-6px 0 14px">Aparece todo mês até você remover. Marque como paga quando pagar.</div><form data-f="bill">${fld('Descrição',`<input name="desc" required placeholder="Ex.: aluguel, faculdade, academia">`)}<div class="two">${fld('Valor (R$)',`<input name="amount" required inputmode="decimal" placeholder="0,00">`)}${fld('Vence todo dia',`<input name="day" inputmode="numeric" value="10">`)}</div>${catSel('Contas')}<button class="btn primary full">Salvar conta</button></form>`,
+  habit:d=>{const h=state.habits.find(x=>x.id===d.id)||{};const type=h.type||d.type||(ui.habitTab==='quit'?'quit':'do');const days=h.days||[0,1,2,3,4,5,6];
+    const cats=['Saúde','Corpo','Mente','Espiritual','Beleza','Rotina','Trabalho'];
+    return `<h3>${h.id?'Editar hábito':type==='quit'?'Parar de…':'Novo hábito'}</h3><form data-f="habit">${hid('id',h.id)}${hid('type',type)}${fld(type==='quit'?'O que você quer parar?':'Hábito',`<input name="name" required value="${esc(h.name)}" placeholder="${type==='quit'?'Ex.: refrigerante':'Ex.: alongar 10 min'}">`)}${type==='quit'?fld('Desde quando você está sem?',`<input type="date" name="since" value="${h.since||today()}">`):fld('Categoria',`<select name="cat">${cats.map(c=>`<option ${c===(h.cat||'Saúde')?'selected':''}>${c}</option>`).join('')}</select>`)+`<div class="fld"><span>Dias</span><div class="days">${[1,2,3,4,5,6,0].map(i=>`<label><input type="checkbox" name="days" value="${i}" ${days.includes(i)?'checked':''}><span>${WDS[i]}</span></label>`).join('')}</div></div>`}<button class="btn primary full">Salvar</button></form>`},
+  relapse:d=>{const h=state.habits.find(x=>x.id===d.id);return `<h3>Tudo bem, recomeça hoje</h3><div class="small muted" style="margin:-6px 0 16px;line-height:1.5">Recaída faz parte do processo. O contador de “${esc(h?.name)}” volta pra zero e seu recorde fica guardado.</div><button class="btn primary full" data-a="doRelapse" data-id="${d.id}">Zerar contador</button><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Cancelar</button>`},
+  sleep:()=>{const v=state.sleep[today()];return `<h3>Como foi sua noite?</h3><form data-f="sleep"><div class="two">${fld('Horas',`<input name="h" inputmode="numeric" value="${v!=null?Math.floor(v/60):7}">`)}${fld('Minutos',`<input name="m" inputmode="numeric" value="${v!=null?v%60:30}">`)}</div>${fld('Noite que terminou em',`<input type="date" name="date" value="${today()}">`)}<button class="btn primary full">Salvar</button></form>`},
+  med:()=>`<h3>Novo remédio ou suplemento</h3><form data-f="med">${fld('Nome',`<input name="name" required placeholder="Ex.: creatina 5 g">`)}${fld('Horário (opcional)',`<input type="time" name="time">`)}<button class="btn primary full">Salvar</button></form>`,
+  list:d=>{const l=state.lists.find(x=>x.id===d.id)||{};return `<h3>${l.id?'Editar lista':'Nova lista'}</h3><form data-f="list">${hid('id',l.id)}${fld('Nome',`<input name="name" required value="${esc(l.name)}" placeholder="Ex.: Viagem de fim de ano">`)}${fld('Tipo',`<select name="type">${Object.entries(listMeta).map(([k,v])=>`<option value="${k}" ${k===(l.type||'checklist')?'selected':''}>${v[0]}</option>`).join('')}</select>`)}<button class="btn primary full">Salvar</button></form>`},
+  import:()=>`<h3>Restaurar backup</h3><div class="small muted" style="margin:-6px 0 14px">Cole aqui o texto do backup. Isso substitui os dados atuais.</div><form data-f="import"><textarea name="j" rows="6" required></textarea><button class="btn primary full" style="margin-top:12px">Restaurar</button></form>`
+};
+function openSheet(name,d={}){$('#sheet').innerHTML='<div class="grab"></div>'+SH[name](d);$('#ov').classList.add('show');const f=$('#sheet input:not([type=hidden]):not([type=date]):not([type=checkbox])');if(f&&!f.value&&window.innerWidth>700)f.focus()}
+function closeSheet(){$('#ov').classList.remove('show')}
+$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeSheet()});
+
+/* ---------- adição rápida (substitui a IA) ---------- */
+function quick(text){
+  text=text.trim();if(!text)return null;
+  const toks=text.split(/\s+/),nt=toks.map(x=>norm(x).replace(/[.,;!?:]+$/,'')),drop=new Array(toks.length).fill(false);
+  const t=today();let date=null,time=null,amount=null,dayNum=null,m;
+  // datas
+  for(let i=0;i<nt.length;i++){
+    if(drop[i])continue;const w=nt[i];
+    if(w==='depois'&&nt[i+1]==='de'&&nt[i+2]==='amanha'){date=addDays(t,2);drop[i]=drop[i+1]=drop[i+2]=true;continue}
+    if(w==='amanha'){date=addDays(t,1);drop[i]=true;continue}
+    if(w==='hoje'){date=t;drop[i]=true;continue}
+    if(w==='ontem'){date=addDays(t,-1);drop[i]=true;continue}
+    if((m=w.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/))){let y=m[3]?+m[3]:new Date().getFullYear();if(y<100)y+=2000;const d=new Date(y,m[2]-1,+m[1]);if(!m[3]&&iso(d)<t)d.setFullYear(y+1);date=iso(d);drop[i]=true;continue}
+    const wd=['domingo','segunda','terca','quarta','quinta','sexta','sabado'].findIndex(n=>w===n||w===n+'-feira'||(w.length>=3&&n.startsWith(w)&&['seg','ter','qua','qui','sex','sab','dom'].includes(w)));
+    if(wd>=0){let diff=(wd-new Date().getDay()+7)%7;if(diff===0)diff=7;date=addDays(t,diff);drop[i]=true;if(i>0&&['na','no','nesta','neste','proxima','proximo','essa','esse'].includes(nt[i-1]))drop[i-1]=true;continue}
+    if(w==='dia'&&/^\d{1,2}$/.test(nt[i+1]||'')){dayNum=+nt[i+1];drop[i]=drop[i+1]=true;continue}
+    if((m=w.match(/^(\d{1,2})(?:h|:)(\d{2})?(?:min)?$/))&&+m[1]<24){time=pad(+m[1])+':'+pad(m[2]?+m[2]:0);drop[i]=true;if(i>0&&['as','a','às','ate'].includes(nt[i-1]))drop[i-1]=true;continue}
+  }
+  const cmd=nt[0];
+  // valores
+  for(let i=0;i<nt.length;i++){if(drop[i])continue;if(nt[i]==='r$'){drop[i]=true;continue}
+    if((m=nt[i].match(/^(?:r\$)?(\d+(?:[.,]\d{1,2})?)(?:reais)?$/))&&amount==null&&i>0){amount=parseAmt(m[1]);drop[i]=true;if(['reais','real'].includes(nt[i+1]))drop[i+1]=true}}
+  const STOP=['de','do','da','no','na','em','pra','para','com','o','a','os','as','um','uma','e'];
+  const rest=(skipFirst=true)=>{let w=toks.filter((_,i)=>!drop[i]&&!(skipFirst&&i===0));while(w.length&&STOP.includes(norm(w[0])))w.shift();while(w.length&&STOP.includes(norm(w[w.length-1])))w.pop();return w.join(' ').replace(/^[:\-–\s]+/,'').trim()};
+  const capT=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
+  if(dayNum&&!date&&!['conta','boleto'].includes(cmd)){const n=new Date();let d=new Date(n.getFullYear(),n.getMonth(),dayNum);if(iso(d)<t)d=new Date(n.getFullYear(),n.getMonth()+1,dayNum);date=iso(d)}
+  // gasto
+  if(['gastei','gasto','paguei','comprei'].includes(cmd)&&amount!=null){const desc=capT(rest())||'Gasto';const d=date||t;return {out:`Gasto ${money(amount)} · ${desc}`,run:()=>state.fin.entries.push({id:uid(),type:'out',desc,amount,date:d,recurring:false,cat:guessCat(desc)})}}
+  if(['recebi','receita','ganhei','entrou','salario'].includes(cmd)&&amount!=null){const desc=capT(rest(cmd!=='salario'))||'Receita';const d=date||t;return {out:`Receita ${money(amount)} · ${desc}`,run:()=>state.fin.entries.push({id:uid(),type:'in',desc,amount,date:d,recurring:false})}}
+  if(['conta','boleto'].includes(cmd)&&amount!=null){const desc=capT(rest())||'Conta';const day=dayNum||10;return {out:`Conta fixa ${money(amount)} · ${desc} · todo dia ${day}`,run:()=>state.fin.entries.push({id:uid(),type:'out',desc,amount,date:t.slice(0,8)+'01',recurring:true,day,cat:guessCat(desc)})}}
+  // água
+  if(['agua','bebi'].includes(cmd)){
+    let ml=null;for(let i=1;i<nt.length;i++){const w=nt[i];if((m=w.match(/^(\d+(?:[.,]\d+)?)(ml|l|litros?)?$/))){let v=parseFloat(m[1].replace(',','.'));const u=m[2]||(nt[i+1]&&/^(ml|l|litros?)$/.test(nt[i+1])?nt[i+1]:'');if(/^l/.test(u)||(!u&&v<10&&!/copo/.test(nt[i+1]||'')))v*=1000;if(/copo/.test(nt[i+1]||''))v=v*state.settings.cup;ml=Math.round(v);break}if(/copo/.test(w)){ml=state.settings.cup;break}}
+    if(amount!=null&&ml==null)ml=amount<10?amount*1000:amount;
+    ml=ml||state.settings.cup;const d=date||t;return {out:`Água +${ml} ml`,run:()=>{state.water[d]=(state.water[d]||0)+ml}}
+  }
+  // sono
+  if(['dormi','sono'].includes(cmd)){
+    let min=null;const joined=nt.slice(1).join(' ');
+    if((m=joined.match(/(\d{1,2})\s*(?:h|:|horas?)\s*(?:e\s*)?(\d{1,2})?/)))min=+m[1]*60+(m[2]?+m[2]:0);
+    if(min==null&&time){const[a,b]=time.split(':').map(Number);min=a*60+b}
+    if(min!=null){const d=date||t;return {out:`Sono ${fmtDur(min)}`,run:()=>{state.sleep[d]=min}}}
+  }
+  // devocional
+  if((cmd==='conquista'||cmd==='conquistas'||cmd==='vitoria')){const tx=capT(rest());if(tx)return {out:`Conquista · ${tx}`,run:()=>{dEntry(t).wins.push({id:uid(),text:tx});devoMarkHabit(t)}}}
+  if(cmd==='versiculo'){const tx=text.trim().split(/\s+/).slice(1).join(' ').replace(/^[:\-–\s]+/,'');if(tx)return {out:`Versículo do dia · ${tx}`,run:()=>{const e=dEntry(t);e.ref=tx;const k=Object.keys(VTXT).find(k=>norm(k)===norm(tx));if(k&&!e.verse){e.ref=k;e.verse=VTXT[k]}devoMarkHabit(t)}}}
+  // leitura
+  if(['li','lendo','leitura'].includes(cmd)&&amount!=null){const bk=state.books.find(b=>b.status==='lendo');if(bk)return {out:`Leitura +${Math.round(amount)} páginas · ${bk.title}`,run:()=>readPages(bk,amount)}}
+  // hábito
+  if(['fiz','feito','treinei','li','meditei','orei','marcar'].includes(cmd)){
+    const words=nt.slice(1).filter(w=>w.length>2&&!STOP.includes(w));
+    const hint={treinei:['trein','muscul','academia'],li:['leitura','ler','livro'],meditei:['medit'],orei:['devoc','ora']}[cmd]||[];
+    const h=doHabits().find(h=>{const n=norm(h.name);return words.some(w=>n.includes(w))||hint.some(x=>n.includes(x))});
+    if(h){const d=date||t;return {out:`Hábito feito · ${h.name}`,run:()=>{h.log[d]=true}}}
+  }
+  // lista
+  if(['mercado','comprar','lista'].includes(cmd)){
+    const raw=rest().replace(/^(de\s+)?(mercado|compras)\s*/i,'');const items=raw.split(/\s*,\s*|\s+e\s+/).map(s=>s.trim()).filter(Boolean);
+    if(items.length)return {out:`Mercado +${items.length} ${items.length===1?'item':'itens'}`,run:()=>{let l=state.lists.find(x=>x.type==='mercado'&&x.pinned)||state.lists.find(x=>x.type==='mercado');if(!l){l={id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]};state.lists.push(l)}items.forEach(s=>l.items.push({id:uid(),text:capT(s),done:false}))}}
+  }
+  // evento ou tarefa
+  const isTask=['tarefa','lembrar','fazer','lembrete'].includes(cmd);
+  let title=rest(isTask);if(isTask&&nt[1]==='de')title=title.replace(/^de\s+/i,'');
+  if(!isTask)title=rest(false);
+  title=capT(title)||capT(text);
+  if(time&&!isTask){const d=date||t,cat=/(medic|dentist|consult|exame|terapia|fisio|dermato|gineco|psico)/.test(norm(title))?'saude':'geral';return {out:`Evento · ${title} · ${dateLabel(d)} ${time}`,run:()=>state.events.push({id:uid(),title,date:d,time,cat})}}
+  return {out:`Tarefa · ${title}${date?' · '+dateLabel(date):' · sem data'}`,run:()=>state.tasks.push({id:uid(),title,date:date||null,done:false})};
+}
+
+/* ---------- ações ---------- */
+const findT=id=>state.tasks.find(x=>x.id===id);
+const A={
+  obNext:()=>{ui.obStep=1;render();window.scrollTo(0,0)},
+  authMode:d=>{ui.authMode=d.m||null;ui.authErr='';render();window.scrollTo(0,0)},
+  logout:async()=>{if(sb){await pushRemote();await sb.auth.signOut()}},
+  obBack:()=>{ui.obStep=0;render()},
+  go:d=>{ui.screen=d.to;if(d.view){ui.agView=d.view;ui.selDay=today()}closeSheet();render();window.scrollTo(0,0)},
+  hero:d=>{ui.heroTab=+d.i;render()},
+  sheet:d=>openSheet(d.s,d),
+  closeSheet:()=>closeSheet(),
+  undo:()=>{if(window._undo){state=migrate(JSON.parse(window._undo));if(session)state._uid=session.user.id;window._undo=null;$('#toastBox').innerHTML='';save()}},
+  toggleTask:d=>{const x=findT(d.id);x.done=!x.done;x.doneAt=x.done?Date.now():null;save()},
+  editTask:d=>openSheet('task',d),
+  delTask:d=>{const s=snap();state.tasks=state.tasks.filter(x=>x.id!==d.id);save();toast('Tarefa removida',s)},
+  clearDone:()=>{const s=snap();state.tasks=state.tasks.filter(x=>!x.done);save();toast('Concluídas removidas',s)},
+  editEvent:d=>openSheet('event',d),
+  delEvent:d=>{const s=snap();state.events=state.events.filter(x=>x.id!==d.id);save();toast('Evento removido',s)},
+  agView:d=>{ui.agView=d.v;render()},
+  selDay:d=>{ui.selDay=d.d;if(d.view)ui.agView=d.view;render()},
+  shift:d=>{ui.selDay=addDays(ui.selDay,+d.n);render()},
+  shiftM:d=>{ui.selDay=shiftMonth(ym(ui.selDay),+d.n)+'-01';render()},
+  taskF:d=>{ui.taskFilter=d.v;render()},
+  setDate:d=>{const i=$('#sheet input[type=date]');if(i)i.value=addDays(today(),+d.n)},
+  habitTab:d=>{ui.habitTab=d.v;render()},
+  habitView:d=>{ui.habitView=d.v;render()},
+  expand:d=>{ui.expanded[d.id]=!ui.expanded[d.id];render()},
+  habitDone:d=>{const h=state.habits.find(x=>x.id===d.id),t=today();if(h.log[t])delete h.log[t];else h.log[t]=true;save()},
+  delHabit:d=>{const s=snap();state.habits=state.habits.filter(x=>x.id!==d.id);save();toast('Hábito removido',s)},
+  doRelapse:d=>{const h=state.habits.find(x=>x.id===d.id),t=today();h.best=Math.max(h.best||0,daysBetween(h.since,t));h.since=t;closeSheet();save();toast('Contador zerado. Recomeço também conta 💪')},
+  water:d=>{const t=today();state.water[t]=Math.max(0,(state.water[t]||0)+ +d.n);if(d.close)closeSheet();save();if(d.close)toast(`Água: ${((state.water[t])/1000).toLocaleString('pt-BR')} L hoje`)},
+  med:d=>{const t=today();state.medLog[t]=state.medLog[t]||{};state.medLog[t][d.id]=!state.medLog[t][d.id];save()},
+  delMed:d=>{const s=snap();state.meds=state.meds.filter(x=>x.id!==d.id);save();toast('Removido',s)},
+  mood:d=>{state.mood[today()]=+d.v;save()},
+  healthTab:d=>{ui.healthTab=d.v;render()},
+  finM:d=>{ui.finMonth=shiftMonth(ui.finMonth,+d.n);render()},
+  paid:d=>{const m=ui.finMonth;state.fin.paid[m]=state.fin.paid[m]||{};state.fin.paid[m][d.id]=!state.fin.paid[m][d.id];save()},
+  delEntry:d=>{const s=snap(),m=ui.finMonth,e=state.fin.entries.find(x=>x.id===d.id);
+    if(e.recurring&&ym(e.date)<m){e.end=shiftMonth(m,-1);save();toast('Removido a partir deste mês',s)}
+    else{state.fin.entries=state.fin.entries.filter(x=>x.id!==d.id);save();toast('Lançamento removido',s)}},
+  listF:d=>{ui.listFilter=d.v;render()},
+  openList:d=>{ui.openList=d.id;ui.screen='lista';render();window.scrollTo(0,0)},
+  openMarket:()=>{const l=state.lists.find(x=>x.type==='mercado'&&x.pinned)||state.lists.find(x=>x.type==='mercado');if(l){ui.openList=l.id;ui.screen='lista'}else{ui.screen='listas'}render();window.scrollTo(0,0)},
+  itemT:d=>{const l=state.lists.find(x=>x.id===ui.openList),i=l.items.find(x=>x.id===d.id);i.done=!i.done;save()},
+  itemDel:d=>{const l=state.lists.find(x=>x.id===ui.openList);l.items=l.items.filter(x=>x.id!==d.id);save()},
+  clearItems:()=>{const s=snap(),l=state.lists.find(x=>x.id===ui.openList);l.items=l.items.filter(x=>!x.done);save();toast('Marcados removidos',s)},
+  pinList:()=>{const l=state.lists.find(x=>x.id===ui.openList);l.pinned=!l.pinned;save()},
+  delList:()=>{const s=snap();state.lists=state.lists.filter(x=>x.id!==ui.openList);ui.screen='listas';save();toast('Lista excluída',s)},
+  ex:d=>{const i=$('#main .quick input');i.value=d.t;i.focus()},
+  copyBackup:async()=>{try{await navigator.clipboard.writeText(JSON.stringify(state));toast('Backup copiado. Cole num lugar seguro (ex.: Notas).')}catch(e){openSheet('import');$('#sheet textarea').value=JSON.stringify(state);$('#sheet h3').textContent='Seu backup';toast('Selecione e copie o texto')}}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const fn=A[el.dataset.a];if(fn){e.preventDefault();fn(el.dataset,el)}});
+
+/* ---------- formulários ---------- */
+const F={
+  auth:async v=>{const m=ui.authMode;if(v.email)ui.authEmail=v.email.trim();ui.authBusy=true;ui.authErr='';render();let r;
+    try{
+      if(m==='signup'){r=await sb.auth.signUp({email:v.email.trim(),password:v.password,options:{emailRedirectTo:location.origin}});if(!r.error&&!r.data.session)ui.authMode='check'}
+      else if(m==='login'){r=await sb.auth.signInWithPassword({email:v.email.trim(),password:v.password})}
+      else if(m==='forgot'){r=await sb.auth.resetPasswordForEmail(v.email.trim(),{redirectTo:location.origin});if(!r.error)ui.authMode='sent'}
+      else if(m==='reset'){r=await sb.auth.updateUser({password:v.password});if(!r.error){ui.authMode=null;toast('Senha atualizada')}}
+      if(r&&r.error)ui.authErr=authMsg(r.error);
+    }catch(e){ui.authErr=authMsg(e)}
+    ui.authBusy=false;render()},
+  onboard:(v,f)=>{const t=today(),sel=new FormData(f).getAll('h').map(Number);state.name=v.name.trim();state.settings.waterGoal=+v.water;state.settings.sleepGoal=+v.sleep;
+    state.habits=sel.map(i=>{const s=SUG[i],o={id:uid(),name:s[0],cat:s[1],type:'do',days:s[2],created:t,log:{}};if(s[3]==='water'){o.auto='water';o.name=`Beber ${(state.settings.waterGoal/1000).toLocaleString('pt-BR')}L de água`}return o});
+    if(v.other&&v.other.trim())state.habits.push({id:uid(),name:v.other.trim(),cat:'Rotina',type:'do',days:[0,1,2,3,4,5,6],created:t,log:{}});
+    if(!state.lists.length)state.lists=[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}];
+    state.onboarded=true;ui.screen='home';save();window.scrollTo(0,0);toast(`Bem-vinda(o) ao GO!, ${state.name} ✨`)},
+  quick:(v,f)=>{const r=quick(v.q);if(!r)return;const s=snap();r.run();state.quickLog.unshift({in:v.q,out:r.out});state.quickLog=state.quickLog.slice(0,20);save();toast('✓ '+r.out,s);const i=$('#main .quick input');if(i)i.value=''},
+  event:v=>{if(v.id){Object.assign(state.events.find(x=>x.id===v.id),{title:v.title,date:v.date,time:v.time,cat:v.cat})}else state.events.push({id:uid(),title:v.title.trim(),date:v.date,time:v.time,cat:v.cat});closeSheet();save();toast(v.id?'Evento atualizado':'Evento criado')},
+  task:v=>{if(v.id)Object.assign(findT(v.id),{title:v.title,date:v.date||null});else state.tasks.push({id:uid(),title:v.title.trim(),date:v.date||null,done:false});closeSheet();save();toast(v.id?'Tarefa atualizada':'Tarefa criada')},
+  schedule:v=>{findT(v.id).date=v.date;closeSheet();save();toast('Agendada para '+dateLabel(v.date).toLowerCase())},
+  entry:v=>{const amount=parseAmt(v.amount);if(!amount){toast('Informe um valor');return}const e={id:uid(),type:v.type,desc:v.desc.trim(),amount,date:v.date||today(),recurring:!!v.recurring};if(e.type==='out')e.cat=v.cat&&v.cat!=='Outros'?v.cat:guessCat(e.desc);if(e.recurring&&e.type==='out')e.day=parseISO(e.date).getDate();state.fin.entries.push(e);ui.finMonth=ym(e.date);closeSheet();save();toast(v.type==='in'?'Receita salva':'Gasto salvo')},
+  bill:v=>{const amount=parseAmt(v.amount);if(!amount){toast('Informe um valor');return}const day=Math.min(31,Math.max(1,parseInt(v.day)||1));state.fin.entries.push({id:uid(),type:'out',desc:v.desc.trim(),amount,date:ui.finMonth+'-01',recurring:true,day,cat:v.cat&&v.cat!=='Contas'?v.cat:(guessCat(v.desc)==='Outros'?'Contas':guessCat(v.desc))});closeSheet();save();toast('Conta fixa criada')},
+  habit:(v,f)=>{const days=new FormData(f).getAll('days').map(Number);
+    if(v.type!=='quit'&&!days.length){toast('Escolha pelo menos um dia');return}
+    if(v.id){const h=state.habits.find(x=>x.id===v.id);h.name=v.name;if(h.type==='quit')h.since=v.since;else{h.cat=v.cat;h.days=days}}
+    else state.habits.push(v.type==='quit'?{id:uid(),name:v.name,type:'quit',since:v.since||today(),best:0,created:today(),days:[],log:{}}:{id:uid(),name:v.name,cat:v.cat,type:'do',days,created:today(),log:{}});
+    closeSheet();save();toast('Hábito salvo')},
+  sleep:v=>{const m=(parseInt(v.h)||0)*60+(parseInt(v.m)||0);state.sleep[v.date||today()]=m;closeSheet();save();toast('Sono registrado: '+fmtDur(m))},
+  med:v=>{state.meds.push({id:uid(),name:v.name,time:v.time});closeSheet();save()},
+  list:v=>{if(v.id)Object.assign(state.lists.find(x=>x.id===v.id),{name:v.name,type:v.type});else{const l={id:uid(),name:v.name,type:v.type,pinned:false,items:[]};state.lists.push(l);ui.openList=l.id;ui.screen='lista'}closeSheet();save()},
+  item:v=>{const l=state.lists.find(x=>x.id===ui.openList);v.t.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>l.items.push({id:uid(),text:s.charAt(0).toUpperCase()+s.slice(1),done:false}));save();const i=$('#main .addrow input');if(i)i.focus()},
+  settings:v=>{state.name=v.name.trim();state.settings.waterGoal=parseInt(v.water)||3000;state.settings.cup=parseInt(v.cup)||250;state.settings.sleepGoal=Math.round(parseAmt(v.sleep)*60)||480;save();toast('Ajustes salvos')},
+  import:v=>{try{const s=JSON.parse(v.j);if(!s.v)throw 0;const old=snap();state=migrate(s);if(session)state._uid=session.user.id;closeSheet();save();toast('Backup restaurado',old)}catch(e){toast('Esse texto não parece um backup válido')}}
+};
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,fn=F[f.dataset.f];if(fn)fn(Object.fromEntries(new FormData(f)),f)});
+document.addEventListener('input',e=>{if(e.target.id==='lsearch'){ui.listSearch=e.target.value;$('#lgrid').innerHTML=listCards()}});
+
+/* deslizar no card principal */
+let tx=null;
+document.addEventListener('touchstart',e=>{tx=e.target.closest('#heroCard')&&!e.target.closest('.htabs')?e.touches[0].clientX:null},{passive:true});
+document.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){ui.heroTab=(ui.heroTab+(dx<0?1:-1)+6)%6;render()}tx=null},{passive:true});
+
+/* ---------- leitura ---------- */
+const catSel=sel=>fld('Categoria',`<select name="cat">${CATS.map(([c])=>`<option ${c===sel?'selected':''}>${c}</option>`).join('')}</select>`);
+const BOOKC=['#d89aa8','#9cc5a1','#a9c6d3','#c9b38f','#b9a7d1','#e5b58f'];
+const pagesOn=d=>state.books.reduce((s,b)=>s+((b.log||{})[d]||0),0);
+function readStreak(){let d=today(),n=0;if(!pagesOn(d))d=addDays(d,-1);while(pagesOn(d)>0){n++;d=addDays(d,-1)}return n}
+function readPages(bk,n){
+  const t=today();n=Math.max(0,Math.round(n));if(!n)return false;
+  bk.log=bk.log||{};bk.log[t]=(bk.log[t]||0)+n;bk.current=Math.min(bk.pages||1e6,(bk.current||0)+n);
+  if(bk.status!=='lido')bk.status='lendo';if(!bk.started)bk.started=t;
+  const h=doHabits().find(h=>/leitur|\bler\b|livro/.test(norm(h.name)));if(h)h.log[t]=true;
+  if(bk.pages&&bk.current>=bk.pages&&bk.status!=='lido'){bk.status='lido';bk.finished=t;return true}
+  return false;
+}
+function bookCard(b){
+  const col=BOOKC[(b.title.charCodeAt(0)||0)%BOOKC.length],pct=b.pages?Math.min(100,Math.round((b.current||0)/b.pages*100)):0;
+  let mid='';
+  if(b.status==='lendo')mid=`<div class="bar" style="margin-top:10px;height:7px"><i style="width:${pct}%;background:${col}"></i></div><div class="small muted" style="margin-top:5px">p. ${b.current||0}${b.pages?' de '+b.pages+' · '+pct+'%':''}</div>`;
+  if(b.status==='lido')mid=`<div class="stars">${'★'.repeat(b.rating||0)}<span style="color:#e6d9c4">${'★'.repeat(5-(b.rating||0))}</span></div><div class="small muted">Terminado ${b.finished?dateLabel(b.finished).toLowerCase():''}${b.pages?' · '+b.pages+' páginas':''}</div>`;
+  if(b.status==='quero')mid=`<div class="small muted" style="margin-top:6px">${b.pages?b.pages+' páginas':''}</div>`;
+  const main=b.status==='lendo'?`<button class="btn sm primary" data-a="sheet" data-s="readlog" data-id="${b.id}">Registrar leitura</button>`:b.status==='quero'?`<button class="btn sm soft" data-a="startBook" data-id="${b.id}">Começar a ler</button>`:`<button class="btn sm ghost" data-a="sheet" data-s="rate" data-id="${b.id}">${b.rating?'Mudar nota':'Avaliar'}</button>`;
+  return `<div class="bcard"><div class="spine" style="background:${col}">${esc(b.title.charAt(0).toUpperCase())}</div><div class="grow" style="min-width:0"><b style="font-weight:500">${esc(b.title)}</b>${b.author?`<div class="small muted">${esc(b.author)}</div>`:''}${mid}<div class="brow">${main}<span style="flex:1"></span><button class="ib sm" data-a="sheet" data-s="book" data-id="${b.id}">${ic('edit',15)}</button><button class="ib sm" data-a="delBook" data-id="${b.id}">${ic('trash',15)}</button></div></div></div>`;
+}
+S.leitura=()=>{
+  const t=today(),y=t.slice(0,4),goal=state.settings.readGoal||12;
+  const doneY=state.books.filter(b=>b.status==='lido'&&(b.finished||'').startsWith(y)).length;
+  let pm=0;for(let d=t.slice(0,8)+'01';d<=t;d=addDays(d,1))pm+=pagesOn(d);
+  const L={lendo:state.books.filter(b=>b.status==='lendo'),quero:state.books.filter(b=>b.status==='quero'),lido:state.books.filter(b=>b.status==='lido').sort((a,b)=>(b.finished||'').localeCompare(a.finished||''))};
+  const tabs=[['lendo','Lendo'],['quero','Quero ler'],['lido','Lidos']];
+  const empty={lendo:'Nenhum livro em andamento. Que tal começar um?',quero:'Anote aqui os livros que você quer ler.',lido:'Seus livros terminados aparecem aqui.'}[ui.bookTab];
+  const b=`<div class="hero"><div class="hmain">${ring(doneY/goal,'var(--sand)',`${doneY}<sup style="font-size:12px">/${goal}</sup>`,'livros')}<div><div class="hk s">Meta de ${y}</div><div class="hT">${doneY} de ${goal} livros</div><div class="hS">${pm} páginas lidas este mês</div><button class="hlink" data-a="sheet" data-s="readgoal">Ajustar meta</button></div></div>${stats([[pagesOn(t),'páginas hoje'],[readStreak()+(readStreak()===1?' dia':' dias'),'seguidos'],[L.lendo.length,'lendo agora']])}</div>
+  <div style="display:flex;gap:8px;align-items:center;margin-top:16px;flex-wrap:wrap"><div class="seg">${tabs.map(([k,l])=>`<button class="${ui.bookTab===k?'on':''}" data-a="bookTab" data-v="${k}">${l} ${L[k].length?`<span style="opacity:.6">${L[k].length}</span>`:''}</button>`).join('')}</div><button class="btn primary sm" style="margin-left:auto" data-a="sheet" data-s="book">${ic('plus',14)} Livro</button></div>
+  ${L[ui.bookTab].map(bookCard).join('')||`<div class="card empty">${empty}</div>`}
+  <div class="note" style="text-align:center;margin-top:16px">Dica: na adição rápida, escreva “li 25 páginas” que soma no livro que você está lendo.</div>`;
+  return {h:titleHdr('book','Leitura',C.sand),b};
+};
+Object.assign(SH,{
+  book:d=>{const k=state.books.find(x=>x.id===d.id)||{};const st=k.status||(ui.bookTab==='lido'?'lido':ui.bookTab==='quero'?'quero':'lendo');
+    return `<h3>${k.id?'editar livro':'novo livro'}</h3><form data-f="book">${hid('id',k.id)}${fld('Título',`<input name="title" required value="${esc(k.title)}" placeholder="Ex.: Hábitos Atômicos">`)}${fld('Autor(a)',`<input name="author" value="${esc(k.author)}" placeholder="Opcional">`)}<div class="two">${fld('Total de páginas',`<input name="pages" inputmode="numeric" value="${k.pages||''}" placeholder="Ex.: 320">`)}${fld('Estou na página',`<input name="current" inputmode="numeric" value="${k.current||''}" placeholder="0">`)}</div>${fld('Status',`<select name="status"><option value="lendo" ${st==='lendo'?'selected':''}>Lendo</option><option value="quero" ${st==='quero'?'selected':''}>Quero ler</option><option value="lido" ${st==='lido'?'selected':''}>Lido</option></select>`)}<button class="btn primary full">Salvar</button></form>`},
+  readlog:d=>{const k=state.books.find(x=>x.id===d.id);if(!k)return '';
+    return `<h3>registrar leitura</h3><div class="small muted" style="margin:-6px 0 14px">${esc(k.title)} · você estava na página ${k.current||0}</div><div class="chips" style="margin:0 0 16px">${[5,10,20,30,50].map(n=>`<button class="chip" data-a="readQuick" data-id="${k.id}" data-n="${n}">+${n} páginas</button>`).join('')}</div><form data-f="readlog">${hid('id',k.id)}${fld('Ou: parei na página',`<input name="page" inputmode="numeric" required value="${k.current||''}">`)}<button class="btn primary full">Salvar</button></form>`},
+  rate:d=>{const k=state.books.find(x=>x.id===d.id);if(!k)return '';
+    return `<h3>${d.fin?'livro terminado! 🎉':'sua nota'}</h3><div class="small muted" style="margin:-6px 0 6px">${esc(k.title)}</div><div class="starpick">${[1,2,3,4,5].map(n=>`<button data-a="rateBook" data-id="${k.id}" data-v="${n}">${n<=(k.rating||0)?'★':'☆'}</button>`).join('')}</div><button class="btn ghost full" data-a="closeSheet">Depois</button>`},
+  readgoal:()=>`<h3>meta de leitura</h3><form data-f="readgoal">${fld('Quantos livros você quer ler este ano?',`<input name="g" inputmode="numeric" value="${state.settings.readGoal||12}">`)}<button class="btn primary full">Salvar</button></form>`
+});
+Object.assign(F,{
+  book:v=>{const pages=parseInt(v.pages)||0,cur=Math.min(parseInt(v.current)||0,pages||1e6),t=today();let k;
+    if(v.id){k=state.books.find(x=>x.id===v.id);Object.assign(k,{title:v.title.trim(),author:v.author.trim(),pages,current:cur,status:v.status})}
+    else{k={id:uid(),title:v.title.trim(),author:v.author.trim(),pages,current:cur,status:v.status,log:{},started:v.status!=='quero'?t:null,finished:null,rating:0};state.books.push(k)}
+    if(k.status==='lido'&&!k.finished)k.finished=t;if(k.status==='lido'&&pages)k.current=pages;if(k.status!=='lido')k.finished=null;
+    ui.bookTab=k.status;closeSheet();save();toast(v.id?'Livro atualizado':'Livro adicionado 📚')},
+  readlog:v=>{const k=state.books.find(x=>x.id===v.id),np=parseInt(v.page)||0,diff=np-(k.current||0);
+    if(diff<=0){k.current=np;closeSheet();save();return}
+    const fin=readPages(k,diff);closeSheet();save();toast(`+${diff} páginas 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
+  readgoal:v=>{state.settings.readGoal=Math.max(1,parseInt(v.g)||12);closeSheet();save()}
+});
+Object.assign(A,{
+  bookTab:d=>{ui.bookTab=d.v;render()},
+  startBook:d=>{const k=state.books.find(x=>x.id===d.id);k.status='lendo';k.started=today();ui.bookTab='lendo';save();toast('Boa leitura! 📖')},
+  delBook:d=>{const s=snap();state.books=state.books.filter(x=>x.id!==d.id);save();toast('Livro removido',s)},
+  readQuick:d=>{const k=state.books.find(x=>x.id===d.id);const fin=readPages(k,+d.n);closeSheet();save();toast(`+${d.n} páginas 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
+  rateBook:d=>{const k=state.books.find(x=>x.id===d.id);k.rating=+d.v;closeSheet();save()},
+  repP:d=>{ui.repPeriod=d.v;ui.repOff=0;render()},
+  repOff:d=>{ui.repOff=Math.min(0,ui.repOff+ +d.n);render()},
+  repCat:d=>{ui.repCat=d.v;render()},
+  print:()=>{try{window.print()}catch(e){}}
+});
+
+/* ---------- relatórios ---------- */
+const CAN_PRINT=typeof cloud!=='undefined';
+function repRange(){
+  const t=today(),o=ui.repOff;let a,b,pa,pb,label;
+  if(ui.repPeriod==='semana'){a=addDays(weekStart(t),7*o);b=addDays(a,6);pa=addDays(a,-7);pb=addDays(a,-1);const A_=parseISO(a),B_=parseISO(b);label=`${A_.getDate()} ${MES[A_.getMonth()].slice(0,3)} – ${B_.getDate()} ${MES[B_.getMonth()].slice(0,3)}`}
+  else if(ui.repPeriod==='mes'){const m=shiftMonth(ym(t),o),pm=shiftMonth(m,-1),last=m2=>{const[y,mo]=m2.split('-').map(Number);return m2+'-'+pad(new Date(y,mo,0).getDate())};a=m+'-01';b=last(m);pa=pm+'-01';pb=last(pm);label=monthLabel(m)}
+  else{const y=new Date().getFullYear()+o;a=y+'-01-01';b=y+'-12-31';pa=(y-1)+'-01-01';pb=(y-1)+'-12-31';label=String(y)}
+  return {a,b,pa,pb,label,e:b<t?b:t,pe:pb,future:a>t};
+}
+function daysIn(a,e){const r=[];for(let d=a;d<=e;d=addDays(d,1))r.push(d);return r}
+function finRange(a,b){
+  const o={inc:0,exp:0,cats:{},items:[]};let m=ym(a);
+  while(m<=ym(b)){
+    state.fin.entries.forEach(e=>{let d=null;
+      if(e.recurring){if(ym(e.date)<=m&&(!e.end||e.end>=m))d=e.type==='out'?dueDate(e,m):m+e.date.slice(7)}else if(ym(e.date)===m)d=e.date;
+      if(d&&d>=a&&d<=b){if(e.type==='in')o.inc+=e.amount;else{o.exp+=e.amount;const c=e.cat||guessCat(e.desc);o.cats[c]=(o.cats[c]||0)+e.amount;o.items.push({...e,d})}}});
+    m=shiftMonth(m,1);
+  }
+  return o;
+}
+function series(r,fn,agg){
+  if(ui.repPeriod!=='ano')return daysIn(r.a,r.b).map(d=>({v:d<=r.e?(fn(d)||0):0,short:ui.repPeriod==='semana'?WDS[parseISO(d).getDay()]:String(parseISO(d).getDate()),label:d}));
+  return Array.from({length:12},(_,i)=>{const m=r.a.slice(0,4)+'-'+pad(i+1),ds=daysIn(m+'-01',addDays(shiftMonth(m,1)+'-01',-1)).filter(d=>d<=r.e);const vs=ds.map(fn).filter(v=>v!=null&&v>0);const s=vs.reduce((x,y)=>x+y,0);return {v:vs.length?(agg==='sum'?s:s/vs.length):0,short:MES[i].charAt(0).toUpperCase(),label:MES[i]}});
+}
+function bars(vals,color,goal){
+  const mx=Math.max(goal||0,...vals.map(x=>x.v||0))*1.12||1,many=vals.length>14;
+  return `<div class="rbars">${goal?`<span class="goal" style="bottom:${goal/mx*100}%"></span>`:''}${vals.map(x=>`<div><em style="height:${x.v?Math.max(3,x.v/mx*100):2}%;background:${x.v?(goal&&x.v>=goal?'var(--sage)':color):'#efe6e8'}"></em></div>`).join('')}</div><div class="rlab">${vals.map((x,i)=>`<span>${many?((i%5===0||i===vals.length-1)?x.short:''):x.short}</span>`).join('')}</div>`;
+}
+function donut(segs,size,thick,center){
+  const r=(size-thick)/2,c=2*Math.PI*r,tot=segs.reduce((s,x)=>s+x.v,0)||1;let off=0;
+  return `<div style="position:relative;width:${size}px;height:${size}px;flex:none"><svg width="${size}" height="${size}" style="transform:rotate(-90deg)"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#f2e8ea" stroke-width="${thick}"/>${segs.filter(s=>s.v>0).map(s=>{const l=c*s.v/tot,el=`<circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${s.color}" stroke-width="${thick}" stroke-dasharray="${Math.max(0.01,l-(segs.length>1?2:0))} ${c}" stroke-dashoffset="${-off}"/>`;off+=l;return el}).join('')}</svg><div style="position:absolute;inset:0;display:grid;place-content:center;text-align:center;line-height:1.2">${center||''}</div></div>`;
+}
+const kpis=arr=>`<div class="kpis">${arr.map(([b,s,d])=>`<div><b>${b}</b><span>${s}</span>${d?`<i class="${d[1]}">${d[0]}</i>`:''}</div>`).join('')}</div>`;
+const rcard=(icon,bg,title,sub,body)=>`<div class="card rcard"><div class="rhead"><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div><div class="grow"><h4>${title}</h4><div class="small muted">${sub}</div></div></div>${body}</div>`;
+const delta=(cur,prev,goodUp)=>{if(!prev)return null;const p=Math.round((cur-prev)/prev*100);if(!p)return ['= anterior',''];const up=p>0;return [`${up?'▲':'▼'} ${Math.abs(p)}% vs anterior`,(up===goodUp)?'up':'down']};
+const plural=(n,s,p)=>n+' '+(n===1?s:p);
+function repHabits(r){
+  const days=daysIn(r.a,r.e);let sch=0,dn=0;
+  const per=doHabits().map(h=>{let s=0,k=0;days.forEach(d=>{if(sched(h,d)){s++;if(hDone(h,d))k++}});sch+=s;dn+=k;return {h,s,k,p:s?k/s:0}}).filter(x=>x.s).sort((a,b)=>b.p-a.p);
+  if(!per.length)return rcard('sprout',C.sage,'hábitos','Nenhum hábito no período','<div class="empty">Crie hábitos pra ver seu relatório aqui.</div>');
+  const pct=Math.round(dn/sch*100),perfect=days.filter(d=>dayRatio(d)===1).length,best=per[0],ser=series(r,d=>{const x=dayRatio(d);return x==null?null:x*100});
+  return rcard('sprout',C.sage,'hábitos',`${dn} de ${sch} marcações feitas`,
+    `<div style="display:flex;gap:18px;align-items:center">${donut([{v:dn,color:'#9cc5a1'},{v:sch-dn,color:'#f2e8ea'}],120,14,`<b style="font-family:var(--serif);font-size:26px;font-weight:400">${pct}%</b><small class="muted" style="font-size:10px">cumprido</small>`)}<div class="grow">${[['Dias perfeitos',perfect+' de '+days.length],['Destaque',esc(best.h.name)],['Sequência geral',plural(allStreak(),'dia','dias')]].map(([l,v])=>`<div style="padding:4px 0"><div class="small muted">${l}</div><div style="font-weight:500;font-size:14px">${v}</div></div>`).join('')}</div></div>
+    <div class="rsub">por hábito</div>${per.map(x=>`<div class="hrow2"><div class="nm">${esc(x.h.name)}</div><div class="bar"><i style="width:${Math.round(x.p*100)}%;background:${x.p>=.8?'var(--sage)':x.p>=.5?'#c9d9a8':'var(--rose)'}"></i></div><div class="pc">${Math.round(x.p*100)}%</div></div>`).join('')}
+    <div class="rsub">${ui.repPeriod==='ano'?'média por mês':'dia a dia'} (% dos hábitos)</div>${bars(ser,'#c9dfcb',100)}`);
+}
+function repHealth(r){
+  const days=daysIn(r.a,r.e),g=state.settings.waterGoal,sg=state.settings.sleepGoal;
+  const wv=days.map(d=>state.water[d]).filter(v=>v>0),sv=days.map(d=>state.sleep[d]).filter(v=>v!=null),mv=days.map(d=>state.mood[d]).filter(Boolean);
+  const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0,hit=days.filter(d=>(state.water[d]||0)>=g).length;
+  const faces=['😣','😕','😐','🙂','😄'],cnt=[1,2,3,4,5].map(n=>mv.filter(v=>v===n).length);
+  const L=v=>(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+' L';
+  return rcard('heart',C.health,'saúde','água, sono e humor',
+    `<div class="rsub" style="margin-top:0">água</div>${kpis([[wv.length?L(avg(wv)):'—','média por dia'],[hit+'/'+days.length,'dias na meta'],[L(g),'meta diária']])}${bars(series(r,d=>state.water[d]||null),'var(--sky)',g)}
+    <div class="rsub">sono</div>${kpis([[sv.length?fmtDur(avg(sv)):'—','média'],[sv.length?fmtDur(Math.max(...sv)):'—','melhor noite'],[sv.filter(v=>v>=sg).length+'/'+sv.length,'noites na meta']])}${bars(series(r,d=>state.sleep[d]??null),'var(--lav)',sg)}
+    <div class="rsub">humor</div>${mv.length?`<div class="faces">${faces.map((f,i)=>`<div style="opacity:${cnt[i]?1:.3}">${f}<small>${cnt[i]} ${cnt[i]===1?'dia':'dias'}</small></div>`).join('')}</div>`:'<div class="small muted">Registre seu humor no Início pra ver aqui.</div>'}`);
+}
+function repFin(r){
+  const f=finRange(r.a,r.b),p=finRange(r.pa,r.pb),bal=f.inc-f.exp;
+  const cats=Object.entries(f.cats).sort((a,b)=>b[1]-a[1]),top=f.items.filter(e=>!e.recurring).sort((a,b)=>b.amount-a.amount).slice(0,3);
+  const body=`${kpis([[money(f.inc).replace(',00',''),'receitas',delta(f.inc,p.inc,true)],[money(f.exp).replace(',00',''),'despesas',delta(f.exp,p.exp,false)],[money(bal).replace(',00',''),'saldo',f.inc?[Math.max(0,Math.round(bal/f.inc*100))+'% guardado',bal>=0?'up':'down']:null]])}
+    ${cats.length?`<div class="rsub">gastos por categoria</div><div style="display:flex;gap:18px;align-items:center;margin-top:8px">${donut(cats.map(([c,v])=>({v,color:catColor(c)})),132,20,`<small class="muted" style="font-size:10px">total</small><b style="font-size:13px;font-weight:500">${money(f.exp).replace(',00','')}</b>`)}<div class="legend">${cats.slice(0,7).map(([c,v])=>`<div><i style="background:${catColor(c)}"></i><span>${c}</span><b>${Math.round(v/f.exp*100)}%</b></div>`).join('')}</div></div>
+    ${cats.map(([c,v])=>`<div class="hrow2"><div class="nm">${c}</div><div class="bar"><i style="width:${v/cats[0][1]*100}%;background:${catColor(c)}"></i></div><div class="pc" style="width:86px;color:var(--ink)">${money(v)}</div></div>`).join('')}`:'<div class="empty">Nenhum gasto no período.</div>'}
+    ${top.length?`<div class="rsub">maiores gastos variáveis</div>${top.map(e=>`<div class="row" style="padding:8px 0"><span style="color:${catColor(e.cat)}">●</span><div class="grow"><div style="font-size:14px">${esc(e.desc)}</div><div class="small muted">${e.cat} · ${dateLabel(e.d)}</div></div><span class="amt">${money(e.amount)}</span></div>`).join('')}`:''}`;
+  return rcard('wallet',C.sand,'finanças',`saldo de ${money(bal)}`,body);
+}
+function repTasks(r){
+  const done=state.tasks.filter(x=>x.done&&x.doneAt&&(()=>{const d=iso(new Date(x.doneAt));return d>=r.a&&d<=r.b})()),ev=state.events.filter(e=>e.date>=r.a&&e.date<=r.b);
+  const late=state.tasks.filter(x=>!x.done&&x.date&&x.date<today()).length,open=state.tasks.filter(x=>!x.done).length;
+  const byCat={};ev.forEach(e=>byCat[e.cat||'geral']=(byCat[e.cat||'geral']||0)+1);
+  const ser=series(r,d=>state.tasks.filter(x=>x.doneAt&&iso(new Date(x.doneAt))===d).length||null,'sum');
+  return rcard('task',C.sky,'tarefas e agenda',`${plural(done.length,'tarefa concluída','tarefas concluídas')}`,
+    `${kpis([[done.length,'concluídas'],[ev.length,'compromissos'],[late,'atrasadas agora']])}${bars(ser,'var(--sky)')}
+    ${ev.length?`<div class="rsub">compromissos por tipo</div>${Object.entries(byCat).map(([k,v])=>`<div class="hrow2"><div class="nm">${catLbl[k]||k}</div><div class="bar"><i style="width:${v/ev.length*100}%;background:var(--rose)"></i></div><div class="pc">${v}</div></div>`).join('')}`:''}
+    <div class="small muted" style="margin-top:12px">${plural(open,'tarefa aberta','tarefas abertas')} no total.</div>`);
+}
+function repRead(r){
+  const days=daysIn(r.a,r.e),pages=days.reduce((s,d)=>s+pagesOn(d),0),readDays=days.filter(d=>pagesOn(d)>0).length;
+  const fin=state.books.filter(b=>b.status==='lido'&&b.finished&&b.finished>=r.a&&b.finished<=r.b);
+  return rcard('book',C.sand,'leitura',`${plural(pages,'página lida','páginas lidas')}`,
+    `${kpis([[pages,'páginas'],[readDays+'/'+days.length,'dias lendo'],[days.length?Math.round(pages/days.length):0,'pág. por dia']])}${bars(series(r,d=>pagesOn(d)||null,'sum'),'var(--sand)')}
+    <div class="rsub">livros terminados</div>${fin.length?fin.map(b=>`<div class="row" style="padding:8px 0"><div class="spine" style="width:30px;height:42px;font-size:15px;background:${BOOKC[(b.title.charCodeAt(0)||0)%BOOKC.length]}">${esc(b.title.charAt(0).toUpperCase())}</div><div class="grow"><div style="font-size:14px">${esc(b.title)}</div><div class="small muted">${esc(b.author||'')}</div></div><span class="stars" style="margin:0;font-size:12px">${'★'.repeat(b.rating||0)}</span></div>`).join(''):'<div class="small muted">Nenhum livro terminado neste período.</div>'}`);
+}
+S.relatorios=()=>{
+  const r=repRange(),P=[['semana','Semana'],['mes','Mês'],['ano','Ano']],CT=[['tudo','Tudo'],['habitos','Hábitos'],['saude','Saúde'],['financas','Finanças'],['tarefas','Tarefas'],['leitura','Leitura'],['devocional','Devocional']];
+  let body='';
+  if(r.future)body='<div class="card empty">Esse período ainda não começou.</div>';
+  else{
+    const c=ui.repCat,show=k=>c==='tudo'||c===k;
+    if(c==='tudo'){
+      const f=finRange(r.a,r.b),days=daysIn(r.a,r.e);let sch=0,dn=0;days.forEach(d=>doHabits().forEach(h=>{if(sched(h,d)){sch++;if(hDone(h,d))dn++}}));
+      const pg=days.reduce((s,d)=>s+pagesOn(d),0);
+      body+=`<div class="hero" style="margin-top:14px"><div class="hk">Resumo · ${r.label}</div><div class="hT">${sch?Math.round(dn/sch*100):0}% dos hábitos cumpridos</div><div class="hS">${days.length} ${days.length===1?'dia':'dias'} analisados${r.e<r.b?' (até hoje)':''}</div>${stats([[money(f.inc-f.exp).replace(',00',''),'saldo'],[pg,'páginas lidas'],[state.tasks.filter(x=>x.doneAt&&(()=>{const d=iso(new Date(x.doneAt));return d>=r.a&&d<=r.b})()).length,'tarefas feitas']])}</div>`;
+    }
+    if(show('habitos'))body+=repHabits(r);
+    if(show('saude'))body+=repHealth(r);
+    if(show('financas'))body+=repFin(r);
+    if(show('tarefas'))body+=repTasks(r);
+    if(show('leitura'))body+=repRead(r);
+    if(show('devocional'))body+=repDevo(r);
+  }
+  const b=`<div class="noprint"><div class="seg">${P.map(([k,l])=>`<button class="${ui.repPeriod===k?'on':''}" data-a="repP" data-v="${k}">${l}</button>`).join('')}</div>
+  <div class="navrow" style="margin-top:12px"><button class="circ" data-a="repOff" data-n="-1">${ic('chevL',16)}</button><div class="grow" style="text-align:center;font-weight:500">${r.label}</div><button class="circ" data-a="repOff" data-n="1" style="${ui.repOff>=0?'opacity:.3':''}">${ic('chevR',16)}</button></div>
+  <div class="chips scroll" style="margin-top:14px">${CT.map(([k,l])=>`<button class="chip ${ui.repCat===k?'on':''}" data-a="repCat" data-v="${k}">${l}</button>`).join('')}</div></div>
+  ${body}
+  ${CAN_PRINT&&!r.future?`<button class="btn ghost full noprint" style="margin-top:16px" data-a="print">${ic('download',16)} Baixar PDF ou imprimir</button>`:''}`;
+  return {h:titleHdr('chart','Relatórios',C.rose),b};
+};
+
+/* ---------- devocional ---------- */
+const VREFS=['Salmos 46:10','Provérbios 3:5-6','Isaías 41:10','Filipenses 4:6-7','Mateus 11:28','Romanos 8:28','Jeremias 29:11','Salmos 23:1','Josué 1:9','Lamentações 3:22-23','2 Coríntios 12:9','Mateus 6:33','Salmos 37:5','Isaías 40:31','João 14:27','Hebreus 11:1','Salmos 119:105','Filipenses 4:13','1 Pedro 5:7','Romanos 12:2','Gálatas 6:9','Salmos 91:1','Provérbios 16:3','Efésios 2:8-9','Colossenses 3:23','Tiago 1:5','Salmos 121:1-2','João 15:5','Miqueias 6:8','Sofonias 3:17','Salmos 139:14','Isaías 26:3','Mateus 5:16','Romanos 15:13','2 Timóteo 1:7','Salmos 34:8','Provérbios 4:23','Eclesiastes 3:1','1 Coríntios 13:4-7','Salmos 27:1','João 8:32','Hebreus 12:1-2','Salmos 103:2','Efésios 3:20','1 Tessalonicenses 5:16-18','Isaías 43:2','Salmos 16:11','Mateus 7:7','Romanos 5:3-4','Salmos 62:1','Provérbios 31:25','Habacuque 3:17-18','João 16:33','Salmos 51:10','Deuteronômio 31:8','Filipenses 1:6','Salmos 18:2','2 Coríntios 5:17','Neemias 8:10','Salmos 5:3'];
+const VTXT={"Salmos 46:10": "Ficai quietos, e sabei que eu sou Deus; eu serei exaltado entre as nações; serei exaltado sobre a terra.", "Provérbios 3:5-6": "Confia no SENHOR com todo o teu coração; e não te apoies em teu próprio entendimento. Dá reconhecimento a ele em todas os teus caminhos; e ele endireitará tuas veredas.", "Isaías 41:10": "Não temas, porque eu estou contigo; não te assombres, porque eu sou teu Deus. Eu te fortaleço, te ajudo, e te sustento com a minha mão direita de justiça.", "Filipenses 4:6-7": "Não estejais ansiosos por coisa alguma; mas em tudo, por meio de orações e súplicas com ações de gratidão, sejam os vossos pedidos conhecidos por Deus; e a paz de Deus, que excede todo entendimento, guardará os vossos corações e as vossas mentes em Cristo Jesus.", "Mateus 11:28": "Vinde a mim todos vós que estais cansados e sobrecarregados, e eu vos farei descansar.", "Romanos 8:28": "E sabemos que todas as coisas juntamente contribuem para o bem daqueles que amam a Deus, dos que são chamados segundo o seu propósito.", "Jeremias 29:11": "Porque eu sei os pensamentos que penso quanto a vós, diz o SENHOR, pensamentos de paz, e não de mal, para vos dar um futuro com esperança.", "Salmos 23:1": "Salmo de Davi: O SENHOR é meu pastor, nada me faltará.", "Josué 1:9": "Olha que te mando que te esforces e sejas valente: não temas nem desmaies, porque o SENHOR teu Deus será contigo onde quer que fores.", "Lamentações 3:22-23": "É pelas bondades do SENHOR que não somos consumidos, porque suas misericórdias não têm fim. Elas são novas a cada manhã; grande é a tua fidelidade.", "2 Coríntios 12:9": "Mas ele me disse: “Minha graça te basta, porque meu poder se aperfeiçoa na fraqueza”. Por isso, com muito prazer, eu me orgulharei nas minhas fraquezas, para que o poder de Cristo habite em mim.", "Mateus 6:33": "Mas buscai primeiramente o Reino de Deus e a sua justiça, e todas estas coisas vos serão acrescentadas.", "Salmos 37:5": "Entrega o teu caminho ao SENHOR; confia nele, e ele agirá,", "Isaías 40:31": "Mas os que confiam no SENHOR renovarão as forças, subirão com asas como águias; correrão, e não se cansarão; caminharão, e não se fatigarão.", "João 14:27": "A paz vos deixo, minha paz vos dou; vou dá- la a vós, não como o mundo a dá. Não se perturbe vosso coração, nem se atemorize.", "Hebreus 11:1": "Ora, a fé é a certeza das coisas que se esperam, e a prova das coisas que não se veem.", "Salmos 119:105": "Nun : Tua palavra é lâmpada para meus pés e luz para meu caminho.", "Filipenses 4:13": "Posso todas as coisas em Cristo que me fortalece.", "1 Pedro 5:7": "lançando sobre ele toda a vossa ansiedade; porque ele tem cuidado de vós.", "Romanos 12:2": "E não vos conformeis com a presente era; mas transformai-vos pela renovação da vossa mentalidade, para que experimenteis qual seja a boa, agradável, e perfeita vontade de Deus.", "Gálatas 6:9": "Porém não cansemos de fazer o bem, pois no tempo devido colheremos, se não desistirmos.", "Salmos 91:1": "Aquele que mora no esconderijo do Altíssimo, à sombra do Todo-Poderoso habitará.", "Provérbios 16:3": "Confia tuas obras ao SENHOR, e teus pensamentos serão firmados.", "Efésios 2:8-9": "Porque pela graça sois salvos, por meio da fé; e isto não vem de vós; é dom de Deus; não por obras, para que ninguém tenha orgulho de si mesmo.", "Colossenses 3:23": "E tudo quanto fizerdes, fazei de coração, como para o Senhor, e não para as pessoas.", "Tiago 1:5": "Se algum de vós tem falta de sabedoria, peça a Deus, que concede generosamente a todos sem repreender, e lhe será dada.", "Salmos 121:1-2": "Cântico dos degraus: Levanto meus olhos aos montes. De onde virá meu socorro? Meu socorro vem do SENHOR, que fez os céus e a terra.", "João 15:5": "Eu sou a videira, vós sois os ramos; quem está em mim, e eu nele, esse dá muito fruto; porque sem mim nada podeis fazer.", "Miqueias 6:8": "Ele já declarou a ti, ó ser humano, o que é bom; e que mais o SENHOR pede de ti, a não ser fazer o que é justo, amar a bondade, e andar humildemente com teu Deus?", "Sofonias 3:17": "O SENHOR está no meio de ti, guerreiro que salva; ele terá prazer em ti com alegria; ele te aquietará em seu amor, se encherá de alegria por causa de ti com júbilo.", "Salmos 139:14": "Eu te louvarei porque de um jeito assombroso e maravilhoso eu fui feito; maravilhosas são tuas obras; e minha alma sabe muito bem.", "Isaías 26:3": "Tu guardarás em completa paz aquele que tem firme entendimento, pois ele confia em ti.", "Mateus 5:16": "Assim brilhe vossa luz diante das pessoas, para que vejam vossas boas obras, e glorifiquem ao vosso Pai, que está nos céus.", "Romanos 15:13": "O Deus da esperança vos encha de toda alegria e paz na fé, para que abundeis em esperança no poder do Espírito Santo.", "2 Timóteo 1:7": "Pois Deus não nos deu espírito de medo; mas sim de força, de amor, e de moderação.", "Salmos 34:8": "Experimentai, e vede que o SENHOR é bom; bem-aventurado é o homem que confia nele.", "Provérbios 4:23": "Acima de tudo o que se deve guardar, guarda o teu coração; porque dele procedem as saídas da vida.", "Eclesiastes 3:1": "Para todas as coisas há um tempo determinado, e todo propósito abaixo do céu tem seu tempo.", "1 Coríntios 13:4-7": "O amor é paciente, é bondoso; o amor não é invejoso; o amor não é orgulhoso, não é arrogante. O amor não trata mal; não busca os próprios interesses, não se ira, não é rancoroso. Não se alegra com a injustiça, mas se alegra com a verdade. Tudo aguenta, tudo crê, tudo espera, tudo suporta.", "Salmos 27:1": "Salmo de Davi: O SENHOR é minha luz e minha salvação; a quem temerei? O SENHOR é a força da minha vida; de quem terei medo?", "João 8:32": "E conhecereis a verdade, e a verdade vos libertará.", "Hebreus 12:1-2": "Portanto nós também, posto que estamos rodeados por uma tão grande nuvem de testemunhas, deixemos toda sobrecarga, e o pecado que facilmente nos envolve, e corramos com perseverança a corrida que nos está proposta, olhando para Jesus, Autor e aperfeiçoador da fé. Ele, pela alegria que lhe estava proposta, suportou a cruz, desprezando a humilhação, e assentou-se à direita do trono de Deus.", "Salmos 103:2": "Louva ao SENHOR, ó minha alma; e não te esqueças de nenhum dos benefícios dele;", "Efésios 3:20": "E quanto àquele que é poderoso para fazer tudo muito mais abundantemente do que pedimos ou pensamos, segundo o poder que opera em nós,", "1 Tessalonicenses 5:16-18": "Alegrai-vos sempre. Orai sem cessar. Agradecei em tudo, pois essa é a vontade de Deus em Cristo Jesus para vós mesmos.", "Isaías 43:2": "Quando passares pelas águas, estarei contigo; e ao passares pelos rios, eles não te submergirão; quando passares pelo fogo, não te queimarás, nem a chamas arderão em ti.", "Salmos 16:11": "Tu me farás conhecer o caminho da vida; fartura de alegrias há em tua presença; agrados estão em tua mão direita para sempre.", "Mateus 7:7": "Pedi, e vos será dado; buscai, e achareis; batei, e vos será aberto;", "Romanos 5:3-4": "E não somente isso, mas também nos alegramos nas tribulações, sabendo que a tribulação produz paciência; a paciência produz experiência, e a experiência produz esperança.", "Salmos 62:1": "Salmo de Davi para o regente, conforme “Jedutum”: Certamente minha alma se aquieta por causa de Deus; dele vem minha salvação.", "Provérbios 31:25": "Força e glória são suas roupas, e ela sorri pelo seu futuro.", "Habacuque 3:17-18": "Ainda que a figueira não floresça, nem haja fruto nas vides, e falte o produto da oliveira, os campos não produzam alimento, as ovelhas sejam arrebatadas, e não haja vacas nos currais, Mesmo assim eu me alegrarei no SENHOR, terei prazer no Deus de minha salvação.", "João 16:33": "Estas coisas tenho vos dito para que tenhais paz em mim; no mundo tereis aflição; mas tende bom ânimo; eu venci o mundo.", "Salmos 51:10": "Cria em mim um coração puro, ó Deus; e renova um espírito firme em meu interior.", "Deuteronômio 31:8": "E o SENHOR é o que vai diante de ti; ele será contigo, não te deixará, nem te desamparará; não temas, nem te intimides.", "Filipenses 1:6": "E disto tenho certeza: aquele que começou a boa obra em vós irá completá-la até o dia de Jesus Cristo.", "Salmos 18:2": "O SENHOR é minha rocha, e minha fortaleza, e meu libertador, meu Deus, meu rochedo, em quem confio; é meu escudo, e a força da minha salvação, meu alto refúgio.", "2 Coríntios 5:17": "Portanto, se alguém está em Cristo, uma nova criatura é ; as coisas velhas já passaram, eis que tudo se fez novo.", "Neemias 8:10": "E disse-lhes mais: Ide, comei gorduras, e bebei doçuras, e enviai porções aos que não têm preparado; porque este é um dia consagrado ao nosso Senhor; portanto não vos entristeçais, porque a alegria do SENHOR é vossa força.", "Salmos 5:3": "SENHOR, pela manhã ouvirás minha voz; pela manhã apresentarei meu clamor a ti, e ficarei esperando."};
+const BLIVRE='Bíblia Livre (BLIVRE) © Diego Santos, Mario Sérgio e Marco Teles · CC BY 4.0';
+const dayOfYear=d=>{const x=parseISO(d);return Math.floor((x-new Date(x.getFullYear(),0,0))/864e5)};
+const vSug=d=>VREFS[dayOfYear(d)%VREFS.length];
+const devo=()=>{state.devo=state.devo||{entries:{}};state.devo.entries=state.devo.entries||{};return state.devo};
+const dEntry=d=>{const e=devo().entries;if(!e[d])e[d]={ref:'',verse:'',understood:'',wins:[]};return e[d]};
+const hasDevo=d=>{const e=(state.devo&&state.devo.entries||{})[d];return !!(e&&(e.understood||e.verse||e.ref||e.matDay||e.matTheme||e.highlight||e.apply||e.prayer||(e.wins||[]).length))};
+const DEVOF=[['material','Meu devocional (livro ou plano)'],['verse','Versículo do dia'],['highlight','Frase que marcou'],['apply','Como vou viver isso hoje'],['prayer','Minha conversa com Deus'],['wins','Conquistas']];
+const devoFields=()=>Object.assign({material:true,verse:true,highlight:true,apply:true,prayer:true,wins:true},devo().fields||{});
+function devoStreak(){let d=today(),n=0;if(!hasDevo(d))d=addDays(d,-1);while(hasDevo(d)){n++;d=addDays(d,-1)}return n}
+function devoMarkHabit(d){const h=doHabits().find(h=>/devoc|oracao|biblia|palavra/.test(norm(h.name)));if(h&&hasDevo(d))h.log[d]=true}
+function saveQuiet(){state.updatedAt=Date.now();state.activeDays[today()]=true;writeLocal();clearTimeout(saveT);saveT=setTimeout(pushRemote,800)}
+const allWins=()=>Object.entries(devo().entries).flatMap(([d,e])=>(e.wins||[]).map(w=>({...w,d}))).sort((a,b)=>b.d.localeCompare(a.d));
+S.devocional=()=>{
+  const t=today(),d=ui.devoDate||t,e=dEntry(d),dv=devo();
+  const mStart=t.slice(0,8)+'01',mDays=daysIn(mStart,t),mDone=mDays.filter(hasDevo).length,wins=allWins();
+  const tabs=[['hoje',d===t?'Hoje':dateLabel(d)],['diario','Diário'],['conquistas','Conquistas']];
+  let b=`<div class="hero"><div class="hmain">${ring(mDone/mDays.length,'#e6cf94',`${mDone}<sup style="font-size:12px">/${mDays.length}</sup>`,'no mês')}<div><div class="hk s">Seu tempo com Deus</div><div class="hT">${plural(devoStreak(),'dia seguido','dias seguidos')}</div><div class="hS">${mDone} ${mDone===1?'devocional':'devocionais'} em ${MES[parseISO(t).getMonth()]}</div></div></div>${stats([[Object.keys(dv.entries).filter(hasDevo).length,'no total'],[wins.length,'conquistas'],[wins.filter(w=>w.d>=mStart).length,'no mês']])}</div>
+  <div class="seg" style="margin-top:16px">${tabs.map(([k,l])=>`<button class="${ui.devoTab===k?'on':''}" data-a="devoTab" data-v="${k}">${l}</button>`).join('')}</div>`;
+  if(ui.devoTab==='hoje'){
+    const sug=vSug(d),F_=devoFields(),bn=dv.bookName||'';
+    const prevDays=Object.keys(dv.entries).filter(x=>x<d&&dv.entries[x].matDay).sort();const lastDay=prevDays.length?parseInt(dv.entries[prevDays.at(-1)].matDay):0;
+    const ta=(k,ph,rows)=>`<textarea data-devo="${k}" rows="${rows}" placeholder="${ph}">${esc(e[k]||'')}</textarea>`;
+    b+=`${d!==t?`<div class="card" style="display:flex;align-items:center;gap:10px;padding:12px 16px"><div class="grow small">Editando o devocional de <b>${dateLabel(d).toLowerCase()}</b></div><button class="btn sm soft" data-a="devoOpen" data-d="${t}">Voltar pra hoje</button></div>`:''}
+    <div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn sm ghost" data-a="sheet" data-s="devofields">${ic('gear',14)} Personalizar blocos</button></div>`;
+    if(F_.material)b+=`<div class="card" style="margin-top:10px"><h4>meu devocional</h4><div class="small muted" style="margin:2px 0 12px">O livro ou plano que você está lendo.</div>
+      ${fld('Material',`<input data-devoset="bookName" value="${esc(bn)}" placeholder="Ex.: Oi, Deus. Sou eu de novo">`)}
+      <div class="two">${fld('Dia ou página',`<input data-devo="matDay" inputmode="numeric" value="${esc(e.matDay||'')}" placeholder="${lastDay?'sugestão: '+(lastDay+1):'Ex.: 12'}">`)}${fld('Tema do dia',`<input data-devo="matTheme" value="${esc(e.matTheme||'')}" placeholder="Opcional">`)}</div>
+      ${!e.matDay&&lastDay?`<button class="btn sm soft" style="margin-top:-2px" data-a="devoNextDay" data-n="${lastDay+1}">Hoje é o dia ${lastDay+1}</button>`:''}</div>`;
+    b+=`<div class="card"><h4>o que Deus falou comigo</h4><div class="small muted" style="margin:2px 0 10px">O que você entendeu da leitura de hoje, do devocional e do versículo. Escreva do seu jeito.</div>${ta('understood','Hoje eu entendi que…',7)}</div>`;
+    if(F_.verse)b+=`<div class="card"><div class="cardHead"><h4>versículo do dia</h4><span class="small muted">${bn?'o do devocional ou a sugestão':''}</span></div>
+      ${!e.ref?`<div class="subcard" style="margin:6px 0 14px"><div class="small muted">Sugestão pra hoje</div><div style="font-family:var(--script);font-size:24px;color:var(--rose-d)">${sug}</div>${VTXT[sug]?`<div style="font-size:14px;line-height:1.6;margin-top:4px">“${esc(VTXT[sug])}”</div>`:''}<button class="btn sm primary" style="margin-top:10px" data-a="useVerse" data-v="${esc(sug)}">Usar este versículo</button></div>`:''}
+      ${fld('Referência',`<input data-devo="ref" value="${esc(e.ref)}" placeholder="Ex.: Salmos 46:10">`)}
+      ${fld('Texto do versículo',ta('verse','Escreva ou cole o texto do versículo',3))}<div class="small muted" style="font-size:10.5px;margin-top:-4px">Textos sugeridos: ${BLIVRE}</div></div>`;
+    if(F_.highlight)b+=`<div class="card"><h4>frase que marcou</h4><div class="small muted" style="margin:2px 0 10px">Uma frase da leitura que você quer guardar.</div>${ta('highlight','“…”',2)}</div>`;
+    if(F_.apply)b+=`<div class="card"><h4>como vou viver isso hoje</h4><div class="small muted" style="margin:2px 0 10px">Uma atitude prática, pequena e possível.</div>${ta('apply','Hoje eu vou…',2)}</div>`;
+    if(F_.prayer)b+=`<div class="card"><h4>minha conversa com Deus</h4><div class="small muted" style="margin:2px 0 10px">Sua oração, seus pedidos, seu agradecimento.</div>${ta('prayer','Deus, …',5)}</div>`;
+    if(F_.wins)b+=`<div class="card"><div class="cardHead"><h4>conquistas</h4><span class="small muted">${(e.wins||[]).length||''}</span></div><div class="small muted" style="margin:2px 0 6px">Vitórias, orações respondidas, pequenos passos. Tudo conta.</div>
+      ${(e.wins||[]).map(w=>`<div class="row"><span style="color:#d9a54a">✦</span><div class="grow rt">${esc(w.text)}</div><button class="ib sm" data-a="delWin" data-id="${w.id}">${ic('x',15)}</button></div>`).join('')}
+      <form class="addrow" data-f="win"><input name="t" placeholder="Adicionar conquista" autocomplete="off" enterkeyhint="done"><button class="btn primary">${ic('plus',16)}</button></form></div>`;
+    b+=`<div class="note" style="text-align:center;margin-top:12px">${ic('check',13)} Salvo automaticamente enquanto você escreve.</div>`;
+  }else if(ui.devoTab==='diario'){
+    const ds=Object.keys(dv.entries).filter(hasDevo).sort().reverse();
+    b+=ds.map(x=>{const en=dv.entries[x];return `<button class="lcard" data-a="devoOpen" data-d="${x}"><div class="cardHead" style="margin:0"><span class="small" style="color:var(--rose-d);font-weight:500">${cap(dateLabel(x))}</span>${(en.wins||[]).length?`<span class="small" style="color:#b8913a">✦ ${(en.wins||[]).length}</span>`:''}</div>${(en.matDay||en.matTheme)?`<div class="small" style="margin-top:4px;color:var(--muted)">${esc(dv.bookName||'Devocional')}${en.matDay?' · dia '+esc(en.matDay):''}${en.matTheme?' · '+esc(en.matTheme):''}</div>`:''}${en.ref?`<div style="font-family:var(--script);font-size:22px;color:var(--rose-d);margin-top:4px">${esc(en.ref)}</div>`:''}${en.highlight?`<div class="small" style="margin-top:6px;font-style:italic;color:var(--rose-d)">“${esc(en.highlight)}”</div>`:''}${en.understood?`<div class="small" style="margin-top:6px;line-height:1.5;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${esc(en.understood)}</div>`:''}</button>`}).join('')||'<div class="card empty">Seus devocionais vão aparecer aqui.</div>';
+  }else{
+    const byM={};wins.forEach(w=>{const k=ym(w.d);(byM[k]=byM[k]||[]).push(w)});
+    b+=Object.keys(byM).length?Object.entries(byM).map(([m,ws])=>`<div class="dayhead">${monthLabel(m)} · ${ws.length}</div><div class="card" style="margin-top:6px;padding-top:6px;padding-bottom:6px">${ws.map(w=>`<div class="row"><span style="color:#d9a54a">✦</span><div class="grow"><div class="rt">${esc(w.text)}</div><div class="small muted">${dateLabel(w.d)}</div></div></div>`).join('')}</div>`).join(''):'<div class="card empty">Cada conquista que você anotar fica guardada aqui, pra você lembrar do quanto já avançou.</div>';
+  }
+  return {h:titleHdr('devo','Devocional','#f3ead2'),b};
+};
+document.addEventListener('input',ev=>{const el=ev.target;if(el.dataset&&el.dataset.devoset){devo()[el.dataset.devoset]=el.value;saveQuiet();return}if(!el.dataset||!el.dataset.devo)return;const d=ui.devoDate||today();dEntry(d)[el.dataset.devo]=el.value;devoMarkHabit(d);saveQuiet()});
+Object.assign(A,{
+  devoTab:d=>{ui.devoTab=d.v;render();window.scrollTo(0,0)},
+  devoOpen:d=>{ui.devoDate=d.d===today()?null:d.d;ui.devoTab='hoje';render();window.scrollTo(0,0)},
+  devoNextDay:d=>{const day=ui.devoDate||today();dEntry(day).matDay=String(d.n);devoMarkHabit(day);save()},
+  useVerse:d=>{const day=ui.devoDate||today(),e=dEntry(day);e.ref=d.v;if(VTXT[d.v]&&!e.verse)e.verse=VTXT[d.v];devoMarkHabit(day);save()},
+  delWin:d=>{const day=ui.devoDate||today(),e=dEntry(day),s=snap();e.wins=e.wins.filter(w=>w.id!==d.id);save();toast('Conquista removida',s)}
+});
+Object.assign(SH,{devofields:()=>{const f=devoFields();return `<h3>personalizar blocos</h3><div class="small muted" style="margin:-6px 0 14px">Escolha o que aparece no seu devocional. “O que Deus falou comigo” fica sempre.</div><form data-f="devofields">${DEVOF.map(([k,l])=>`<label class="tog"><input type="checkbox" name="f" value="${k}" ${f[k]?'checked':''}> ${l}</label>`).join('')}<button class="btn primary full">Salvar</button></form>`}});
+Object.assign(F,{
+  devofields:(v,f)=>{const on=new FormData(f).getAll('f');devo().fields=Object.fromEntries(DEVOF.map(([k])=>[k,on.includes(k)]));closeSheet();save()},
+  win:v=>{const t_=(v.t||'').trim();if(!t_)return;const day=ui.devoDate||today();dEntry(day).wins.push({id:uid(),text:t_.charAt(0).toUpperCase()+t_.slice(1)});devoMarkHabit(day);save();toast('Conquista anotada ✦');const i=$('#main form[data-f=win] input');if(i)i.focus()}
+});
+function repDevo(r){
+  const days=daysIn(r.a,r.e),done=days.filter(hasDevo),wins=allWins().filter(w=>w.d>=r.a&&w.d<=r.b),refs=done.map(d=>devo().entries[d].ref).filter(Boolean);
+  return rcard('devo','#f3ead2','devocional',plural(done.length,'dia com Deus','dias com Deus'),
+    `${kpis([[done.length+'/'+days.length,'dias'],[plural(devoStreak(),'dia','dias'),'sequência'],[wins.length,'conquistas']])}${bars(series(r,d=>hasDevo(d)?1:null,'sum'),'#e6cf94')}
+    ${(()=>{const ap=done.map(d=>[d,devo().entries[d]]).filter(([,e])=>e.understood).slice(-3).reverse();return ap.length?`<div class="rsub">o que Deus falou comigo</div>${ap.map(([d,e])=>`<div class="subcard" style="margin-top:8px"><div class="small" style="color:var(--rose-d);font-weight:500">${cap(dateLabel(d))}${e.matDay?' · dia '+esc(e.matDay):''}</div><div style="font-size:13.5px;line-height:1.55;margin-top:4px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden">${esc(e.understood)}</div></div>`).join('')}`:''})()}
+    ${refs.length?`<div class="rsub">versículos do período</div><div class="chips" style="margin-top:6px">${refs.slice(-12).map(x=>`<span class="chip" style="font-family:var(--script);font-size:17px;color:var(--rose-d)">${esc(x)}</span>`).join('')}</div>`:''}
+    ${wins.length?`<div class="rsub">conquistas</div>${wins.slice(0,8).map(w=>`<div class="row" style="padding:7px 0"><span style="color:#d9a54a">✦</span><div class="grow" style="font-size:14px">${esc(w.text)}</div><span class="small muted">${dateLabel(w.d)}</span></div>`).join('')}`:''}`);
+}
+
+writeLocal();render();
+</script>
+</body>
+</html>
