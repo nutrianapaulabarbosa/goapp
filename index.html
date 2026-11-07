@@ -130,7 +130,7 @@ body{background-color:var(--bg);background-image:url("data:image/svg+xml,%3Csvg 
   <div>
     <h1>sua rotina <span class="script">leve</span>,<br>num lugar só.</h1>
     <p class="lead">Agenda, tarefas, hábitos, saúde, finanças, listas, leitura e devocional, organizados do seu jeito. Pra quem tem a vida corrida e quer constância sem cobrança.</p>
-    <div class="cta"><a class="btn p" href="#preco" data-auth="criar">Quero meu GO!</a><a class="btn g" href="#recursos">Ver os recursos</a></div>
+    <div class="cta"><a class="btn p" href="#preco" data-auth="criar">Quero meu GO!</a><a class="btn g" href="#video">Ver como funciona</a></div>
     <div class="mini">R$ 97 · pagamento único · acesso vitalício. Funciona no celular e no computador.</div>
   </div>
   <div style="position:relative">
@@ -196,6 +196,13 @@ body{background-color:var(--bg);background-image:url("data:image/svg+xml,%3Csvg 
       <div class="nt"><img src="icon-192.png" alt=""><div><b>Consulta com a Júlia ⏰</b><span>16:30 · daqui a 30 min</span></div><small>15:59</small></div>
       <div class="nt"><img src="icon-192.png" alt=""><div><b>Que semana! 🎉</b><span>86% dos hábitos · 5 dias de devocional · 120 páginas lidas ✨</span></div><small>dom.</small></div>
     </div>
+  </div>
+</section>
+
+<section class="w reveal" id="video">
+  <div class="split">
+    <div class="txt"><div class="kicker">em ação</div><h2 class="sec-t">veja o GO! <span class="script">funcionando</span>.</h2><p class="sec-s">Deslize o resumo do dia, marque um hábito e veja o check aparecer, abra o devocional e planeje a semana. Tudo leve, num toque.</p></div>
+    <div style="display:flex;justify-content:center"><div class="phone" style="width:min(290px,76vw)"><video src="video/go.mp4" poster="video/go-poster.jpg" autoplay muted loop playsinline preload="metadata"></video></div></div>
   </div>
 </section>
 
@@ -272,6 +279,7 @@ var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es
 document.querySelectorAll('.reveal').forEach(function(el){io?io.observe(el):el.classList.add('in')});
 
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(function(){});
+window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
 </script>
 </body>
 </html>
