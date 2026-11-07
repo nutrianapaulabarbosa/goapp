@@ -304,6 +304,19 @@ input,select,textarea{font-weight:400}
 .badge2 .be{font-size:30px;line-height:1.2}.badge2 b{display:block;font-weight:500;font-size:13.5px;margin-top:4px}.badge2 span{font-size:11.5px;color:var(--muted)}
 [data-theme=dark] .badge2{background:var(--card)}[data-theme=dark] .badge2.on{background:linear-gradient(160deg,#2c2326,#3a2830)}
 @media (min-width:900px){.badges{grid-template-columns:repeat(4,1fr)}}
+.law{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#6e9f75;background:var(--sage-l);border-radius:10px;padding:3px 8px;white-space:nowrap;font-weight:500}
+.pintro{background:linear-gradient(135deg,#e4f0e5,#faf5f3);border-color:#d9e8da}
+.phab{padding:12px 0;border-bottom:1px solid var(--line)}.phab:last-child{border-bottom:0}.phn{font-weight:500;font-size:14.5px;margin-bottom:8px}
+.pday{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}.pday:last-of-type{border-bottom:0}
+.pdl{width:44px;flex:none;text-align:center;line-height:1.15}.pdl b{display:block;font-weight:500;font-size:12px;color:var(--muted);text-transform:uppercase}.pdl span{font-size:17px;font-weight:500}
+.pday.today .pdl b,.pday.today .pdl span{color:var(--rose-d)}
+.pday input{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;background:var(--card,#fff);color:var(--ink);min-width:0;outline:0}
+.pwarn{background:#fbf3ee;border-color:#f0dccf}
+.pcard{background:linear-gradient(135deg,#fbeef1,#fff);border:1px solid #f0d6dc;border-radius:20px;padding:14px 16px;margin-bottom:14px}
+[data-theme=dark] .pintro{background:linear-gradient(135deg,#26302a,#1d1719);border-color:#33413a}
+[data-theme=dark] .pwarn{background:#2e2522;border-color:#45352f}
+[data-theme=dark] .pcard{background:linear-gradient(135deg,#3a2730,#272022);border-color:#4a3138}
+[data-theme=dark] .law{background:#2c3a2e;color:#a9d0ad}
 @media print{nav.bar,.hicons,.noprint,#toastBox{display:none!important}body{background:#fff;padding:0}.card,.hero{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -402,7 +415,7 @@ let state=null;
 try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 state=migrate(state&&state.v?state:defaultState());
 state.activeDays[today()]=true;
-const ui={metaTab:'metas',devoTab:'hoje',devoDate:null,repPeriod:'mes',repOff:0,repCat:'tudo',bookTab:'lendo',ready:true,obStep:0,authMode:null,authErr:'',authBusy:false,screen:'home',heroTab:0,agView:'timeline',selDay:today(),healthTab:'geral',finMonth:ym(today()),listFilter:'todas',listSearch:'',openList:null,habitTab:'do',habitView:'lista',expanded:{},taskFilter:'hoje',sync:'local'};
+const ui={planTab:'planejar',planWeek:null,metaTab:'metas',devoTab:'hoje',devoDate:null,repPeriod:'mes',repOff:0,repCat:'tudo',bookTab:'lendo',ready:true,obStep:0,authMode:null,authErr:'',authBusy:false,screen:'home',heroTab:0,agView:'timeline',selDay:today(),healthTab:'geral',finMonth:ym(today()),listFilter:'todas',listSearch:'',openList:null,habitTab:'do',habitView:'lista',expanded:{},taskFilter:'hoje',sync:'local'};
 
 /* ---------- persistência: Supabase (login + banco) ou só no aparelho ---------- */
 const CFG=window.GO_CONFIG||{};
@@ -503,7 +516,7 @@ S.home=()=>{
   }else if(ui.heroTab===1){
     const end=addDays(t,6),evs=eventsBetween(t,end),tks=state.tasks.filter(x=>x.date&&x.date>=t&&x.date<=end);
     const p=tks.length?tks.filter(x=>x.done).length/tks.length:0;let perfect=0;for(let i=0;i<7;i++)if(dayRatio(addDays(t,-i))===1)perfect++;
-    c=`<div class="hmain">${ring(p,'var(--rose)',pctBig(Math.round(p*100)),'tarefas')}<div><div class="hk">Próximos 7 dias</div><div class="hT">${evs.length} ${evs.length===1?'compromisso':'compromissos'}</div><button class="hlink" data-a="go" data-to="agenda" data-view="semana">Planejar a semana ›</button></div></div>${stats([[evs.length,'eventos'],[tks.filter(x=>!x.done).length,'tarefas abertas'],[perfect+'/7','dias perfeitos']])}`;
+    c=`<div class="hmain">${ring(p,'var(--rose)',pctBig(Math.round(p*100)),'tarefas')}<div><div class="hk">Próximos 7 dias</div><div class="hT">${evs.length} ${evs.length===1?'compromisso':'compromissos'}</div><button class="hlink" data-a="go" data-to="semana">Planejar a semana ›</button></div></div>${stats([[evs.length,'eventos'],[tks.filter(x=>!x.done).length,'tarefas abertas'],[perfect+'/7','dias perfeitos']])}`;
   }else if(ui.heroTab===2){
     const p=hs.length?hd/hs.length:0;
     c=`<div class="hmain">${ring(p,'var(--sage)',pctBig(Math.round(p*100)),'feito')}<div><div class="hk g">Hábitos hoje</div><div class="hT">${hd} de ${hs.length} feitos</div><div class="hS">${ic('flame',12)} Sequência de ${allStreak()} dias · recorde ${state.habitRecord||0}</div></div></div>${stats([[monthHabitPct()+'%','no mês'],[doHabits().filter(x=>hStreak(x)>0).length,'em dia'],[doHabits().length,'hábitos']])}`;
@@ -517,13 +530,13 @@ S.home=()=>{
     c=`<div class="hmain">${ring(f.pct/100,'var(--sand)',pctBig(f.pct),'guardado')}<div><div class="hk s">${cap(MES[d.getMonth()])}</div><div class="hT">Sobrando ${money(f.left)}</div><div class="hS">${f.toPay.length} contas a pagar · ${money(f.toPaySum)}</div></div></div>${stats([[money(f.totIn),'receitas'],[money(f.totOut),'despesas']],'two')}`;
   }
   const hero=`<div class="hero" id="heroCard"><div class="htabs">${tabs.map((x,i)=>`<button class="${ui.heroTab===i?'on':''}" data-a="hero" data-i="${i}">${x}</button>`).join('')}</div>${c}<div class="dots">${tabs.map((_,i)=>`<i class="${ui.heroTab===i?'on':''}"></i>`).join('')}</div></div>`;
-  const chips=`<div class="chips"><button class="chip" data-a="sheet" data-s="expense">Anotar um gasto</button><button class="chip" data-a="openMarket">Lista de mercado</button><button class="chip" data-a="go" data-to="agenda" data-view="semana">Planejar a semana</button></div>`;
+  const chips=`<div class="chips"><button class="chip" data-a="sheet" data-s="expense">Anotar um gasto</button><button class="chip" data-a="openMarket">Lista de mercado</button><button class="chip" data-a="go" data-to="semana">Planejar a semana</button></div>`;
   const openT=state.tasks.filter(x=>!x.done).length,mk=state.lists.length;
   const area=(icon,bg,name,sub,to)=>`<button class="area" data-a="go" data-to="${to}"><div class="tic" style="background:${bg}">${ic(icon,21)}</div><b>${name}</b><span>${sub}</span></button>`;
   const areas=`<h2 class="sec">Suas áreas</h2><div class="areas">${area('cal',C.rose,'Agenda',ev.length+' hoje','agenda')}${area('task',C.sky,'Tarefas',openT+' abertas','tarefas')}${area('sprout',C.sage,'Hábitos',`${hd} de ${hs.length}`,'habitos')}${area('wallet',C.sand,'Finanças',money(f.left).replace(',00',''),'financas')}${area('heart',C.health,'Saúde',(water/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})+' L','saude')}${area('list',C.lav,'Listas',mk+(mk===1?' lista':' listas'),'listas')}${area('book',C.sand,'Leitura',pagesOn(t)?pagesOn(t)+' pág. hoje':state.books.filter(b=>b.status==='lendo').length+' lendo','leitura')}${area('devo','#f3ead2','Devocional',hasDevo(t)?'feito hoje ✓':(devoStreak()?devoStreak()+'d seguidos':'hoje'),'devocional')}</div><button class="mitem" style="margin-top:10px" data-a="go" data-to="relatorios"><div class="tic" style="background:${C.rose};width:40px;height:40px">${ic('chart',19)}</div><div class="grow"><b style="font-weight:500">Relatórios</b><div class="small muted">Seu resumo por categoria e período</div></div>${ic('chevR',18)}</button>`;
   const todayItems=ev.map(e=>evRow(e)).join('')+tk.map(x=>tkRow(x)).join('');
   const todayBox=`<h2 class="sec">Hoje <button class="btn sm soft" data-a="sheet" data-s="fab">${ic('plus',14)} Adicionar</button></h2><div class="card" style="margin-top:0;padding-top:6px;padding-bottom:6px">${todayItems||'<div class="empty">Nada marcado pra hoje. Dia leve ✨</div>'}</div>`;
-  return {h,b:welcomeBack()+hero+quickForm()+chips+areas+todayBox};
+  return {h,b:welcomeBack()+homePlan()+hero+quickForm()+chips+areas+todayBox};
 };
 
 S.agenda=()=>{
@@ -582,7 +595,7 @@ S.habitos=()=>{
     if(ui.habitView==='lista'){
       b+=doHabits().map(h=>{const dn=hDone(h,t),sc=sched(h,t),st=hStreak(h),ex=ui.expanded[h.id];
         let grid='';if(ex){grid='<div class="grid28">';for(let i=27;i>=0;i--){const d=addDays(t,-i);grid+=`<i class="${!sched(h,d)?'off':hDone(h,d)?'on':''}" title="${d}"></i>`}grid+='</div><div class="small muted" style="margin-top:6px">Últimos 28 dias</div>'}
-        return `<div class="hcard"><div class="hrow"><div class="hic">${ic('sprout',17)}</div><div class="grow"><b>${esc(h.name)}</b><div class="small"><span class="sagec">${esc(h.cat)}</span> <span class="fl">${ic('flame',11)} ${st}d</span></div><div class="small muted">${daysText(h.days)}${!sc?' · folga hoje':''}${h.auto==='water'?' · automático pela água':''}</div></div><button class="btn sm ${dn?'ok':'ghost'}" data-a="habitDone" data-id="${h.id}">${dn?ic('check',13,2.4)+' Feito':'Marcar'}</button></div><div style="display:flex;justify-content:flex-end;gap:2px;margin-top:4px"><button class="ib sm" data-a="sheet" data-s="habit" data-id="${h.id}">${ic('edit',15)}</button><button class="ib sm" data-a="delHabit" data-id="${h.id}">${ic('trash',15)}</button><button class="ib sm" data-a="expand" data-id="${h.id}" style="${ex?'transform:rotate(180deg)':''}">${ic('chevD',16)}</button></div>${grid}</div>`}).join('')||'<div class="empty">Crie seu primeiro hábito.</div>';
+        return `<div class="hcard"><div class="hrow"><div class="hic">${ic('sprout',17)}</div><div class="grow"><b>${esc(h.name)}</b><div class="small"><span class="sagec">${esc(h.cat)}</span> <span class="fl">${ic('flame',11)} ${st}d</span></div><div class="small muted">${daysText(h.days)}${!sc?' · folga hoje':''}${h.auto==='water'?' · automático pela água':''}</div>${h.when||h.where?`<div class="small" style="color:var(--rose-d)">${[h.when?'às '+esc(h.when):'',h.where?esc(h.where):''].filter(Boolean).join(' · ')}</div>`:''}${h.mini?`<div class="small muted">Mínimo: ${esc(h.mini)}</div>`:''}</div><button class="btn sm ${dn?'ok':'ghost'}" data-a="habitDone" data-id="${h.id}">${dn?ic('check',13,2.4)+' Feito':'Marcar'}</button></div><div style="display:flex;justify-content:flex-end;gap:2px;margin-top:4px"><button class="ib sm" data-a="sheet" data-s="habit" data-id="${h.id}">${ic('edit',15)}</button><button class="ib sm" data-a="delHabit" data-id="${h.id}">${ic('trash',15)}</button><button class="ib sm" data-a="expand" data-id="${h.id}" style="${ex?'transform:rotate(180deg)':''}">${ic('chevD',16)}</button></div>${grid}</div>`}).join('')||'<div class="empty">Crie seu primeiro hábito.</div>';
     }else{
       const m=ym(t),gs=weekStart(m+'-01');let cells=WDS.slice(1).concat('Dom').map(x=>`<div class="h">${x}</div>`).join('');
       for(let i=0;i<42;i++){const d=addDays(gs,i);if(i>=35&&ym(d)!==m)break;const r=d>t?null:dayRatio(d);const bg=r==null?'#fff':`rgba(156,197,161,${.15+r*.85})`;cells+=`<button class="${ym(d)!==m?'out':''} ${d===t?'today':''}" style="background:${bg};${r===1?'color:#fff;font-weight:600':''}">${parseISO(d).getDate()}</button>`}
@@ -678,7 +691,7 @@ S.rapido=()=>{
 S.menu=()=>{
   const it=(icon,bg,name,sub,to)=>`<button class="mitem" data-a="go" data-to="${to}"><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div><div class="grow"><b style="font-weight:500">${name}</b><div class="small muted">${sub}</div></div>${ic('chevR',18)}</button>`;
   const syncTxt={nuvem:'Seus dados estão salvos na sua conta e aparecem em qualquer aparelho em que você entrar.',conectando:'Conectando à sua conta…',local:'Salvando só neste aparelho. Faça backup de vez em quando.',erro:'Não consegui salvar na nuvem agora; os dados seguem salvos neste aparelho.'}[ui.sync];
-  const b=`<div class="card" style="margin-top:0;display:flex;align-items:center;gap:16px"><div class="bigav">${state.avatar?`<img src="${state.avatar}" alt="">`:esc((state.name||'A').charAt(0).toUpperCase())}</div><div class="grow"><div style="font-family:var(--serif);font-size:22px">${esc(state.name||'')}</div><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><label class="btn sm soft" style="cursor:pointer">${ic('edit',14)} ${state.avatar?'Trocar foto':'Adicionar foto'}<input type="file" id="avatarIn" accept="image/*" style="display:none"></label>${state.avatar?'<button class="btn sm ghost" data-a="rmAvatar">Remover</button>':''}</div></div></div>`+it('task',C.sky,'Tarefas','Todas as suas tarefas','tarefas')+it('heart',C.health,'Saúde','Água, sono, remédios e consultas','saude')+it('wallet',C.sand,'Finanças','Receitas, contas e gastos','financas')+it('list',C.lav,'Listas','Mercado, desejos e checklists','listas')+it('target',C.rose,'Metas e selos','Seus objetivos e conquistas','metas')+it('devo','#f3ead2','Devocional','Versículo, reflexão e conquistas','devocional')+it('book',C.sand,'Leitura','Livros, páginas e meta do ano','leitura')+it('chart',C.rose,'Relatórios','Resumo por categoria e período','relatorios')+it('bolt',C.rose,'Adição rápida','Como escrever pra o app entender','rapido')+
+  const b=`<div class="card" style="margin-top:0;display:flex;align-items:center;gap:16px"><div class="bigav">${state.avatar?`<img src="${state.avatar}" alt="">`:esc((state.name||'A').charAt(0).toUpperCase())}</div><div class="grow"><div style="font-family:var(--serif);font-size:22px">${esc(state.name||'')}</div><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><label class="btn sm soft" style="cursor:pointer">${ic('edit',14)} ${state.avatar?'Trocar foto':'Adicionar foto'}<input type="file" id="avatarIn" accept="image/*" style="display:none"></label>${state.avatar?'<button class="btn sm ghost" data-a="rmAvatar">Remover</button>':''}</div></div></div>`+it('task',C.sky,'Tarefas','Todas as suas tarefas','tarefas')+it('heart',C.health,'Saúde','Água, sono, remédios e consultas','saude')+it('wallet',C.sand,'Finanças','Receitas, contas e gastos','financas')+it('list',C.lav,'Listas','Mercado, desejos e checklists','listas')+it('planner',C.sage,'Planejar a semana','Identidade, hábitos e revisão (Hábitos Atômicos)','semana')+it('target',C.rose,'Metas e selos','Seus objetivos e conquistas','metas')+it('devo','#f3ead2','Devocional','Versículo, reflexão e conquistas','devocional')+it('book',C.sand,'Leitura','Livros, páginas e meta do ano','leitura')+it('chart',C.rose,'Relatórios','Resumo por categoria e período','relatorios')+it('bolt',C.rose,'Adição rápida','Como escrever pra o app entender','rapido')+
   `${notifCard()}${themeCard()}<h2 class="sec">Ajustes</h2><div class="card" style="margin-top:0"><form data-f="settings"><label class="fld"><span>Seu nome</span><input name="name" value="${esc(state.name)}"></label><div class="two"><label class="fld"><span>Meta de água (ml)</span><input name="water" inputmode="numeric" value="${state.settings.waterGoal}"></label><label class="fld"><span>Copo padrão (ml)</span><input name="cup" inputmode="numeric" value="${state.settings.cup}"></label></div><label class="fld"><span>Meta de sono (horas)</span><input name="sleep" inputmode="decimal" value="${(state.settings.sleepGoal/60).toLocaleString('pt-BR')}"></label><button class="btn primary full">Salvar ajustes</button></form></div>
   ${accountCard()}<h2 class="sec">Backup</h2><div class="card" style="margin-top:0"><div class="small" style="line-height:1.5">${syncTxt}</div><div class="btnrow"><button class="btn ghost" data-a="copyBackup">${ic('copy',15)} Copiar backup</button><button class="btn ghost" data-a="sheet" data-s="import">Restaurar</button></div><div class="note">Dica: no iPhone, abra no Safari → Compartilhar → “Adicionar à Tela de Início” pra usar como app.</div></div>${cloud&&session?`<h2 class="sec">Conta</h2><div class="card" style="margin-top:0"><div class="small muted">Conectada(o) como</div><div style="margin:2px 0 12px;word-break:break-all">${esc(session.user.email)}</div><button class="btn ghost full" data-a="logout">Sair da conta</button></div>`:''}`;
   return {h:`<div class="top" style="align-items:center"><div class="titleRow">${logoFull(40)}</div>${hIcons()}</div>`,b};
@@ -713,7 +726,7 @@ const authMsg=e=>{const s=(e&&e.message)||'';if(/Invalid login/i.test(s))return 
 
 /* ---------- render ---------- */
 const NAV=[['home','Início','home'],['agenda','Agenda','cal'],['fab','',''],['habitos','Hábitos','sprout'],['rapido','Rápido','bolt'],['menu','Menu','grid']];
-const navOf={tarefas:'menu',saude:'menu',financas:'menu',listas:'menu',lista:'menu',leitura:'menu',relatorios:'menu',devocional:'menu',metas:'menu'};
+const navOf={tarefas:'menu',saude:'menu',financas:'menu',listas:'menu',lista:'menu',leitura:'menu',relatorios:'menu',devocional:'menu',metas:'menu',semana:'menu'};
 function render(){
   const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(!state.onboarded?'welcome':null);
   if(gate){$('#nav').style.display='none';$('#hdr').innerHTML='';$('#main').innerHTML=gate==='splash'?`<div class="splash">${logoFull(64)}<div class="small muted">carregando…</div></div>`:gate==='auth'?S.auth():S.welcome();return}
@@ -725,7 +738,7 @@ function render(){
   $('#hdr').innerHTML=r.h;$('#main').innerHTML=r.b;
   const cur=navOf[ui.screen]||ui.screen;
   const scr=ui.screen==='lista'?'listas':ui.screen;
-  const EXTRA=[['tarefas','Tarefas','task'],['saude','Saúde','heart'],['financas','Finanças','wallet'],['listas','Listas','list'],['leitura','Leitura','book'],['devocional','Devocional','devo'],['relatorios','Relatórios','chart'],['metas','Metas e selos','target']];
+  const EXTRA=[['tarefas','Tarefas','task'],['saude','Saúde','heart'],['financas','Finanças','wallet'],['listas','Listas','list'],['leitura','Leitura','book'],['devocional','Devocional','devo'],['relatorios','Relatórios','chart'],['semana','Planejar a semana','planner'],['metas','Metas e selos','target']];
   $('#nav').innerHTML=`<div class="side-logo">${logoFull(34)}</div>`+NAV.map(([k,l,i])=>k==='fab'?`<button class="fab" data-a="sheet" data-s="fab" aria-label="Adicionar">${ic('plus',26,2)}<span class="fabl">Adicionar</span></button>`:`<button class="${(k===scr||(cur===k&&!EXTRA.some(x=>x[0]===scr)))?'on':''} ${k==='menu'?'mn':''}" data-a="go" data-to="${k}">${ic(i,22)}<span>${l}</span></button>`).join('')+`<div class="side-sep"></div>`+EXTRA.map(([k,l,i])=>`<button class="dsk ${scr===k?'on':''}" data-a="go" data-to="${k}">${ic(i,20)}<span>${l}</span></button>`).join('');
 }
 
@@ -1436,6 +1449,68 @@ SH.feedback=()=>`<h3>mandar sugestão</h3><div class="small muted" style="margin
 
 /* ---------- abrir direto no cadastro ou login (links do site) ---------- */
 (()=>{if(!CLOUD)return;const h=location.hash;if(h==='#criar'||h==='#entrar'){ui.authMode=h==='#criar'?'signup':'login';try{history.replaceState(null,'',location.pathname)}catch(e){}}})();
+
+/* ---------- planejador da semana (inspirado em Hábitos Atômicos) ---------- */
+I.planner='<rect x="4" y="4.5" width="16" height="16.5" rx="2.5"/><path d="M8 2.5v3.5M16 2.5v3.5M4 9.5h16M8 13.5h3.5M8 17h6.5"/>';
+const wkPlan=()=>{ui.planWeek=ui.planWeek||weekStart(today());return ui.planWeek};
+function plan(w){state.plans=state.plans||{};if(!state.plans[w])state.plans[w]={identity:'',focus:[],env:[],stacks:[],reward:'',bundle:'',days:{},review:{}};const p=state.plans[w];['focus','env','stacks'].forEach(k=>p[k]=p[k]||[]);p.days=p.days||{};p.review=p.review||{};return p}
+const prevPlan=w=>{const ks=Object.keys(state.plans||{}).filter(k=>k<w&&state.plans[k].identity).sort();return ks.length?state.plans[ks[ks.length-1]]:null};
+const lawTag=t=>`<span class="law">${t}</span>`;
+function missedTwice(h,end,start){let run=0;for(let d=start;d<=end;d=addDays(d,1)){if(!sched(h,d))continue;if(hDone(h,d))run=0;else{run++;if(run>=2)return true}}return false}
+S.semana=()=>{
+  const w=wkPlan(),p=plan(w),t=today(),we=addDays(w,6),A_=parseISO(w),B_=parseISO(we);
+  const label=`${A_.getDate()} ${MES[A_.getMonth()].slice(0,3)} – ${B_.getDate()} ${MES[B_.getMonth()].slice(0,3)}`;
+  const ta=(k,ph,rows,val)=>`<textarea data-pl="${k}" rows="${rows}" placeholder="${ph}">${esc(val||'')}</textarea>`;
+  let b=`<div class="navrow" style="margin-top:0"><button class="circ" data-a="planWk" data-n="-7">${ic('chevL',16)}</button><button class="pill" data-a="planWk" data-n="0">Esta semana</button><button class="circ" data-a="planWk" data-n="7">${ic('chevR',16)}</button><div class="grow small" style="font-weight:500;padding-left:4px">${label}</div></div>
+  <div class="card pintro"><div class="small" style="line-height:1.6">Inspirado no livro <b>Hábitos Atômicos</b>, de James Clear: pequenas mudanças, repetidas com constância, geram grandes resultados. A ideia aqui é ficar <span class="script" style="font-size:19px">1% melhor</span> a cada semana.</div></div>
+  <div class="seg" style="margin-top:14px"><button class="${ui.planTab!=='revisar'?'on':''}" data-a="planTab" data-v="planejar">Planejar</button><button class="${ui.planTab==='revisar'?'on':''}" data-a="planTab" data-v="revisar">Revisar a semana</button></div>`;
+  if(ui.planTab!=='revisar'){
+    const pv=prevPlan(w);
+    b+=`<div class="card"><div class="cardHead"><h4>quem eu quero ser</h4>${lawTag('identidade')}</div><div class="small muted" style="margin:2px 0 10px">Cada hábito é um voto pra pessoa que você quer se tornar. Comece pela identidade, não pela meta.</div>${ta('identity','Eu sou uma pessoa que cuida do corpo, lê todo dia e tem tempo com Deus…',3,p.identity)}${!p.identity&&pv?`<button class="btn sm soft" style="margin-top:8px" data-a="useIdentity">Usar a da semana passada</button>`:''}</div>`;
+    b+=`<div class="card"><div class="cardHead"><h4>1% melhor esta semana</h4><span class="small muted">${p.focus.length}/3</span></div><div class="small muted" style="margin:2px 0 6px">No máximo 3 focos. Menos é mais.</div>${p.focus.map(f=>`<div class="row"><button class="cb ${f.done?'on':''}" data-a="pTog" data-l="focus" data-id="${f.id}">${f.done?ic('check',14,2.4):''}</button><div class="grow rt ${f.done?'done-t':''}">${esc(f.text)}</div><button class="ib sm" data-a="pDel" data-l="focus" data-id="${f.id}">${ic('x',15)}</button></div>`).join('')}${p.focus.length<3?`<form class="addrow" data-f="pfocus"><input name="t" placeholder="Ex.: treinar 3x, dormir antes das 23h" autocomplete="off"><button class="btn primary">${ic('plus',16)}</button></form>`:''}</div>`;
+    const hs=doHabits();
+    b+=`<div class="card"><div class="cardHead"><h4>quando, onde e o mínimo</h4>${lawTag('torne óbvio e fácil')}</div><div class="small muted" style="margin:2px 0 8px">Defina hora e lugar pra cada hábito, e uma versão de 2 minutos pros dias difíceis. Ninguém precisa de motivação pra fazer o mínimo.</div>`+
+      (hs.length?hs.map(h=>`<div class="phab"><div class="phn">${esc(h.name)}</div><div class="two" style="gap:8px"><label class="fld" style="margin:0"><span>Hora</span><input type="time" data-ph="${h.id}:when" value="${esc(h.when||'')}"></label><label class="fld" style="margin:0"><span>Onde</span><input data-ph="${h.id}:where" value="${esc(h.where||'')}" placeholder="Ex.: na sala"></label></div><label class="fld" style="margin:8px 0 0"><span>Versão de 2 minutos</span><input data-ph="${h.id}:mini" value="${esc(h.mini||'')}" placeholder="Ex.: ler 1 página, calçar o tênis"></label></div>`).join(''):`<div class="empty">Crie seus hábitos na aba Hábitos pra planejar aqui.</div>`)+`</div>`;
+    b+=`<div class="card"><div class="cardHead"><h4>empilhamento de hábitos</h4>${lawTag('torne óbvio')}</div><div class="small muted" style="margin:2px 0 6px">Prenda o hábito novo a algo que você já faz todo dia.</div>${p.stacks.map(s=>`<div class="row"><div class="grow rt" style="font-size:14px">Depois de <b>${esc(s.after)}</b>, eu vou <b>${esc(s.then)}</b>.</div><button class="ib sm" data-a="pDel" data-l="stacks" data-id="${s.id}">${ic('x',15)}</button></div>`).join('')}<form data-f="pstack" style="margin-top:8px"><div class="two" style="gap:8px"><label class="fld" style="margin:0"><span>Depois de…</span><input name="a" required placeholder="tomar café" autocomplete="off"></label><label class="fld" style="margin:0"><span>eu vou…</span><input name="b" required placeholder="ler meu devocional" autocomplete="off"></label></div><button class="btn soft sm" style="margin-top:8px">${ic('plus',13)} Adicionar</button></form></div>`;
+    b+=`<div class="card"><div class="cardHead"><h4>prepare o ambiente</h4>${lawTag('torne fácil')}</div><div class="small muted" style="margin:2px 0 6px">Deixe o caminho pronto: o certo fácil de ver, o que atrapalha difícil de alcançar.</div>${p.env.map(f=>`<div class="row"><button class="cb ${f.done?'on':''}" data-a="pTog" data-l="env" data-id="${f.id}">${f.done?ic('check',14,2.4):''}</button><div class="grow rt ${f.done?'done-t':''}">${esc(f.text)}</div><button class="ib sm" data-a="pDel" data-l="env" data-id="${f.id}">${ic('x',15)}</button></div>`).join('')}<form class="addrow" data-f="penv"><input name="t" placeholder="Ex.: deixar a garrafinha na mesa, roupa do treino separada" autocomplete="off"><button class="btn primary">${ic('plus',16)}</button></form></div>`;
+    b+=`<div class="card"><div class="cardHead"><h4>torne prazeroso</h4>${lawTag('atraente e satisfatório')}</div><div class="small muted" style="margin:2px 0 10px">Junte o que você precisa fazer com algo que você gosta, e celebre cada vitória.</div><label class="fld"><span>Só vou… enquanto…</span>${ta('bundle','Ex.: ouvir meu podcast favorito só enquanto caminho',2,p.bundle)}</label><label class="fld" style="margin-bottom:0"><span>Como vou celebrar</span>${ta('reward','Ex.: marcar o hábito no GO! e um café gostoso no sábado',2,p.reward)}</label></div>`;
+    b+=`<div class="card"><div class="cardHead"><h4>dia a dia</h4><span class="small muted">a prioridade de cada dia</span></div>${[0,1,2,3,4,5,6].map(i=>{const d=addDays(w,i),ev=eventsOn(d).length;return `<div class="pday ${d===t?'today':''}"><div class="pdl"><b>${WDS[parseISO(d).getDay()]}</b><span>${parseISO(d).getDate()}</span></div><input data-pl="day:${d}" value="${esc(p.days[d]||'')}" placeholder="${ev?ev+(ev===1?' compromisso':' compromissos')+' · prioridade?':'Prioridade do dia'}"></div>`}).join('')}<div class="note">A prioridade de hoje aparece no Início.</div></div>`;
+  }else{
+    const end=we<t?we:t,days=w<=t?daysIn(w,end):[];let sch=0,dn=0;
+    const per=doHabits().map(h=>{let s=0,k=0;days.forEach(d=>{if(sched(h,d)){s++;if(hDone(h,d))k++}});sch+=s;dn+=k;return {h,s,k}}).filter(x=>x.s);
+    const twice=doHabits().filter(h=>days.length&&missedTwice(h,end,w));
+    b+=`<div class="hero" style="margin-top:14px"><div class="hmain">${ring(sch?dn/sch:0,'var(--sage)',pctBig(sch?Math.round(dn/sch*100):0),'hábitos')}<div><div class="hk g">Semana ${label}</div><div class="hT">${p.focus.filter(f=>f.done).length} de ${p.focus.length} focos concluídos</div><div class="hS">${days.length?plural(days.length,'dia analisado','dias analisados'):'A semana ainda não começou'}</div></div></div></div>`;
+    if(per.length)b+=`<div class="card"><h4>como foram os hábitos</h4>${per.map(x=>{const pc=Math.round(x.k/x.s*100);return `<div class="hrow2"><div class="nm">${esc(x.h.name)}</div><div class="bar"><i style="width:${pc}%;background:${pc>=80?'var(--sage)':pc>=50?'#c9d9a8':'var(--rose)'}"></i></div><div class="pc">${x.k}/${x.s}</div></div>`}).join('')}</div>`;
+    if(twice.length)b+=`<div class="card pwarn"><h4>nunca falhe duas vezes</h4><div class="small" style="line-height:1.6;margin-top:4px">Errar uma vez é acidente; duas seguidas é o começo de um novo padrão. Na próxima semana, proteja estes, nem que seja com a versão mínima:</div>${twice.map(h=>`<div class="row" style="padding:8px 0"><span>🌱</span><div class="grow"><div class="rt" style="font-size:14px">${esc(h.name)}</div>${h.mini?`<div class="small muted">Mínimo: ${esc(h.mini)}</div>`:''}</div></div>`).join('')}</div>`;
+    b+=`<div class="card"><h4>revisão</h4><label class="fld" style="margin-top:10px"><span>O que funcionou?</span>${ta('rev:good','Ex.: treinar de manhã, antes do trabalho',2,p.review.good)}</label><label class="fld"><span>O que atrapalhou?</span>${ta('rev:hard','Ex.: dormi tarde e perdi o horário',2,p.review.hard)}</label><label class="fld" style="margin-bottom:0"><span>O que vou ajustar (1%)?</span>${ta('rev:next','Ex.: deixar a roupa do treino separada na noite anterior',2,p.review.next)}</label></div>
+    <button class="btn primary full" style="margin-top:14px" data-a="planNext">Planejar a próxima semana ›</button>`;
+  }
+  b+=`<div class="note" style="text-align:center;margin-top:12px">${ic('check',13)} Salvo automaticamente enquanto você escreve.</div>`;
+  return {h:titleHdr('planner','Planejar a semana',C.sage),b};
+};
+document.addEventListener('input',ev=>{const el=ev.target;if(!el||!el.dataset)return;
+  if(el.dataset.pl){const p=plan(wkPlan()),k=el.dataset.pl;if(k.startsWith('day:'))p.days[k.slice(4)]=el.value;else if(k.startsWith('rev:'))p.review[k.slice(4)]=el.value;else p[k]=el.value;saveQuiet();return}
+  if(el.dataset.ph){const [id,f]=el.dataset.ph.split(':'),h=state.habits.find(x=>x.id===id);if(h){h[f]=el.value;saveQuiet()}}
+});
+Object.assign(A,{
+  planWk:d=>{ui.planWeek=+d.n===0?weekStart(today()):addDays(wkPlan(),+d.n);render();window.scrollTo(0,0)},
+  planTab:d=>{ui.planTab=d.v;render();window.scrollTo(0,0)},
+  planNext:()=>{const w=wkPlan(),nw=addDays(w,7),cur=plan(w),np=plan(nw);if(!np.identity)np.identity=cur.identity;ui.planWeek=nw;ui.planTab='planejar';save();window.scrollTo(0,0);toast('Nova semana, novo 1% 🌱')},
+  useIdentity:()=>{const p=plan(wkPlan()),pv=prevPlan(wkPlan());if(pv)p.identity=pv.identity;save()},
+  pTog:d=>{const it=plan(wkPlan())[d.l].find(x=>x.id===d.id);if(it){it.done=!it.done;save()}},
+  pDel:d=>{const p=plan(wkPlan());p[d.l]=p[d.l].filter(x=>x.id!==d.id);save()}
+});
+Object.assign(F,{
+  pfocus:v=>{const t_=(v.t||'').trim();if(!t_)return;const p=plan(wkPlan());if(p.focus.length>=3){toast('No máximo 3 focos 😉');return}p.focus.push({id:uid(),text:t_,done:false});save()},
+  penv:v=>{const t_=(v.t||'').trim();if(!t_)return;plan(wkPlan()).env.push({id:uid(),text:t_,done:false});save()},
+  pstack:v=>{if(!v.a.trim()||!v.b.trim())return;plan(wkPlan()).stacks.push({id:uid(),after:v.a.trim(),then:v.b.trim()});save()}
+});
+function homePlan(){
+  const t=today(),p=(state.plans||{})[weekStart(t)],pr=p&&p.days&&p.days[t],y=addDays(t,-1);
+  const miss=doHabits().find(h=>sched(h,y)&&!hDone(h,y)&&sched(h,t)&&!hDone(h,t)&&y>=h.created);
+  if(!pr&&!miss)return '';
+  return `<div class="pcard">${pr?`<div><div class="hk" style="color:var(--rose-d)">Prioridade de hoje</div><div style="font-size:15.5px;margin-top:2px">★ ${esc(pr)}</div></div>`:''}${miss?`<div class="small" style="line-height:1.55;${pr?'margin-top:10px;padding-top:10px;border-top:1px solid #efd9de':''}">🌱 Ontem não deu pra <b>${esc(miss.name)}</b>. Hoje, o mínimo já conta${miss.mini?`: <b>${esc(miss.mini)}</b>`:''}. Nunca falhe duas vezes 💛</div>`:''}</div>`;
+}
 
 writeLocal();render();
 </script>
