@@ -90,6 +90,9 @@ button{font:inherit;cursor:pointer;color:inherit}
 .ar{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:70px;flex:1 0 70px;padding:4px 0;color:var(--ink);font-size:12px}
 .ar .tic{width:48px;height:48px;border-radius:16px}
 .tday{padding:6px 16px}
+.rrow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -4px;padding:0 4px 4px;scroll-snap-type:x mandatory}.rrow::-webkit-scrollbar{display:none}
+.rbk{flex:0 0 min(300px,84%);scroll-snap-align:start;display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px}
+.rrow .rbk:only-child{flex-basis:100%}
 .tgrp{padding:8px 0 6px}.tgrp+.tgrp{border-top:1px solid var(--line)}
 .tgh{display:flex;align-items:center;gap:6px;width:100%;background:none;border:0;padding:4px 0 6px;color:var(--muted);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
 .tgh span:first-of-type{flex:1;text-align:left}.tgh .tdone{flex:none;letter-spacing:0;text-transform:none;color:var(--sage-d,#6f9c76);font-size:12px;margin-right:4px}
@@ -302,7 +305,7 @@ input,select,textarea{font-weight:400}
 .wbt{font-family:var(--serif);font-size:21px;text-transform:lowercase}
 
 [data-theme=dark]{--bg:#1d1719;--card:#272022;--ink:#f2e8ea;--line:#3a2f32;--muted:#b5a5a9;--rose-l:#4a2f37;--sage-l:#2c3a2e;--sky-l:#26343a;--lav-l:#332c3d;--sand-l:#3a3226;color-scheme:dark}
-[data-theme=dark] .card,[data-theme=dark] .area,[data-theme=dark] .lcard,[data-theme=dark] .bcard,[data-theme=dark] .hcard,[data-theme=dark] .chip,[data-theme=dark] .seg,[data-theme=dark] .quick,[data-theme=dark] .mitem,[data-theme=dark] .search,[data-theme=dark] .pill,[data-theme=dark] .circ,[data-theme=dark] .btn.ghost,[data-theme=dark] .wk button,[data-theme=dark] .cal button,[data-theme=dark] .ex button,[data-theme=dark] .fabgrid button,[data-theme=dark] .cb,[data-theme=dark] .days span,[data-theme=dark] .pick label span,[data-theme=dark] .sheet .xclose,[data-theme=dark] nav.bar,[data-theme=dark] .fld input,[data-theme=dark] .fld select,[data-theme=dark] textarea,[data-theme=dark] .addrow input,[data-theme=dark] .paid{background:var(--card);color:var(--ink);border-color:var(--line)}
+[data-theme=dark] .card,[data-theme=dark] .rbk,[data-theme=dark] .area,[data-theme=dark] .lcard,[data-theme=dark] .bcard,[data-theme=dark] .hcard,[data-theme=dark] .chip,[data-theme=dark] .seg,[data-theme=dark] .quick,[data-theme=dark] .mitem,[data-theme=dark] .search,[data-theme=dark] .pill,[data-theme=dark] .circ,[data-theme=dark] .btn.ghost,[data-theme=dark] .wk button,[data-theme=dark] .cal button,[data-theme=dark] .ex button,[data-theme=dark] .fabgrid button,[data-theme=dark] .cb,[data-theme=dark] .days span,[data-theme=dark] .pick label span,[data-theme=dark] .sheet .xclose,[data-theme=dark] nav.bar,[data-theme=dark] .fld input,[data-theme=dark] .fld select,[data-theme=dark] textarea,[data-theme=dark] .addrow input,[data-theme=dark] .paid{background:var(--card);color:var(--ink);border-color:var(--line)}
 [data-theme=dark] .chip.on,[data-theme=dark] .seg button.on,[data-theme=dark] .days input:checked+span,[data-theme=dark] .pick label input:checked+span,[data-theme=dark] .wk .on{background:var(--rose);color:#2b2023;border-color:var(--rose)}
 [data-theme=dark] .cb.on{background:var(--sage);border-color:var(--sage)}
 [data-theme=dark] .tic{background:#3a2f33!important;color:#f0dfe3}
@@ -424,13 +427,13 @@ function defaultState(){
     habitRecord:0,water:{},sleep:{},meds:[],medLog:{},mood:{},moodNote:{},
     fin:{entries:[],paid:{}},
     lists:[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}],
-    activeDays:{},quickLog:[],books:[],devo:{entries:{}}};
+    activeDays:{},openDays:{},quickLog:[],books:[],devo:{entries:{}}};
 }
 function migrate(s){if(s.onboarded===undefined)s.onboarded=!!(s.updatedAt||(s.name&&s.habits&&s.habits.length));const d=defaultState();for(const k in d)if(s[k]===undefined)s[k]=d[k];for(const k in d.settings)if(s.settings[k]===undefined)s.settings[k]=d.settings[k];if(!s.fin.paid)s.fin.paid={};(s.fin.entries||[]).forEach(e=>{if(e.type==='out'&&!e.cat)e.cat=guessCat(e.desc)});return s}
 let state=null;
 try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 state=migrate(state&&state.v?state:defaultState());
-state.activeDays[today()]=true;
+state.openDays[today()]=true;
 const ui={access:null,planTab:'planejar',planWeek:null,metaTab:'metas',devoTab:'hoje',devoDate:null,repPeriod:'mes',repOff:0,repCat:'tudo',bookTab:'lendo',ready:true,obStep:0,authMode:null,authErr:'',authBusy:false,screen:'home',heroTab:0,agView:'timeline',selDay:today(),healthTab:'geral',finMonth:ym(today()),listFilter:'todas',listSearch:'',openList:null,habitTab:'do',habitView:'lista',expanded:{},taskFilter:'hoje',sync:'local'};
 
 /* ---------- persistência: Supabase (login + banco) ou só no aparelho ---------- */
@@ -441,7 +444,7 @@ const lkey=()=>KEY+(session?':'+session.user.id:'');
 function loadLocal(){try{return JSON.parse(localStorage.getItem(lkey()))}catch(e){return null}}
 function writeLocal(){try{localStorage.setItem(lkey(),JSON.stringify(state))}catch(e){}}
 async function pushRemote(){if(!sb||!session)return;const uid_=session.user.id;const {error}=await sb.from('app_state').upsert({user_id:uid_,data:state,updated_at:new Date().toISOString()});ui.sync=error?'erro':'nuvem'}
-function save(){try{checkBadges()}catch(e){}state.updatedAt=Date.now();state.activeDays[today()]=true;writeLocal();clearTimeout(saveT);saveT=setTimeout(pushRemote,600);render()}
+function save(meta){try{checkBadges()}catch(e){}state.updatedAt=Date.now();if(!meta)state.activeDays[today()]=true;state.openDays[today()]=true;writeLocal();clearTimeout(saveT);saveT=setTimeout(pushRemote,600);render()}
 async function pullRemote(force){
   if(!sb||!session)return;
   const {data,error}=await sb.from('app_state').select('data').eq('user_id',session.user.id).maybeSingle();
@@ -451,7 +454,7 @@ async function pullRemote(force){
   let best=remote;
   [local,cur].forEach(s=>{if(s&&s.v&&s._uid===session.user.id&&(!best||(s.updatedAt||0)>(best.updatedAt||0)))best=s});
   state=migrate(best?JSON.parse(JSON.stringify(best)):defaultState());
-  state._uid=session.user.id;state.activeDays[today()]=true;writeLocal();
+  state._uid=session.user.id;state.openDays[today()]=true;writeLocal();
   if(!remote||(state.updatedAt||0)>(remote.updatedAt||0))await pushRemote();else ui.sync='nuvem';
 }
 /* ---------- acesso pago: só entra quem comprou (ou cortesia) ---------- */
@@ -566,7 +569,9 @@ S.home=()=>{
   const grp=(icon,l,body,to,extra='')=>body||extra?`<div class="tgrp"><button class="tgh" data-a="go" data-to="${to}">${ic(icon,14)}<span>${l}</span>${extra}${ic('chevR',14)}</button>${body}</div>`:'';
   const inner=grp('cal','agenda',evH,'agenda')+grp('task','tarefas',tkH,'tarefas')+grp('sprout','hábitos',hH,'habitos',hD?`<span class="tdone">${hD} ${hD===1?'feito':'feitos'} ✓</span>`:'');
   const todayBox=`<h2 class="sec">seu dia <button class="btn sm soft" data-a="sheet" data-s="fab">${ic('plus',14)} Adicionar</button></h2><div class="card tday" style="margin-top:0">${inner||'<div class="empty">Nada marcado pra hoje. Dia leve ✨</div>'}</div>`;
-  return {h,b:welcomeBack()+homePlan()+hero+todayBox+quickForm()+areas};
+  const rd=state.books.filter(x=>x.status==='lendo');
+  const reading=rd.length?`<h2 class="sec">lendo agora <button class="btn sm soft" data-a="go" data-to="leitura">Ver tudo</button></h2><div class="rrow">${rd.map(k=>{const pct=k.pages?Math.min(100,Math.round((k.current||0)/k.pages*100)):0,col=BOOKC[(k.title.charCodeAt(0)||0)%BOOKC.length];return `<div class="rbk">${spineH(k,col)}<div class="grow" style="min-width:0"><div class="rt" style="font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k.title)}</div>${k.author?`<div class="small muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k.author)}</div>`:''}<div class="bar" style="margin-top:8px;height:6px"><i style="width:${pct}%;background:${col}"></i></div><div class="small muted" style="margin-top:4px">p. ${k.current||0}${k.pages?' de '+k.pages+' · '+pct+'%':''}</div><button class="btn sm primary" style="margin-top:8px" data-a="sheet" data-s="readlog" data-id="${k.id}">+ páginas</button></div></div>`}).join('')}</div>`:'';
+  return {h,b:welcomeBack()+homePlan()+hero+todayBox+reading+quickForm()+areas};
 };
 
 S.agenda=()=>{
@@ -948,7 +953,7 @@ const A={
   itemT:d=>{const l=state.lists.find(x=>x.id===ui.openList),i=l.items.find(x=>x.id===d.id);i.done=!i.done;save()},
   itemDel:d=>{const l=state.lists.find(x=>x.id===ui.openList);l.items=l.items.filter(x=>x.id!==d.id);save()},
   clearItems:()=>{const s=snap(),l=state.lists.find(x=>x.id===ui.openList);l.items=l.items.filter(x=>!x.done);save();toast('Marcados removidos',s)},
-  pinList:()=>{const l=state.lists.find(x=>x.id===ui.openList);l.pinned=!l.pinned;save()},
+  pinList:()=>{const l=state.lists.find(x=>x.id===ui.openList);l.pinned=!l.pinned;save(1)},
   delList:()=>{const s=snap();state.lists=state.lists.filter(x=>x.id!==ui.openList);ui.screen='listas';save();toast('Lista excluída',s)},
   ex:d=>{const i=$('#main .quick input');i.value=d.t;i.focus()},
   copyBackup:async()=>{try{await navigator.clipboard.writeText(JSON.stringify(state));toast('Backup copiado. Cole num lugar seguro (ex.: Notas).')}catch(e){openSheet('import');$('#sheet textarea').value=JSON.stringify(state);$('#sheet h3').textContent='Seu backup';toast('Selecione e copie o texto')}}
@@ -987,7 +992,7 @@ const F={
   med:v=>{state.meds.push({id:uid(),name:v.name,time:v.time});closeSheet();save()},
   list:v=>{if(v.id)Object.assign(state.lists.find(x=>x.id===v.id),{name:v.name,type:v.type});else{const l={id:uid(),name:v.name,type:v.type,pinned:false,items:[]};state.lists.push(l);ui.openList=l.id;ui.screen='lista'}closeSheet();save()},
   item:v=>{const l=state.lists.find(x=>x.id===ui.openList);v.t.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>l.items.push({id:uid(),text:s.charAt(0).toUpperCase()+s.slice(1),done:false}));save();const i=$('#main .addrow input');if(i)i.focus()},
-  settings:v=>{state.name=v.name.trim();state.settings.waterGoal=parseInt(v.water)||3000;state.settings.cup=parseInt(v.cup)||250;state.settings.sleepGoal=Math.round(parseAmt(v.sleep)*60)||480;save();toast('Ajustes salvos')},
+  settings:v=>{state.name=v.name.trim();state.settings.waterGoal=parseInt(v.water)||3000;state.settings.cup=parseInt(v.cup)||250;state.settings.sleepGoal=Math.round(parseAmt(v.sleep)*60)||480;save(1);toast('Ajustes salvos')},
   import:v=>{try{const s=JSON.parse(v.j);if(!s.v)throw 0;const old=snap();state=migrate(s);if(session)state._uid=session.user.id;closeSheet();save();toast('Backup restaurado',old)}catch(e){toast('Esse texto não parece um backup válido')}}
 };
 document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,fn=F[f.dataset.f];if(fn)fn(Object.fromEntries(new FormData(f)),f)});
@@ -1054,7 +1059,7 @@ Object.assign(F,{
   readlog:v=>{const k=state.books.find(x=>x.id===v.id),np=parseInt(v.page)||0,diff=np-(k.current||0);
     if(diff<=0){k.current=np;closeSheet();save();return}
     const fin=readPages(k,diff);closeSheet();save();toast(`+${diff} páginas 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
-  readgoal:v=>{state.settings.readGoal=Math.max(1,parseInt(v.g)||12);closeSheet();save()}
+  readgoal:v=>{state.settings.readGoal=Math.max(1,parseInt(v.g)||12);closeSheet();save(1)}
 });
 Object.assign(A,{
   bookTab:d=>{ui.bookTab=d.v;render()},
@@ -1287,7 +1292,7 @@ document.addEventListener('change',ev=>{
 document.addEventListener('change',ev=>{
   if(ev.target.id!=='avatarIn'||!ev.target.files||!ev.target.files[0])return;
   const f=ev.target.files[0],img=new Image(),url=URL.createObjectURL(f);
-  img.onload=()=>{const s=Math.min(img.width,img.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,256,256);URL.revokeObjectURL(url);state.avatar=c.toDataURL('image/jpeg',0.82);save();toast('Foto atualizada 📸')};
+  img.onload=()=>{const s=Math.min(img.width,img.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,256,256);URL.revokeObjectURL(url);state.avatar=c.toDataURL('image/jpeg',0.82);save(1);toast('Foto atualizada 📸')};
   img.onerror=()=>{URL.revokeObjectURL(url);toast('Não consegui abrir essa imagem')};img.src=url;
 });
 A.rmAvatar=()=>{const s=snap();delete state.avatar;save();toast('Foto removida',s)};
@@ -1362,11 +1367,11 @@ Object.assign(A,{
   nset:d=>{const n=nf();n[d.k]=!n[d.k];save();syncPrefs()},
   ntest:()=>testNotif(),
   nhere:()=>enableNotif(),
-  wbClose:()=>{state.wbSeen=today();save()}
+  wbClose:()=>{state.wbSeen=today();save(1)}
 });
 SH.iosinstall=()=>`<h3>falta só um passo</h3><div style="font-size:14px;line-height:1.65">No iPhone, as notificações só funcionam com o GO! adicionado à Tela de Início:<ol style="margin:10px 0 0 18px"><li>Abra este endereço no <b>Safari</b></li><li>Toque em <b>Compartilhar</b> (o quadrado com a setinha)</li><li>Escolha <b>Adicionar à Tela de Início</b></li><li>Abra o GO! pelo ícone e ative as notificações no Menu</li></ol></div><button class="btn primary full" style="margin-top:18px" data-a="closeSheet">Entendi</button>`;
 function welcomeBack(){
-  const t=today(),prev=Object.keys(state.activeDays||{}).filter(d=>d<t).sort().pop();if(!prev||state.wbSeen===t)return '';
+  const t=today(),prev=Object.keys(Object.assign({},state.activeDays,state.openDays)).filter(d=>d<t).sort().pop();if(!prev||state.wbSeen===t)return '';
   const gap=daysBetween(prev,t);if(gap<3)return '';
   return `<div class="wb"><div class="grow"><div class="wbt">que bom te ver de novo${state.name?`, <span class="script">${esc(state.name.split(' ')[0])}</span>`:''} 💛</div><div class="small" style="line-height:1.55;margin-top:4px">Fazia ${gap} dias. Recomeçar também é avançar: nada se perdeu, tudo o que você já fez continua aqui.</div><div class="btnrow" style="margin-top:12px"><button class="btn primary sm" data-a="go" data-to="habitos">Marcar um hábito</button><button class="btn sm ghost" data-a="wbClose">Fechar</button></div></div></div>`;
 }
@@ -1425,7 +1430,7 @@ A.openSearch=()=>{openSheet('search');setTimeout(()=>{const i=document.getElemen
 /* ---------- modo escuro ---------- */
 function applyTheme(){const t=(state.settings&&state.settings.theme)||'auto';const dark=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#1d1719':'#faf5f3'}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
-A.theme=d=>{state.settings.theme=d.v;applyTheme();save()};
+A.theme=d=>{state.settings.theme=d.v;applyTheme();save(1)};
 const themeCard=()=>{const t=state.settings.theme||'auto';return `<h2 class="sec">Aparência</h2><div class="card" style="margin-top:0"><div class="seg" style="width:100%;display:flex">${[['auto','Automático'],['light','Claro'],['dark','Escuro']].map(([k,l])=>`<button style="flex:1;justify-content:center" class="${t===k?'on':''}" data-a="theme" data-v="${k}">${l}</button>`).join('')}</div><div class="note">No automático, o GO! segue o modo claro ou escuro do seu celular.</div></div>`};
 
 /* ---------- conta: privacidade, exportar e excluir ---------- */
@@ -1535,6 +1540,27 @@ function plan(w){state.plans=state.plans||{};if(!state.plans[w])state.plans[w]={
 const prevPlan=w=>{const ks=Object.keys(state.plans||{}).filter(k=>k<w&&state.plans[k].identity).sort();return ks.length?state.plans[ks[ks.length-1]]:null};
 const lawTag=t=>`<span class="law">${t}</span>`;
 function missedTwice(h,end,start){let run=0;for(let d=start;d<=end;d=addDays(d,1)){if(!sched(h,d))continue;if(hDone(h,d))run=0;else{run++;if(run>=2)return true}}return false}
+const HINTS=[
+ [/agua|beber|hidrat/,'garrafinha na mesa do trabalho','beber 1 copo d\'água agora'],
+ [/trein|academia|muscula|malha|crossfit|funcional/,'na academia, depois do trabalho','vestir a roupa de treino e fazer 1 série'],
+ [/caminh|corr|cardio|bike|pedal/,'na rua do bairro ou na esteira','calçar o tênis e andar 5 minutos'],
+ [/along|yoga|pilates|mobilid/,'no tapete do quarto','1 alongamento de 2 minutos'],
+ [/devoc|oracao|orar|biblia|palavra|deus|culto/,'na mesa da sala, com o café','ler 1 versículo e agradecer'],
+ [/leitura|\bler\b|livro|ler /,'na poltrona, antes de dormir','ler 1 página'],
+ [/medit|respira/,'no quarto, ao acordar','3 respirações profundas'],
+ [/skin|pele|cuidado/,'no banheiro, antes de dormir','lavar o rosto e passar hidratante'],
+ [/dorm|sono|deitar/,'no quarto, celular fora da cama','apagar a luz no horário'],
+ [/celular|tela|rede|instagram/,'celular carregando fora do quarto','deixar o celular em outro cômodo'],
+ [/fruta|salada|verdura|legume/,'na fruteira à vista na cozinha','comer 1 fruta no lanche'],
+ [/vitamin|suplement|remedio|creatina|whey/,'pote ao lado da cafeteira','tomar com o café da manhã'],
+ [/estud|curso|aula|ingles|idioma/,'na escrivaninha, sem o celular','abrir o material e ler 1 parágrafo'],
+ [/planej|organiz|agenda/,'na mesa, com o GO! aberto','escolher a prioridade do dia'],
+ [/marmita|cozinh|refeic|comida|aliment|dieta|cardapio/,'na cozinha, domingo à tarde','separar os potes e os ingredientes'],
+ [/escrev|diario|journal|gratid/,'na cama, antes de dormir','escrever 1 frase do dia'],
+ [/limp|arrum|casa|louca/,'na cozinha, depois do jantar','arrumar só a pia'],
+ [/financ|gasto|dinheiro|econom/,'no sofá, à noite','anotar os gastos do dia no GO!']
+];
+function habitHint(h){const n=norm(h.name||'');const x=HINTS.find(r=>r[0].test(n));return x?{w:x[1],m:x[2]}:{w:'um lugar que você já passa todo dia',m:'a menor versão possível de '+(h.name||'').toLowerCase()}}
 S.semana=()=>{
   const w=wkPlan(),p=plan(w),t=today(),we=addDays(w,6),A_=parseISO(w),B_=parseISO(we);
   const label=`${A_.getDate()} ${MES[A_.getMonth()].slice(0,3)} – ${B_.getDate()} ${MES[B_.getMonth()].slice(0,3)}`;
@@ -1548,7 +1574,7 @@ S.semana=()=>{
     b+=`<div class="card"><div class="cardHead"><h4>1% melhor esta semana</h4><span class="small muted">${p.focus.length}/3</span></div><div class="small muted" style="margin:2px 0 6px">No máximo 3 focos. Menos é mais.</div>${p.focus.map(f=>`<div class="row"><button class="cb ${f.done?'on':''}" data-a="pTog" data-l="focus" data-id="${f.id}">${f.done?ic('check',14,2.4):''}</button><div class="grow rt ${f.done?'done-t':''}">${esc(f.text)}</div><button class="ib sm" data-a="pDel" data-l="focus" data-id="${f.id}">${ic('x',15)}</button></div>`).join('')}${p.focus.length<3?`<form class="addrow" data-f="pfocus"><input name="t" placeholder="Ex.: treinar 3x, dormir antes das 23h" autocomplete="off"><button class="btn primary">${ic('plus',16)}</button></form>`:''}</div>`;
     const hs=doHabits();
     b+=`<div class="card"><div class="cardHead"><h4>quando, onde e o mínimo</h4>${lawTag('torne óbvio e fácil')}</div><div class="small muted" style="margin:2px 0 8px">Defina hora e lugar pra cada hábito, e uma versão de 2 minutos pros dias difíceis. Ninguém precisa de motivação pra fazer o mínimo.</div>`+
-      (hs.length?hs.map(h=>`<div class="phab"><div class="phn">${esc(h.name)}</div><div class="two" style="gap:8px"><label class="fld" style="margin:0"><span>Hora</span><input type="time" data-ph="${h.id}:when" value="${esc(h.when||'')}"></label><label class="fld" style="margin:0"><span>Onde</span><input data-ph="${h.id}:where" value="${esc(h.where||'')}" placeholder="Ex.: na sala"></label></div><label class="fld" style="margin:8px 0 0"><span>Versão de 2 minutos</span><input data-ph="${h.id}:mini" value="${esc(h.mini||'')}" placeholder="Ex.: ler 1 página, calçar o tênis"></label></div>`).join(''):`<div class="empty">Crie seus hábitos na aba Hábitos pra planejar aqui.</div>`)+`</div>`;
+      (hs.length?hs.map(h=>`<div class="phab"><div class="phn">${esc(h.name)}</div><div class="two" style="gap:8px"><label class="fld" style="margin:0"><span>Hora</span><input type="time" data-ph="${h.id}:when" value="${esc(h.when||'')}"></label><label class="fld" style="margin:0"><span>Onde</span><input data-ph="${h.id}:where" value="${esc(h.where||'')}" placeholder="Ex.: ${esc(habitHint(h).w)}"></label></div><label class="fld" style="margin:8px 0 0"><span>Versão de 2 minutos</span><input data-ph="${h.id}:mini" value="${esc(h.mini||'')}" placeholder="Ex.: ${esc(habitHint(h).m)}"></label></div>`).join(''):`<div class="empty">Crie seus hábitos na aba Hábitos pra planejar aqui.</div>`)+`</div>`;
     b+=`<div class="card"><div class="cardHead"><h4>empilhamento de hábitos</h4>${lawTag('torne óbvio')}</div><div class="small muted" style="margin:2px 0 6px">Prenda o hábito novo a algo que você já faz todo dia.</div>${p.stacks.map(s=>`<div class="row"><div class="grow rt" style="font-size:14px">Depois de <b>${esc(s.after)}</b>, eu vou <b>${esc(s.then)}</b>.</div><button class="ib sm" data-a="pDel" data-l="stacks" data-id="${s.id}">${ic('x',15)}</button></div>`).join('')}<form data-f="pstack" style="margin-top:8px"><div class="two" style="gap:8px"><label class="fld" style="margin:0"><span>Depois de…</span><input name="a" required placeholder="tomar café" autocomplete="off"></label><label class="fld" style="margin:0"><span>eu vou…</span><input name="b" required placeholder="ler meu devocional" autocomplete="off"></label></div><button class="btn soft sm" style="margin-top:8px">${ic('plus',13)} Adicionar</button></form></div>`;
     b+=`<div class="card"><div class="cardHead"><h4>prepare o ambiente</h4>${lawTag('torne fácil')}</div><div class="small muted" style="margin:2px 0 6px">Deixe o caminho pronto: o certo fácil de ver, o que atrapalha difícil de alcançar.</div>${p.env.map(f=>`<div class="row"><button class="cb ${f.done?'on':''}" data-a="pTog" data-l="env" data-id="${f.id}">${f.done?ic('check',14,2.4):''}</button><div class="grow rt ${f.done?'done-t':''}">${esc(f.text)}</div><button class="ib sm" data-a="pDel" data-l="env" data-id="${f.id}">${ic('x',15)}</button></div>`).join('')}<form class="addrow" data-f="penv"><input name="t" placeholder="Ex.: deixar a garrafinha na mesa, roupa do treino separada" autocomplete="off"><button class="btn primary">${ic('plus',16)}</button></form></div>`;
     b+=`<div class="card"><div class="cardHead"><h4>torne prazeroso</h4>${lawTag('atraente e satisfatório')}</div><div class="small muted" style="margin:2px 0 10px">Junte o que você precisa fazer com algo que você gosta, e celebre cada vitória.</div><label class="fld"><span>Só vou… enquanto…</span>${ta('bundle','Ex.: ouvir meu podcast favorito só enquanto caminho',2,p.bundle)}</label><label class="fld" style="margin-bottom:0"><span>Como vou celebrar</span>${ta('reward','Ex.: marcar o hábito no GO! e um café gostoso no sábado',2,p.reward)}</label></div>`;
@@ -1573,7 +1599,7 @@ document.addEventListener('input',ev=>{const el=ev.target;if(!el||!el.dataset)re
 Object.assign(A,{
   planWk:d=>{ui.planWeek=+d.n===0?weekStart(today()):addDays(wkPlan(),+d.n);render();window.scrollTo(0,0)},
   planTab:d=>{ui.planTab=d.v;render();window.scrollTo(0,0)},
-  planNext:()=>{const w=wkPlan(),nw=addDays(w,7),cur=plan(w),np=plan(nw);if(!np.identity)np.identity=cur.identity;ui.planWeek=nw;ui.planTab='planejar';save();window.scrollTo(0,0);toast('Nova semana, novo 1% 🌱')},
+  planNext:()=>{const w=wkPlan(),nw=addDays(w,7),cur=plan(w),np=plan(nw);if(!np.identity)np.identity=cur.identity;ui.planWeek=nw;ui.planTab='planejar';save(1);window.scrollTo(0,0);toast('Nova semana, novo 1% 🌱')},
   useIdentity:()=>{const p=plan(wkPlan()),pv=prevPlan(wkPlan());if(pv)p.identity=pv.identity;save()},
   pTog:d=>{const it=plan(wkPlan())[d.l].find(x=>x.id===d.id);if(it){it.done=!it.done;save()}},
   pDel:d=>{const p=plan(wkPlan());p[d.l]=p[d.l].filter(x=>x.id!==d.id);save()}
