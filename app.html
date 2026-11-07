@@ -176,7 +176,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .ex button{text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;display:flex;justify-content:space-between;gap:10px}
 .ex button span{color:var(--muted);font-size:12px;white-space:nowrap}
 .mitem{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 14px;margin-top:10px;width:100%;text-align:left}
-nav.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -6px 24px rgba(58,42,46,.08);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);align-items:center;padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:20;-webkit-transform:translateZ(0);height:auto;overflow:visible}
+nav.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -6px 24px rgba(58,42,46,.08);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(7,1fr);align-items:center;padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:20;-webkit-transform:translateZ(0);height:auto;overflow:visible}
 nav.bar button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--muted)}
 nav.bar button.on{color:var(--ink);font-weight:600}
 nav.bar button.on svg{color:var(--rose-d)}
@@ -405,7 +405,7 @@ function defaultState(){
   return {v:1,updatedAt:0,onboarded:false,name:'',settings:{waterGoal:2000,sleepGoal:480,cup:250,readGoal:12},
     events:[],tasks:[],
     habits:[],
-    habitRecord:0,water:{},sleep:{},meds:[],medLog:{},mood:{},
+    habitRecord:0,water:{},sleep:{},meds:[],medLog:{},mood:{},moodNote:{},
     fin:{entries:[],paid:{}},
     lists:[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}],
     activeDays:{},quickLog:[],books:[],devo:{entries:{}}};
@@ -533,7 +533,7 @@ S.home=()=>{
     c=`<div class="hmain">${ring(last!=null?last/state.settings.sleepGoal:0,'var(--lav)',last!=null?fmtDur(last):'—','sono')}<div><div class="hk" style="color:var(--lav)">Última noite</div><div class="hT">${last!=null?fmtDur(last)+' dormidas':'Sem registro'}</div><button class="hlink" data-a="sheet" data-s="sleep">Registrar sono</button></div></div>${stats([[n?fmtDur(s/n):'—','média 7 dias'],[fmtDur(state.settings.sleepGoal),'meta'],[n+'/7','noites']])}`;
   }else if(ui.heroTab===4){
     const mv=state.mood[t],faces=['😣','😕','😐','🙂','😄'];let s=0,n=0;for(let i=0;i<7;i++){const v=state.mood[addDays(t,-i)];if(v){s+=v;n++}}
-    c=`<div class="hmain">${ring(mv?mv/5:0,'var(--rose)',mv?faces[mv-1]:'—','hoje')}<div><div class="hk">Humor</div><div class="hT">Como você está?</div><div class="moods">${faces.map((f_,i)=>`<button class="${mv===i+1?'on':''}" data-a="mood" data-v="${i+1}">${f_}</button>`).join('')}</div></div></div>${stats([[n?faces[Math.round(s/n)-1]:'—','média semana'],[n+'/7','dias registrados']],'two')}`;
+    c=`<div class="hmain">${ring(mv?mv/5:0,'var(--rose)',mv?faces[mv-1]:'—','hoje')}<div><div class="hk">Humor</div><div class="hT">Como você está?</div><div class="moods">${faces.map((f_,i)=>`<button class="${mv===i+1?'on':''}" data-a="mood" data-v="${i+1}">${f_}</button>`).join('')}</div>${mv?(()=>{const nt=state.moodNote[t];return nt&&(nt.why||nt.tags.length)?`<button class="hlink" data-a="sheet" data-s="moodWhy" style="text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block">${esc(nt.tags.length?nt.tags.join(' · '):nt.why)}</button>`:`<button class="hlink" data-a="sheet" data-s="moodWhy">Por que estou assim?</button>`})():''}</div></div>${stats([[n?faces[Math.round(s/n)-1]:'—','média semana'],[n+'/7','dias registrados']],'two')}`;
   }else{
     c=`<div class="hmain">${ring(f.pct/100,'var(--sand)',pctBig(f.pct),'guardado')}<div><div class="hk s">${cap(MES[d.getMonth()])}</div><div class="hT">Sobrando ${money(f.left)}</div><div class="hS">${f.toPay.length} contas a pagar · ${money(f.toPaySum)}</div></div></div>${stats([[money(f.totIn),'receitas'],[money(f.totOut),'despesas']],'two')}`;
   }
@@ -744,7 +744,7 @@ S.paywall=()=>{
 const authMsg=e=>{const s=(e&&e.message)||'';if(/Invalid login/i.test(s))return 'E-mail ou senha incorretos.';if(/not confirmed/i.test(s))return 'Confirme seu e-mail pelo link que enviamos antes de entrar.';if(/already registered|already exists/i.test(s))return 'Esse e-mail já tem conta. Tente entrar.';if(/at least 6|Password should/i.test(s))return 'A senha precisa ter pelo menos 6 caracteres.';if(/rate limit|too many/i.test(s))return 'Muitas tentativas. Espere um pouco e tente de novo.';if(/valid email|invalid email/i.test(s))return 'Confira o e-mail digitado.';return 'Não deu certo: '+s};
 
 /* ---------- render ---------- */
-const NAV=[['home','Início','home'],['agenda','Agenda','cal'],['fab','',''],['habitos','Hábitos','sprout'],['rapido','Rápido','bolt'],['menu','Menu','grid']];
+const NAV=[['home','Início','home'],['agenda','Agenda','cal'],['semana','Semana','planner'],['fab','',''],['habitos','Hábitos','sprout'],['rapido','Rápido','bolt'],['menu','Menu','grid']];
 const navOf={tarefas:'menu',saude:'menu',financas:'menu',listas:'menu',lista:'menu',leitura:'menu',relatorios:'menu',devocional:'menu',metas:'menu',semana:'menu'};
 function render(){
   const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(cloud&&ui.access===null)?'splash':(cloud&&!ui.access)?'paywall':(!state.onboarded?'welcome':null);
@@ -758,7 +758,7 @@ function render(){
   const cur=navOf[ui.screen]||ui.screen;
   const scr=ui.screen==='lista'?'listas':ui.screen;
   const EXTRA=[['tarefas','Tarefas','task'],['saude','Saúde','heart'],['financas','Finanças','wallet'],['listas','Listas','list'],['leitura','Leitura','book'],['devocional','Devocional','devo'],['relatorios','Relatórios','chart'],['semana','Planejar a semana','planner'],['metas','Metas e selos','target']];
-  $('#nav').innerHTML=`<div class="side-logo">${logoFull(34)}</div>`+NAV.map(([k,l,i])=>k==='fab'?`<button class="fab" data-a="sheet" data-s="fab" aria-label="Adicionar">${ic('plus',26,2)}<span class="fabl">Adicionar</span></button>`:`<button class="${(k===scr||(cur===k&&!EXTRA.some(x=>x[0]===scr)))?'on':''} ${k==='menu'?'mn':''}" data-a="go" data-to="${k}">${ic(i,22)}<span>${l}</span></button>`).join('')+`<div class="side-sep"></div>`+EXTRA.map(([k,l,i])=>`<button class="dsk ${scr===k?'on':''}" data-a="go" data-to="${k}">${ic(i,20)}<span>${l}</span></button>`).join('');
+  $('#nav').innerHTML=`<div class="side-logo">${logoFull(34)}</div>`+NAV.map(([k,l,i])=>k==='fab'?`<button class="fab" data-a="sheet" data-s="fab" aria-label="Adicionar">${ic('plus',26,2)}<span class="fabl">Adicionar</span></button>`:`<button class="${(k===scr||(cur===k&&!EXTRA.some(x=>x[0]===scr)))?'on':''} ${k==='menu'?'mn':''}" data-a="go" data-to="${k}">${ic(i,22)}<span>${l}</span></button>`).join('')+`<div class="side-sep"></div>`+EXTRA.filter(x=>!NAV.some(n=>n[0]===x[0])).map(([k,l,i])=>`<button class="dsk ${scr===k?'on':''}" data-a="go" data-to="${k}">${ic(i,20)}<span>${l}</span></button>`).join('');
 }
 
 /* ---------- toast + desfazer ---------- */
@@ -769,6 +769,7 @@ const snap=()=>JSON.stringify(state);
 /* ---------- folhas (bottom sheets) ---------- */
 const fld=(l,inner)=>`<label class="fld"><span>${l}</span>${inner}</label>`;
 const hid=(n,v)=>`<input type="hidden" name="${n}" value="${esc(v||'')}">`;
+const MOODTAGS=['Trabalho','Família','Relacionamento','Amizades','Sono','Saúde','Treino','Alimentação','Dinheiro','Fé','Estudos','Cansaço','Ansiedade','Conquista','Descanso','Clima'];
 const SH={
   fab:()=>{const o=(icon,bg,l,a,extra='')=>`<button data-a="${a}" ${extra}><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div>${l}</button>`;
     return `<h3>Adicionar</h3><div class="fabgrid">${o('cal',C.rose,'Evento','sheet','data-s="event"')}${o('task',C.sky,'Tarefa','sheet','data-s="task"')}${o('wallet',C.sand,'Gasto','sheet','data-s="expense"')}${o('wallet',C.sage,'Receita','sheet','data-s="income"')}${o('wallet',C.lav,'Conta fixa','sheet','data-s="bill"')}${o('sprout',C.sage,'Hábito','sheet','data-s="habit"')}${o('drop',C.sky,'+ Água','water','data-n="'+state.settings.cup+'" data-close="1"')}${o('moon',C.lav,'Sono','sheet','data-s="sleep"')}${o('list',C.lav,'Lista','sheet','data-s="list"')}</div>`},
@@ -784,6 +785,11 @@ const SH={
     const cats=['Saúde','Corpo','Mente','Espiritual','Beleza','Rotina','Trabalho'];
     return `<h3>${h.id?'Editar hábito':type==='quit'?'Parar de…':'Novo hábito'}</h3><form data-f="habit">${hid('id',h.id)}${hid('type',type)}${fld(type==='quit'?'O que você quer parar?':'Hábito',`<input name="name" required value="${esc(h.name)}" placeholder="${type==='quit'?'Ex.: refrigerante':'Ex.: alongar 10 min'}">`)}${type==='quit'?fld('Desde quando você está sem?',`<input type="date" name="since" value="${h.since||today()}">`):fld('Categoria',`<select name="cat">${cats.map(c=>`<option ${c===(h.cat||'Saúde')?'selected':''}>${c}</option>`).join('')}</select>`)+`<div class="fld"><span>Dias</span><div class="days">${[1,2,3,4,5,6,0].map(i=>`<label><input type="checkbox" name="days" value="${i}" ${days.includes(i)?'checked':''}><span>${WDS[i]}</span></label>`).join('')}</div></div>`}<button class="btn primary full">Salvar</button></form>`},
   relapse:d=>{const h=state.habits.find(x=>x.id===d.id);return `<h3>Tudo bem, recomeça hoje</h3><div class="small muted" style="margin:-6px 0 16px;line-height:1.5">Recaída faz parte do processo. O contador de “${esc(h?.name)}” volta pra zero e seu recorde fica guardado.</div><button class="btn primary full" data-a="doRelapse" data-id="${d.id}">Zerar contador</button><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Cancelar</button>`},
+  moodWhy:()=>{const t=today(),mv=state.mood[t],nt=state.moodNote[t]||{why:'',tags:[]},faces=['😣','😕','😐','🙂','😄'],lbl=['Difícil','Pra baixo','Neutra','Bem','Ótima'];
+    return `<div style="text-align:center;margin:-4px 0 14px"><div style="font-size:42px;line-height:1">${mv?faces[mv-1]:'🙂'}</div><h3 style="margin:8px 0 2px">o que te deixou assim?</h3><div class="small muted">${mv?'Hoje você está: '+lbl[mv-1]+'. ':''}Opcional, mas ajuda a enxergar padrões.</div></div>
+    <form data-f="moodWhy"><div class="small" style="color:var(--rose-d);font-weight:500;margin-bottom:8px">Tem a ver com…</div><div class="pick">${MOODTAGS.map(g=>`<label><input type="checkbox" name="tg" value="${g}" ${nt.tags.includes(g)?'checked':''}><span>${g}</span></label>`).join('')}</div>
+    <label class="fld" style="margin-top:14px"><span>Quer escrever um pouquinho?</span><textarea name="why" rows="3" maxlength="500" placeholder="Ex.: dormi mal e o dia no trabalho foi puxado">${esc(nt.why||'')}</textarea></label>
+    <button class="btn primary full">Salvar</button><button type="button" class="btn full" style="margin-top:6px;background:none;color:var(--muted)" data-a="closeSheet">Agora não</button></form>`},
   sleep:()=>{const v=state.sleep[today()];return `<h3>Como foi sua noite?</h3><form data-f="sleep"><div class="two">${fld('Horas',`<input name="h" inputmode="numeric" value="${v!=null?Math.floor(v/60):7}">`)}${fld('Minutos',`<input name="m" inputmode="numeric" value="${v!=null?v%60:30}">`)}</div>${fld('Noite que terminou em',`<input type="date" name="date" value="${today()}">`)}<button class="btn primary full">Salvar</button></form>`},
   med:()=>`<h3>Novo remédio ou suplemento</h3><form data-f="med">${fld('Nome',`<input name="name" required placeholder="Ex.: creatina 5 g">`)}${fld('Horário (opcional)',`<input type="time" name="time">`)}<button class="btn primary full">Salvar</button></form>`,
   list:d=>{const l=state.lists.find(x=>x.id===d.id)||{};return `<h3>${l.id?'Editar lista':'Nova lista'}</h3><form data-f="list">${hid('id',l.id)}${fld('Nome',`<input name="name" required value="${esc(l.name)}" placeholder="Ex.: Viagem de fim de ano">`)}${fld('Tipo',`<select name="type">${Object.entries(listMeta).map(([k,v])=>`<option value="${k}" ${k===(l.type||'checklist')?'selected':''}>${v[0]}</option>`).join('')}</select>`)}<button class="btn primary full">Salvar</button></form>`},
@@ -896,7 +902,7 @@ const A={
   water:d=>{const t=today();state.water[t]=Math.max(0,(state.water[t]||0)+ +d.n);if(d.close)closeSheet();save();if(d.close)toast(`Água: ${((state.water[t])/1000).toLocaleString('pt-BR')} L hoje`)},
   med:d=>{const t=today();state.medLog[t]=state.medLog[t]||{};state.medLog[t][d.id]=!state.medLog[t][d.id];save()},
   delMed:d=>{const s=snap();state.meds=state.meds.filter(x=>x.id!==d.id);save();toast('Removido',s)},
-  mood:d=>{state.mood[today()]=+d.v;save()},
+  mood:d=>{state.mood[today()]=+d.v;save();openSheet('moodWhy')},
   healthTab:d=>{ui.healthTab=d.v;render()},
   finM:d=>{ui.finMonth=shiftMonth(ui.finMonth,+d.n);render()},
   paid:d=>{const m=ui.finMonth;state.fin.paid[m]=state.fin.paid[m]||{};state.fin.paid[m][d.id]=!state.fin.paid[m][d.id];save()},
@@ -943,6 +949,7 @@ const F={
     if(v.id){const h=state.habits.find(x=>x.id===v.id);h.name=v.name;if(h.type==='quit')h.since=v.since;else{h.cat=v.cat;h.days=days}}
     else state.habits.push(v.type==='quit'?{id:uid(),name:v.name,type:'quit',since:v.since||today(),best:0,created:today(),days:[],log:{}}:{id:uid(),name:v.name,cat:v.cat,type:'do',days,created:today(),log:{}});
     closeSheet();save();toast('Hábito salvo')},
+  moodWhy:(v,f)=>{const t=today(),tags=new FormData(f).getAll('tg'),why=(v.why||'').trim();if(tags.length||why)state.moodNote[t]={why,tags};else delete state.moodNote[t];closeSheet();save();toast('Anotado 💛')},
   sleep:v=>{const m=(parseInt(v.h)||0)*60+(parseInt(v.m)||0);state.sleep[v.date||today()]=m;closeSheet();save();toast('Sono registrado: '+fmtDur(m))},
   med:v=>{state.meds.push({id:uid(),name:v.name,time:v.time});closeSheet();save()},
   list:v=>{if(v.id)Object.assign(state.lists.find(x=>x.id===v.id),{name:v.name,type:v.type});else{const l={id:uid(),name:v.name,type:v.type,pinned:false,items:[]};state.lists.push(l);ui.openList=l.id;ui.screen='lista'}closeSheet();save()},
@@ -1080,7 +1087,16 @@ function repHealth(r){
   return rcard('heart',C.health,'saúde','água, sono e humor',
     `<div class="rsub" style="margin-top:0">água</div>${kpis([[wv.length?L(avg(wv)):'—','média por dia'],[hit+'/'+days.length,'dias na meta'],[L(g),'meta diária']])}${bars(series(r,d=>state.water[d]||null),'var(--sky)',g)}
     <div class="rsub">sono</div>${kpis([[sv.length?fmtDur(avg(sv)):'—','média'],[sv.length?fmtDur(Math.max(...sv)):'—','melhor noite'],[sv.filter(v=>v>=sg).length+'/'+sv.length,'noites na meta']])}${bars(series(r,d=>state.sleep[d]??null),'var(--lav)',sg)}
-    <div class="rsub">humor</div>${mv.length?`<div class="faces">${faces.map((f,i)=>`<div style="opacity:${cnt[i]?1:.3}">${f}<small>${cnt[i]} ${cnt[i]===1?'dia':'dias'}</small></div>`).join('')}</div>`:'<div class="small muted">Registre seu humor no Início pra ver aqui.</div>'}`);
+    <div class="rsub">humor</div>${mv.length?`<div class="faces">${faces.map((f,i)=>`<div style="opacity:${cnt[i]?1:.3}">${f}<small>${cnt[i]} ${cnt[i]===1?'dia':'dias'}</small></div>`).join('')}</div>${moodInsight(days,faces)}`:'<div class="small muted">Registre seu humor no Início pra ver aqui.</div>'}`);
+}
+function moodInsight(days,faces){
+  const T={};let notes=[];days.forEach(d=>{const n=state.moodNote[d],m=state.mood[d];if(!n||!m)return;n.tags.forEach(g=>{(T[g]=T[g]||[]).push(m)});if(n.why)notes.push([d,m,n.why])});
+  const top=Object.entries(T).map(([g,a])=>[g,a.length,a.reduce((x,y)=>x+y,0)/a.length]).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  if(!top.length&&!notes.length)return '<div class="small muted" style="margin-top:10px">Toque numa carinha e conte o porquê. Com o tempo, aparece aqui o que mais influencia seu humor.</div>';
+  const up=top.filter(x=>x[2]>=3.5).map(x=>x[0]),dn=top.filter(x=>x[2]<=2.5).map(x=>x[0]);
+  return `<div class="rsub">o que mais mexeu com seu humor</div><div class="pick">${top.map(([g,n,a])=>`<span class="chip" style="cursor:default">${faces[Math.round(a)-1]} ${esc(g)} <span class="muted">· ${n}</span></span>`).join('')}</div>
+  ${up.length||dn.length?`<div class="small" style="margin-top:10px;line-height:1.6">${up.length?`Dias com <b>${esc(up.join(', '))}</b> costumam ser mais leves. `:''}${dn.length?`<b>${esc(dn.join(', '))}</b> aparece${dn.length>1?'m':''} mais nos dias difíceis.`:''}</div>`:''}
+  ${notes.length?`<div class="rsub">suas anotações</div>${notes.slice(-4).reverse().map(([d,m,w])=>`<div class="small" style="padding:8px 0;border-top:1px solid var(--line)"><span>${faces[m-1]}</span> <span class="muted">${d.slice(8,10)}/${d.slice(5,7)}</span><br>${esc(w)}</div>`).join('')}`:''}`;
 }
 function repFin(r){
   const f=finRange(r.a,r.b),p=finRange(r.pa,r.pb),bal=f.inc-f.exp;
