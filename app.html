@@ -364,6 +364,13 @@ nav.bar button.on svg{color:var(--plum)!important}
 @keyframes hcheck{0%{transform:scale(.4)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
 .hlist{margin-top:10px}.hli{border-bottom:1px solid var(--line)}.hli .htile{border-bottom:0}.hlrow{display:flex;align-items:center;gap:4px}.hlrow .htile{flex:1;min-width:0}.hexp{flex:none}
 .hdet{padding:2px 4px 12px 34px;display:flex;flex-direction:column;gap:4px}.htile .hsub{font-size:11.5px;color:var(--muted)}
+.vday{text-align:center;padding:2px 6px 12px;margin-bottom:12px;border-bottom:1px solid rgba(0,0,0,.06)}
+.vday .vtx{font-family:var(--serif);font-size:12.5px;line-height:1.5;padding:0 14px}
+.vday .vref{font-family:var(--script);font-weight:600;color:var(--rose-d);font-size:13.5px;margin-top:3px}
+.vmini{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 22px 7px;text-align:center;font:inherit;color:var(--ink)}
+.vmini .vml{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#a88a55;display:flex;align-items:center;gap:5px;font-weight:500}
+.vmini .vtx{font-family:var(--serif);font-size:11px;line-height:1.45}
+.vmini .vref{font-family:var(--script);font-weight:600;color:var(--rose-d);font-size:12px}
 .hall{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:6px 0 8px;font-size:12.5px;color:var(--muted)}
 .hall .script{font-size:21px}
 .tgh .tdone{color:var(--rose-d)!important}
@@ -637,7 +644,9 @@ S.home=()=>{
   const todayBox=`<h2 class="sec">seu dia <button class="btn sm soft" data-a="sheet" data-s="fab">${ic('plus',14)} Adicionar</button></h2><div class="card tday" style="margin-top:0">${inner||'<div class="empty">Nada marcado pra hoje. Dia leve ✨</div>'}</div>`;
   const rd=state.books.filter(x=>x.status==='lendo');
   const reading=rd.length?`<h2 class="sec">lendo agora <button class="btn sm soft" data-a="go" data-to="leitura">Ver tudo</button></h2><div class="rrow">${rd.map(k=>{const pct=k.pages?Math.min(100,Math.round((k.current||0)/k.pages*100)):0,col=BOOKC[(k.title.charCodeAt(0)||0)%BOOKC.length];return `<div class="rbk">${spineH(k,col)}<div class="grow" style="min-width:0"><div class="rt" style="font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k.title)}</div>${k.author?`<div class="small muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k.author)}</div>`:''}<div class="bar" style="margin-top:8px;height:6px"><i style="width:${pct}%;background:${col}"></i></div><div class="small muted" style="margin-top:4px">p. ${k.current||0}${k.pages?' de '+k.pages+' · '+pct+'%':''}</div><button class="btn sm primary" style="margin-top:8px" data-a="sheet" data-s="readlog" data-id="${k.id}">+ páginas</button></div></div>`}).join('')}</div>`:'';
-  return {h,b:welcomeBack()+homePlan()+hero+quickForm()+areas+todayBox+reading};
+  const de=(state.devo&&state.devo.entries||{})[t]||{},vR=(de.ref&&de.ref.trim())||vSug(t),vT=(de.ref&&de.ref.trim()?de.verse:'')||VTXT[vR]||'';
+  const vcard=vT?`<button class="vmini" data-a="go" data-to="devocional"><span class="vml">${ic('devo',10)} versículo do dia</span><span class="vtx">“${esc(vT.trim())}”</span><span class="vref">${esc(vR)}</span></button>`:'';
+  return {h,b:welcomeBack()+homePlan()+hero+vcard+quickForm()+areas+todayBox+reading};
 };
 
 S.agenda=()=>{
@@ -1279,7 +1288,9 @@ S.devocional=()=>{
   const t=today(),d=ui.devoDate||t,e=dEntry(d),dv=devo();
   const mStart=t.slice(0,8)+'01',mDays=daysIn(mStart,t),mDone=mDays.filter(hasDevo).length,wins=allWins();
   const tabs=[['hoje',d===t?'Hoje':dateLabel(d)],['diario','Diário'],['conquistas','Conquistas']];
-  let b=`<div class="hero"><div class="hmain">${ring(mDone/mDays.length,'#e6cf94',`${mDone}<sup style="font-size:12px">/${mDays.length}</sup>`,'no mês')}<div><div class="hk s">Seu tempo com Deus</div><div class="hT">${plural(devoStreak(),'dia seguido','dias seguidos')}</div><div class="hS">${mDone} ${mDone===1?'devocional':'devocionais'} em ${MES[parseISO(t).getMonth()]}</div></div></div>${stats([[Object.keys(dv.entries).filter(hasDevo).length,'no total'],[wins.length,'conquistas'],[wins.filter(w=>w.d>=mStart).length,'no mês']])}</div>
+  const vRef=(e.ref&&e.ref.trim())||vSug(d),vTxt=(e.ref&&e.ref.trim()?e.verse:'')||VTXT[vRef]||'';
+  const vBox=vTxt?`<div class="vday"><div class="hk s" style="margin-bottom:8px">versículo do dia</div><div class="vtx">“${esc(vTxt.trim())}”</div><div class="vref">${esc(vRef)}</div></div>`:'';
+  let b=`<div class="hero">${vBox}<div class="hmain">${ring(mDone/mDays.length,'#e6cf94',`${mDone}<sup style="font-size:12px">/${mDays.length}</sup>`,'no mês')}<div><div class="hk s">Seu tempo com Deus</div><div class="hT">${plural(devoStreak(),'dia seguido','dias seguidos')}</div><div class="hS">${mDone} ${mDone===1?'devocional':'devocionais'} em ${MES[parseISO(t).getMonth()]}</div></div></div>${stats([[Object.keys(dv.entries).filter(hasDevo).length,'no total'],[wins.length,'conquistas'],[wins.filter(w=>w.d>=mStart).length,'no mês']])}</div>
   <div class="seg" style="margin-top:16px">${tabs.map(([k,l])=>`<button class="${ui.devoTab===k?'on':''}" data-a="devoTab" data-v="${k}">${l}</button>`).join('')}</div>`;
   if(ui.devoTab==='hoje'){
     const sug=vSug(d),F_=devoFields(),bn=dv.bookName||'';
