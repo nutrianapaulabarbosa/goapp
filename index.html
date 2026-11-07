@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>GO! · sua rotina leve, num lugar só</title>
-<meta name="description" content="Agenda, tarefas, hábitos, saúde, finanças, listas, leitura e devocional num app só. Leve, bonito e feito pra rotina real. Gratuito.">
+<meta name="description" content="Agenda, tarefas, hábitos, saúde, finanças, listas, leitura e devocional num app só. Leve, bonito e feito pra rotina real. R$ 97, pagamento único.">
 <meta name="theme-color" content="#faf5f3">
 <meta property="og:title" content="GO! · sua rotina leve, num lugar só">
-<meta property="og:description" content="Agenda, hábitos, saúde, finanças, leitura e devocional num app só. Gratuito.">
+<meta property="og:description" content="Agenda, hábitos, saúde, finanças, leitura e devocional num app só. Pagamento único, acesso vitalício.">
 <meta property="og:image" content="https://usegoapp.com.br/img/inicio.jpg">
 <meta property="og:url" content="https://usegoapp.com.br">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
@@ -55,7 +55,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-transform:lowercase;line-
 .cta{display:flex;gap:12px;flex-wrap:wrap}
 .mini{font-size:13px;color:var(--muted);margin-top:14px}
 .phone{position:relative;width:min(300px,78vw);margin:0 auto;border-radius:46px;background:#241b1e;padding:11px;box-shadow:0 30px 60px rgba(58,42,46,.22)}
-.phone img,.phone video{display:block;width:100%;height:auto;border-radius:36px;aspect-ratio:390/844;object-fit:cover;background:#faf5f3}
+.phone img,.phone video{display:block;width:100%;height:auto;border-radius:36px;aspect-ratio:390/844;object-fit:cover;object-position:top;background:#faf5f3;box-sizing:border-box;padding-top:9%}
 .phone:after{content:'';position:absolute;top:20px;left:50%;transform:translateX(-50%);width:84px;height:22px;border-radius:12px;background:#140e10}
 .float{position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:13px;box-shadow:0 10px 24px rgba(58,42,46,.1);white-space:nowrap}
 .f1{left:-40px;top:22%}.f2{right:-34px;top:52%}.f3{left:-20px;bottom:12%}
@@ -90,14 +90,20 @@ section{padding:72px 0}
 .nt img{width:38px;height:38px;border-radius:10px;flex:none}
 .nt b{font-weight:500;font-size:14px;display:block}.nt span{font-size:13.5px;color:#4d4044}
 .nt small{margin-left:auto;font-size:11px;color:var(--muted);white-space:nowrap}
-.shots{display:flex;gap:18px;overflow-x:auto;padding:20px 22px 30px;scroll-snap-type:x mandatory;scrollbar-width:none;max-width:1180px;margin:0 auto}
+.shots{display:flex;justify-content:safe center;gap:18px;overflow-x:auto;padding:20px 22px 30px;scroll-snap-type:x mandatory;scrollbar-width:none;max-width:1180px;margin:0 auto}
 .shots::-webkit-scrollbar{display:none}
 .shots figure{flex:none;scroll-snap-align:center;text-align:center}
-.shots .phone{width:230px;border-radius:38px;padding:9px}.shots .phone img{border-radius:30px}.shots .phone:after{width:64px;height:17px;top:16px}
+.shots .phone{width:206px;border-radius:38px;padding:9px}.shots .phone img{border-radius:30px}.shots .phone:after{width:64px;height:17px;top:16px}
 .shots figcaption{margin-top:14px;font-size:14px;color:var(--muted)}
 .list{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:12px}
 .list li{display:flex;gap:12px;font-size:15.5px}
 .list li:before{content:'✓';width:24px;height:24px;flex:none;border-radius:8px;background:var(--sage-l);color:#5f9467;display:grid;place-items:center;font-size:13px;font-weight:600}
+.price{max-width:440px;margin:36px auto 0;background:#fff;border:1px solid var(--line);border-radius:30px;padding:34px 30px;text-align:center;box-shadow:0 24px 50px rgba(58,42,46,.08)}
+.price .pt{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--rose-d);font-weight:500}
+.price .pv{font-family:var(--serif);font-size:72px;line-height:1;margin:14px 0 6px}.price .pv small{font-size:24px;vertical-align:top;margin-right:4px;position:relative;top:10px}
+.price .pp{color:var(--muted);font-size:14px;margin-bottom:22px}
+.price .list{text-align:left;margin:0 0 24px}
+.price .pa{font-size:13px;color:var(--muted);margin-top:14px}.price .pa a{color:var(--rose-d)}
 .faq{max-width:760px;margin:36px auto 0}
 .faq details{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:10px}
 .faq summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:10px}
@@ -115,7 +121,7 @@ footer a{text-decoration:none;margin-left:18px}
 <body>
 <header class="top" id="top"><div class="w">
   <a class="logo" href="/"><img src="logo.svg" width="36" height="36" alt=""><span>GO!</span></a>
-  <nav><a class="hide" href="#recursos">Recursos</a><a class="hide" href="#duvidas">Dúvidas</a><a href="/app#entrar" data-auth="entrar">Entrar</a><a class="btn p" href="/app#criar" data-auth="criar">Criar conta</a></nav>
+  <nav><a class="hide" href="#recursos">Recursos</a><a class="hide" href="#preco">Preço</a><a class="hide" href="#duvidas">Dúvidas</a><a href="/app#entrar" data-auth="entrar">Entrar</a><a class="btn p" href="#preco" data-auth="criar">Quero meu GO!</a></nav>
 </div></header>
 
 <main>
@@ -123,8 +129,8 @@ footer a{text-decoration:none;margin-left:18px}
   <div>
     <h1>sua rotina <span class="script">leve</span>,<br>num lugar só.</h1>
     <p class="lead">Agenda, tarefas, hábitos, saúde, finanças, listas, leitura e devocional, organizados do seu jeito. Pra quem tem a vida corrida e quer constância sem cobrança.</p>
-    <div class="cta"><a class="btn p" href="/app#criar" data-auth="criar">Criar minha conta grátis</a><a class="btn g" href="#video">Ver como funciona</a></div>
-    <div class="mini">Funciona no celular e no computador. Sem baixar nada na loja.</div>
+    <div class="cta"><a class="btn p" href="#preco" data-auth="criar">Quero meu GO!</a><a class="btn g" href="#video">Ver como funciona</a></div>
+    <div class="mini">R$ 97 · pagamento único · acesso vitalício. Funciona no celular e no computador.</div>
   </div>
   <div style="position:relative">
     <div class="phone"><img src="img/inicio.jpg" alt="Tela inicial do GO! com o resumo do dia" width="390" height="844"></div>
@@ -223,10 +229,25 @@ footer a{text-decoration:none;margin-left:18px}
   <div class="phone" style="width:min(280px,74vw)"><img src="img/metas.jpg" alt="Tela de metas do GO!" loading="lazy"></div>
 </section>
 
+<section class="w reveal" id="preco">
+  <div class="center"><div class="kicker">investimento</div><h2 class="sec-t" style="margin:0 auto">um pagamento, <span class="script">sem mensalidade</span>.</h2></div>
+  <div class="price">
+    <div class="pt">GO! · acesso completo</div>
+    <div class="pv"><small>R$</small>97</div>
+    <div class="pp">pagamento único · Pix, cartão ou boleto</div>
+    <ul class="list"><li>Acesso vitalício a todas as áreas do app</li><li>1 ano de atualizações e novidades incluídas</li><li>Celular e computador, com seus dados sincronizados</li><li>Notificações e lembretes do seu jeito</li><li>7 dias de garantia: não gostou, devolvemos 100%</li></ul>
+    <a class="btn p js-buy" href="#preco" style="width:100%">Quero meu GO!</a>
+    <div class="pa">Já comprou? <a href="/app#criar">Crie sua conta</a> com o mesmo e-mail da compra.</div>
+  </div>
+</section>
+
 <section class="w reveal" id="duvidas">
   <div class="center"><div class="kicker">dúvidas</div><h2 class="sec-t">perguntas frequentes</h2></div>
   <div class="faq">
-    <details><summary>O GO! é gratuito?</summary><p>Sim. Você cria sua conta e usa todas as áreas sem pagar nada.</p></details>
+    <details><summary>Quanto custa?</summary><p>R$ 97, pagamento único, sem mensalidade. Você paga uma vez e usa todas as áreas do app.</p></details>
+    <details><summary>O que significa acesso vitalício + 1 ano de atualizações?</summary><p>Você usa o GO! sem prazo para acabar, enquanto o app estiver no ar. E durante 1 ano a partir da compra recebe todas as novidades e melhorias que forem lançadas, sem pagar nada a mais.</p></details>
+    <details><summary>Como recebo o acesso depois de pagar?</summary><p>Assim que o pagamento é aprovado, o e-mail da compra é liberado. É só criar sua conta no GO! com esse mesmo e-mail. No Pix e no cartão a liberação é quase imediata; no boleto, pode levar até 2 dias úteis.</p></details>
+    <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia a partir da compra. Se não fizer sentido pra você, é só pedir o reembolso pela plataforma de pagamento ou pelo e-mail de contato, e devolvemos 100% do valor.</p></details>
     <details><summary>Preciso baixar na App Store ou no Google Play?</summary><p>Não. O GO! funciona direto no navegador. Pra usar como app, abra o site no celular e adicione à Tela de Início: no iPhone, pelo Safari → Compartilhar → “Adicionar à Tela de Início”; no Android, pelo Chrome → menu ⋮ → “Instalar app”.</p></details>
     <details><summary>Funciona no iPhone, no Android e no computador?</summary><p>Sim, nos três. Entrando com o mesmo e-mail, seus dados aparecem iguais em todos os aparelhos.</p></details>
     <details><summary>Recebo notificações?</summary><p>Só se você quiser. Elas vêm desligadas e você escolhe quais receber no Menu. No iPhone, funcionam com o GO! adicionado à Tela de Início (iOS 16.4 ou mais novo).</p></details>
@@ -239,15 +260,18 @@ footer a{text-decoration:none;margin-left:18px}
   <div class="final">
     <img src="logo.svg" width="64" height="64" alt="">
     <h2 class="sec-t" style="margin:16px auto 10px">bora deixar sua rotina mais <span class="script">leve</span>?</h2>
-    <p class="sec-s" style="margin:0 auto 26px">Leva 1 minuto pra começar.</p>
-    <a class="btn p" href="/app#criar" data-auth="criar">Criar minha conta grátis</a>
+    <p class="sec-s" style="margin:0 auto 26px">R$ 97 uma vez só. Acesso vitalício e 1 ano de atualizações.</p>
+    <a class="btn p js-buy" href="#preco">Quero meu GO!</a>
   </div>
 </section>
 </main>
 
 <footer><div class="w"><div>© 2026 GO! · sua rotina leve, num lugar só.</div><div><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="mailto:contato@usegoapp.com.br">Contato</a><a href="/app#entrar">Entrar</a></div></div></footer>
 
+<script src="config.js"></script>
 <script>
+// botões de compra apontam pro checkout da Kiwify (config.js → checkoutUrl)
+try{var ck=(window.GO_CONFIG||{}).checkoutUrl;if(ck){document.querySelectorAll('.js-buy').forEach(function(a){a.href=ck;a.target='_blank';a.rel='noopener'})}}catch(e){}
 // quem já tem conta neste aparelho vê "Abrir o app"
 try{if(Object.keys(localStorage).some(function(k){return /^sb-.*-auth-token$/.test(k)})){document.querySelectorAll('[data-auth=criar]').forEach(function(a){a.href='/app';a.textContent='Abrir meu GO!'});document.querySelectorAll('[data-auth=entrar]').forEach(function(a){a.style.display='none'})}}catch(e){}
 var top_=document.getElementById('top');addEventListener('scroll',function(){top_.classList.toggle('s',scrollY>10)},{passive:true});

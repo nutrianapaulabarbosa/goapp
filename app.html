@@ -415,7 +415,7 @@ let state=null;
 try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 state=migrate(state&&state.v?state:defaultState());
 state.activeDays[today()]=true;
-const ui={planTab:'planejar',planWeek:null,metaTab:'metas',devoTab:'hoje',devoDate:null,repPeriod:'mes',repOff:0,repCat:'tudo',bookTab:'lendo',ready:true,obStep:0,authMode:null,authErr:'',authBusy:false,screen:'home',heroTab:0,agView:'timeline',selDay:today(),healthTab:'geral',finMonth:ym(today()),listFilter:'todas',listSearch:'',openList:null,habitTab:'do',habitView:'lista',expanded:{},taskFilter:'hoje',sync:'local'};
+const ui={access:null,planTab:'planejar',planWeek:null,metaTab:'metas',devoTab:'hoje',devoDate:null,repPeriod:'mes',repOff:0,repCat:'tudo',bookTab:'lendo',ready:true,obStep:0,authMode:null,authErr:'',authBusy:false,screen:'home',heroTab:0,agView:'timeline',selDay:today(),healthTab:'geral',finMonth:ym(today()),listFilter:'todas',listSearch:'',openList:null,habitTab:'do',habitView:'lista',expanded:{},taskFilter:'hoje',sync:'local'};
 
 /* ---------- persistência: Supabase (login + banco) ou só no aparelho ---------- */
 const CFG=window.GO_CONFIG||{};
@@ -438,14 +438,22 @@ async function pullRemote(force){
   state._uid=session.user.id;state.activeDays[today()]=true;writeLocal();
   if(!remote||(state.updatedAt||0)>(remote.updatedAt||0))await pushRemote();else ui.sync='nuvem';
 }
+/* ---------- acesso pago: só entra quem comprou (ou cortesia) ---------- */
+const ACCK=uid=>'go-acc:'+uid;
+async function checkAccess(){
+  if(!sb||!session)return;
+  const uid=session.user.id;
+  try{const {data,error}=await sb.rpc('go_has_access');if(error)throw error;ui.access=!!data;try{data?localStorage.setItem(ACCK(uid),'1'):localStorage.removeItem(ACCK(uid))}catch(e){}}
+  catch(e){ui.access=(()=>{try{return localStorage.getItem(ACCK(uid))==='1'}catch(_){return false}})()}
+}
 if(cloud){
   sb=supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);
   ui.ready=false;
   sb.auth.onAuthStateChange((ev,s)=>{setTimeout(async()=>{
     if(ev==='PASSWORD_RECOVERY'){session=s;ui.authMode='reset';ui.ready=true;render();return}
     const before=session&&session.user.id;session=s;
-    if(s&&s.user.id!==before){ui.screen='home';await pullRemote(true);if(ui.authMode!=='reset')ui.authMode=null}
-    if(!s){state=migrate(defaultState());ui.obStep=0}
+    if(s&&s.user.id!==before){ui.screen='home';ui.access=null;await checkAccess();if(ui.access)await pullRemote(true);if(ui.authMode!=='reset')ui.authMode=null}
+    if(!s){state=migrate(defaultState());ui.obStep=0;ui.access=null}
     ui.ready=true;render();
   },0)});
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&session)pullRemote().then(render)});
@@ -702,7 +710,7 @@ const SUG=[['Beber água','Saúde',[0,1,2,3,4,5,6],'water'],['Treinar','Corpo',[
 S.welcome=()=>{
   if(ui.obStep===0&&!(cloud&&session))return `<div class="welcome">${logoFull(72)}<div class="tag">sua rotina <span class="script">leve</span>,<br>num lugar só.</div><p>Agenda, tarefas, hábitos, saúde, finanças e listas organizados do seu jeito. Leva 1 minuto pra começar.</p>
   <div class="feat"><div>${ic('cal',20)}Agenda</div><div>${ic('sprout',20)}Hábitos</div><div>${ic('drop',20)}Saúde</div><div>${ic('wallet',20)}Finanças</div><div>${ic('list',20)}Listas</div><div>${ic('bolt',20)}Adição rápida</div></div>
-  ${cloud&&!session?`<button class="btn primary full" data-a="authMode" data-m="signup">Criar minha conta</button><button class="btn ghost full" style="margin-top:8px" data-a="authMode" data-m="login">Já tenho conta</button>`:`<button class="btn primary full" data-a="obNext">${cloud?'Completar meu cadastro':'Criar meu cadastro'}</button>`}<div class="note">Cada pessoa tem sua própria conta e vê só os seus dados.<br><a href="privacidade.html" target="_blank" style="color:var(--muted)">Privacidade</a> · <a href="termos.html" target="_blank" style="color:var(--muted)">Termos de uso</a></div></div>`;
+  ${cloud&&!session?`<button class="btn primary full" data-a="authMode" data-m="signup">Criar minha conta</button><button class="btn ghost full" style="margin-top:8px" data-a="authMode" data-m="login">Já tenho conta</button><div class="small muted" style="margin-top:12px">Ainda não tem o GO!? <a href="/#preco" style="color:var(--rose-d)">Conheça e garanta o seu</a></div>`:`<button class="btn primary full" data-a="obNext">${cloud?'Completar meu cadastro':'Criar meu cadastro'}</button>`}<div class="note">Cada pessoa tem sua própria conta e vê só os seus dados.<br><a href="privacidade.html" target="_blank" style="color:var(--muted)">Privacidade</a> · <a href="termos.html" target="_blank" style="color:var(--muted)">Termos de uso</a></div></div>`;
   return `<div style="padding-top:3vh"><div class="steps"><i class="on"></i><i class="on"></i></div><div style="text-align:center;margin-bottom:18px">${logoMark(44)}<div class="ttl" style="margin-top:10px">vamos te conhecer</div></div>
   <form data-f="onboard"><div class="card" style="margin-top:0">${fld('Como você quer ser chamada(o)?',`<input name="name" required placeholder="Seu nome" autocomplete="given-name">`)}
   <div class="two">${fld('Meta de água por dia',`<select name="water">${[1500,2000,2500,3000,3500,4000].map(v=>`<option value="${v}" ${v===2000?'selected':''}>${(v/1000).toLocaleString('pt-BR')} L</option>`).join('')}</select>`)}${fld('Meta de sono',`<select name="sleep">${[6,6.5,7,7.5,8,8.5,9].map(v=>`<option value="${v*60}" ${v===8?'selected':''}>${fmtDur(v*60)}</option>`).join('')}</select>`)}</div></div>
@@ -713,7 +721,7 @@ S.welcome=()=>{
 };
 
 
-const AUTH_T={signup:['criar conta','Crie seu acesso com e-mail e senha.','Criar conta'],login:['entrar','Que bom te ver de novo.','Entrar'],forgot:['recuperar senha','Enviaremos um link pro seu e-mail.','Enviar link'],reset:['nova senha','Escolha uma senha nova.','Salvar senha'],check:['confira seu e-mail','',''],sent:['link enviado','','']};
+const AUTH_T={signup:['criar conta','Use o mesmo e-mail da sua compra.','Criar conta'],login:['entrar','Que bom te ver de novo.','Entrar'],forgot:['recuperar senha','Enviaremos um link pro seu e-mail.','Enviar link'],reset:['nova senha','Escolha uma senha nova.','Salvar senha'],check:['confira seu e-mail','',''],sent:['link enviado','','']};
 S.auth=()=>{
   const m=ui.authMode,[t,sub,btn]=AUTH_T[m]||AUTH_T.login;
   const head=`<div style="text-align:center;padding-top:6vh;margin-bottom:20px">${logoMark(52)}<div class="ttl" style="margin-top:12px">${t}</div>${sub?`<div class="small muted" style="margin-top:4px">${sub}</div>`:''}</div>`;
@@ -722,14 +730,25 @@ S.auth=()=>{
   ${m==='signup'?`<label class="tog" style="align-items:flex-start;font-size:12.5px;line-height:1.5"><input type="checkbox" name="ok" required style="margin-top:2px;flex:none"><span>Li e aceito os <a href="termos.html" target="_blank" style="color:var(--rose-d)">Termos de Uso</a> e a <a href="privacidade.html" target="_blank" style="color:var(--rose-d)">Política de Privacidade</a>, e autorizo o uso dos meus dados (inclusive de saúde e devocional) para o funcionamento do app.</span></label>`:''}${ui.authErr?`<div class="small" style="color:var(--rose-d);margin-bottom:10px">${esc(ui.authErr)}</div>`:''}<button class="btn primary full" ${ui.authBusy?'disabled style="opacity:.6"':''}>${ui.authBusy?'Aguarde…':btn}</button></div></form>
   <div style="text-align:center;margin-top:14px;display:flex;flex-direction:column;gap:6px" class="small">${m==='login'?`<button class="btn" style="background:none;color:var(--rose-d)" data-a="authMode" data-m="forgot">Esqueci minha senha</button><button class="btn" style="background:none" data-a="authMode" data-m="signup">Não tenho conta · criar agora</button>`:''}${m==='signup'?`<button class="btn" style="background:none" data-a="authMode" data-m="login">Já tenho conta · entrar</button>`:''}${m!=='reset'?`<button class="btn" style="background:none;color:var(--muted)" data-a="authMode" data-m="">Voltar</button>`:''}</div>`;
 };
+S.paywall=()=>{
+  const em=session&&session.user.email||'',url=CFG.checkoutUrl||'/#preco';
+  return `<div style="text-align:center;padding-top:6vh;margin-bottom:18px">${logoMark(52)}<div class="ttl" style="margin-top:12px">ative seu GO!</div><div class="small muted" style="margin-top:4px">Falta só liberar o acesso desta conta.</div></div>
+  <div class="card" style="margin-top:0;text-align:center"><div style="font-size:14px;line-height:1.6">Não encontramos uma compra para<br><b>${esc(em)}</b>.</div>
+  <div style="margin:16px 0 4px;font-family:var(--serif);font-size:34px">R$ 97</div><div class="small muted">pagamento único · acesso vitalício<br>+ 1 ano de atualizações</div>
+  <a class="btn primary full" style="margin-top:16px;text-decoration:none;display:flex;justify-content:center" href="${esc(url)}" target="_blank" rel="noopener">Quero meu GO!</a>
+  <button class="btn ghost full" style="margin-top:8px" data-a="recheckAccess">${ui.accBusy?'Verificando…':'Já comprei · verificar de novo'}</button>
+  ${ui.accMsg?`<div class="small" style="color:var(--rose-d);margin-top:10px">${esc(ui.accMsg)}</div>`:''}</div>
+  <div class="small muted" style="text-align:center;margin-top:14px;line-height:1.6">Use no GO! o <b>mesmo e-mail da compra</b>. A liberação costuma levar menos de 1 minuto depois do pagamento aprovado (no boleto, até 2 dias úteis).${CFG.contactEmail?`<br>Dúvidas: <a href="mailto:${esc(CFG.contactEmail)}" style="color:var(--rose-d)">${esc(CFG.contactEmail)}</a>`:''}</div>
+  <div style="text-align:center;margin-top:10px"><button class="btn" style="background:none;color:var(--muted)" data-a="logout">Sair e entrar com outro e-mail</button></div>`;
+};
 const authMsg=e=>{const s=(e&&e.message)||'';if(/Invalid login/i.test(s))return 'E-mail ou senha incorretos.';if(/not confirmed/i.test(s))return 'Confirme seu e-mail pelo link que enviamos antes de entrar.';if(/already registered|already exists/i.test(s))return 'Esse e-mail já tem conta. Tente entrar.';if(/at least 6|Password should/i.test(s))return 'A senha precisa ter pelo menos 6 caracteres.';if(/rate limit|too many/i.test(s))return 'Muitas tentativas. Espere um pouco e tente de novo.';if(/valid email|invalid email/i.test(s))return 'Confira o e-mail digitado.';return 'Não deu certo: '+s};
 
 /* ---------- render ---------- */
 const NAV=[['home','Início','home'],['agenda','Agenda','cal'],['fab','',''],['habitos','Hábitos','sprout'],['rapido','Rápido','bolt'],['menu','Menu','grid']];
 const navOf={tarefas:'menu',saude:'menu',financas:'menu',listas:'menu',lista:'menu',leitura:'menu',relatorios:'menu',devocional:'menu',metas:'menu',semana:'menu'};
 function render(){
-  const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(!state.onboarded?'welcome':null);
-  if(gate){$('#nav').style.display='none';$('#hdr').innerHTML='';$('#main').innerHTML=gate==='splash'?`<div class="splash">${logoFull(64)}<div class="small muted">carregando…</div></div>`:gate==='auth'?S.auth():S.welcome();return}
+  const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(cloud&&ui.access===null)?'splash':(cloud&&!ui.access)?'paywall':(!state.onboarded?'welcome':null);
+  if(gate){$('#nav').style.display='none';$('#hdr').innerHTML='';$('#main').innerHTML=gate==='splash'?`<div class="splash">${logoFull(64)}<div class="small muted">carregando…</div></div>`:gate==='auth'?S.auth():gate==='paywall'?S.paywall():S.welcome();return}
   $('#nav').style.display='';
   try{pingActive()}catch(e){}
   if(ui.screen!==NAVH.last){if(NAVH.last!==null&&!NAVH.popping){try{history.pushState({s:ui.screen},'')}catch(e){}}else{try{history.replaceState({s:ui.screen},'')}catch(e){}}NAVH.last=ui.screen}
@@ -848,6 +867,7 @@ const findT=id=>state.tasks.find(x=>x.id===id);
 const A={
   obNext:()=>{ui.obStep=1;render();window.scrollTo(0,0)},
   authMode:d=>{ui.authMode=d.m||null;ui.authErr='';render();window.scrollTo(0,0)},
+  recheckAccess:async()=>{ui.accBusy=true;ui.accMsg='';render();await checkAccess();ui.accBusy=false;if(ui.access){await pullRemote(true);toast('Acesso liberado! Bem-vinda ao GO! 💛')}else ui.accMsg='Ainda não encontramos a compra. Confira se usou o mesmo e-mail ou aguarde mais um pouquinho.';render()},
   logout:async()=>{if(sb){await pushRemote();await sb.auth.signOut()}},
   obBack:()=>{ui.obStep=0;render()},
   go:d=>{ui.screen=d.to;if(d.view){ui.agView=d.view;ui.selDay=today()}closeSheet();render();window.scrollTo(0,0)},
