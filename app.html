@@ -443,6 +443,15 @@ nav.bar button.on svg{color:var(--plum)!important}
 [data-theme=dark] .pcard{background:linear-gradient(135deg,#3a2730,#272022);border-color:#4a3138}
 [data-theme=dark] .law{background:#2c3a2e;color:#a9d0ad}
 @media print{nav.bar,.hicons,.noprint,#toastBox{display:none!important}body{background:#fff;padding:0}.card,.hero{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* seu dia em blocos */
+.tday .tgrp,.tday .tgrp+.tgrp{background:#f7f0ed;background:color-mix(in srgb,var(--rbg) 60%,var(--bg));border:1px solid var(--hair);border-radius:18px;padding:10px 14px 6px;margin:0 0 12px}
+.tday .tgrp:last-child{margin-bottom:0}
+.tday .tgh{padding:2px 0 6px;color:var(--rose-d)}
+.tday .tgrp .trow:last-child,.tday .tgrp .htile:last-child{border-bottom:0}
+.tday .htile.done{background:linear-gradient(90deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 30%,rgba(232,208,198,.32) 58%,rgba(196,146,127,.4) 100%)}
+[data-theme=dark] .tday .tgrp{background:rgba(255,255,255,.035)}
+[data-theme=dark] .tday .htile.done{background:linear-gradient(90deg,rgba(255,255,255,.07),rgba(196,146,127,.22))}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
