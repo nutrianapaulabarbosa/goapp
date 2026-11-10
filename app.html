@@ -2354,12 +2354,15 @@ const dzDayN=()=>DZ.c?daysBetween(DZ.c.start_date,today())+1:0;
 const dzLen=()=>DZ.c?daysBetween(DZ.c.start_date,DZ.c.end_date)+1:0;
 const dzPhase=()=>{if(!DZ.c)return 'none';const n=dzDayN();return n<1?'antes':n>dzLen()?'fim':'durante'};
 const dzMission=n=>DZ.missions.find(m=>m.day===n);
-const dzMem=u=>DZ.members[u]||(DZ.c&&u===DZ.c.owner_id?{nickname:'Organizadora',color:'#3a3536'}:{nickname:'Participante',color:'#a8877a'});
+let dzMyThumb=null;
+const dzMem=u=>{const m=DZ.members[u]||(DZ.c&&u===DZ.c.owner_id?{nickname:'Organizadora',color:'#3a3536',avatar:DZ.c.owner_avatar}:{nickname:'Participante',color:'#a8877a'});return u&&u===dzUid()&&dzMyThumb?{...m,avatar:dzMyThumb}:m};
 const dzAgo=ts=>{const s=(Date.now()-new Date(ts))/1000;if(s<60)return 'agora';if(s<3600)return Math.floor(s/60)+' min';if(s<86400)return Math.floor(s/3600)+' h';const d=Math.floor(s/86400);return d===1?'ontem':d+' dias'};
 const dzLeft=ts=>{const h=Math.max(0,(new Date(ts)-Date.now())/36e5);return h>=1?'some em '+Math.floor(h)+' h':'some em '+Math.max(1,Math.round(h*60))+' min'};
 const dzAv=(u,sz=38)=>{const m=dzMem(u);return `<span class="dzav" style="width:${sz}px;height:${sz}px;background:${esc(m.color)};font-size:${Math.round(sz*.46)}px">${m.avatar&&/^data:image\//.test(m.avatar)?`<img src="${m.avatar}" alt="">`:esc((m.nickname||'?').charAt(0).toUpperCase())}</span>`};
 function dzThumb(src,max=120){return new Promise(res=>{if(!src)return res(null);const img=new Image();img.onload=()=>{const k=max/Math.min(img.width,img.height),w=Math.round(img.width*k),h=Math.round(img.height*k),cv=document.createElement('canvas');cv.width=max;cv.height=max;cv.getContext('2d').drawImage(img,(max-w)/2,(max-h)/2,w,h);let q=.75,d=cv.toDataURL('image/jpeg',q);while(d.length>28000&&q>.3){q-=.15;d=cv.toDataURL('image/jpeg',q)}res(d.length<30000?d:null)};img.onerror=()=>res(null);img.src=src})}
-async function dzSyncAvatar(){if(!DZ.me||!DZ.c)return;const t=await dzThumb(state.avatar);if((t||null)===(DZ.me.avatar||null))return;const {error}=await sb.from('dz_members').update({avatar:t}).eq('challenge_id',DZ.c.id).eq('user_id',dzUid());if(!error){DZ.me.avatar=t;if(DZ.members[dzUid()])DZ.members[dzUid()].avatar=t;render()}}
+async function dzSyncAvatar(){if(!DZ.c)return;const t=await dzThumb(state.avatar);if(t!==dzMyThumb){dzMyThumb=t;render()}
+  if(DZ.isOwner&&(t||null)!==(DZ.c.owner_avatar||null)){const r=await sb.from('dz_challenges').update({owner_avatar:t}).eq('id',DZ.c.id);if(!r.error)DZ.c.owner_avatar=t}
+  if(!DZ.me)return;if((t||null)===(DZ.me.avatar||null))return;const {error}=await sb.from('dz_members').update({avatar:t}).eq('challenge_id',DZ.c.id).eq('user_id',dzUid());if(!error){DZ.me.avatar=t;if(DZ.members[dzUid()])DZ.members[dzUid()].avatar=t;render()}}
 const dzErr=e=>{const s=(e&&e.message)||String(e||'');return /Failed to fetch|NetworkError/i.test(s)?'Sem conexão agora. Tente de novo.':s};
 
 async function dzLoad(force){
@@ -2377,7 +2380,7 @@ async function dzLoad(force){
       DZ.missions=m.data||[];DZ.habits=h.data||[];DZ.me=me.data||null;
       if(!DZ.me&&DZ.isOwner&&DZ.rankScope==='liga')DZ.rankScope='semana';
       if(DZ.me||DZ.isOwner)await dzLoadFeed();
-      if(DZ.me)setTimeout(dzSyncAvatar,50);
+      if(DZ.me||DZ.isOwner)setTimeout(dzSyncAvatar,50);
     }
   }catch(e){DZ.err=dzErr(e)}
   DZ.loaded=true;DZ.loading=false;render();
@@ -2447,7 +2450,7 @@ function dzStoriesRow(){
   const by={};DZ.stories.filter(s=>!s.hidden||DZ.isOwner).forEach(s=>{(by[s.user_id]=by[s.user_id]||[]).push(s)});
   const seen=dzSeen(),u=dzUid();
   const users=Object.keys(by).sort((a,b)=>(a===u?-1:b===u?1:0));
-  return `<div class="dzst"><button class="dzsb" data-a="sheet" data-s="dzStoryNew"><span class="dzsr add">${DZ.me&&DZ.me.avatar?`${dzAv(u,50)}<i class="dzplus">${ic('plus',12,2.6)}</i>`:ic('plus',20,2)}</span><small>Seu story</small></button>${users.map(x=>{const all=by[x].every(s=>seen[s.id]);const m=dzMem(x),last=by[x][by[x].length-1],url=DZ.urls[last.photo_path];return `<button class="dzsb" data-a="dzStoryOpen" data-u="${x}"><span class="dzsr ${all?'seen':''}">${!m.avatar&&url?`<span class="dzav" style="width:50px;height:50px"><img src="${url}" alt=""></span>`:dzAv(x,50)}</span><small>${esc(x===u?'Você':dzMem(x).nickname)}</small></button>`}).join('')}</div>`;
+  return `<div class="dzst"><button class="dzsb" data-a="sheet" data-s="dzStoryNew"><span class="dzsr add">${dzMem(u).avatar?`${dzAv(u,50)}<i class="dzplus">${ic('plus',12,2.6)}</i>`:ic('plus',20,2)}</span><small>Seu story</small></button>${users.map(x=>{const all=by[x].every(s=>seen[s.id]);const m=dzMem(x),last=by[x][by[x].length-1],url=DZ.urls[last.photo_path];return `<button class="dzsb" data-a="dzStoryOpen" data-u="${x}"><span class="dzsr ${all?'seen':''}">${!m.avatar&&url?`<span class="dzav" style="width:50px;height:50px"><img src="${url}" alt=""></span>`:dzAv(x,50)}</span><small>${esc(x===u?'Você':dzMem(x).nickname)}</small></button>`}).join('')}</div>`;
 }
 function dzPost(p){
   const u=dzUid(),m=p.mission_id&&DZ.missions.find(x=>x.id===p.mission_id),rs=DZ.reacts[p.id]||[],cc=DZ.ccount[p.id]||0;
