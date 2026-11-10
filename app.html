@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>try{var L=JSON.parse(localStorage.getItem('go-look')||'null');if(L){if(L.p&&L.p!=='rose')document.documentElement.dataset.pal=L.p;var d=L.t==='dark'||(L.t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light'}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#fcf9f8">
@@ -1158,7 +1159,7 @@ const authMsg=e=>{const s=(e&&e.message)||'';if(/Invalid login/i.test(s))return 
 /* ---------- render ---------- */
 const NAV=[['home','Início','home'],['agenda','Agenda','cal'],['semana','Semana','planner'],['habitos','Hábitos','sprout'],['fab','',''],['menu','Menu','grid']];
 const navOf={tarefas:'menu',saude:'menu',financas:'menu',listas:'menu',lista:'menu',leitura:'menu',relatorios:'menu',devocional:'menu',metas:'menu',semana:'menu'};
-function render(){try{requestAnimationFrame(()=>{const h=document.getElementById('hsl');if(h&&ui.hsIdx)h.scrollLeft=ui.hsIdx*h.clientWidth})}catch(e){}
+function render(){try{if(!CLOUD||state._uid)applyTheme()}catch(e){}try{requestAnimationFrame(()=>{const h=document.getElementById('hsl');if(h&&ui.hsIdx)h.scrollLeft=ui.hsIdx*h.clientWidth})}catch(e){}
   const gate=!ui.ready?'splash':(cloud&&(!session||ui.authMode==='reset'))?(ui.authMode?'auth':'welcome'):(cloud&&ui.access===null)?'splash':(cloud&&!ui.access)?'paywall':(!state.onboarded?'welcome':null);
   if(gate){$('#nav').style.display='none';$('#hdr').innerHTML='';$('#main').innerHTML=gate==='splash'?`<div class="splash">${logoFull(64)}<div class="small muted">carregando…</div></div>`:gate==='auth'?S.auth():gate==='paywall'?S.paywall():S.welcome();return}
   $('#nav').style.display='';
@@ -1846,7 +1847,7 @@ A.sres=d=>{closeSheet();const t=d.t;
 A.openSearch=()=>{openSheet('search');setTimeout(()=>{const i=document.getElementById('gsearch');if(i)i.focus()},50)};
 
 /* ---------- modo escuro ---------- */
-function applyTheme(){let pl=(state.settings&&state.settings.palette)||'rose';if(!PALS.some(x=>x[0]===pl))pl='rose';if(pl==='rose')delete document.documentElement.dataset.pal;else document.documentElement.dataset.pal=pl;const t=(state.settings&&state.settings.theme)||'auto';const dark=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#1d1719':getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#fcf9f8'}
+function applyTheme(){let pl=(state.settings&&state.settings.palette)||'rose';try{if(!CLOUD||state._uid)localStorage.setItem('go-look',JSON.stringify({p:pl,t:(state.settings&&state.settings.theme)||'auto'}))}catch(e){}if(!PALS.some(x=>x[0]===pl))pl='rose';if(pl==='rose')delete document.documentElement.dataset.pal;else document.documentElement.dataset.pal=pl;const t=(state.settings&&state.settings.theme)||'auto';const dark=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#1d1719':getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#fcf9f8'}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 A.theme=d=>{state.settings.theme=d.v;applyTheme();save(1)};
 const PALS=[['rose','Nude','#c4927f','#f4e9e5'],['bege','Bege','#b39b78','#f2ede6'],['oliva','Oliva','#7d8a5e','#ebeadf'],['pb','Preto e branco','#1d1c1c','#f5f1f0'],['lavanda','Lavanda','#9a86de','#efeafd'],['itgirl','It girl 🎀','#e07aa3','#ffe1ec']];
@@ -1881,7 +1882,7 @@ F.delacc=async v=>{if((v.c||'').trim().toUpperCase()!=='EXCLUIR'){toast('Digite 
 (()=>{const bar=document.createElement('div');bar.id='offbar';bar.textContent='Sem internet · salvando no aparelho';document.body.appendChild(bar);
   const upd=()=>{bar.classList.toggle('show',navigator.onLine===false)};window.addEventListener('offline',upd);
   window.addEventListener('online',()=>{upd();if(CLOUD&&session)pullRemote().then(render).catch(()=>{})});upd()})();
-applyTheme();
+if(!CLOUD||state._uid)applyTheme();
 
 /* ---------- selos de conquista ---------- */
 I.target='<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.2"/>';
