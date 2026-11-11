@@ -832,6 +832,46 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .hgo{position:relative;z-index:2;border:1px solid var(--hair);background:var(--card,#fff);color:var(--rose-d);border-radius:999px;padding:5px 11px;font:inherit;font-size:12px;flex:none}
 .dpintS{font-family:var(--script);font-size:17px;text-transform:none;letter-spacing:0}
 .dptopH{display:flex;flex-direction:column;gap:4px;margin-top:8px}.dptopH button{background:none;border:0;padding:2px 0;font:inherit;font-size:13.5px;color:var(--ink);text-align:left;display:flex;align-items:center;gap:6px}.dptopH button.ok{color:var(--muted);text-decoration:line-through}
+
+/* ===== desafio · jornada ===== */
+.dzphb{display:block;width:100%;background:none;border:0;padding:0;margin:2px 0 12px;font:inherit;color:inherit;text-align:left}
+.dzphs{display:flex;gap:5px}.dzphs i{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}.dzphs i b{display:block;height:100%;background:var(--ringg)}.dzphs i.ok b{background:var(--deep)}
+.dzpht{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;letter-spacing:.08em;color:var(--rose-d);margin-top:6px}.dzpht span:last-child{letter-spacing:0;color:var(--muted)}
+.dznote{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;color:var(--ink);border-color:var(--deep)!important}
+.dznote small{display:block;font-size:10px;letter-spacing:.12em;color:var(--rose-d)}.dznote b{display:block;font-weight:500;font-size:15px;margin-top:2px}
+.dznq{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;background:linear-gradient(145deg,var(--deep-hi),var(--deep));color:#fff}.dznq.sm{width:28px;height:28px}
+.dznl{width:100%;background:none;border:0;font:inherit;color:var(--ink);text-align:left}.dznl.lock{opacity:.6}
+.dznb{font-size:15px;line-height:1.7;white-space:normal}
+.dzauto{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:12.5px;color:#fbf5f1;opacity:.9}
+.dzshare{margin-top:8px;width:100%;border:0;background:none;color:#fbf5f1;font:inherit;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;opacity:.9;text-decoration:underline;text-underline-offset:3px}
+.dzha{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--rose-d);margin-top:2px}
+.dzbud{display:flex;align-items:center;gap:12px}.dzbud b{display:block;font-weight:500}.dzbud small{display:block;font-size:12px;color:var(--muted);margin-top:2px}.dzbud.muted{opacity:.85}
+.dzcheers{display:flex;flex-direction:column;gap:6px;margin:4px 2px 0}.dzcheers>div{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.dzresc{border-style:dashed!important}.dzrh{display:flex;gap:12px;align-items:center}.dzrh b{display:block;font-weight:500}.dzrh small{display:block;font-size:12px;color:var(--muted)}
+.dzrp{display:block;font-size:11px;color:var(--muted)}
+.dzfase{margin-top:18px}.dzfh{display:flex;align-items:center;gap:12px}.dzfh small{display:block;font-size:10px;letter-spacing:.12em;color:var(--rose-d)}.dzfh b{font-family:var(--serif);font-weight:400;font-size:22px}
+.dzfn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:13px;font-weight:600;background:var(--rbg);color:var(--rose-d)}.dzfase.ok .dzfn{background:var(--deep);color:#fff}.dzfase.on .dzfn{box-shadow:0 0 0 3px var(--hair)}
+.dzpath{position:relative;display:flex;flex-direction:column;gap:6px;margin:12px 0 0 16px;padding-left:2px;border-left:2px dashed var(--hair)}
+.dznode{display:flex;align-items:center;gap:10px;background:none;border:0;font:inherit;color:var(--ink);text-align:left;padding:4px 0;margin-left:-19px;position:relative}
+.dznode.o1{margin-left:6px}.dznode.o2{margin-left:30px}
+.dznode .dzn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:13px;font-weight:600;background:var(--card,#fff);border:1.5px solid var(--hair);color:var(--rose-d)}
+.dznode small{font-size:12.5px;color:var(--muted);max-width:56vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dznode.ok .dzn{background:linear-gradient(145deg,var(--deep-hi),var(--deep));border-color:transparent;color:#fff}.dznode.ok small{color:var(--ink)}
+.dznode.today .dzn{width:46px;height:46px;background:var(--rbg);border:2px solid var(--deep);font-size:15px;animation:dzpulse 2s infinite}.dznode.today small{color:var(--rose-d);font-weight:600}
+@keyframes dzpulse{0%,100%{box-shadow:0 0 0 0 rgba(125,97,87,.35)}50%{box-shadow:0 0 0 8px rgba(125,97,87,0)}}
+.dznode.miss .dzn{border-style:dashed;color:var(--muted)}.dznode.late .dzn{border-color:var(--rose-d);border-style:dashed}
+.dznode.fut .dzn{background:var(--bg);color:#cbbdb7;border-color:var(--line)}
+.dzmark{display:flex;align-items:center;gap:10px;margin:10px 0 0;padding:10px 12px;border-radius:16px;background:var(--rbg);border:1px solid var(--hair)}.dzmark>span{color:var(--rose-d)}.dzmark b{display:block;font-weight:500;font-size:13.5px}.dzmark small{display:block;font-size:11.5px;color:var(--muted)}
+.dzmark.ok{background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(196,146,127,.3))}.dzmark.lock{opacity:.75}
+.dzba{display:flex;flex-direction:column;gap:12px}.dzbal{font-size:12.5px;color:var(--rose-d);margin:0 2px 6px}
+.dzbap{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dzbap button{aspect-ratio:4/5;border-radius:18px;border:1.5px dashed var(--hair);background:var(--card,#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--rose-d);font:inherit;overflow:hidden;padding:0}
+.dzbap button small{font-size:11.5px}.dzbap button.has{border-style:solid}.dzbap button img{width:100%;height:100%;object-fit:cover}.dzbap button:disabled{opacity:.55}
+.dzletter{display:flex;align-items:center;gap:12px}.dzletter b{display:block;font-weight:500}.dzletter small{display:block;font-size:12px;color:var(--muted)}
+.dzwax{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;background:radial-gradient(circle at 35% 30%,#c98f84,#9c4a3f);color:#fff;box-shadow:inset 0 -3px 6px rgba(0,0,0,.2)}
+.dzletter.open{display:block}.dzletter.open small{font-size:10.5px;letter-spacing:.12em;color:var(--rose-d)}.dzlt{font-family:var(--script);font-size:21px;line-height:1.5;margin-top:8px}
+.dzq small{font-size:10px;letter-spacing:.12em;color:var(--rose-d)}.dzq.wait{opacity:.8;border-style:dashed!important}.dzqq{margin-top:4px;font-weight:500}.dzqa{margin-top:8px;font-size:14px;line-height:1.6;padding-top:8px;border-top:1px dashed var(--line)}
+.dzfinal{text-align:center}.dzfs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 14px}.dzfs>div{background:var(--bg);border-radius:16px;padding:12px 6px}.dzfs b{display:block;font-family:var(--serif);font-weight:400;font-size:26px}.dzfs span{font-size:11px;color:var(--muted)}
+.dzoffer .dzmt{font-size:22px}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -2447,7 +2487,7 @@ Object.assign(I,{
 });
 const DZ_SLUG=window.GO_DZ_SLUG||'recomeco-2027',DZ_BUCKET='desafio',DZ_COLORS=['#7d6157','#b07d6e','#a8877a','#5c463e','#3a3536','#bf7486','#8b9a7c','#7d8fa3'];
 const DZR=[['forca','Força'],['inspirou','Inspirou'],['orgulho','Orgulho']];
-const DZ={c:null,loaded:false,loading:false,err:'',me:null,isOwner:false,missions:[],habits:[],members:{},checks:[],posts:[],stories:[],rank:[],urls:{},reacts:{},ccount:{},tab:'hoje',feed:'todas',rankScope:'liga',file:null,fileUrl:'',busy:false,comments:{},admin:null};
+const DZ={c:null,loaded:false,loading:false,err:'',me:null,isOwner:false,missions:[],habits:[],members:{},checks:[],posts:[],stories:[],rank:[],urls:{},reacts:{},ccount:{},tab:'hoje',feed:'todas',rankScope:'liga',file:null,fileUrl:'',busy:false,comments:{},admin:null,notes:[],letter:null,qs:[],cheers:[],bchecks:[],mine:[],rescUsed:0,sel:null};
 const dzSeen=()=>{try{return JSON.parse(localStorage.getItem('go-dz-seen')||'{}')}catch(e){return {}}};
 const dzSetSeen=id=>{try{const s=dzSeen();s[id]=1;localStorage.setItem('go-dz-seen',JSON.stringify(s))}catch(e){}};
 const dzUid=()=>session&&session.user.id;
@@ -2504,6 +2544,7 @@ async function dzLoadFeed(){
   const need=[...DZ.posts.map(p=>p.photo_path),...DZ.stories.map(s=>s.photo_path)].filter(p=>p&&!DZ.urls[p]);
   if(need.length){const {data}=await sb.storage.from(DZ_BUCKET).createSignedUrls(need,6*3600);(data||[]).forEach(x=>{if(x.signedUrl)DZ.urls[x.path]=x.signedUrl})}
   await dzLoadRank();
+  await dzLoadExtra();
 }
 async function dzLoadRank(){
   if(!DZ.c)return;const {data,error}=await sb.rpc('dz_ranking',{cid:DZ.c.id,scope:DZ.rankScope});DZ.rank=error?[]:(data||[]);
@@ -2530,7 +2571,7 @@ function dzIntro(){
   return `<div class="dzkick">DESAFIO GO! · ${dzLen()} DIAS</div><div class="dztitle">${esc(c.title)}</div>${c.subtitle?`<div class="dzscript">${esc(c.subtitle)}</div>`:''}${cd}
   ${c.prize?`<div class="card dzrow"><span class="dzic">${ic('trophy',20)}</span><div><b>Prêmio para as 3 mais constantes</b><div class="small muted">${esc(c.prize)}</div></div></div>`:''}
   ${pillars.length?`<h2 class="sec">um pilar por semana</h2><div class="dzpil">${pillars.map((p,i)=>`<div class="card"><small>SEMANA ${i+1}</small><b>${esc(p)}</b></div>`).join('')}</div>`:''}
-  <div class="dzlist">${['Uma missão nova todo dia, comprovada com foto','Comunidade só das participantes, com stories e comentários','Ranking por constância, em ligas semanais. Peso e medidas nunca entram'].map(t=>`<div><span class="dzck">${ic('check',13,2.4)}</span>${t}</div>`).join('')}</div>
+  <div class="dzlist">${['Uma missão nova todo dia, comprovada com foto','Comunidade só das participantes, com stories e comentários','Ranking pela % de constância, em ligas semanais. Peso e medidas nunca entram','Uma dupla de apoio, recados semanais da nutri e dias de resgate se a vida apertar'].map(t=>`<div><span class="dzck">${ic('check',13,2.4)}</span>${t}</div>`).join('')}</div>
   ${ph!=='fim'?`<button class="btn primary full dzcta" data-a="sheet" data-s="dzJoin">Quero participar</button>${c.price_note?`<div class="small muted" style="text-align:center;margin-top:8px">${esc(c.price_note)}</div>`:''}`:''}`;
 }
 function dzHoje(){
@@ -2539,13 +2580,13 @@ function dzHoje(){
   if(ph==='fim'){const me=DZ.rank.findIndex(r=>r.is_me);return dzGcard('DESAFIO ENCERRADO',`${dzPts()} pontos`,me>=0&&DZ.rankScope==='total'?`Você ficou em ${me+1}º lugar no geral`:'Veja a classificação final em Ranking')}
   const m=dzMission(n),done=dzMissionDone(m),my=dzMission(n-1),ydone=dzMissionDone(my);
   const pts=dzPts(t),max=(m?m.points:0)+DZ.habits.reduce((s,h)=>s+h.points,0);
-  const mc=m?`<div class="gcard dzg"><div class="hsl" style="min-height:0"><div class="dzmh"><span class="hk">DIA ${n} DE ${dzLen()}${m.pillar?' · '+esc(m.pillar).toUpperCase():''}</span><span class="dzpt">+${m.points} pts</span></div><div class="dzmt">${esc(m.title)}</div>${m.description?`<div class="hS dzsub">${esc(m.description)}</div>`:''}${done?`<div class="dzdone">${ic('check',16,2.4)} Missão comprovada</div>`:`<button class="dzproof" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',18)} Comprovar com foto</button>`}</div></div>`:'<div class="card"><div class="empty">A organizadora ainda não cadastrou a missão de hoje.</div></div>';
+  const mc=m?`<div class="gcard dzg"><div class="hsl" style="min-height:0"><div class="dzmh"><span class="hk">DIA ${n} DE ${dzLen()}${m.pillar?' · '+esc(m.pillar).toUpperCase():''}</span><span class="dzpt">+${m.points} pts</span></div><div class="dzmt">${esc(m.title)}</div>${m.description?`<div class="hS dzsub">${esc(m.description)}</div>`:''}${done?`<div class="dzdone">${ic('check',16,2.4)} Missão cumprida</div><button class="dzshare" data-a="dzShareDay" data-n="${n}">${ic('send',15)} Compartilhar nos stories</button>`:m.auto?`<div class="dzauto">${ic('spark',14)} ${dzAutoTxt(m.auto)}</div><button class="dzproof" data-a="dzAutoGo" data-k="${m.auto}">${ic('chevR',16)} ${dzAutoBtn(m.auto)}</button><button class="dzshare" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',14)} ou comprovar com foto</button>`:`<button class="dzproof" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',18)} Comprovar com foto</button>`}</div></div>`:'<div class="card"><div class="empty">A organizadora ainda não cadastrou a missão de hoje.</div></div>';
   const yb=my&&!ydone?`<button class="card dzrow dzy" data-a="sheet" data-s="dzProof" data-m="${my.id}"><span class="dzic">${ic('clock',18)}</span><div><b>Ainda dá tempo: missão de ontem</b><div class="small muted">${esc(my.title)} · +${my.points} pts</div></div>${ic('chevR',16)}</button>`:'';
-  const hb=DZ.habits.map(h=>{const o=dzHabitOn(h,t);return `<button class="dzhab ${o?'on':''}" data-a="dzHabit" data-id="${h.id}" data-d="${t}" aria-pressed="${o}"><span class="dzhc">${ic('check',14,2.6)}</span><span class="grow">${esc(h.label)}</span><span class="dzhp">+${h.points}</span></button>`}).join('');
+  const hb=DZ.habits.map(h=>{const o=dzHabitOn(h,t);return `<button class="dzhab ${o?'on':''}" data-a="dzHabit" data-id="${h.id}" data-d="${t}" aria-pressed="${o}"><span class="dzhc">${ic('check',14,2.6)}</span><span class="grow">${esc(h.label)}${h.auto?`<small class="dzha">${ic('spark',10)} marca sozinho pelo GO!</small>`:''}</span><span class="dzhp">+${h.points}</span></button>`}).join('');
   const yd=addDays(t,-1),ymiss=n>1?DZ.habits.filter(h=>!dzHabitOn(h,yd)):[];
-  return mc+yb+`<h2 class="sec">hábitos do desafio <span class="small" style="text-transform:none;letter-spacing:0">${pts} de ${max} pts hoje</span></h2><div class="bar dzbar"><i style="width:${max?Math.min(100,pts/max*100):0}%"></i></div>${hb}
+  return dzPhaseBar()+dzNoteNew()+mc+yb+`<h2 class="sec">hábitos do desafio <span class="small" style="text-transform:none;letter-spacing:0">${pts} de ${max} pts hoje</span></h2><div class="bar dzbar"><i style="width:${max?Math.min(100,pts/max*100):0}%"></i></div>${hb}
   ${ymiss.length?`<div class="small muted" style="margin:14px 2px 6px">Esqueceu de marcar ontem?</div><div class="chips" style="margin-top:0">${ymiss.map(h=>`<button class="chip" data-a="dzHabit" data-id="${h.id}" data-d="${yd}">${ic('plus',13)} ${esc(h.label)}</button>`).join('')}</div>`:''}
-  <div class="dzstats"><div><b>${dzStreak()}</b><span>dias seguidos</span></div><div><b>${dzPts()}</b><span>pontos no total</span></div></div>`;
+  <div class="dzstats"><div><b>${dzPct()}%</b><span>de constância</span></div><div><b>${dzPts()}</b><span>pontos no total</span></div></div>${dzHojeExtras()}`;
 }
 function dzStoriesRow(){
   const by={};DZ.stories.filter(s=>!s.hidden||DZ.isOwner).forEach(s=>{(by[s.user_id]=by[s.user_id]||[]).push(s)});
@@ -2555,7 +2596,7 @@ function dzStoriesRow(){
 }
 function dzPost(p){
   const u=dzUid(),m=p.mission_id&&DZ.missions.find(x=>x.id===p.mission_id),rs=DZ.reacts[p.id]||[],cc=DZ.ccount[p.id]||0;
-  const tag=m?`Missão · Dia ${m.day} · ${esc(m.title)}`:'Vitória livre';
+  const tag=p.kind?(p.kind==='antes'?'Fotos do antes':'Fotos do depois'):m?`Missão · Dia ${m.day} · ${esc(m.title)}`:'Vitória livre';
   const url=p.photo_path&&DZ.urls[p.photo_path];
   return `<article class="card dzpost"><div class="dzph">${dzAv(p.user_id)}<div class="grow"><b>${esc(p.user_id===u?'Você':dzMem(p.user_id).nickname)}</b><div class="small dztag">${tag} · ${dzAgo(p.created_at)}</div></div><button class="ib sm" data-a="sheet" data-s="dzMore" data-k="post" data-id="${p.id}" aria-label="Mais opções">${ic('dots',18)}</button></div>
   ${!p.is_public?`<div class="dzpriv">${ic('lock',13)} Só você e a organizadora veem</div>`:''}${p.hidden?`<div class="dzpriv">${ic('eyeOff',13)} Oculto para as participantes</div>`:''}
@@ -2575,26 +2616,26 @@ function dzComunidade(){
 function dzRanking(){
   const me=DZ.rank.findIndex(r=>r.is_me),mr=DZ.rank[me],ahead=me>0?DZ.rank[me-1]:null;
   const lbl={liga:'SUA LIGA · ZERA DOMINGO À NOITE',semana:'TODAS AS PARTICIPANTES · ESTA SEMANA',total:'CLASSIFICAÇÃO GERAL DO DESAFIO'}[DZ.rankScope];
-  const card=mr?dzGcard(lbl,`<span class="dzbn">${me+1}º</span> lugar`,ahead?`Faltam ${ahead.points-mr.points+1} pts para passar ${esc(ahead.nickname)}.`:me===0&&mr.points>0?'Você está na frente. Segura essa constância!':'Marque hábitos e missões para pontuar.'):DZ.isOwner?dzGcard('VISÃO DA ORGANIZADORA','Ranking','Você vê todas as participantes'):'';
+  const card=mr?dzGcard(lbl,`<span class="dzbn">${me+1}º</span> lugar · ${mr.pct??0}%`,ahead?`${esc(ahead.nickname)} está com ${ahead.pct??0}% de constância. Cada missão e hábito te aproxima.`:me===0&&mr.points>0?'Você está na frente. Segura essa constância!':'Marque hábitos e missões para pontuar.'):DZ.isOwner?dzGcard('VISÃO DA ORGANIZADORA','Ranking','Você vê todas as participantes'):'';
   const sc=[['liga','Minha liga'],['semana','Semana geral'],['total','Total']];
   return card+`<div class="chips" style="margin-top:14px">${sc.filter(s=>!(DZ.isOwner&&!DZ.me&&s[0]==='liga')).map(([k,l])=>`<button class="chip ${DZ.rankScope===k?'on':''}" data-a="dzScope" data-v="${k}">${l}</button>`).join('')}</div>
-  <div class="card dzrank">${DZ.rank.map((r,i)=>`<div class="dzrr ${r.is_me?'me':''}"><span class="dzpos">${i+1}</span>${dzAv(r.user_id,34)}<span class="grow">${esc(r.is_me?'Você':r.nickname)}</span><b>${r.points} pts</b></div>`).join('')||'<div class="empty">Ninguém pontuou ainda.</div>'}</div>
-  <div class="small muted dznote">${ic('heart',14)} Pontos só por constância: missões e hábitos. Peso e medidas nunca entram no ranking.</div>`;
+  <div class="card dzrank">${DZ.rank.map((r,i)=>`<div class="dzrr ${r.is_me?'me':''}"><span class="dzpos">${i+1}</span>${dzAv(r.user_id,34)}<span class="grow">${esc(r.is_me?'Você':r.nickname)}<small class="dzrp">${r.points} pts</small></span><b>${r.pct??0}%</b></div>`).join('')||'<div class="empty">Ninguém pontuou ainda.</div>'}</div>
+  <div class="small muted dznote">${ic('heart',14)} O ranking é pela % de constância: quanto do que dava pra fazer você fez. Falhou um dia? Segue o jogo. Peso e medidas nunca entram.</div>`;
 }
 S.desafio=()=>{
   if(!DZ.loaded){dzLoad();return {h:dzHdr(),b:'<div class="empty">Carregando o desafio…</div>'}}
   if(DZ.err&&!DZ.c)return {h:dzHdr(),b:`<div class="card"><div class="empty">${esc(DZ.err)}</div><button class="btn primary full" data-a="dzRefresh">Tentar de novo</button></div>`};
   if(!DZ.c)return {h:dzHdr(),b:'<div class="card"><div class="empty">Nenhum desafio aberto no momento.</div></div>'};
   if(!DZ.me&&!DZ.isOwner)return {h:dzHdr(),b:dzIntro()};
-  const tabs=[['hoje','Hoje'],['comunidade','Comunidade'],['ranking','Ranking']];
+  const tabs=[['hoje','Hoje'],['jornada','Jornada'],['comunidade','Comunidade'],['ranking','Ranking']];
   const seg=`<div class="seg dzseg">${tabs.map(([k,l])=>`<button class="${DZ.tab===k?'on':''}" data-a="dzTab" data-v="${k}">${l}</button>`).join('')}</div>`;
-  const body=DZ.tab==='comunidade'?dzComunidade():DZ.tab==='ranking'?dzRanking():(DZ.me?dzHoje():dzIntro());
+  const body=DZ.tab==='comunidade'?dzComunidade():DZ.tab==='ranking'?dzRanking():DZ.tab==='jornada'?(DZ.me?dzJornada():dzIntro()):(DZ.me?dzHoje():dzIntro());
   return {h:dzHdr(),b:(DZ.err?`<div class="note">${esc(DZ.err)}</div>`:'')+seg+body};
 };
 
 /* ---------- sheets ---------- */
 SH.dzJoin=()=>{const m=DZ.me||{},nick=m.nickname||(state.name||'').split(' ')[0]||'',col=m.color||DZ_COLORS[0];return `<h3>${DZ.me?'seu perfil no desafio':'entrar no desafio'}</h3><div class="small muted" style="margin:-6px 0 14px">É assim que as outras participantes vão te ver na comunidade e no ranking. ${state.avatar?'Sua foto de perfil do GO! aparece junto.':'Quer foto? Adicione no Menu, no seu perfil do GO!.'}</div><form data-f="dzJoin">${fld('Seu apelido',`<input name="nick" required maxlength="24" value="${esc(nick)}" placeholder="Ex.: Ana P.">`)}<div class="fld"><span>Sua cor</span><div class="dzcols">${DZ_COLORS.map(c=>`<label><input type="radio" name="color" value="${c}" ${c===col?'checked':''}><i style="background:${c}"></i></label>`).join('')}</div></div>${DZ.me?'':`<div class="note" style="margin:0 0 14px">Ao entrar, você concorda em manter a comunidade gentil: sem comentários sobre o corpo de ninguém. Fotos podem ser só para você e a organizadora.</div>`}<button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.me?'Salvar':'Entrar no desafio'}</button></form>${DZ.me?`<button class="btn ghost full" style="margin-top:8px" data-a="dzLeave">Sair do desafio</button>`:''}`};
-SH.dzProof=d=>{const m=d.m&&DZ.missions.find(x=>x.id===d.m);return `<h3>${m?'comprovar missão':'compartilhar uma vitória'}</h3>${m?`<div class="small muted" style="margin:-6px 0 14px">Dia ${m.day} · ${esc(m.title)} · +${m.points} pts</div>`:'<div class="small muted" style="margin:-6px 0 14px">Uma conquista, um prato, um treino… inspire as outras!</div>'}${dzPicker(m?'Tirar ou escolher foto':'Adicionar foto (opcional)')}<form data-f="dzProof" style="margin-top:14px">${hid('m',m&&m.id)}${fld('Legenda',`<textarea name="cap" rows="3" maxlength="500" placeholder="Conte como foi (opcional)"></textarea>`)}<label class="dztog"><input type="checkbox" name="pub" checked><span><b>Mostrar na comunidade</b><small>Desmarcado: só você e a organizadora veem. ${m?'Os pontos contam igual.':''}</small></span></label><button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':m?`Comprovar e ganhar +${m.points} pts`:'Publicar'}</button></form>`};
+SH.dzProof=d=>{const m=d.m&&DZ.missions.find(x=>x.id===d.m),rs=d.r==='1',kd=d.kind;if(kd)return dzBeforeAfterSheet(kd);return `<h3>${rs?'usar um dia de resgate':m?'comprovar missão':'compartilhar uma vitória'}</h3>${rs?`<div class="note" style="margin:-4px 0 12px">Você tem ${dzRescLeft()} ${dzRescLeft()===1?'resgate':'resgates'}. Ele recupera a missão do dia ${m.day} com todos os pontos.</div>`:''}${m?`<div class="small muted" style="margin:-6px 0 14px">Dia ${m.day} · ${esc(m.title)} · +${m.points} pts</div>${m.description?`<div class="small" style="margin:-6px 0 14px;line-height:1.5">${esc(m.description)}</div>`:''}`:'<div class="small muted" style="margin:-6px 0 14px">Uma conquista, um prato, um treino… inspire as outras!</div>'}${dzPicker(m?'Tirar ou escolher foto':'Adicionar foto (opcional)')}<form data-f="dzProof" style="margin-top:14px">${hid('m',m&&m.id)}${hid('r',rs?'1':'')}${fld('Legenda',`<textarea name="cap" rows="3" maxlength="500" placeholder="Conte como foi (opcional)"></textarea>`)}<label class="dztog"><input type="checkbox" name="pub" checked><span><b>Mostrar na comunidade</b><small>Desmarcado: só você e a organizadora veem. ${m?'Os pontos contam igual.':''}</small></span></label><button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':m?`Comprovar e ganhar +${m.points} pts`:'Publicar'}</button></form>`};
 SH.dzStoryNew=()=>`<h3>novo story</h3><div class="small muted" style="margin:-6px 0 14px">Só foto. Some sozinho em ${DZ.c?DZ.c.story_hours:18} horas.</div>${dzPicker('Tirar ou escolher foto')}<form data-f="dzStory" style="margin-top:14px">${fld('Texto (opcional)',`<input name="cap" maxlength="200" placeholder="Ex.: treino pago!">`)}<button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':'Publicar story'}</button></form>`;
 SH.dzMore=d=>{const u=dzUid();const it=d.k==='post'?DZ.posts.find(p=>p.id===d.id):d.k==='story'?DZ.stories.find(s=>s.id===d.id):null;const mine=it?it.user_id===u:d.mine==='1';
   return `<h3>opções</h3>${mine||DZ.isOwner?`<button class="btn ghost full" data-a="dzDel" data-k="${d.k}" data-id="${d.id}">${ic('trash',15)} Apagar</button>`:''}${DZ.isOwner&&!mine?`<button class="btn ghost full" style="margin-top:8px" data-a="dzHide" data-k="${d.k}" data-id="${d.id}">${ic('eyeOff',15)} ${it&&it.hidden?'Mostrar de novo':'Ocultar das participantes'}</button>`:''}${!mine?`<form data-f="dzReport" style="margin-top:12px">${hid('k',d.k)}${hid('id',d.id)}${fld('Denunciar (só a organizadora vê)',`<input name="r" maxlength="300" placeholder="O que aconteceu? (opcional)">`)}<button class="btn full" style="background:var(--rose-l);color:var(--rose-d)">${ic('flag',15)} Enviar denúncia</button></form>`:''}`};
@@ -2651,11 +2692,11 @@ Object.assign(F,{
   dzProof:async v=>{if(DZ.busy)return;const m=v.m&&DZ.missions.find(x=>x.id===v.m);
     if(m&&!DZ.file){toast('A missão é comprovada com uma foto');return}
     if(!m&&!DZ.file&&!(v.cap||'').trim()){toast('Escreva algo ou adicione uma foto');return}
-    DZ.busy=true;openSheet('dzProof',{m:v.m});
+    DZ.busy=true;openSheet('dzProof',{m:v.m,r:v.r});
     try{const path=DZ.file?await dzUpload(DZ.file):null;
-      const {error}=await sb.from('dz_posts').insert({challenge_id:DZ.c.id,mission_id:m?m.id:null,caption:(v.cap||'').trim().slice(0,500)||null,photo_path:path,is_public:!!v.pub});
+      const {error}=await sb.from('dz_posts').insert({challenge_id:DZ.c.id,mission_id:m?m.id:null,caption:(v.cap||'').trim().slice(0,500)||null,photo_path:path,is_public:!!v.pub,rescue:v.r==='1'});
       if(error){if(path)sb.storage.from(DZ_BUCKET).remove([path]);throw error}
-      dzClearFile();closeSheet();toast(m?`Missão comprovada · +${m.points} pts 🎉`:'Publicado!');DZ.tab=m?DZ.tab:'comunidade';
+      dzClearFile();closeSheet();toast(m?`Missão comprovada · +${m.points} pts 🎉`:'Publicado!');DZ.tab=m?DZ.tab:'comunidade';if(m)setTimeout(()=>dzAfterMission(m),900);
     }catch(e){toast(dzErr(e))}
     DZ.busy=false;DZ.loaded=false;await dzLoad(true)},
   dzStory:async v=>{if(DZ.busy)return;if(!DZ.file){toast('Escolha uma foto');return}DZ.busy=true;openSheet('dzStoryNew');
@@ -2678,14 +2719,15 @@ S.desafioAdmin=()=>{
   const rep=a.reports.map(r=>{const p=r.target==='post'&&DZ.posts.find(x=>x.id===r.target_id);return `<div class="row"><span style="color:var(--rose-d)">${ic('flag',17)}</span><div class="grow"><div class="rt">${{post:'Post',comment:'Comentário',story:'Story'}[r.target]} denunciado</div><div class="small muted">${esc(r.reason||'Sem motivo informado')} · ${dzAgo(r.created_at)}${p&&p.caption?' · “'+esc(p.caption.slice(0,60))+'”':''}</div></div>${r.target!=='comment'?`<button class="btn sm ghost" data-a="dzHide" data-k="${r.target}" data-id="${r.target_id}">Ocultar</button>`:`<button class="btn sm ghost" data-a="dzAdmDelComment" data-id="${r.target_id}">Apagar</button>`}<button class="btn sm soft" data-a="dzResolve" data-id="${r.id}">Ok</button></div>`}).join('');
   const b=`<div class="dzstats" style="margin-top:0"><div><b>${a.count}</b><span>participantes</span></div><div><b>${dzPhase()==='antes'?1-dzDayN()+' dias':dzPhase()==='durante'?'dia '+dzDayN():'fim'}</b><span>${dzPhase()==='antes'?'para começar':dzPhase()==='durante'?'de '+dzLen():'encerrado'}</span></div></div>
   <h2 class="sec">denúncias</h2><div class="card" style="margin-top:0">${rep||'<div class="empty">Nenhuma denúncia em aberto 🙌</div>'}</div>
-  <h2 class="sec">dados do desafio</h2><div class="card" style="margin-top:0"><form data-f="dzAdmC">${fld('Nome',`<input name="title" required maxlength="60" value="${esc(c.title)}">`)}${fld('Frase de apoio',`<input name="subtitle" maxlength="80" value="${esc(c.subtitle||'')}">`)}<div class="two">${fld('Começa',`<input type="date" name="start" required value="${c.start_date}">`)}${fld('Termina',`<input type="date" name="end" required value="${c.end_date}">`)}</div>${fld('Prêmio (aparece na entrada)',`<input name="prize" maxlength="160" value="${esc(c.prize||'')}" placeholder="Ex.: 1 mês de acompanhamento">`)}${fld('Texto embaixo do botão',`<input name="price" maxlength="80" value="${esc(c.price_note||'')}" placeholder="Ex.: vagas limitadas">`)}<div class="two">${fld('Stories somem em',`<select name="sh">${[12,18,24].map(x=>`<option value="${x}" ${c.story_hours===x?'selected':''}>${x} horas</option>`).join('')}</select>`)}${fld('Pessoas por liga',`<input name="ls" inputmode="numeric" value="${c.league_size}">`)}</div><button class="btn primary full">Salvar</button></form></div>
+  <h2 class="sec">dados do desafio</h2><div class="card" style="margin-top:0"><form data-f="dzAdmC">${fld('Nome',`<input name="title" required maxlength="60" value="${esc(c.title)}">`)}${fld('Frase de apoio',`<input name="subtitle" maxlength="80" value="${esc(c.subtitle||'')}">`)}<div class="two">${fld('Começa',`<input type="date" name="start" required value="${c.start_date}">`)}${fld('Termina',`<input type="date" name="end" required value="${c.end_date}">`)}</div>${fld('Prêmio (aparece na entrada)',`<input name="prize" maxlength="160" value="${esc(c.prize||'')}" placeholder="Ex.: 1 mês de acompanhamento">`)}${fld('Texto embaixo do botão',`<input name="price" maxlength="80" value="${esc(c.price_note||'')}" placeholder="Ex.: vagas limitadas">`)}<div class="two">${fld('Stories somem em',`<select name="sh">${[12,18,24].map(x=>`<option value="${x}" ${c.story_hours===x?'selected':''}>${x} horas</option>`).join('')}</select>`)}${fld('Pessoas por liga',`<input name="ls" inputmode="numeric" value="${c.league_size}">`)}</div>${fld('Dias de resgate por participante',`<input name="resc" inputmode="numeric" value="${c.rescues??2}">`)}<div class="psub2" style="margin:6px 0 8px">oferta do final do desafio</div>${fld('Título da oferta',`<input name="ot" maxlength="80" value="${esc(c.offer_title||'')}" placeholder="Ex.: Continue com acompanhamento">`)}${fld('Texto',`<textarea name="ox" rows="3" maxlength="400" placeholder="Ex.: 20% off no Método REVela para quem concluiu">${esc(c.offer_text||'')}</textarea>`)}${fld('Link (WhatsApp, Kiwify…)',`<input name="ou" maxlength="300" value="${esc(c.offer_url||'')}" placeholder="https://">`)}<button class="btn primary full">Salvar</button></form></div>
   <h2 class="sec">hábitos do desafio <button class="btn sm soft" data-a="sheet" data-s="dzAdmH">${ic('plus',14)} Novo</button></h2><div class="card" style="margin-top:0">${DZ.habits.map(x=>`<div class="row"><div class="grow rt">${esc(x.label)}</div><span class="small muted">+${x.points}</span><button class="ib sm" data-a="sheet" data-s="dzAdmH" data-id="${x.id}" aria-label="Editar">${ic('edit',15)}</button></div>`).join('')||'<div class="empty">Nenhum hábito.</div>'}</div>
   <h2 class="sec">missões <button class="btn sm soft" data-a="sheet" data-s="dzAdmM">${ic('plus',14)} Nova</button></h2><div class="card" style="margin-top:0">${DZ.missions.map(m=>`<div class="row"><span class="dzpos">${m.day}</span><div class="grow"><div class="rt">${esc(m.title)}</div><div class="small muted">${esc(m.pillar||'')}${m.day===dzDayN()?' · hoje':''}</div></div><button class="ib sm" data-a="sheet" data-s="dzAdmM" data-id="${m.id}" aria-label="Editar">${ic('edit',15)}</button></div>`).join('')}</div>
+  ${dzAdminExtras()}
   <h2 class="sec">testes</h2><div class="card" style="margin-top:0"><div class="small" style="line-height:1.6">Para testar antes de janeiro, mude a data de início para hoje, teste com as testadoras e depois volte a data para 04/01 e zere os dados de teste.</div><button class="btn full rzero" style="margin-top:12px" data-a="sheet" data-s="dzAdmReset">${ic('x',14)} Zerar dados de teste</button></div>`;
   return {h,b};
 };
-SH.dzAdmH=d=>{const x=DZ.habits.find(h=>h.id===d.id)||{};return `<h3>${x.id?'editar hábito':'novo hábito'}</h3><form data-f="dzAdmH">${hid('id',x.id)}${fld('Hábito',`<input name="label" required maxlength="80" value="${esc(x.label||'')}">`)}${fld('Pontos',`<input name="pts" inputmode="numeric" value="${x.points??5}">`)}<button class="btn primary full">Salvar</button></form>${x.id?`<button class="btn ghost full" style="margin-top:8px" data-a="dzAdmDelH" data-id="${x.id}">${ic('trash',15)} Excluir hábito</button>`:''}`};
-SH.dzAdmM=d=>{const x=DZ.missions.find(m=>m.id===d.id)||{day:(DZ.missions.reduce((a,m)=>Math.max(a,m.day),0)+1),points:10};return `<h3>${x.id?'editar missão':'nova missão'}</h3><form data-f="dzAdmM">${hid('id',x.id)}<div class="two">${fld('Dia',`<input name="day" inputmode="numeric" required value="${x.day}">`)}${fld('Pontos',`<input name="pts" inputmode="numeric" value="${x.points}">`)}</div>${fld('Pilar',`<input name="pillar" maxlength="30" value="${esc(x.pillar||'')}" placeholder="Ex.: Alimentação">`)}${fld('Missão',`<input name="title" required maxlength="120" value="${esc(x.title||'')}">`)}${fld('Explicação',`<textarea name="desc" rows="4" maxlength="600">${esc(x.description||'')}</textarea>`)}<button class="btn primary full">Salvar</button></form>${x.id?`<button class="btn ghost full" style="margin-top:8px" data-a="dzAdmDelM" data-id="${x.id}">${ic('trash',15)} Excluir missão</button>`:''}`};
+SH.dzAdmH=d=>{const x=DZ.habits.find(h=>h.id===d.id)||{};return `<h3>${x.id?'editar hábito':'novo hábito'}</h3><form data-f="dzAdmH">${hid('id',x.id)}${fld('Hábito',`<input name="label" required maxlength="80" value="${esc(x.label||'')}">`)}${fld('Pontos',`<input name="pts" inputmode="numeric" value="${x.points??5}">`)}${fld('Marcar sozinho pelo GO! (opcional)',dzAutoSel(x.auto))}<button class="btn primary full">Salvar</button></form>${x.id?`<button class="btn ghost full" style="margin-top:8px" data-a="dzAdmDelH" data-id="${x.id}">${ic('trash',15)} Excluir hábito</button>`:''}`};
+SH.dzAdmM=d=>{const x=DZ.missions.find(m=>m.id===d.id)||{day:(DZ.missions.reduce((a,m)=>Math.max(a,m.day),0)+1),points:10};return `<h3>${x.id?'editar missão':'nova missão'}</h3><form data-f="dzAdmM">${hid('id',x.id)}<div class="two">${fld('Dia',`<input name="day" inputmode="numeric" required value="${x.day}">`)}${fld('Pontos',`<input name="pts" inputmode="numeric" value="${x.points}">`)}</div>${fld('Pilar',`<input name="pillar" maxlength="30" value="${esc(x.pillar||'')}" placeholder="Ex.: Alimentação">`)}${fld('Missão',`<input name="title" required maxlength="120" value="${esc(x.title||'')}">`)}${fld('Explicação',`<textarea name="desc" rows="4" maxlength="600">${esc(x.description||'')}</textarea>`)}${fld('Cumprir automaticamente pelo GO! (opcional)',dzAutoSel(x.auto))}<div class="small muted" style="margin:-6px 0 12px">Se escolher, a missão se completa sozinha quando ela fizer isso no app. A foto vira opcional.</div><button class="btn primary full">Salvar</button></form>${x.id?`<button class="btn ghost full" style="margin-top:8px" data-a="dzAdmDelM" data-id="${x.id}">${ic('trash',15)} Excluir missão</button>`:''}`};
 SH.dzAdmReset=()=>`<h3>zerar dados de teste</h3><div style="font-size:14px;line-height:1.6">Apaga <b>todos</b> os posts, stories, comentários, reações, pontos e denúncias deste desafio. As missões e os hábitos continuam.</div><form data-f="dzAdmReset" style="margin-top:14px"><label class="dztog"><input type="checkbox" name="mem"><span><b>Tirar as participantes também</b><small>Elas precisam entrar de novo no desafio</small></span></label>${fld('Pra confirmar, digite ZERAR',`<input name="c" autocomplete="off" autocapitalize="characters" required>`)}<button class="btn full" style="background:var(--rose-d);color:#fff">Zerar agora</button></form>`;
 Object.assign(A,{
   dzResolve:async d=>{await sb.from('dz_reports').update({resolved:true}).eq('id',d.id);DZ.admin.reports=DZ.admin.reports.filter(r=>r.id!==d.id);render()},
@@ -2695,10 +2737,10 @@ Object.assign(A,{
 });
 Object.assign(F,{
   dzAdmC:async v=>{if(v.end<v.start){toast('A data final precisa ser depois do início');return}const ls=Math.max(3,Math.min(50,parseInt(v.ls,10)||8));
-    const {error}=await sb.from('dz_challenges').update({title:v.title.trim(),subtitle:(v.subtitle||'').trim()||null,start_date:v.start,end_date:v.end,prize:(v.prize||'').trim()||null,price_note:(v.price||'').trim()||null,story_hours:parseInt(v.sh,10)||18,league_size:ls}).eq('id',DZ.c.id);
+    const {error}=await sb.from('dz_challenges').update({title:v.title.trim(),subtitle:(v.subtitle||'').trim()||null,start_date:v.start,end_date:v.end,prize:(v.prize||'').trim()||null,price_note:(v.price||'').trim()||null,story_hours:parseInt(v.sh,10)||18,league_size:ls,rescues:Math.max(0,Math.min(7,parseInt(v.resc,10)||0)),offer_title:(v.ot||'').trim()||null,offer_text:(v.ox||'').trim()||null,offer_url:(v.ou||'').trim()||null}).eq('id',DZ.c.id);
     if(error){toast(dzErr(error));return}toast('Desafio salvo');DZ.loaded=false;await dzLoad(true)},
-  dzAdmH:async v=>{const row={label:v.label.trim(),points:Math.max(0,Math.min(100,parseInt(v.pts,10)||0))};const q=v.id?sb.from('dz_habits').update(row).eq('id',v.id):sb.from('dz_habits').insert({...row,challenge_id:DZ.c.id,sort:DZ.habits.length+1});const {error}=await q;if(error){toast(dzErr(error));return}closeSheet();DZ.loaded=false;await dzLoad(true)},
-  dzAdmM:async v=>{const row={day:Math.max(1,parseInt(v.day,10)||1),points:Math.max(0,Math.min(100,parseInt(v.pts,10)||0)),pillar:(v.pillar||'').trim()||null,title:v.title.trim(),description:(v.desc||'').trim()||null};const q=v.id?sb.from('dz_missions').update(row).eq('id',v.id):sb.from('dz_missions').insert({...row,challenge_id:DZ.c.id});const {error}=await q;if(error){toast(/duplicate|unique/i.test(error.message)?'Já existe uma missão nesse dia':dzErr(error));return}closeSheet();DZ.loaded=false;await dzLoad(true)},
+  dzAdmH:async v=>{const row={label:v.label.trim(),points:Math.max(0,Math.min(100,parseInt(v.pts,10)||0)),auto:v.auto||null};const q=v.id?sb.from('dz_habits').update(row).eq('id',v.id):sb.from('dz_habits').insert({...row,challenge_id:DZ.c.id,sort:DZ.habits.length+1});const {error}=await q;if(error){toast(dzErr(error));return}closeSheet();DZ.loaded=false;await dzLoad(true)},
+  dzAdmM:async v=>{const row={day:Math.max(1,parseInt(v.day,10)||1),points:Math.max(0,Math.min(100,parseInt(v.pts,10)||0)),pillar:(v.pillar||'').trim()||null,title:v.title.trim(),description:(v.desc||'').trim()||null,auto:v.auto||null};const q=v.id?sb.from('dz_missions').update(row).eq('id',v.id):sb.from('dz_missions').insert({...row,challenge_id:DZ.c.id});const {error}=await q;if(error){toast(/duplicate|unique/i.test(error.message)?'Já existe uma missão nesse dia':dzErr(error));return}closeSheet();DZ.loaded=false;await dzLoad(true)},
   dzAdmReset:async v=>{if((v.c||'').trim().toUpperCase()!=='ZERAR'){toast('Digite ZERAR pra confirmar');return}const {error}=await sb.rpc('dz_reset',{cid:DZ.c.id,keep_members:!v.mem});if(error){toast(dzErr(error));return}closeSheet();toast('Dados de teste apagados');DZ.admin=null;DZ.urls={};DZ.loaded=false;await dzLoad(true)}
 });
 
@@ -2722,6 +2764,217 @@ navOf.desafioAdmin='desafio';
   if(!show&&DZ.c&&!nav.querySelector('button.dsk[data-to="desafio"]')){const sep=nav.querySelector('.side-sep');if(sep){const b=document.createElement('button');b.className='dsk'+(['desafio','desafioAdmin'].includes(ui.screen)?' on':'');b.dataset.a='go';b.dataset.to='desafio';b.innerHTML=ic('trophy',20)+'<span>Desafio</span>';sep.after(b)}}
 }catch(e){}}}
 {const _menu=S.menu;S.menu=()=>{const r=_menu();if(DZ.c){const k=`<button class="mitem" data-a="go" data-to="desafio"><div class="tic" style="background:${C.rose};width:40px;height:40px">${ic('trophy',19)}</div><div class="grow"><b style="font-weight:500">Desafio ${esc(DZ.c.title)}</b><div class="small muted">Missões, comunidade e ranking</div></div>${ic('chevR',18)}</button>`,i=r.b.indexOf('<button class="mitem"');r.b=i>=0?r.b.slice(0,i)+k+r.b.slice(i):k+r.b}return r}}
+
+/* =========================================================
+   DESAFIO · JORNADA (fases, missões automáticas, resgate,
+   antes/depois, carta, recados, perguntas, dupla, cards, final)
+   ========================================================= */
+const DZAUTO=[['planejar','Planejar o dia no GO!','Planejar meu dia agora'],['planejar_amanha','Planejar o dia seguinte no GO!','Planejar amanhã agora'],['semana','Planejar a semana no GO!','Planejar a semana agora'],['agua','Bater a meta de água','Registrar água'],['treino','Registrar um treino no GO!','Ir para Treinos'],['leitura','Registrar páginas lidas','Ir para Leitura'],['devocional','Fazer o devocional no GO!','Ir para o Devocional'],['humor','Registrar o humor do dia','Registrar meu humor']];
+const DZBA=[['A sua geladeira','geladeira'],['A sua agenda ou planner','agenda'],['Um cantinho seu','cantinho'],['Você (só você vê)','eu']];
+const dzAutoTxt=k=>{const x=DZAUTO.find(a=>a[0]===k);return x?`Faça no GO! e a missão se cumpre sozinha: ${x[1].toLowerCase()}`:''};
+const dzAutoBtn=k=>{const x=DZAUTO.find(a=>a[0]===k);return x?x[2]:'Abrir'};
+const dzAutoSel=v=>`<select name="auto"><option value="">Não, só com foto / na mão</option>${DZAUTO.map(([k,l])=>`<option value="${k}" ${v===k?'selected':''}>${l}</option>`).join('')}</select>`;
+const dzStart=()=>DZ.c.start_date;
+const dzDateOf=n=>addDays(DZ.c.start_date,n-1);
+const dzRescLeft=()=>Math.max(0,(DZ.c&&DZ.c.rescues!=null?DZ.c.rescues:2)-(DZ.rescUsed||0));
+function dzPhases(){const L=[];DZ.missions.slice().sort((a,b)=>a.day-b.day).forEach(m=>{const k=m.pillar||'Jornada',last=L[L.length-1];if(last&&last.name===k){last.to=m.day;last.ms.push(m)}else L.push({name:k,from:m.day,to:m.day,ms:[m]})});return L}
+function dzCurPhase(){const n=dzDayN(),P=dzPhases();return P.findIndex(p=>n>=p.from&&n<=p.to)}
+function dzPct(){if(!DZ.c||!DZ.me)return 0;const t=today(),j=(DZ.me.joined_at||'').slice(0,10),fs=[DZ.c.start_date,j].sort()[1]||DZ.c.start_date,we=[t,DZ.c.end_date].sort()[0];if(we<fs)return 0;
+  const days=daysBetween(fs,we)+1,hp=DZ.habits.reduce((a,h)=>a+h.points,0),mp=DZ.missions.filter(m=>{const d=dzDateOf(m.day);return d>=fs&&d<=we}).reduce((a,m)=>a+m.points,0),pmax=days*hp+mp;
+  const got=DZ.checks.filter(k=>k.day>=fs&&k.day<=we).reduce((a,k)=>a+k.points,0);return pmax?Math.min(100,Math.round(got/pmax*100)):0}
+function dzMissedMissions(){const n=dzDayN();return DZ.missions.filter(m=>m.day<n-1&&m.day>=1&&!dzMissionDone(m)).sort((a,b)=>b.day-a.day)}
+const dzBA=k=>(DZ.mine||[]).filter(p=>p.kind===k);
+const dzBAFor=(k,label)=>(DZ.mine||[]).find(p=>p.kind===k&&p.caption===label);
+
+async function dzLoadExtra(){
+  if(!DZ.c)return;const cid=DZ.c.id,u=dzUid();
+  try{
+    const since=new Date(Date.now()-7*864e5).toISOString();
+    const [nt,lt,qs,ch,mn]=await Promise.all([
+      sb.from('dz_notes').select('*').eq('challenge_id',cid).order('day'),
+      sb.from('dz_letters').select('text,created_at').eq('challenge_id',cid).eq('user_id',u).maybeSingle(),
+      sb.from('dz_questions').select('*').eq('challenge_id',cid).order('created_at',{ascending:false}).limit(60),
+      sb.from('dz_cheers').select('*').eq('challenge_id',cid).gte('created_at',since).order('created_at',{ascending:false}),
+      sb.from('dz_posts').select('id,kind,caption,photo_path,mission_id,day,rescue,is_public').eq('challenge_id',cid).eq('user_id',u)]);
+    DZ.notes=nt.data||[];DZ.letter=lt.data||null;DZ.qs=qs.data||[];DZ.cheers=ch.data||[];DZ.mine=mn.data||[];DZ.rescUsed=DZ.mine.filter(p=>p.rescue).length;
+    DZ.bchecks=[];if(DZ.me&&DZ.me.buddy){const {data}=await sb.from('dz_checks').select('day,habit_id,mission_id,points').eq('challenge_id',cid).eq('user_id',DZ.me.buddy);DZ.bchecks=data||[]}
+    const need=DZ.mine.map(p=>p.photo_path).filter(p=>p&&!DZ.urls[p]);
+    if(need.length){const {data}=await sb.storage.from(DZ_BUCKET).createSignedUrls(need,6*3600);(data||[]).forEach(x=>{if(x.signedUrl)DZ.urls[x.path]=x.signedUrl})}
+  }catch(e){}
+  setTimeout(dzAutoSync,300);
+}
+
+/* ---------- missões e hábitos automáticos ---------- */
+function dzAutoLocal(k,d){const st=state;try{switch(k){
+  case 'planejar':return !!(st.dayPlans&&st.dayPlans[d]&&st.dayPlans[d].done);
+  case 'planejar_amanha':{const x=addDays(d,1);return !!(st.dayPlans&&st.dayPlans[x]&&st.dayPlans[x].done)}
+  case 'semana':{const p=st.plans&&st.plans[weekStart(d)];return !!(p&&((p.identity||'').trim()||(p.focus||[]).length))}
+  case 'agua':return (st.water[d]||0)>=(st.settings.waterGoal||2000);
+  case 'treino':return !!((st.gym&&st.gym.logs||[]).some(l=>l.date===d&&l.end));
+  case 'leitura':return (st.books||[]).some(b=>(b.log||{})[d]>0);
+  case 'devocional':return !!(st.devo&&st.devo.entries&&st.devo.entries[d]);
+  case 'humor':return !!(st.mood&&st.mood[d]);
+}}catch(e){}return false}
+const dzHabitAutoLocal=(k,d)=>dzAutoLocal(k,d)||(k==='treino'&&doHabits().some(h=>habitIcon(h)==='dumb'&&h.log&&h.log[d]));
+let dzSyncing=false;
+async function dzAutoSync(){
+  if(dzSyncing||!DZ.c||!DZ.me||!sb||!session)return;dzSyncing=true;let got=0;
+  try{const t=today();for(const d of [addDays(t,-1),t]){if(d<DZ.c.start_date||d>DZ.c.end_date)continue;const n=daysBetween(DZ.c.start_date,d)+1,m=dzMission(n);
+    if(m&&m.auto&&!dzMissionDone(m)&&dzAutoLocal(m.auto,d)){const {error}=await sb.from('dz_checks').insert({challenge_id:DZ.c.id,day:d,mission_id:m.id});if(!error){DZ.checks.push({day:d,mission_id:m.id,habit_id:null,points:m.points});got+=m.points;toast(`Missão do dia ${n} cumprida pelo GO! ✨ +${m.points} pts`)}}
+    for(const h of DZ.habits){if(h.auto&&!dzHabitOn(h,d)&&dzHabitAutoLocal(h.auto,d)){const {error}=await sb.from('dz_checks').insert({challenge_id:DZ.c.id,day:d,habit_id:h.id});if(!error){DZ.checks.push({day:d,habit_id:h.id,mission_id:null,points:h.points});got+=h.points}}}}
+  }catch(e){}
+  dzSyncing=false;if(got){dzLoadRank().then(render);render()}
+}
+{const _pr=pushRemote;pushRemote=async function(){await _pr();try{if(DZ.me)dzAutoSync()}catch(e){}}}
+
+/* ---------- Hoje: barra da fase, recado, extras ---------- */
+function dzPhaseBar(){const P=dzPhases(),i=dzCurPhase();if(i<0)return '';const p=P[i],n=dzDayN();
+  return `<button class="dzphb" data-a="dzTab" data-v="jornada"><div class="dzphs">${P.map((x,j)=>`<i class="${j<i?'ok':j===i?'on':''}"><b style="width:${j<i?100:j===i?Math.round((n-x.from+1)/(x.to-x.from+1)*100):0}%"></b></i>`).join('')}</div><div class="dzpht"><span>FASE ${i+1} · ${esc(p.name).toUpperCase()}</span><span>dia ${n-p.from+1} de ${p.to-p.from+1} ›</span></div></button>`}
+const dzNotesSeen=()=>{try{return JSON.parse(localStorage.getItem('go-dz-notes')||'{}')}catch(e){return {}}};
+function dzNoteNew(){const n=dzDayN(),L=(DZ.notes||[]).filter(x=>x.day<=n),last=L[L.length-1];if(!last||dzNotesSeen()[last.id])return '';
+  return `<button class="card dznote" data-a="sheet" data-s="dzNote" data-id="${last.id}"><span class="dznq">${ic('heart',16)}</span><div class="grow"><small>RECADO DA NUTRI · NOVO</small><b>${esc(last.title)}</b></div>${ic('chevR',16)}</button>`}
+function dzHojeExtras(){
+  const n=dzDayN(),len=dzLen(),t=today();let b='';
+  // dupla
+  const bd=DZ.me&&DZ.me.buddy;
+  if(bd){const bm=dzMem(bd),m=dzMission(n),bmd=m&&DZ.bchecks.some(k=>k.mission_id===m.id),bh=DZ.bchecks.filter(k=>k.habit_id&&k.day===t).length,sent=DZ.cheers.some(c=>c.from_user===dzUid()&&c.to_user===bd&&c.created_at.slice(0,10)===new Date().toISOString().slice(0,10));
+    b+=`<h2 class="sec">sua dupla</h2><div class="card dzbud">${dzAv(bd,44)}<div class="grow"><b>${esc(bm.nickname)}</b><small>${bmd?'✓ missão de hoje feita':'missão de hoje pendente'} · ${bh} de ${DZ.habits.length} hábitos</small></div><button class="btn sm ${sent?'soft':'primary'}" data-a="dzCheer" ${sent?'disabled':''}>${sent?'força enviada':'mandar força 💪'}</button></div>`}
+  else b+=`<div class="card dzbud muted"><span class="dzic">${ic('heart',18)}</span><div class="grow small">Sua dupla de apoio chega assim que outra participante entrar 💛</div></div>`;
+  const rc=DZ.cheers.filter(c=>c.to_user===dzUid()).slice(0,3);
+  if(rc.length)b+=`<div class="dzcheers">${rc.map(c=>`<div>${dzAv(c.from_user,24)} <span><b>${esc(dzMem(c.from_user).nickname)}</b> te mandou força ${dzAgo(c.created_at)==='agora'?'agora':'há '+dzAgo(c.created_at)} 💪</span></div>`).join('')}</div>`;
+  // resgate
+  const miss=dzMissedMissions(),rl=dzRescLeft();
+  if(miss.length&&rl)b+=`<div class="card dzresc"><div class="dzrh"><span class="dzic">${ic('refresh',17)}</span><div class="grow"><b>Ficou alguma missão pra trás?</b><small>Você tem ${rl} ${rl===1?'dia':'dias'} de resgate. Recupere com todos os pontos.</small></div></div><div class="pchips" style="margin-top:10px">${miss.slice(0,4).map(m=>`<button class="pchip" data-a="sheet" data-s="dzProof" data-m="${m.id}" data-r="1">dia ${m.day} · ${esc(m.title)}</button>`).join('')}</div></div>`;
+  // antes / carta / depois
+  const ant=dzBA('antes').length,dep=dzBA('depois').length;
+  if(n<=7&&ant<3)b+=`<button class="card dzrow dzy" data-a="dzTab" data-v="jornada"><span class="dzic">${ic('camera',18)}</span><div class="grow"><b>Fotos do antes (${ant}/3)</b><div class="small muted">Geladeira, agenda e um cantinho seu. No fim você compara.</div></div>${ic('chevR',16)}</button>`;
+  if(n<=7&&!DZ.letter)b+=`<button class="card dzrow dzy" data-a="sheet" data-s="dzLetter"><span class="dzic">${ic('edit',18)}</span><div class="grow"><b>Escreva sua carta para a eu do futuro</b><div class="small muted">Ela fica selada até o último dia.</div></div>${ic('chevR',16)}</button>`;
+  if(n>=len-2&&dep<3)b+=`<button class="card dzrow dzy" data-a="dzTab" data-v="jornada"><span class="dzic">${ic('camera',18)}</span><div class="grow"><b>Fotos do depois (${dep}/3)</b><div class="small muted">Os mesmos lugares de antes. Bora ver a diferença?</div></div>${ic('chevR',16)}</button>`;
+  if(n>=len)b+=`<button class="btn primary full" style="margin-top:14px" data-a="dzTab" data-v="jornada">${ic('trophy',16)} Ver o resumo da minha jornada</button>`;
+  return b;
+}
+
+/* ---------- Jornada ---------- */
+function dzJornada(){
+  const n=dzDayN(),len=dzLen(),P=dzPhases(),ci=dzCurPhase(),pc=dzPct(),done=DZ.missions.filter(dzMissionDone).length,rl=dzRescLeft();
+  let b=`<div class="gcard dzg"><div class="hsl" style="min-height:0"><div class="hk">SUA JORNADA · ${esc(DZ.c.title).toUpperCase()}</div><div class="dzbig"><span class="dzbn">${pc}%</span> de constância</div><div class="hS dzsub">${Math.max(0,Math.min(n,len))} de ${len} dias · ${done} ${done===1?'missão':'missões'} · ${rl} ${rl===1?'resgate':'resgates'} disponíveis</div></div></div>`;
+  if(n>=len||dzPhase()==='fim')b+=dzFinal();
+  P.forEach((p,i)=>{const st=n>p.to?'ok':i===ci?'on':'lock',dn=p.ms.filter(dzMissionDone).length;
+    b+=`<div class="dzfase ${st}"><div class="dzfh"><span class="dzfn">${st==='ok'?ic('check',14,2.6):i+1}</span><div class="grow"><small>FASE ${i+1} · DIAS ${p.from}–${p.to}</small><b>${esc(p.name)}</b></div><span class="small muted">${dn}/${p.ms.length}</span></div><div class="dzpath">`;
+    p.ms.forEach((m,j)=>{const d=m.day,ok=dzMissionDone(m),cls=ok?'ok':d===n?'today':d<n?(d===n-1?'late':'miss'):'fut',off=[0,1,2,1][j%4];
+      b+=`<button class="dznode ${cls} o${off}" data-a="sheet" data-s="dzNode" data-n="${d}" aria-label="Dia ${d}: ${esc(m.title)}"><span class="dzn">${ok?ic('check',16,2.6):cls==='fut'?ic('lock',13):d}</span><small>${d===n?'hoje':esc(m.title)}</small></button>`});
+    const nt=(DZ.notes||[]).find(x=>x.day===p.to+1)||(i===P.length-1?(DZ.notes||[]).find(x=>x.day===p.to):null);
+    b+=`</div><div class="dzmark ${st}"><span>${ic('trophy',15)}</span><div class="grow"><b>${st==='ok'?'Fase concluída!':'Marco da fase'}</b><small>${st==='ok'?`${dn} de ${p.ms.length} missões${nt?' · recado liberado: '+esc(nt.title):''}`:nt?'libera: recado da nutri "'+esc(nt.title)+'"':'conclua a fase pra liberar'}</small></div></div></div>`});
+  // antes e depois
+  const depOn=n>=len-2;
+  b+=`<h2 class="sec">antes e depois</h2><div class="small muted" style="margin:-4px 2px 10px">Não é sobre corpo: é sobre a vida que você organizou. As fotos ficam só pra você, a não ser que escolha mostrar.</div><div class="dzba">${DZBA.map(([lb,k])=>{const a=dzBAFor('antes',lb),d=dzBAFor('depois',lb),ua=a&&DZ.urls[a.photo_path],ud=d&&DZ.urls[d.photo_path];
+    return `<div class="dzbrow"><div class="dzbal">${esc(lb)}</div><div class="dzbap"><button data-a="sheet" data-s="dzProof" data-kind="antes" data-p="${esc(lb)}" class="${a?'has':''}">${ua?`<img src="${ua}" alt="">`:`${ic('camera',18)}<small>antes</small>`}</button><button ${depOn?`data-a="sheet" data-s="dzProof" data-kind="depois" data-p="${esc(lb)}"`:'disabled'} class="${d?'has':''}">${ud?`<img src="${ud}" alt="">`:depOn?`${ic('camera',18)}<small>depois</small>`:`${ic('lock',14)}<small>no fim</small>`}</button></div></div>`}).join('')}</div>`;
+  // carta
+  const sealed=today()<DZ.c.end_date;
+  b+=`<h2 class="sec">carta para a eu do futuro</h2>${DZ.letter?(sealed?`<div class="card dzletter"><span class="dzwax">${ic('heart',18)}</span><div class="grow"><b>Carta selada</b><small>abre em ${dateLabel(DZ.c.end_date).toLowerCase()} · escrita em ${fmtD((DZ.letter.created_at||'').slice(0,10))}</small></div><button class="lnk" data-a="sheet" data-s="dzLetter">editar</button></div>`:`<div class="card dzletter open"><small>VOCÊ ESCREVEU PARA VOCÊ:</small><div class="dzlt">${esc(DZ.letter.text).replace(/\n/g,'<br>')}</div></div>`):`<button class="card dzrow dzy" data-a="sheet" data-s="dzLetter"><span class="dzic">${ic('edit',18)}</span><div class="grow"><b>Escrever minha carta</b><div class="small muted">O que você quer que a eu do dia ${len} lembre?</div></div>${ic('chevR',16)}</button>`}`;
+  // recados
+  const NL=(DZ.notes||[]).slice().sort((a,c)=>a.day-c.day);
+  if(NL.length)b+=`<h2 class="sec">recados da nutri</h2><div class="card" style="margin-top:0">${NL.map(x=>x.day<=n?`<button class="row dznl" data-a="sheet" data-s="dzNote" data-id="${x.id}"><span class="dznq sm">${ic('heart',13)}</span><div class="grow rt">${esc(x.title)}<div class="small muted">dia ${x.day}${dzNotesSeen()[x.id]?'':' · novo'}</div></div>${ic('chevR',15)}</button>`:`<div class="row dznl lock"><span class="dznq sm">${ic('lock',12)}</span><div class="grow rt muted">Libera no dia ${x.day}</div></div>`).join('')}</div>`;
+  // caixinha
+  const mineQ=DZ.qs.filter(q=>q.user_id===dzUid()),ans=DZ.qs.filter(q=>q.answer);
+  b+=`<h2 class="sec">caixinha de perguntas <button class="btn sm soft" data-a="sheet" data-s="dzAsk">${ic('plus',13)} Perguntar</button></h2><div class="small muted" style="margin:-4px 2px 10px">Pergunte pra nutri. As respostas aparecem aqui pra todas, sem o seu nome.</div>
+  ${mineQ.filter(q=>!q.answer).map(q=>`<div class="card dzq wait"><small>SUA PERGUNTA · AGUARDANDO</small><div>${esc(q.text)}</div></div>`).join('')}
+  ${ans.map(q=>`<div class="card dzq"><small>PERGUNTA${q.user_id===dzUid()?' (SUA)':''}</small><div class="dzqq">${esc(q.text)}</div><div class="dzqa"><b>Nutri:</b> ${esc(q.answer).replace(/\n/g,'<br>')}</div></div>`).join('')||(mineQ.length?'':'<div class="card"><div class="empty">Nenhuma pergunta respondida ainda.</div></div>')}`;
+  return b;
+}
+function dzFinal(){
+  const c=DZ.c,len=dzLen(),act=new Set(DZ.checks.map(k=>k.day)).size,dn=DZ.missions.filter(dzMissionDone).length,pc=dzPct(),me=DZ.rank.findIndex(r=>r.is_me);
+  return `<div class="card dzfinal"><div class="script" style="font-size:30px;color:var(--rose-d);text-align:center">você chegou!</div><div class="dzfs"><div><b>${act}</b><span>dias em que você apareceu</span></div><div><b>${dn}/${DZ.missions.length}</b><span>missões</span></div><div><b>${pc}%</b><span>constância</span></div>${me>=0?`<div><b>${me+1}º</b><span>${DZ.rankScope==='total'?'no geral':'no ranking'}</span></div>`:''}</div><button class="btn primary full" data-a="dzCert">${ic('trophy',15)} Meu certificado de constância</button></div>
+  ${c.offer_title?`<div class="gcard dzg dzoffer"><div class="hsl" style="min-height:0"><div class="hk">SÓ PRA QUEM CONCLUIU</div><div class="dzmt">${esc(c.offer_title)}</div>${c.offer_text?`<div class="hS dzsub">${esc(c.offer_text)}</div>`:''}${c.offer_url?`<a class="dzproof" href="${esc(c.offer_url)}" target="_blank" rel="noopener" style="text-decoration:none">Quero continuar ${ic('chevR',15)}</a>`:''}</div></div>`:''}`;
+}
+
+/* ---------- sheets ---------- */
+SH.dzNode=d=>{const n=+d.n,m=dzMission(n),now=dzDayN();if(!m)return '<div class="empty">Sem missão nesse dia.</div>';const ok=dzMissionDone(m),dt=dzDateOf(n);
+  const act=ok?`<div class="dzdone" style="background:var(--rbg);color:var(--rose-d)">${ic('check',16,2.4)} Missão cumprida</div><button class="btn soft full" style="margin-top:10px" data-a="dzShareDay" data-n="${n}">${ic('send',14)} Card para os stories</button>`
+    :n>now?`<div class="note">Essa missão abre em ${dateLabel(dt).toLowerCase()}.</div>`
+    :n>=now-1?`${m.auto?`<button class="btn primary full" data-a="dzAutoGo" data-k="${m.auto}">${dzAutoBtn(m.auto)}</button><div class="small muted" style="margin:8px 0">${dzAutoTxt(m.auto)}</div>`:''}<button class="btn ${m.auto?'ghost':'primary'} full" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',15)} Comprovar com foto</button>`
+    :dzRescLeft()?`<button class="btn primary full" data-a="sheet" data-s="dzProof" data-m="${m.id}" data-r="1">${ic('refresh',15)} Usar um dia de resgate</button><div class="small muted" style="margin-top:8px;text-align:center">Você tem ${dzRescLeft()} ${dzRescLeft()===1?'resgate':'resgates'}.</div>`:`<div class="note">Essa ficou pra trás e seus resgates acabaram. Tudo bem: o que importa é o próximo passo 💛</div>`;
+  return `<div class="small" style="color:var(--rose-d);letter-spacing:.12em;text-transform:uppercase;font-size:11px">dia ${n} · ${esc(m.pillar||'')} · +${m.points} pts</div><h3 style="margin-top:4px">${esc(m.title)}</h3>${m.description?`<div style="font-size:14.5px;line-height:1.6;margin-bottom:16px">${esc(m.description)}</div>`:''}${act}`};
+SH.dzNote=d=>{const x=(DZ.notes||[]).find(y=>y.id===d.id);if(!x)return '';try{const s_=dzNotesSeen();s_[x.id]=1;localStorage.setItem('go-dz-notes',JSON.stringify(s_))}catch(e){}setTimeout(render,50);
+  return `<div class="small" style="color:var(--rose-d);letter-spacing:.12em;text-transform:uppercase;font-size:11px">recado da nutri · dia ${x.day}</div><h3 style="margin-top:4px">${esc(x.title)}</h3><div class="dznb">${esc(x.body||'').replace(/\n/g,'<br>')}</div><div class="script" style="font-size:22px;color:var(--rose-d);margin-top:14px">com carinho, ${esc(DZ.members[DZ.c.owner_id]?DZ.members[DZ.c.owner_id].nickname:'sua nutri')} 💛</div><button class="btn soft full" style="margin-top:14px" data-a="sheet" data-s="dzAsk">Ficou com dúvida? Pergunte</button>`};
+SH.dzLetter=()=>`<h3>carta para a eu do futuro</h3><div class="small muted" style="margin:-6px 0 14px;line-height:1.5">Escreva para a você do dia ${dzLen()}. Por que começou, o que espera sentir, o que quer lembrar nos dias difíceis. Só você lê, e ela fica selada até o fim.</div><form data-f="dzLetter"><textarea name="t" rows="9" maxlength="3000" placeholder="Querida eu do futuro…">${esc(DZ.letter?DZ.letter.text:'')}</textarea><button class="btn primary full" style="margin-top:12px">${DZ.letter?'Salvar':'Selar a carta'} ${ic('heart',14)}</button></form>`;
+SH.dzAsk=()=>`<h3>pergunte pra nutri</h3><div class="small muted" style="margin:-6px 0 14px">Sobre alimentação, treino, rotina… A resposta aparece pra todas, sem o seu nome.</div><form data-f="dzAsk"><textarea name="t" rows="4" maxlength="600" required placeholder="Ex.: posso trocar o arroz por batata?"></textarea><button class="btn primary full" style="margin-top:12px">Enviar pergunta</button></form>`;
+function dzBeforeAfterSheet(kind){const lb=DZ._baP||DZBA[0][0],cur=dzBAFor(kind,lb);return `<h3>${kind==='antes'?'foto do antes':'foto do depois'}</h3><div class="small muted" style="margin:-6px 0 14px">${esc(lb)}${kind==='depois'?' · mesmo ângulo da foto de antes, se der':''}</div>${cur?`<div class="note" style="margin:-4px 0 12px">Você já tem essa foto. Enviar outra substitui.</div>`:''}${dzPicker('Tirar ou escolher foto')}<form data-f="dzBA" style="margin-top:14px">${hid('k',kind)}${hid('p',lb)}<label class="dztog"><input type="checkbox" name="pub" ${lb.includes('só você')?'disabled':''}><span><b>Mostrar na comunidade</b><small>Desmarcado: só você e a organizadora veem.</small></span></label><button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':'Salvar foto'}</button></form>`}
+{const _sh=A.sheet;A.sheet=d=>{if(d&&d.s==='dzProof'&&d.kind)DZ._baP=d.p;return _sh(d)}}
+
+/* ---------- ações ---------- */
+Object.assign(A,{
+  dzAutoGo:d=>{closeSheet();const k=d.k;if(k==='planejar'){A.dpOpen();return}if(k==='planejar_amanha'){A.dpTomorrow();return}if(k==='semana'){ui.planMode='semana';ui.screen='semana';render();return}
+    if(k==='treino'){ui.screen='treinos';ui.gymTab='hoje';render();return}if(k==='leitura'){ui.screen='leitura';render();return}if(k==='devocional'){ui.screen='devocional';render();return}
+    if(k==='humor'){ui.screen='home';render();openSheet('moodPick',{});return}ui.screen='home';render();window.scrollTo(0,0)},
+  dzCheer:async()=>{const bd=DZ.me&&DZ.me.buddy;if(!bd)return;const {data,error}=await sb.from('dz_cheers').insert({challenge_id:DZ.c.id,to_user:bd}).select('*').single();if(error){toast(dzErr(error));return}DZ.cheers.unshift(data);if(navigator.vibrate)navigator.vibrate(15);toast('Força enviada 💪');render()},
+  dzShareDay:d=>{closeSheet();dzShareCard(+d.n)},
+  dzCert:()=>dzCertCard()
+});
+function dzAfterMission(m){if(dzMissionDone(m))openSheet('dzShareAsk',{n:m.day})}
+SH.dzShareAsk=d=>`<div style="text-align:center"><div class="script" style="font-size:30px;color:var(--rose-d)">missão cumprida!</div><div class="small muted" style="margin:6px 0 16px">Que tal mostrar pro mundo? Um card bonito pros seus stories.</div><button class="btn primary full" data-a="dzShareDay" data-n="${d.n}">${ic('send',15)} Criar card dos stories</button><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Agora não</button></div>`;
+if(!A.closeSheet)A.closeSheet=()=>closeSheet();
+Object.assign(F,{
+  dzLetter:async v=>{const t_=(v.t||'').trim();if(!t_){toast('Escreva alguma coisa 💛');return}const row={challenge_id:DZ.c.id,text:t_.slice(0,3000)};
+    const {error}=DZ.letter?await sb.from('dz_letters').update({text:row.text}).eq('challenge_id',DZ.c.id).eq('user_id',dzUid()):await sb.from('dz_letters').insert(row);
+    if(error){toast(dzErr(error));return}DZ.letter={text:row.text,created_at:(DZ.letter&&DZ.letter.created_at)||new Date().toISOString()};closeSheet();toast('Carta selada 💌 Ela abre no último dia.');render()},
+  dzAsk:async v=>{const t_=(v.t||'').trim();if(!t_)return;const {data,error}=await sb.from('dz_questions').insert({challenge_id:DZ.c.id,text:t_.slice(0,600)}).select('*').single();if(error){toast(dzErr(error));return}DZ.qs.unshift(data);closeSheet();toast('Pergunta enviada! A resposta aparece na Jornada.');render()},
+  dzBA:async v=>{if(DZ.busy)return;if(!DZ.file){toast('Escolha uma foto');return}DZ.busy=true;openSheet('dzProof',{kind:v.k,p:v.p});
+    try{const old=dzBAFor(v.k,v.p);const path=await dzUpload(DZ.file);const {error}=await sb.from('dz_posts').insert({challenge_id:DZ.c.id,kind:v.k,caption:v.p,photo_path:path,is_public:!!v.pub});if(error){sb.storage.from(DZ_BUCKET).remove([path]);throw error}
+      if(old){await sb.from('dz_posts').delete().eq('id',old.id);if(old.photo_path)sb.storage.from(DZ_BUCKET).remove([old.photo_path])}
+      dzClearFile();closeSheet();toast(v.k==='antes'?'Foto do antes guardada 📸':'Foto do depois guardada. Compare na Jornada ✨')}catch(e){toast(dzErr(e))}
+    DZ.busy=false;await dzLoadExtra();render()},
+  dzAdmN:async v=>{const row={day:Math.max(1,parseInt(v.day,10)||1),title:v.title.trim(),body:(v.body||'').trim()||null};const q=v.id?sb.from('dz_notes').update(row).eq('id',v.id):sb.from('dz_notes').insert({...row,challenge_id:DZ.c.id});const {error}=await q;if(error){toast(dzErr(error));return}closeSheet();await dzLoadExtra();render()},
+  dzAns:async v=>{const {error}=await sb.from('dz_questions').update({answer:(v.a||'').trim()||null,answered_at:new Date().toISOString()}).eq('id',v.id);if(error){toast(dzErr(error));return}const q=DZ.qs.find(x=>x.id===v.id);if(q)q.answer=(v.a||'').trim();closeSheet();toast('Resposta publicada 💛');render()}
+});
+
+/* ---------- painel: recados, perguntas, duplas ---------- */
+function dzAdminExtras(){
+  const pend=DZ.qs.filter(q=>!q.answer),pairs=Object.values(DZ.members).filter(m=>m.buddy).length/2;
+  return `<h2 class="sec">perguntas da caixinha ${pend.length?`<span class="tag">${pend.length} nova${pend.length>1?'s':''}</span>`:''}</h2><div class="card" style="margin-top:0">${DZ.qs.map(q=>`<button class="row dznl" data-a="sheet" data-s="dzAdmQ" data-id="${q.id}"><span class="dznq sm">${ic(q.answer?'check':'chat',13)}</span><div class="grow rt">${esc(q.text.slice(0,90))}<div class="small muted">${q.answer?'respondida':'aguardando resposta'} · ${dzAgo(q.created_at)}</div></div>${ic('chevR',15)}</button>`).join('')||'<div class="empty">Nenhuma pergunta ainda.</div>'}</div>
+  <h2 class="sec">recados da nutri <button class="btn sm soft" data-a="sheet" data-s="dzAdmN">${ic('plus',14)} Novo</button></h2><div class="card" style="margin-top:0">${(DZ.notes||[]).map(x=>`<div class="row"><span class="dzpos">${x.day}</span><div class="grow rt">${esc(x.title)}</div><button class="ib sm" data-a="sheet" data-s="dzAdmN" data-id="${x.id}">${ic('edit',15)}</button></div>`).join('')||'<div class="empty">Nenhum recado.</div>'}<div class="small muted" style="margin-top:8px">O recado aparece pras participantes a partir do dia escolhido.</div></div>
+  <h2 class="sec">duplas de apoio</h2><div class="card" style="margin-top:0"><div class="small" style="line-height:1.6">As duplas se formam sozinhas quando alguém entra. ${pairs?`Hoje são ${Math.floor(pairs)} duplas.`:''} Se quiser, sorteie de novo (dentro de cada liga).</div><button class="btn soft full" style="margin-top:10px" data-a="dzPairAll">${ic('refresh',14)} Sortear duplas de novo</button></div>`}
+SH.dzAdmN=d=>{const x=(DZ.notes||[]).find(n=>n.id===d.id)||{day:dzDayN()>0?dzDayN():1};return `<h3>${x.id?'editar recado':'novo recado'}</h3><form data-f="dzAdmN">${hid('id',x.id)}${fld('Libera no dia',`<input name="day" inputmode="numeric" required value="${x.day}">`)}${fld('Título',`<input name="title" required maxlength="80" value="${esc(x.title||'')}">`)}${fld('Recado',`<textarea name="body" rows="8" maxlength="3000">${esc(x.body||'')}</textarea>`)}<button class="btn primary full">Salvar</button></form>${x.id?`<button class="btn ghost full" style="margin-top:8px" data-a="dzAdmDelN" data-id="${x.id}">${ic('trash',15)} Excluir recado</button>`:''}`};
+SH.dzAdmQ=d=>{const q=DZ.qs.find(x=>x.id===d.id);if(!q)return '';return `<h3>pergunta</h3><div class="card" style="margin:0 0 12px"><div>${esc(q.text)}</div><div class="small muted" style="margin-top:6px">${esc(dzMem(q.user_id).nickname)} · ${dzAgo(q.created_at)} · só você vê quem perguntou</div></div><form data-f="dzAns">${hid('id',q.id)}${fld('Sua resposta (aparece pra todas, sem o nome)',`<textarea name="a" rows="6" maxlength="3000">${esc(q.answer||'')}</textarea>`)}<button class="btn primary full">${q.answer?'Atualizar resposta':'Responder'}</button></form>`};
+Object.assign(A,{
+  dzAdmDelN:async d=>{if(!confirm('Excluir este recado?'))return;await sb.from('dz_notes').delete().eq('id',d.id);closeSheet();await dzLoadExtra();render()},
+  dzPairAll:async()=>{if(!confirm('Sortear as duplas de novo? As duplas atuais serão desfeitas.'))return;const {data,error}=await sb.rpc('dz_pair_all',{cid:DZ.c.id});if(error){toast(dzErr(error));return}toast(`${data} duplas formadas 💛`);DZ.loaded=false;await dzLoad(true)}
+});
+{const _al=dzAdminLoad;dzAdminLoad=async function(){await dzLoadExtra();await _al()}}
+{const _ml=dzLoadFeed;dzLoadFeed=async function(){await _ml();const {data}=await sb.from('dz_members').select('user_id,buddy').eq('challenge_id',DZ.c.id);(data||[]).forEach(x=>{if(DZ.members[x.user_id])DZ.members[x.user_id].buddy=x.buddy})}}
+
+/* ---------- cards para stories e certificado ---------- */
+async function dzCanvas(draw,name){
+  try{await Promise.all(["700 80px Gazpacho","400 60px 'Dancing Script'","500 40px Poppins","400 40px Poppins"].map(f=>document.fonts.load(f).catch(()=>{})))}catch(e){}
+  const cv=document.createElement('canvas');cv.width=1080;cv.height=1920;const x=cv.getContext('2d');const cs=getComputedStyle(document.documentElement),V=k=>(cs.getPropertyValue(k)||'').trim();
+  const P={bg:V('--bg')||'#fcf9f8',rbg:V('--rbg')||'#f4e9e5',deep:V('--deep')||'#7d6157',hi:V('--deep-hi')||'#a8877a',lo:V('--deep-lo')||'#5c463e',ink:V('--ink')||'#2b2627',rose:V('--rose-d')||'#b07d6e'};
+  const g=x.createLinearGradient(0,0,0,1920);g.addColorStop(0,P.bg);g.addColorStop(1,P.rbg);x.fillStyle=g;x.fillRect(0,0,1080,1920);
+  x.fillStyle=P.rose;x.globalAlpha=.12;for(let yy=0;yy<1920;yy+=54)for(let xx=(yy/54)%2?27:0;xx<1080;xx+=54){x.beginPath();x.arc(xx,yy,4,0,7);x.fill()}x.globalAlpha=1;
+  draw(x,P);
+  x.fillStyle=P.rose;x.font="500 30px Poppins";x.textAlign='center';x.fillText('GO! · usegoapp.com.br',540,1840);
+  const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const file=new File([blob],name,{type:'image/png'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}}catch(e){if(e&&e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast('Imagem salva 📸');
+}
+function dzRR(x,X,Y,W,H,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+W,Y,X+W,Y+H,r);x.arcTo(X+W,Y+H,X,Y+H,r);x.arcTo(X,Y+H,X,Y,r);x.arcTo(X,Y,X+W,Y,r);x.closePath()}
+function dzWrap(x,t,X,Y,maxW,lh){const w=String(t).split(' ');let line='',yy=Y;for(const s of w){const tt=line?line+' '+s:s;if(x.measureText(tt).width>maxW&&line){x.fillText(line,X,yy);line=s;yy+=lh}else line=tt}if(line)x.fillText(line,X,yy);return yy}
+function dzGloss(x,P,X,Y,W,H){const g=x.createLinearGradient(X,Y,X+W,Y+H);g.addColorStop(0,P.hi);g.addColorStop(.55,P.deep);g.addColorStop(1,P.lo);x.save();x.shadowColor='rgba(60,40,35,.35)';x.shadowBlur=60;x.shadowOffsetY=24;dzRR(x,X,Y,W,H,64);x.fillStyle=g;x.fill();x.restore();
+  x.save();dzRR(x,X,Y,W,H,64);x.clip();const r=x.createRadialGradient(X+W*.15,Y-40,10,X+W*.15,Y,W*.8);r.addColorStop(0,'rgba(255,255,255,.35)');r.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=r;x.fillRect(X,Y,W,H);x.restore()}
+function dzShareCard(n){const m=dzMission(n);if(!m)return;const nick=DZ.me?DZ.me.nickname:'';
+  dzCanvas((x,P)=>{x.textAlign='center';x.fillStyle=P.rose;x.font="500 34px Poppins";x.fillText(('desafio '+DZ.c.title).toUpperCase().split('').join(String.fromCharCode(8202)),540,250);
+    x.fillStyle=P.ink;x.font="400 120px Gazpacho";x.fillText(`dia ${n}`,540,420);x.fillStyle=P.rose;x.font="400 56px 'Dancing Script'";x.fillText(`de ${dzLen()}`,540,500);
+    dzGloss(x,P,110,600,860,640);x.fillStyle='rgba(255,255,255,.75)';x.font="500 30px Poppins";x.fillText((m.pillar||'missão').toUpperCase(),540,700);
+    x.fillStyle='#fff';x.font="400 70px Gazpacho";const ye=dzWrap(x,m.title,540,820,720,86);
+    x.beginPath();x.arc(540,ye+150,60,0,7);x.fillStyle='rgba(255,255,255,.95)';x.fill();x.strokeStyle=P.deep;x.lineWidth=12;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(512,ye+152);x.lineTo(532,ye+172);x.lineTo(570,ye+130);x.stroke();
+    x.fillStyle=P.ink;x.font="400 64px 'Dancing Script'";x.fillText('missão cumprida',540,1400);x.fillStyle=P.ink;x.font="400 38px Poppins";dzWrap(x,`${nick?nick+' · ':''}um passo de cada vez, todo dia`,540,1480,820,52);
+    x.fillStyle=P.rose;x.font="500 32px Poppins";x.fillText(`${dzPct()}% de constância`,540,1620)},`go-desafio-dia-${n}.png`)}
+function dzCertCard(){const nick=DZ.me?DZ.me.nickname:'',act=new Set(DZ.checks.map(k=>k.day)).size,dn=DZ.missions.filter(dzMissionDone).length;
+  dzCanvas((x,P)=>{x.textAlign='center';dzGloss(x,P,90,200,900,1500);x.fillStyle='rgba(255,255,255,.75)';x.font="500 32px Poppins";x.fillText('CERTIFICADO DE CONSTÂNCIA',540,330);
+    x.fillStyle='#fff';x.font="400 54px 'Dancing Script'";x.fillText('este certificado é de',540,470);x.font="400 110px Gazpacho";dzWrap(x,nick||'você',540,610,760,110);
+    x.font="400 40px Poppins";x.fillStyle='rgba(255,255,255,.9)';dzWrap(x,`que completou o desafio ${DZ.c.title}, aparecendo por si mesma dia após dia.`,540,760,740,58);
+    const st=[[`${dzPct()}%`,'constância'],[`${act}`,'dias ativos'],[`${dn}`,'missões']];st.forEach(([a,b],i)=>{const X=240+i*300;x.fillStyle='#fff';x.font="400 90px Gazpacho";x.fillText(a,X,1080);x.font="400 30px Poppins";x.fillStyle='rgba(255,255,255,.8)';x.fillText(b,X,1130)});
+    x.fillStyle='#fff';x.font="400 60px 'Dancing Script'";x.fillText('constância não é nunca falhar,',540,1330);x.fillText('é sempre voltar.',540,1405);
+    x.font="400 30px Poppins";x.fillStyle='rgba(255,255,255,.8)';x.fillText(`${fmtD(DZ.c.start_date)} a ${fmtD(DZ.c.end_date)}`,540,1580)},'certificado-constancia.png')}
 
 </script>
 </body>
