@@ -2402,6 +2402,15 @@ document.addEventListener('input',ev=>{const el=ev.target;if(!el||!el.dataset)re
   else if(el.dataset.gpe){const [i,k]=el.dataset.gpe.split(':'),p=gym().plans.find(x=>x.id===ui.gymEdit);if(p&&p.ex[+i]){p.ex[+i][k]=k==='sets'?Math.max(1,parseInt(el.value)||1):el.value;saveQuiet()}}});
 
 
+/* ---------- tela acesa no treino ---------- */
+let gWL=null,gWLBusy=false;
+function gAwakeWant(){try{const g=gym();if(g.awakeOff||document.visibilityState!=='visible')return false;return !!gRT||(ui.screen==='treinos'&&!!gActive())}catch(e){return false}}
+async function gAwakeSync(){if(!('wakeLock' in navigator)||gWLBusy)return;const want=gAwakeWant();
+  if(want&&!gWL){gWLBusy=true;try{gWL=await navigator.wakeLock.request('screen');gWL.addEventListener('release',()=>{gWL=null})}catch(e){gWL=null}gWLBusy=false}
+  else if(!want&&gWL){try{await gWL.release()}catch(e){}gWL=null}}
+setInterval(gAwakeSync,1500);document.addEventListener('visibilitychange',gAwakeSync);
+Object.assign(A,{awakeTg:()=>{const g=gym();g.awakeOff=!g.awakeOff;save(1);closeSheet();toast(g.awakeOff?'A tela pode apagar normalmente':'Tela fica acesa durante o treino ☀️');gAwakeSync()}});
+
 /* ---------- descanso entre séries ---------- */
 let gRT=null,gREnd=0,gRDur=0;
 function gRestEl(){let el=document.getElementById('grest');if(!el){el=document.createElement('div');el.id='grest';document.body.appendChild(el)}return el}
@@ -2417,7 +2426,7 @@ Object.assign(A,{
   restSkip:()=>gRestStop(),
   restSet:d=>{const g=gym();if(d.v==='off'){g.restOff=true;gRestStop()}else{g.restOff=false;g.rest=+d.v}closeSheet();save(1);toast(d.v==='off'?'Cronômetro de descanso desligado':`Descanso de ${+d.v>=60?(+d.v/60).toString().replace('.',',')+' min':d.v+'s'}`)}
 });
-SH.restCfg=()=>{const g=gym(),r=g.restOff?'off':(g.rest||90);return `<h3>tempo de descanso</h3><div class="small muted" style="margin:-6px 0 14px">O cronômetro começa sozinho quando você marca uma série. No bi-set, ele começa depois do último exercício da rodada.</div><div class="cupg" style="grid-template-columns:repeat(3,1fr)">${[30,45,60,90,120,180].map(v=>`<button class="${r===v?'on':''}" data-a="restSet" data-v="${v}">${ic('clock',15)}<b>${v>=60?(v/60).toString().replace('.',',')+' min':v+'s'}</b></button>`).join('')}</div><button class="btn ghost full" style="margin-top:12px" data-a="restSet" data-v="off">${r==='off'?'✓ ':''}Não usar cronômetro</button>`};
+SH.restCfg=()=>{const g=gym(),r=g.restOff?'off':(g.rest||90);return `<h3>tempo de descanso</h3><div class="small muted" style="margin:-6px 0 14px">O cronômetro começa sozinho quando você marca uma série. No bi-set, ele começa depois do último exercício da rodada.</div><div class="cupg" style="grid-template-columns:repeat(3,1fr)">${[30,45,60,90,120,180].map(v=>`<button class="${r===v?'on':''}" data-a="restSet" data-v="${v}">${ic('clock',15)}<b>${v>=60?(v/60).toString().replace('.',',')+' min':v+'s'}</b></button>`).join('')}</div><button class="btn ghost full" style="margin-top:12px" data-a="restSet" data-v="off">${r==='off'?'✓ ':''}Não usar cronômetro</button><div class="small muted" style="margin:16px 0 8px">Tela durante o treino</div><button class="btn ghost full" data-a="awakeTg">${g.awakeOff?'○':'✓'} Manter a tela acesa enquanto o treino estiver aberto</button><div class="small muted" style="margin-top:8px">Assim o celular não apaga no meio do descanso e o aviso sonoro toca na hora. Deixe o som do iPhone ligado (sem modo silencioso).</div>`};
 
 
 /* ---------- planejar o dia ---------- */
