@@ -2324,14 +2324,14 @@ S.treinos=()=>{
       const td=gToday(),dn=gDoneToday();
       const nx=(()=>{for(let k=1;k<=7;k++){const d=addDays(t,k),w_=parseISO(d).getDay(),pp=gPlans().filter(p=>(p.days||[]).includes(w_));if(pp.length)return {k,w_,pp}}return null})();
       const nxT=nx?`<div class="small muted" style="margin-top:6px">próximo: <b style="color:var(--rose-d);font-weight:500">${nx.k===1?'amanhã':WDL[nx.w_].toLowerCase()}</b> · ${nx.pp.map(p=>esc(p.name)).join(', ')}</div>`:'';
-      if(dn.length)b+=`<div class="card gdone"><div class="script" style="font-size:24px;color:var(--rose-d)">treino feito!</div><div class="small">${dn.map(l=>`${esc(l.name)} · ${gKg(gVol(l))} kg${l.end&&l.start?' · '+Math.max(1,Math.round((l.end-l.start)/60000))+' min':''}`).join('<br>')}</div>${nxT}</div>`;
+      if(dn.length)b+=`<div class="card gdone"><div class="script" style="font-size:24px;color:var(--rose-d)">treino feito!</div><div class="small">${dn.map(l=>`<span data-a="sheet" data-s="gLog" data-id="${l.id}" style="cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px">${esc(l.name)} · ${gKg(gVol(l))} kg${l.end&&l.start?' · '+Math.max(1,Math.round((l.end-l.start)/60000))+' min':''}</span>`).join('<br>')}</div>${nxT}</div>`;
       if(!g.plans.length){b+=`<div class="card" style="text-align:center;padding:26px 18px"><div style="font-family:var(--serif);font-size:22px">monte sua divisão de treino</div><div class="small muted" style="margin:8px 0 16px;line-height:1.6">Cadastre o treino de cada dia, os exercícios, e registre carga e repetições. Com o tempo, você vê sua evolução em cada exercício.</div><button class="btn primary" data-a="gymNew">${ic('plus',15)} Criar treino</button><button class="btn soft" style="margin-left:6px" data-a="gymTpl">Usar um modelo</button></div>`}
       else{
         b+=td.length?`<h2 class="sec">pra hoje · ${WDL[parseISO(t).getDay()].toLowerCase()}</h2>`+td.map(p=>gPlanCard(p,true)).join(''):`<div class="card gdone"><div class="script" style="font-size:22px;color:var(--rose-d)">dia de descanso</div><div class="small muted">Nada marcado pra hoje. Se quiser treinar, escolha abaixo.</div>${nxT}</div>`;
         const oth=gPlans().filter(p=>!td.includes(p));if(oth.length)b+=`<h2 class="sec">outros treinos</h2>`+oth.map(p=>gPlanCard(p,false)).join('');
       }
       const hist=g.logs.filter(l=>l.end).sort((a,b)=>b.start-a.start).slice(0,6);
-      if(hist.length)b+=`<h2 class="sec">últimos treinos</h2><div class="card" style="margin-top:0">${hist.map(l=>`<div class="row"><div class="gdt">${fmtD(l.date)}</div><div class="grow rt">${esc(l.name)}<div class="small muted">${l.ex.length} exercícios · ${gKg(gVol(l))} kg</div></div></div>`).join('')}</div>`;
+      if(hist.length)b+=`<h2 class="sec">últimos treinos</h2><div class="card" style="margin-top:0">${hist.map(l=>{const dup=g.logs.filter(x=>x.end&&x.date===l.date&&x.name===l.name).length>1;return `<div class="row" data-a="sheet" data-s="gLog" data-id="${l.id}" style="cursor:pointer"><div class="gdt">${fmtD(l.date)}</div><div class="grow rt">${esc(l.name)}<div class="small muted">${l.ex.length} exercícios · ${gKg(gVol(l))} kg${dup?' · <b style="color:var(--rose-d)">registrado 2x?</b>':''}</div></div>${ic('chevR',16)}</div>`}).join('')}</div><div class="small muted" style="margin:6px 2px 0">Toque num treino para ver os detalhes ou apagar.</div>`;
     }
   }else if(tab==='treinos'){
     const ed=ui.gymEdit&&g.plans.find(p=>p.id===ui.gymEdit);
@@ -2401,6 +2401,10 @@ document.addEventListener('input',ev=>{const el=ev.target;if(!el||!el.dataset)re
   else if(el.dataset.gp){const p=gym().plans.find(x=>x.id===ui.gymEdit);if(p){p[el.dataset.gp]=el.value;saveQuiet()}}
   else if(el.dataset.gpe){const [i,k]=el.dataset.gpe.split(':'),p=gym().plans.find(x=>x.id===ui.gymEdit);if(p&&p.ex[+i]){p.ex[+i][k]=k==='sets'?Math.max(1,parseInt(el.value)||1):el.value;saveQuiet()}}});
 
+
+SH.gLog=d=>{const g=gym(),l=g.logs.find(x=>x.id===d.id);if(!l)return '';const min=l.end&&l.start?Math.round((l.end-l.start)/60000):0;
+  return `<h3>${esc(l.name)}</h3><div class="small muted" style="margin:-6px 0 14px">${fmtD(l.date)}${min?` · ${min} min`:''} · ${gKg(gVol(l))} kg no total</div><div class="card" style="margin-top:0">${l.ex.map(e=>{const ok=e.sets.filter(x=>x.ok);return `<div class="row"><div class="grow rt">${esc(e.name)}<div class="small muted">${ok.length?ok.map(x=>`${x.kg||'–'}kg × ${x.r||'–'}`).join(' · '):'nenhuma série marcada'}</div></div></div>`}).join('')}</div><button class="btn full" style="margin-top:12px;background:var(--rose-l);color:var(--rose-d)" data-a="gymLogDel" data-id="${l.id}">Apagar este registro</button>`};
+Object.assign(A,{gymLogDel:d=>{const g=gym(),s_=snap();g.logs=g.logs.filter(x=>x.id!==d.id);if(g.active===d.id)g.active=null;closeSheet();save();toast('Registro de treino apagado',s_)}});
 
 /* ---------- tela acesa no treino ---------- */
 let gWL=null,gWLBusy=false;
