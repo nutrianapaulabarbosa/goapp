@@ -886,6 +886,12 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .mbr{text-align:center}.mbc{position:relative;height:230px;display:grid;place-items:center;margin:8px 0}
 .mbo{position:absolute;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--deep-hi),var(--deep) 70%);opacity:.85;box-shadow:0 0 0 14px var(--rose-l),0 10px 30px var(--deep-sh)}
 .mbc b{position:relative;color:#fff;font-weight:500;font-size:15px;letter-spacing:.06em;text-shadow:0 1px 3px rgba(0,0,0,.2)}
+
+.evr{gap:10px}.evr .cb,.row .cb{flex:none}.evr .rt{cursor:pointer}
+.evdone .rt{text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}.evdone .tt,.evdone .time{opacity:.55}
+.evlate .tt{opacity:.7}
+.evmv{flex:none;background:none;border:0;color:var(--muted);padding:4px;display:grid;place-items:center;font:inherit}
+.evmv.on{font-size:11.5px;color:var(--rose-d);border:1px solid var(--line);border-radius:12px;padding:3px 10px;background:var(--card)}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1083,7 +1089,7 @@ function hIcons(){const n=alerts().length;return `<div class="hicons"><button cl
 const titleHdr=(icon,title,bg)=>`<div class="top" style="align-items:center"><div class="titleRow"><div class="tic" style="background:${bg}">${ic(icon,21)}</div><div class="ttl">${title}</div></div>${hIcons()}</div>`;
 const backHdr=(title,to)=>`<div class="top" style="align-items:center"><div class="titleRow"><button class="circ" data-a="go" data-to="${to}">${ic('chevL',18)}</button><div class="ttl" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(title)}</div></div>${hIcons()}</div>`;
 const catLbl={geral:'Geral',saude:'Saúde',trabalho:'Trabalho',pessoal:'Pessoal'};
-function evRow(e,showDate){return `<div class="row"><div class="time">${e.time||'Dia'}</div><div class="grow"><div class="rt">${esc(e.title)}</div><div class="small muted">${showDate?dateLabel(e.date)+' · ':''}${catLbl[e.cat]||'Geral'}${e.rep?' · ↻ '+REP[e.rep].toLowerCase():''}</div></div><button class="ib sm" data-a="editEvent" data-id="${e.id}">${ic('edit',16)}</button><button class="ib sm" data-a="delEvent" data-id="${e.id}" data-d="${e.date}">${ic('trash',16)}</button></div>`}
+function evRow(e,showDate,d){d=d||e.date;const dn=evIsDone(e,d);return `<div class="row ${dn?'evdone':''}"><button class="cb ${dn?'on':''}" data-a="evDone" data-id="${e.id}" data-d="${d}" aria-label="Concluir">${dn?ic('check',13,2.6):''}</button><div class="time">${e.time||'Dia'}</div><div class="grow" data-a="editEvent" data-id="${e.id}"><div class="rt">${esc(e.title)}</div><div class="small muted">${showDate?dateLabel(d)+' · ':''}${catLbl[e.cat]||'Geral'}${e.rep?' · ↻ '+REP[e.rep].toLowerCase():''}</div></div>${dn?'':`<button class="ib sm" data-a="sheet" data-s="evMove" data-id="${e.id}" data-d="${d}" aria-label="Adiar">${ic('clock',16)}</button>`}<button class="ib sm" data-a="delEvent" data-id="${e.id}" data-d="${d}">${ic('trash',16)}</button></div>`}
 function tkRow(x,showDate){const late=!x.done&&x.date&&x.date<today();return `<div class="row"><button class="cb ${x.done?'on':''}" data-a="toggleTask" data-id="${x.id}" aria-label="Concluir">${x.done?ic('check',14,2.4):''}</button><div class="grow" data-a="editTask" data-id="${x.id}"><div class="rt ${x.done?'done-t':''}">${x.time?`<span class="tkt">${x.time}</span>`:''}${esc(x.title)}${x.rep?' <span class="muted" style="font-size:12px">↻</span>':''}</div>${showDate&&x.date?`<div class="small" style="color:${late?'var(--rose-d)':'var(--muted)'}">${late?'Atrasada · ':''}${dateLabel(x.date)}</div>`:''}</div><button class="ib sm" data-a="delTask" data-id="${x.id}">${ic('trash',16)}</button></div>`}
 const quickForm=(ph='anote rápido: “dentista 9h”')=>`<form class="quick" data-f="quick">${ic('bolt',19)}<input name="q" placeholder="${ph}" autocomplete="off" enterkeyhint="send"><button aria-label="Adicionar">${ic('arrowUp',20,2)}</button></form>`;
 const daysText=d=>d.length===7?'Todos os dias':(d.join()==='1,2,3,4,5'?'Seg a Sex':(d.join()==='1,2,3,4,5,6'?'Seg a Sáb':d.map(i=>WDS[i]).join(', ')));
@@ -1116,8 +1122,8 @@ S.home=()=>{
   const area=(icon,bg,name,to)=>(['tarefas','relatorios'].includes(to)||on(to))?`<button class="ar" data-a="go" data-to="${to}"><div class="tic" style="background:${bg}">${ic(icon,20)}</div><span>${name}</span></button>`:'';
   const areas=`<div class="arow" style="margin-top:18px">${area('task',C.sky,'Tarefas','tarefas')}${area('wallet',C.sand,'Finanças','financas')}${area('dumb',C.rose,'Treinos','treinos')}${area('heart',C.health,'Saúde','saude')}${area('list',C.lav,'Listas','listas')}${area('book',C.sand,'Leitura','leitura')}${area('devo','#f3ead2','Devocional','devocional')}${area('target',C.rose,'Metas','metas')}${area('chart',C.rose,'Relatórios','relatorios')}</div>`;
   const now=nowHM(),late=state.tasks.filter(x=>!x.done&&x.date&&x.date<t),tkAll=[...late,...tk.filter(x=>!x.done),...tk.filter(x=>x.done)];
-  const nextEv=ev.find(e=>e.time&&e.time>=now);
-  const evH=ev.map(e=>{const past=e.time&&e.time<now&&e!==nextEv,nx=e===nextEv;return `<button class="trow ${past?'past':''}" data-a="editEvent" data-id="${e.id}"><span class="tt">${e.time||'dia'}</span><span class="grow rt">${esc(e.title)}</span>${nx?'<span class="tag">próximo</span>':''}</button>`}).join('');
+  const nextEv=ev.find(e=>e.time&&e.time>=now&&!evIsDone(e,t));
+  const evH=ev.map(e=>{const dn=evIsDone(e,t),past=!dn&&e.time&&e.time<now&&e!==nextEv,nx=e===nextEv;return `<div class="trow evr ${dn?'evdone':''} ${past?'evlate':''}"><button class="cb ${dn?'on':''}" data-a="evDone" data-id="${e.id}" data-d="${t}" aria-label="Concluir">${dn?ic('check',13,2.6):''}</button><span class="tt">${e.time||'dia'}</span><span class="grow rt" data-a="editEvent" data-id="${e.id}">${esc(e.title)}</span>${nx?'<span class="tag">próximo</span>':''}${dn?'':`<button class="evmv${past?' on':''}" data-a="sheet" data-s="evMove" data-id="${e.id}" data-d="${t}" aria-label="Adiar">${past?'adiar':ic('clock',15)}</button>`}</div>`}).join('');
   const tkH=tkAll.map(x=>`<div class="trow"><button class="cb ${x.done?'on':''}" data-a="toggleTask" data-id="${x.id}" aria-label="Concluir">${x.done?ic('check',14,2.4):''}</button><span class="grow rt ${x.done?'done-t':''}" data-a="editTask" data-id="${x.id}">${x.time?`<span class="tkt">${x.time}</span>`:''}${esc(x.title)}${x.date&&x.date<t?' <span class="late">atrasada</span>':''}</span></div>`).join('');
   hs.sort((a,b)=>hDone(a,t)-hDone(b,t));const hP=hs.filter(x=>!hDone(x,t)),hD=hs.length-hP.length;
   const allDone=hs.length&&hD===hs.length;
@@ -1147,7 +1153,7 @@ S.agenda=()=>{
   const und=state.tasks.filter(x=>!x.date&&!x.done);
   const org=`<div class="card"><div class="cardHead"><h4>Para organizar</h4><span class="small muted">${und.length} sem data</span></div><div class="small muted">Tarefas que ainda não têm dia. Escolha quando fazer.</div>${und.map(x=>`<div class="row"><span style="color:var(--sky)">${ic('task',18)}</span><div class="grow rt">${esc(x.title)}</div><button class="btn sm soft" data-a="sheet" data-s="schedule" data-id="${x.id}">Agendar</button></div>`).join('')||'<div class="empty" style="padding-bottom:0">Tudo organizado 👏</div>'}</div>`;
   let v='';
-  const dayItems=d=>eventsOn(d).map(e=>evRow(e)).join('')+tasksOn(d).map(x=>tkRow(x)).join('');
+  const dayItems=d=>eventsOn(d).map(e=>evRow(e,false,d)).join('')+tasksOn(d).map(x=>tkRow(x)).join('');
   if(ui.agView==='timeline'){
     const late=state.tasks.filter(x=>!x.done&&x.date&&x.date<t);
     if(late.length)v+=`<div class="dayhead" style="color:var(--rose-d)">Atrasadas</div>`+late.map(x=>tkRow(x,true)).join('');
@@ -2420,6 +2426,25 @@ SH.gLog=d=>{const g=gym(),l=g.logs.find(x=>x.id===d.id);if(!l)return '';const mi
   return `<h3>${esc(l.name)}</h3><div class="small muted" style="margin:-6px 0 14px">${fmtD(l.date)}${min?` · ${min} min`:''} · ${gKg(gVol(l))} kg no total</div><div class="card" style="margin-top:0">${l.ex.map(e=>{const ok=e.sets.filter(x=>x.ok);return `<div class="row"><div class="grow rt">${esc(e.name)}<div class="small muted">${ok.length?ok.map(x=>`${x.kg||'–'}kg × ${x.r||'–'}`).join(' · '):'nenhuma série marcada'}</div></div></div>`}).join('')}</div><button class="btn full" style="margin-top:12px;background:var(--rose-l);color:var(--rose-d)" data-a="gymLogDel" data-id="${l.id}">Apagar este registro</button>`};
 Object.assign(A,{gymLogDel:d=>{const g=gym(),s_=snap();g.logs=g.logs.filter(x=>x.id!==d.id);if(g.active===d.id)g.active=null;closeSheet();save();toast('Registro de treino apagado',s_)}});
 
+
+/* ---------- agenda: concluir e adiar ---------- */
+const evIsDone=(e,d)=>!!(state.evDone&&state.evDone[e.id+'|'+d]);
+A.evDone=d=>{state.evDone=state.evDone||{};const k=d.id+'|'+d.d;if(state.evDone[k])delete state.evDone[k];else{state.evDone[k]=1;const e=state.events.find(x=>x.id===d.id);toast(e?'“'+e.title+'” concluído ✓':'Concluído ✓')}
+  const lim=addDays(today(),-120);Object.keys(state.evDone).forEach(x=>{if(x.split('|')[1]<lim)delete state.evDone[x]});save()};
+function evNextHour(){const n=new Date();n.setMinutes(0);n.setHours(n.getHours()+1);return String(n.getHours()).padStart(2,'0')+':00'}
+SH.evMove=d=>{const e=state.events.find(x=>x.id===d.id);if(!e)return '';const od=d.d||e.date,t=today(),tm=e.time||'',nh=evNextHour(),dt=parseISO(od),nw=nh>tm&&od===t&&nh>'00:00';
+  const opt=(lbl,sub,nd,nt)=>`<button class="mitem" data-a="evMoveTo" data-id="${e.id}" data-d="${od}" data-nd="${nd}" data-nt="${nt}"><div class="grow"><div>${lbl}</div><div class="small muted">${sub}</div></div>${ic('chevR',16)}</button>`;
+  return `<h3>adiar ou reagendar</h3><div class="small muted" style="margin:-6px 0 14px">“${esc(e.title)}”${e.time?' · '+e.time:''}${e.rep?' · só esta vez, a repetição continua':''}</div>
+  ${od===t&&nw?opt('Mais tarde hoje','às '+nh,t,nh):''}
+  ${opt('Amanhã',`${WDS[parseISO(addDays(t,1)).getDay()].toLowerCase()}${tm?' às '+tm:''}`,addDays(od<t?t:od,1),tm)}
+  ${opt('Daqui a uma semana',dateLabel(addDays(od,7)).toLowerCase()+(tm?' às '+tm:''),addDays(od,7),tm)}
+  <form data-f="evMove" style="margin-top:14px">${hid('id',e.id)}${hid('d',od)}<div class="two">${fld('Outra data',`<input type="date" name="nd" required value="${addDays(od<t?t:od,1)}">`)}${fld('Horário',`<input type="time" name="nt" value="${tm}">`)}</div><button class="btn primary full">Reagendar</button></form>`};
+function evMoveDo(id,od,nd,nt){const s_=snap(),e=state.events.find(x=>x.id===id);if(!e)return;
+  if(e.rep){e.skip=e.skip||[];if(!e.skip.includes(od))e.skip.push(od);const c={...e,id:uid(),date:nd,time:nt||'',rep:'',until:'',skip:[],from:e.id};delete c.notif;state.events.push(c)}
+  else{e.date=nd;e.time=nt||''}
+  closeSheet();save();toast(`Reagendado para ${nd===today()?'hoje':dateLabel(nd).toLowerCase()}${nt?' às '+nt:''}`,s_)}
+A.evMoveTo=d=>evMoveDo(d.id,d.d,d.nd,d.nt);
+F.evMove=v=>evMoveDo(v.id,v.d,v.nd,v.nt);
 /* ---------- humor: card de apoio ---------- */
 const MV={
  'Isaías 41:10':'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus; eu te fortaleço, e te ajudo.',
