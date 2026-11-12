@@ -907,6 +907,26 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .hpw:active{transform:scale(.94)}
 .htile.hwater .hfill{background:linear-gradient(90deg,rgba(173,206,229,.28),rgba(140,186,220,.42))}
 .htile.hwater.done .hfill{background:linear-gradient(90deg,rgba(232,208,198,.35),rgba(196,146,127,.5))}
+
+.bodyc .bnums{display:flex;gap:8px;margin:10px 0 12px}.bodyc .bnums>div{flex:1;background:var(--rbg);border-radius:14px;padding:10px 8px;text-align:center}
+.bodyc .bnums{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr))}.bodyc .bnums b{display:block;font-family:var(--serif);font-weight:400;font-size:20px;line-height:1.1}.bodyc .bnums b i{font-style:normal;font-size:12px;color:var(--sage)}.bodyc .bnums span{font-size:10.5px;color:var(--muted);line-height:1.2;display:block}
+.bbar i{background:linear-gradient(90deg,var(--deep-hi),var(--deep))}
+.bsp{width:100%;height:64px;margin-top:10px;overflow:visible}.bsp .bln{fill:none;stroke:var(--deep);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}.bsp .bdt{fill:var(--deep)}.bsp .bgl{stroke:var(--sage);stroke-width:1.5;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.bpace{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.5;margin-top:10px;padding:10px 12px;border-radius:14px;background:var(--rbg)}.bpace svg{flex:none;margin-top:2px;color:var(--sage)}.bpace.warn svg{color:#b8892e}
+.varal{position:relative;overflow-x:auto;overflow-y:visible;margin:0 -16px;padding:4px 16px 8px;scrollbar-width:none}.varal::-webkit-scrollbar{display:none}
+.vline{position:absolute;left:0;right:0;top:14px;height:30px;border-top:1.5px solid #b89a72;border-radius:50% 50% 0 0/100% 100% 0 0;opacity:.7;min-width:100%}
+.vrow{display:flex;gap:14px;position:relative;padding-top:12px;width:max-content}
+.vpol{position:relative;width:108px;flex:none;background:#fff;border:0;padding:8px 8px 6px;border-radius:4px;box-shadow:0 6px 16px rgba(92,70,62,.14);transform:rotate(var(--r));transform-origin:50% 0;font:inherit;color:var(--ink);text-align:center}
+.vpol .vph{display:grid;place-items:center;width:92px;height:96px;background:var(--rbg);border-radius:2px;overflow:hidden;color:var(--rose-d)}.vpol .vph img{width:100%;height:100%;object-fit:cover}
+.vpol .vph em{font-family:var(--serif);font-style:normal;font-size:12px;line-height:1.35;padding:6px;color:var(--ink)}.vpol .vph b{font-size:11px;font-weight:600;margin-top:-18px}
+.vpol small{display:block;font-family:var(--script);font-size:15px;color:var(--rose-d);margin-top:4px}
+.vpol .vpin{position:absolute;left:50%;top:-12px;width:8px;height:20px;margin-left:-4px;border-radius:2px;background:linear-gradient(90deg,#d6b77f,#b58d4c);box-shadow:0 1px 2px rgba(0,0,0,.2);z-index:2}
+.vpol.fut{opacity:.45;box-shadow:none;border:1px dashed var(--line);background:transparent}.vpol.fut .vph{background:transparent}
+.vpol.add .vph{border:1.5px dashed var(--rose-d);background:transparent}.vpol.add.now{animation:knudge 2.4s ease 1s 2}
+.vmarcos{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}.vm{font-size:11.5px;padding:5px 10px;border-radius:999px;border:1px dashed var(--line);color:var(--muted);display:inline-flex;align-items:center;gap:4px}
+.vm.ok{border:0;color:#7a5a22;background:linear-gradient(135deg,#f7e3b5,#e8c983);font-weight:600}
+.dzopt{margin-top:14px}.dzopt summary{list-style:none;cursor:pointer;color:var(--muted);font-size:13px;display:flex;gap:6px;align-items:center;justify-content:center;padding:6px}.dzopt summary::-webkit-details-marker{display:none}.dzopt[open] summary{margin-bottom:10px}
+.dzreply{background:linear-gradient(160deg,var(--card),var(--rbg))}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1256,7 +1276,7 @@ S.saude=()=>{
   const tabs=[['geral','Visão geral','heart'],['agua','Água e sono','drop'],['rem','Remédios','pill']];
   let b=`<div class="seg" style="margin-bottom:16px">${tabs.map(([k,l,i])=>`<button class="${ui.healthTab===k?'on':''}" data-a="healthTab" data-v="${k}">${ic(i,15)} ${l}</button>`).join('')}</div>`;
   b+=`<div class="hero"><div class="hmain">${ring(w/g,'var(--sage)',pctBig(Math.round(Math.min(1,w/g)*100)),'água')}<div><div class="hk g">Seu corpo hoje</div><div class="hT">${(w/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L de ${(g/1000).toLocaleString('pt-BR')} L de água</div><div class="hS">Cuidar de você também entra na rotina.</div></div></div>${stats([[fmtDur(last),'última noite'],[`${state.meds.filter(m=>ml[m.id]).length}/${state.meds.length}`,'remédios hoje'],[cons,cons===1?'consulta':'consultas']])}</div>`;
-  if(ui.healthTab==='geral')b+=waterCard()+sleepCard()+medsCard();
+  if(ui.healthTab==='geral')b+=bodyCard()+waterCard()+sleepCard()+medsCard();
   else if(ui.healthTab==='agua'){
     const days=[6,5,4,3,2,1,0].map(i=>addDays(t,-i));
     b+=waterCard()+`<div class="card"><h4>Água nos últimos 7 dias</h4>${days.map(d=>{const v=state.water[d]||0;return `<div class="row" style="padding:8px 0"><div style="width:58px" class="small">${dateLabel(d).split(',')[0]}</div><div class="grow"><div class="bar"><i style="width:${Math.min(100,v/g*100)}%;background:${v>=g?'var(--sage)':'var(--sky)'}"></i></div></div><div class="small" style="width:52px;text-align:right">${(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L</div></div>`}).join('')}</div>`+sleepCard();
@@ -2443,6 +2463,70 @@ Object.assign(A,{gymLogDel:d=>{const g=gym(),s_=snap();g.logs=g.logs.filter(x=>x
 
 
 
+/* ---------- meta de peso (privada) ---------- */
+const kgF=v=>(Math.round(v*10)/10).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+function bodyData(){const B=state.body||{},ws=Object.entries(B.w||{}).sort((a,b)=>a[0]<b[0]?-1:1),cms=Object.entries(B.cm||{}).sort((a,b)=>a[0]<b[0]?-1:1);
+  const start=B.start&&B.start.kg?B.start:(ws[0]?{d:ws[0][0],kg:ws[0][1]}:null),cur=ws.length?{d:ws[ws.length-1][0],kg:ws[ws.length-1][1]}:start;
+  return {B,ws,cms,start,cur,goal:B.goal||null,until:B.until||null}}
+function bodyCard(inDz){const {ws,cms,start,cur,goal,until}=bodyData();
+  if(!start&&!goal)return `<div class="card bodyc"><div class="cardHead"><h4>${ic('target',15)} Minha meta de peso</h4></div><div class="small muted" style="line-height:1.5;margin:4px 0 12px">Registre o ponto de partida e a meta. Fica só no seu GO!, ninguém mais vê.</div><button class="btn primary full" data-a="sheet" data-s="bodyGoal">Definir minha meta</button></div>`;
+  const lost=start&&cur?start.kg-cur.kg:0,tot=start&&goal?start.kg-goal:0,pc=tot>0?Math.max(0,Math.min(1,lost/tot)):0,end=until||(inDz&&DZ.c?DZ.c.end_date:null);
+  let pace='';if(goal&&cur&&end&&cur.kg>goal){const dl=Math.max(1,daysBetween(today(),end)),need=(cur.kg-goal)/(dl/7),lo=cur.kg*.005,hi=cur.kg*.01;
+    pace=`<div class="bpace ${need>hi?'warn':''}">${ic(need>hi?'flag':'check',13)} <span>Para chegar em ${kgF(goal)} kg até ${fmtD(end)}: <b>${kgF(need)} kg por semana</b>. ${need>hi?`Isso passa do ritmo que preserva massa magra (0,5 a 1% do peso por semana, ${kgF(lo)} a ${kgF(hi)} kg). Vale olhar também a cintura e as fotos, não só a balança.`:'Dentro do ritmo saudável (0,5 a 1% do peso por semana).'}</span></div>`}
+  else if(goal&&cur&&cur.kg<=goal)pace=`<div class="bpace">${ic('trophy',13)} <span><b>Meta batida!</b> Agora o foco é manter, com a mesma constância.</span></div>`;
+  const pts=ws.slice(-12).map(x=>x[1]),W=280,H=56;let sp='';
+  if(pts.length>1){const all=goal?pts.concat([goal]):pts,mn=Math.min(...all)-.3,mx=Math.max(...all)+.3,X=i=>i/(pts.length-1)*W,Y=v=>H-(v-mn)/(mx-mn)*H;
+    sp=`<svg class="bsp" viewBox="-4 -4 ${W+8} ${H+8}" preserveAspectRatio="none">${goal?`<line x1="0" x2="${W}" y1="${Y(goal)}" y2="${Y(goal)}" class="bgl"/>`:''}<polyline points="${pts.map((v,i)=>X(i)+','+Y(v)).join(' ')}" class="bln"/>${pts.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="${i===pts.length-1?3.5:2}" class="bdt"/>`).join('')}</svg>`}
+  const cm0=cms[0],cm1=cms[cms.length-1],dcm=cm0&&cm1&&cm1!==cm0?cm0[1]-cm1[1]:0;
+  return `<div class="card bodyc"><div class="cardHead"><h4>${ic('target',15)} Minha meta</h4><button class="lnk" data-a="sheet" data-s="bodyGoal">editar</button></div>
+  <div class="bnums"><div><b>${cur?kgF(cur.kg):'–'}</b><span>agora</span></div><div><b>${lost>0?'−'+kgF(lost):kgF(0)}</b><span>desde ${start?fmtD(start.d):'o início'}</span></div><div><b>${goal?kgF(goal):'–'}</b><span>meta</span></div>${cm1?`<div><b>${cm1[1]}${dcm>0?`<i> −${dcm}</i>`:''}</b><span>cintura</span></div>`:''}</div>
+  ${goal?`<div class="bar bbar"><i style="width:${pc*100}%"></i></div><div class="small muted" style="margin:6px 0 2px">${Math.round(pc*100)}% do caminho${cur&&goal&&cur.kg>goal?` · faltam ${kgF(cur.kg-goal)} kg`:''}</div>`:''}
+  ${sp}${pace}<div class="btnrow" style="margin-top:12px"><button class="btn primary" data-a="sheet" data-s="bodyW">${ic('plus',15)} Pesagem</button>${ws.length?`<button class="btn ghost" data-a="sheet" data-s="bodyHist">Histórico</button>`:''}</div>
+  <div class="small muted" style="margin-top:8px">${ic('lock',11)} Só você vê. A balança é um dado, não uma sentença.</div></div>`}
+SH.bodyW=o=>{const {cur}=bodyData(),d=o.d||today();return `<h3>pesagem</h3><div class="small muted" style="margin:-6px 0 14px;line-height:1.5">Pese em jejum, depois do banheiro, sempre no mesmo dia da semana. Oscilar 0,5 a 1 kg de um dia pro outro é normal (água e intestino).</div>
+  <form data-f="bodyW"><div class="two">${fld('Peso (kg)',`<input name="kg" inputmode="decimal" required placeholder="${cur?kgF(cur.kg):'65,5'}" autofocus>`)}${fld('Cintura (cm)',`<input name="cm" inputmode="decimal" placeholder="opcional">`)}</div>${fld('Data',`<input type="date" name="d" value="${d}" max="${today()}">`)}<button class="btn primary full">Salvar</button></form>`};
+SH.bodyGoal=()=>{const {B,start}=bodyData();return `<h3>minha meta</h3><div class="small muted" style="margin:-6px 0 14px">Fica só no seu GO!.</div><form data-f="bodyGoal"><div class="two">${fld('Peso inicial (kg)',`<input name="sk" inputmode="decimal" required value="${start?kgF(start.kg):''}" placeholder="65,5">`)}${fld('Data do início',`<input type="date" name="sd" value="${start?start.d:today()}">`)}</div><div class="two">${fld('Meta (kg)',`<input name="g" inputmode="decimal" required value="${B.goal?kgF(B.goal):''}" placeholder="60">`)}${fld('Até quando',`<input type="date" name="u" value="${B.until||(DZ.c&&DZ.c.private?DZ.c.end_date:'')}">`)}</div><button class="btn primary full">Salvar meta</button></form>`};
+SH.bodyHist=()=>{const {ws,B}=bodyData();return `<h3>histórico</h3><div class="card" style="margin-top:0">${ws.slice().reverse().map(([d,kg],i,arr)=>{const prev=arr[i+1],df=prev?kg-prev[1]:0;return `<div class="row"><div class="grow rt">${kgF(kg)} kg${(B.cm||{})[d]?` · ${B.cm[d]} cm`:''}<div class="small muted">${dateLabel(d)}${prev?` · ${df>0?'+':df<0?'−':''}${kgF(Math.abs(df))} kg`:''}</div></div><button class="ib sm" data-a="bodyDel" data-d="${d}">${ic('trash',15)}</button></div>`}).join('')}</div>`};
+const pkg=v=>{const n=parseFloat(String(v||'').replace(',','.'));return isFinite(n)?n:NaN};
+F.bodyW=v=>{const kg=pkg(v.kg),cm=pkg(v.cm),d=v.d||today();if(!(kg>25&&kg<350)){toast('Confira o peso');return}
+  const B=state.body=state.body||{};B.w=B.w||{};B.cm=B.cm||{};const {cur}=bodyData();B.w[d]=Math.round(kg*10)/10;if(cm>30&&cm<250)B.cm[d]=Math.round(cm*10)/10;if(!B.start)B.start={d,kg:B.w[d]};
+  closeSheet();save();const df=cur&&cur.d<d?B.w[d]-cur.kg:null;toast(df==null?'Pesagem registrada':df<0?`−${kgF(-df)} kg desde a última 💛`:df>0?`+${kgF(df)} kg. Semana que vem é outra pesagem, segue o plano`:'Mesmo peso. Constância é isso 💛')};
+F.bodyGoal=v=>{const sk=pkg(v.sk),g=pkg(v.g);if(!(sk>25&&g>25)){toast('Confira os valores');return}const B=state.body=state.body||{};B.start={d:v.sd||today(),kg:Math.round(sk*10)/10};B.goal=Math.round(g*10)/10;B.until=v.u||null;B.w=B.w||{};if(!B.w[B.start.d])B.w[B.start.d]=B.start.kg;closeSheet();save();toast('Meta salva 🎯')};
+A.bodyDel=d=>{const B=state.body||{},s_=snap();if(B.w)delete B.w[d.d];if(B.cm)delete B.cm[d.d];if(B.start&&B.start.d===d.d&&!Object.keys(B.w||{}).length)delete B.start;save();openSheet('bodyHist');toast('Pesagem apagada',s_)};
+
+/* ---------- varal das conquistas ---------- */
+const dzWeekOf=d=>Math.floor((daysBetween(DZ.c.start_date,d))/7)+1;
+const dzVaralPosts=()=>(DZ.mine||[]).filter(p=>p.kind==='varal').map(p=>({...p,w:p.week||dzWeekOf(p.day)}));
+function dzHabRe(re){return DZ.habits.find(h=>re.test(h.label||''))}
+function dzHabDays(h){return h?[...new Set(DZ.checks.filter(k=>k.habit_id===h.id).map(k=>k.day))].sort():[]}
+function dzMaxRun(days){let best=0,run=0,prev=null;days.forEach(d=>{run=prev&&addDays(prev,1)===d?run+1:1;best=Math.max(best,run);prev=d});return best}
+function dzMarcos(){const n=dzDayN(),len=dzLen(),L=[];
+  const bel=dzHabDays(dzHabRe(/belisc/i)),nut=dzHabDays(dzHabRe(/nutri/i)),deus=dzHabDays(dzHabRe(/deus|devoc|ora[cç]/i)),run=dzMaxRun(bel);
+  L.push(['carta escrita',!!DZ.letter]);
+  if(DZ.c.private){const {ws,start,cur,goal}=bodyData(),inC=ws.some(([d])=>d>=DZ.c.start_date),lost=start&&cur?start.kg-cur.kg:0;
+    L.push(['primeira pesagem',inC]);L.push(['−1 kg',lost>=1]);L.push(['−2 kg',lost>=2]);L.push(['−3 kg',lost>=3]);if(goal)L.push(['meta: '+kgF(goal)+' kg',!!(cur&&cur.kg<=goal)])}
+  if(bel.length||dzHabRe(/belisc/i)){L.push(['7 dias sem beliscar',run>=7]);L.push(['14 dias sem beliscar',run>=14])}
+  if(dzHabRe(/nutri/i)){L.push(['10 ações pela nutrição',nut.length>=10]);L.push(['30 ações pela nutrição',nut.length>=30])}
+  if(dzHabRe(/deus|devoc|ora[cç]/i)){L.push(['21 momentos com Deus',deus.length>=21])}
+  L.push(['metade do caminho',n>=Math.ceil(len/2)]);L.push(['desafio concluído',n>=len&&dzPhase&&n>=len]);
+  return L.map(([t,ok])=>({t,ok}))}
+function dzVaral(){if(!DZ.c)return '';const len=dzLen(),W=Math.ceil(len/7),n=dzDayN(),cw=Math.max(1,Math.min(W,Math.floor((n-1)/7)+1)),VP=dzVaralPosts(),M=dzMarcos(),okM=M.filter(m=>m.ok),nxt=M.filter(m=>!m.ok).slice(0,2);
+  const cards=[];for(let w=1;w<=W;w++){const p=VP.filter(x=>x.w===w).pop(),fut=n<1||w>cw,a=(w%2?-3:2.5);
+    cards.push(p?`<button class="vpol has" style="--r:${a}deg" data-a="sheet" data-s="dzVaralView" data-id="${p.id}"><i class="vpin"></i><span class="vph">${p.photo_path&&DZ.urls[p.photo_path]?`<img src="${DZ.urls[p.photo_path]}" alt="">`:`<em>“${esc((p.caption||'').slice(0,70))}${(p.caption||'').length>70?'…':''}”</em>`}</span><small>semana ${w}</small></button>`
+      :fut?`<div class="vpol fut" style="--r:${a}deg"><i class="vpin"></i><span class="vph">${ic('lock',13)}</span><small>semana ${w}</small></div>`
+      :`<button class="vpol add ${w===cw?'now':''}" style="--r:${a}deg" data-a="sheet" data-s="dzVaral" data-w="${w}"><i class="vpin"></i><span class="vph">${ic('plus',20,2)}<b>pendurar</b></span><small>semana ${w}</small></button>`)}
+  return `<h2 class="sec">varal das conquistas</h2><div class="small muted" style="margin:-4px 2px 8px;line-height:1.5">Todo domingo, pendure a conquista da semana. Os prendedores dourados aparecem sozinhos quando você chega lá.</div>
+  <div class="varal"><div class="vline"></div><div class="vrow">${cards.join('')}</div></div>
+  <div class="vmarcos">${okM.map(m=>`<span class="vm ok">${ic('spark',11)} ${esc(m.t)}</span>`).join('')}${nxt.map(m=>`<span class="vm">${ic('lock',10)} ${esc(m.t)}</span>`).join('')}</div>`}
+SH.dzVaral=d=>{const w=+d.w||1;return `<h3>pendurar no varal</h3><div class="small muted" style="margin:-6px 0 14px">Semana ${w}. Pode ser grande ou pequena: o que você fez e que a Ana de antes não faria?</div>${dzPicker('Foto da conquista (opcional)')}<form data-f="dzVaral" style="margin-top:14px">${hid('w',w)}${fld('Minha conquista da semana',`<textarea name="cap" rows="4" maxlength="500" required placeholder="Ex.: fiquei 5 dias sem beliscar e postei meu primeiro reels"></textarea>`)}<button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Pendurando…':'Pendurar 📌'}</button></form>`};
+SH.dzVaralView=d=>{const p=dzVaralPosts().find(x=>x.id===d.id);if(!p)return '';const u=p.photo_path&&DZ.urls[p.photo_path];return `<div class="small" style="color:var(--rose-d);letter-spacing:.12em;text-transform:uppercase;font-size:11px">semana ${p.w} · ${fmtD(p.day)}</div>${u?`<img src="${u}" alt="" style="width:100%;border-radius:16px;margin:10px 0">`:''}<div style="font-family:var(--serif);font-size:19px;line-height:1.45;margin:10px 0 16px">“${esc(p.caption||'')}”</div><button class="btn ghost full" data-a="dzVaralDel" data-id="${p.id}">Tirar do varal</button>`};
+F.dzVaral=async v=>{if(DZ.busy)return;const cap=(v.cap||'').trim();if(cap.length<3){toast('Escreva a sua conquista');return}DZ.busy=true;
+  try{const path=DZ.file?await dzUpload(DZ.file):null;const row={challenge_id:DZ.c.id,kind:'varal',caption:cap.slice(0,500),photo_path:path,is_public:false,week:+v.w||null};
+    const {data,error}=await sb.from('dz_posts').insert(row).select().maybeSingle();if(error){if(path)sb.storage.from(DZ_BUCKET).remove([path]);throw error}
+    if(path&&DZ.fileUrl)DZ.urls[path]=DZ.fileUrl;DZ.file=null;DZ.fileUrl='';DZ.mine=DZ.mine||[];DZ.mine.push(data||{...row,id:uid(),day:today()});closeSheet();toast('Pendurado no varal 📌');render()}
+  catch(e){toast(dzErr(e))}DZ.busy=false};
+A.dzVaralDel=async d=>{const p=(DZ.mine||[]).find(x=>x.id===d.id);if(!p)return;const {error}=await sb.from('dz_posts').delete().eq('id',p.id);if(error){toast(dzErr(error));return}if(p.photo_path)sb.storage.from(DZ_BUCKET).remove([p.photo_path]);DZ.mine=DZ.mine.filter(x=>x.id!==p.id);closeSheet();render()};
+
 /* ---------- água: ajuste por arraste ---------- */
 const wL=v=>v>=1000?(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})+' L':Math.round(v)+' ml';
 function setWater(d,ml,fb){const before=state.water[d]||0;ml=Math.max(0,Math.round(ml));if(ml)state.water[d]=ml;else delete state.water[d];
@@ -2755,7 +2839,7 @@ function dzHoje(){
   if(ph==='fim'){const me=DZ.rank.findIndex(r=>r.is_me);return dzGcard('DESAFIO ENCERRADO',`${dzPts()} pontos`,me>=0&&DZ.rankScope==='total'?`Você ficou em ${me+1}º lugar no geral`:'Veja a classificação final em Ranking')}
   const m=dzMission(n),done=dzMissionDone(m),my=dzMission(n-1),ydone=dzMissionDone(my);
   const pts=dzPts(t),max=(m?m.points:0)+DZ.habits.reduce((s,h)=>s+h.points,0);
-  const mc=m?`<div class="gcard dzg"><div class="hsl" style="min-height:0"><div class="dzmh"><span class="hk">DIA ${n} DE ${dzLen()}${m.pillar?' · '+esc(m.pillar).toUpperCase():''}</span><span class="dzpt">+${m.points} pts</span></div><div class="dzmt">${esc(m.title)}</div>${m.description?`<div class="hS dzsub">${esc(m.description)}</div>`:''}${done?`<div class="dzdone">${ic('check',16,2.4)} Missão cumprida</div><button class="dzshare" data-a="dzShareDay" data-n="${n}">${ic('send',15)} Compartilhar nos stories</button>`:m.auto?`<div class="dzauto">${ic('spark',14)} ${dzAutoTxt(m.auto)}</div><button class="dzproof" data-a="dzAutoGo" data-k="${m.auto}">${ic('chevR',16)} ${dzAutoBtn(m.auto)}</button><button class="dzshare" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',14)} ou comprovar com foto</button>`:`<button class="dzproof" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',18)} Comprovar com foto</button>`}</div></div>`:'<div class="card"><div class="empty">A organizadora ainda não cadastrou a missão de hoje.</div></div>';
+  const mc=m?`<div class="gcard dzg"><div class="hsl" style="min-height:0"><div class="dzmh"><span class="hk">DIA ${n} DE ${dzLen()}${m.pillar?' · '+esc(m.pillar).toUpperCase():''}</span><span class="dzpt">+${m.points} pts</span></div><div class="dzmt">${esc(m.title)}</div>${m.description?`<div class="hS dzsub">${esc(m.description)}</div>`:''}${done?`<div class="dzdone">${ic('check',16,2.4)} Missão cumprida</div><button class="dzshare" data-a="dzShareDay" data-n="${n}">${ic('send',15)} Compartilhar nos stories</button>`:m.auto?`<div class="dzauto">${ic('spark',14)} ${dzAutoTxt(m.auto)}</div><button class="dzproof" data-a="dzAutoGo" data-k="${m.auto}">${ic('chevR',16)} ${dzAutoBtn(m.auto)}</button><button class="dzshare" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',14)} ou comprovar com foto</button>`:`<button class="dzproof" data-a="sheet" data-s="dzProof" data-m="${m.id}">${m.proof==='texto'?ic('edit',18)+' Escrever minha resposta':ic('camera',18)+' Comprovar com foto'}</button>`}</div></div>`:'<div class="card"><div class="empty">A organizadora ainda não cadastrou a missão de hoje.</div></div>';
   const yb=my&&!ydone?`<button class="card dzrow dzy" data-a="sheet" data-s="dzProof" data-m="${my.id}"><span class="dzic">${ic('clock',18)}</span><div><b>Ainda dá tempo: missão de ontem</b><div class="small muted">${esc(my.title)} · +${my.points} pts</div></div>${ic('chevR',16)}</button>`:'';
   const hb=DZ.habits.map(h=>{const o=dzHabitOn(h,t);return `<button class="dzhab ${o?'on':''}" data-a="dzHabit" data-id="${h.id}" data-d="${t}" aria-pressed="${o}"><span class="dzhc">${ic('check',14,2.6)}</span><span class="grow">${esc(h.label)}${h.auto?`<small class="dzha">${ic('spark',10)} marca sozinho pelo GO!</small>`:''}</span><span class="dzhp">+${h.points}</span></button>`}).join('');
   const yd=addDays(t,-1),ymiss=n>1?DZ.habits.filter(h=>!dzHabitOn(h,yd)):[];
@@ -2802,7 +2886,8 @@ S.desafio=()=>{
   if(DZ.err&&!DZ.c)return {h:dzHdr(),b:`<div class="card"><div class="empty">${esc(DZ.err)}</div><button class="btn primary full" data-a="dzRefresh">Tentar de novo</button></div>`};
   if(!DZ.c)return {h:dzHdr(),b:'<div class="card"><div class="empty">Nenhum desafio aberto no momento.</div></div>'};
   if(!DZ.me&&!DZ.isOwner)return {h:dzHdr(),b:dzIntro()};
-  const tabs=[['hoje','Hoje'],['jornada','Jornada'],['comunidade','Comunidade'],['ranking','Ranking']];
+  if(DZ.c.private&&!DZ.isOwner&&!DZ.me)return {h:dzHdr(),b:`<div class="card"><div class="empty">${ic('lock',18)}<br>O próximo desafio ainda não abriu.<br>Fique de olho por aqui 💛</div></div>`};
+  const tabs=DZ.c.private?[['hoje','Hoje'],['jornada','Jornada'],['comunidade','Diário']]:[['hoje','Hoje'],['jornada','Jornada'],['comunidade','Comunidade'],['ranking','Ranking']];if(DZ.c.private&&DZ.tab==='ranking')DZ.tab='hoje';
   const seg=`<div class="seg dzseg">${tabs.map(([k,l])=>`<button class="${DZ.tab===k?'on':''}" data-a="dzTab" data-v="${k}">${l}</button>`).join('')}</div>`;
   const body=DZ.tab==='comunidade'?dzComunidade():DZ.tab==='ranking'?dzRanking():DZ.tab==='jornada'?(DZ.me?dzJornada():dzIntro()):(DZ.me?dzHoje():dzIntro());
   return {h:dzHdr(),b:(DZ.err?`<div class="note">${esc(DZ.err)}</div>`:'')+seg+body};
@@ -2810,7 +2895,7 @@ S.desafio=()=>{
 
 /* ---------- sheets ---------- */
 SH.dzJoin=()=>{const m=DZ.me||{},nick=m.nickname||(state.name||'').split(' ')[0]||'',col=m.color||DZ_COLORS[0];return `<h3>${DZ.me?'seu perfil no desafio':'entrar no desafio'}</h3><div class="small muted" style="margin:-6px 0 14px">É assim que as outras participantes vão te ver na comunidade e no ranking. ${state.avatar?'Sua foto de perfil do GO! aparece junto.':'Quer foto? Adicione no Menu, no seu perfil do GO!.'}</div><form data-f="dzJoin">${fld('Seu apelido',`<input name="nick" required maxlength="24" value="${esc(nick)}" placeholder="Ex.: Ana P.">`)}<div class="fld"><span>Sua cor</span><div class="dzcols">${DZ_COLORS.map(c=>`<label><input type="radio" name="color" value="${c}" ${c===col?'checked':''}><i style="background:${c}"></i></label>`).join('')}</div></div>${DZ.me?'':`<div class="note" style="margin:0 0 14px">Ao entrar, você concorda em manter a comunidade gentil: sem comentários sobre o corpo de ninguém. Fotos podem ser só para você e a organizadora.</div>`}<button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.me?'Salvar':'Entrar no desafio'}</button></form>${DZ.me?`<button class="btn ghost full" style="margin-top:8px" data-a="dzLeave">Sair do desafio</button>`:''}`};
-SH.dzProof=d=>{const m=d.m&&DZ.missions.find(x=>x.id===d.m),rs=d.r==='1',kd=d.kind;if(kd)return dzBeforeAfterSheet(kd);return `<h3>${rs?'usar um dia de resgate':m?'comprovar missão':'compartilhar uma vitória'}</h3>${rs?`<div class="note" style="margin:-4px 0 12px">Você tem ${dzRescLeft()} ${dzRescLeft()===1?'resgate':'resgates'}. Ele recupera a missão do dia ${m.day} com todos os pontos.</div>`:''}${m?`<div class="small muted" style="margin:-6px 0 14px">Dia ${m.day} · ${esc(m.title)} · +${m.points} pts</div>${m.description?`<div class="small" style="margin:-6px 0 14px;line-height:1.5">${esc(m.description)}</div>`:''}`:'<div class="small muted" style="margin:-6px 0 14px">Uma conquista, um prato, um treino… inspire as outras!</div>'}${dzPicker(m?'Tirar ou escolher foto':'Adicionar foto (opcional)')}<form data-f="dzProof" style="margin-top:14px">${hid('m',m&&m.id)}${hid('r',rs?'1':'')}${fld('Legenda',`<textarea name="cap" rows="3" maxlength="500" placeholder="Conte como foi (opcional)"></textarea>`)}<label class="dztog"><input type="checkbox" name="pub" checked><span><b>Mostrar na comunidade</b><small>Desmarcado: só você e a organizadora veem. ${m?'Os pontos contam igual.':''}</small></span></label><button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':m?`Comprovar e ganhar +${m.points} pts`:'Publicar'}</button></form>`};
+SH.dzProof=d=>{const m=d.m&&DZ.missions.find(x=>x.id===d.m),rs=d.r==='1',kd=d.kind;if(kd)return dzBeforeAfterSheet(kd);return `<h3>${rs?'usar um dia de resgate':m?(m.proof==='texto'?'sua resposta':'comprovar missão'):'compartilhar uma vitória'}</h3>${rs?`<div class="note" style="margin:-4px 0 12px">Você tem ${dzRescLeft()} ${dzRescLeft()===1?'resgate':'resgates'}. Ele recupera a missão do dia ${m.day} com todos os pontos.</div>`:''}${m?`<div class="small muted" style="margin:-6px 0 14px">Dia ${m.day} · ${esc(m.title)} · +${m.points} pts</div>${m.description?`<div class="small" style="margin:-6px 0 14px;line-height:1.5">${esc(m.description)}</div>`:''}`:'<div class="small muted" style="margin:-6px 0 14px">Uma conquista, um prato, um treino… inspire as outras!</div>'}${m&&m.proof==='texto'?'':dzPicker(m?'Tirar ou escolher foto':'Adicionar foto (opcional)')}<form data-f="dzProof" style="margin-top:14px">${hid('m',m&&m.id)}${hid('r',rs?'1':'')}${m&&m.proof==='texto'?fld('Sua resposta',`<textarea name="cap" rows="6" maxlength="500" required placeholder="Escreva com sinceridade. Isso é só seu."></textarea>`):fld('Legenda',`<textarea name="cap" rows="3" maxlength="500" placeholder="Conte como foi (opcional)"></textarea>`)}<label class="dztog" ${DZ.c.private?'style="display:none"':''}><input type="checkbox" name="pub" ${DZ.c.private?'':'checked'}><span><b>Mostrar na comunidade</b><small>Desmarcado: só você e a organizadora veem. ${m?'Os pontos contam igual.':''}</small></span></label><button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':m?`${m.proof==='texto'?'Salvar':'Comprovar'} e ganhar +${m.points} pts`:'Publicar'}</button></form>${m&&m.proof==='texto'?`<details class="dzopt"><summary>${ic('camera',14)} Adicionar uma foto (opcional)</summary>${dzPicker('Escolher foto')}</details>`:''}`};
 SH.dzStoryNew=()=>`<h3>novo story</h3><div class="small muted" style="margin:-6px 0 14px">Só foto. Some sozinho em ${DZ.c?DZ.c.story_hours:18} horas.</div>${dzPicker('Tirar ou escolher foto')}<form data-f="dzStory" style="margin-top:14px">${fld('Texto (opcional)',`<input name="cap" maxlength="200" placeholder="Ex.: treino pago!">`)}<button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':'Publicar story'}</button></form>`;
 SH.dzMore=d=>{const u=dzUid();const it=d.k==='post'?DZ.posts.find(p=>p.id===d.id):d.k==='story'?DZ.stories.find(s=>s.id===d.id):null;const mine=it?it.user_id===u:d.mine==='1';
   return `<h3>opções</h3>${mine||DZ.isOwner?`<button class="btn ghost full" data-a="dzDel" data-k="${d.k}" data-id="${d.id}">${ic('trash',15)} Apagar</button>`:''}${DZ.isOwner&&!mine?`<button class="btn ghost full" style="margin-top:8px" data-a="dzHide" data-k="${d.k}" data-id="${d.id}">${ic('eyeOff',15)} ${it&&it.hidden?'Mostrar de novo':'Ocultar das participantes'}</button>`:''}${!mine?`<form data-f="dzReport" style="margin-top:12px">${hid('k',d.k)}${hid('id',d.id)}${fld('Denunciar (só a organizadora vê)',`<input name="r" maxlength="300" placeholder="O que aconteceu? (opcional)">`)}<button class="btn full" style="background:var(--rose-l);color:var(--rose-d)">${ic('flag',15)} Enviar denúncia</button></form>`:''}`};
@@ -2865,13 +2950,14 @@ Object.assign(F,{
     const {error}=await q;DZ.busy=false;if(error){toast(dzErr(error));return}
     const was=!!DZ.me;closeSheet();toast(was?'Perfil salvo':'Bem-vinda ao desafio! 💛');DZ.tab='hoje';DZ.loaded=false;await dzLoad(true)},
   dzProof:async v=>{if(DZ.busy)return;const m=v.m&&DZ.missions.find(x=>x.id===v.m);
-    if(m&&!DZ.file){toast('A missão é comprovada com uma foto');return}
+    if(m&&m.proof!=='texto'&&!DZ.file){toast('A missão é comprovada com uma foto');return}
+    if(m&&m.proof==='texto'&&!DZ.file&&(v.cap||'').trim().length<3){toast('Escreva a sua resposta');return}
     if(!m&&!DZ.file&&!(v.cap||'').trim()){toast('Escreva algo ou adicione uma foto');return}
     DZ.busy=true;openSheet('dzProof',{m:v.m,r:v.r});
     try{const path=DZ.file?await dzUpload(DZ.file):null;
       const {error}=await sb.from('dz_posts').insert({challenge_id:DZ.c.id,mission_id:m?m.id:null,caption:(v.cap||'').trim().slice(0,500)||null,photo_path:path,is_public:!!v.pub,rescue:v.r==='1'});
       if(error){if(path)sb.storage.from(DZ_BUCKET).remove([path]);throw error}
-      dzClearFile();closeSheet();toast(m?`Missão comprovada · +${m.points} pts 🎉`:'Publicado!');DZ.tab=m?DZ.tab:'comunidade';if(m)setTimeout(()=>dzAfterMission(m),900);
+      dzClearFile();closeSheet();toast(m?`Missão cumprida · +${m.points} pts 🎉`:'Publicado!');DZ.tab=m?DZ.tab:'comunidade';if(m)setTimeout(()=>dzAfterMission(m),900);
     }catch(e){toast(dzErr(e))}
     DZ.busy=false;DZ.loaded=false;await dzLoad(true)},
   dzStory:async v=>{if(DZ.busy)return;if(!DZ.file){toast('Escolha uma foto');return}DZ.busy=true;openSheet('dzStoryNew');
@@ -2944,7 +3030,7 @@ navOf.desafioAdmin='desafio';
    DESAFIO · JORNADA (fases, missões automáticas, resgate,
    antes/depois, carta, recados, perguntas, dupla, cards, final)
    ========================================================= */
-const DZAUTO=[['planejar','Planejar o dia no GO!','Planejar meu dia agora'],['planejar_amanha','Planejar o dia seguinte no GO!','Planejar amanhã agora'],['semana','Planejar a semana no GO!','Planejar a semana agora'],['agua','Bater a meta de água','Registrar água'],['treino','Registrar um treino no GO!','Ir para Treinos'],['leitura','Registrar páginas lidas','Ir para Leitura'],['devocional','Fazer o devocional no GO!','Ir para o Devocional'],['humor','Registrar o humor do dia','Registrar meu humor']];
+const DZAUTO=[['planejar','Planejar o dia no GO!','Planejar meu dia agora'],['planejar_amanha','Planejar o dia seguinte no GO!','Planejar amanhã agora'],['semana','Planejar a semana no GO!','Planejar a semana agora'],['agua','Bater a meta de água','Registrar água'],['treino','Registrar um treino no GO!','Ir para Treinos'],['leitura','Registrar páginas lidas','Ir para Leitura'],['devocional','Fazer o devocional no GO!','Ir para o Devocional'],['humor','Registrar o humor do dia','Registrar meu humor'],['peso','Registrar o peso no GO!','Registrar meu peso']];
 const DZBA=[['A sua geladeira','geladeira'],['A sua agenda ou planner','agenda'],['Um cantinho seu','cantinho'],['Você (só você vê)','eu']];
 const dzAutoTxt=k=>{const x=DZAUTO.find(a=>a[0]===k);return x?`Faça no GO! e a missão se cumpre sozinha: ${x[1].toLowerCase()}`:''};
 const dzAutoBtn=k=>{const x=DZAUTO.find(a=>a[0]===k);return x?x[2]:'Abrir'};
@@ -2967,10 +3053,10 @@ async function dzLoadExtra(){
     const since=new Date(Date.now()-7*864e5).toISOString();
     const [nt,lt,qs,ch,mn]=await Promise.all([
       sb.from('dz_notes').select('*').eq('challenge_id',cid).order('day'),
-      sb.from('dz_letters').select('text,created_at').eq('challenge_id',cid).eq('user_id',u).maybeSingle(),
+      sb.from('dz_letters').select('*').eq('challenge_id',cid).eq('user_id',u).maybeSingle(),
       sb.from('dz_questions').select('*').eq('challenge_id',cid).order('created_at',{ascending:false}).limit(60),
       sb.from('dz_cheers').select('*').eq('challenge_id',cid).gte('created_at',since).order('created_at',{ascending:false}),
-      sb.from('dz_posts').select('id,kind,caption,photo_path,mission_id,day,rescue,is_public').eq('challenge_id',cid).eq('user_id',u)]);
+      sb.from('dz_posts').select('*').eq('challenge_id',cid).eq('user_id',u)]);
     DZ.notes=nt.data||[];DZ.letter=lt.data||null;DZ.qs=qs.data||[];DZ.cheers=ch.data||[];DZ.mine=mn.data||[];DZ.rescUsed=DZ.mine.filter(p=>p.rescue).length;
     DZ.bchecks=[];if(DZ.me&&DZ.me.buddy){const {data}=await sb.from('dz_checks').select('day,habit_id,mission_id,points').eq('challenge_id',cid).eq('user_id',DZ.me.buddy);DZ.bchecks=data||[]}
     const need=DZ.mine.map(p=>p.photo_path).filter(p=>p&&!DZ.urls[p]);
@@ -2989,6 +3075,7 @@ function dzAutoLocal(k,d){const st=state;try{switch(k){
   case 'leitura':return (st.books||[]).some(b=>(b.log||{})[d]>0);
   case 'devocional':return !!(st.devo&&st.devo.entries&&st.devo.entries[d]);
   case 'humor':return !!(st.mood&&st.mood[d]);
+  case 'peso':return !!(st.body&&st.body.w&&st.body.w[d]);
 }}catch(e){}return false}
 const dzHabitAutoLocal=(k,d)=>dzAutoLocal(k,d)||(k==='treino'&&doHabits().some(h=>habitIcon(h)==='dumb'&&h.log&&h.log[d]));
 let dzSyncing=false;
@@ -3007,12 +3094,12 @@ function dzPhaseBar(){const P=dzPhases(),i=dzCurPhase();if(i<0)return '';const p
   return `<button class="dzphb" data-a="dzTab" data-v="jornada"><div class="dzphs">${P.map((x,j)=>`<i class="${j<i?'ok':j===i?'on':''}"><b style="width:${j<i?100:j===i?Math.round((n-x.from+1)/(x.to-x.from+1)*100):0}%"></b></i>`).join('')}</div><div class="dzpht"><span>FASE ${i+1} · ${esc(p.name).toUpperCase()}</span><span>dia ${n-p.from+1} de ${p.to-p.from+1} ›</span></div></button>`}
 const dzNotesSeen=()=>{try{return JSON.parse(localStorage.getItem('go-dz-notes')||'{}')}catch(e){return {}}};
 function dzNoteNew(){const n=dzDayN(),L=(DZ.notes||[]).filter(x=>x.day<=n),last=L[L.length-1];if(!last||dzNotesSeen()[last.id])return '';
-  return `<button class="card dznote" data-a="sheet" data-s="dzNote" data-id="${last.id}"><span class="dznq">${ic('heart',16)}</span><div class="grow"><small>RECADO DA NUTRI · NOVO</small><b>${esc(last.title)}</b></div>${ic('chevR',16)}</button>`}
+  return `<button class="card dznote" data-a="sheet" data-s="dzNote" data-id="${last.id}"><span class="dznq">${ic('heart',16)}</span><div class="grow"><small>${last.author==='claude'?'RECADO DA JORNADA':'RECADO DA NUTRI'} · NOVO</small><b>${esc(last.title)}</b></div>${ic('chevR',16)}</button>`}
 function dzHojeExtras(){
   const n=dzDayN(),len=dzLen(),t=today();let b='';
   // dupla
   const bd=DZ.me&&DZ.me.buddy;
-  if(bd){const bm=dzMem(bd),m=dzMission(n),bmd=m&&DZ.bchecks.some(k=>k.mission_id===m.id),bh=DZ.bchecks.filter(k=>k.habit_id&&k.day===t).length,sent=DZ.cheers.some(c=>c.from_user===dzUid()&&c.to_user===bd&&c.created_at.slice(0,10)===new Date().toISOString().slice(0,10));
+  if(DZ.c.private){}else if(bd){const bm=dzMem(bd),m=dzMission(n),bmd=m&&DZ.bchecks.some(k=>k.mission_id===m.id),bh=DZ.bchecks.filter(k=>k.habit_id&&k.day===t).length,sent=DZ.cheers.some(c=>c.from_user===dzUid()&&c.to_user===bd&&c.created_at.slice(0,10)===new Date().toISOString().slice(0,10));
     b+=`<h2 class="sec">sua dupla</h2><div class="card dzbud">${dzAv(bd,44)}<div class="grow"><b>${esc(bm.nickname)}</b><small>${bmd?'✓ missão de hoje feita':'missão de hoje pendente'} · ${bh} de ${DZ.habits.length} hábitos</small></div><button class="btn sm ${sent?'soft':'primary'}" data-a="dzCheer" ${sent?'disabled':''}>${sent?'força enviada':'mandar força 💪'}</button></div>`}
   else b+=`<div class="card dzbud muted"><span class="dzic">${ic('heart',18)}</span><div class="grow small">Sua dupla de apoio chega assim que outra participante entrar 💛</div></div>`;
   const rc=DZ.cheers.filter(c=>c.to_user===dzUid()).slice(0,3);
@@ -3034,6 +3121,7 @@ function dzJornada(){
   const n=dzDayN(),len=dzLen(),P=dzPhases(),ci=dzCurPhase(),pc=dzPct(),done=DZ.missions.filter(dzMissionDone).length,rl=dzRescLeft();
   let b=`<div class="gcard dzg"><div class="hsl" style="min-height:0"><div class="hk">SUA JORNADA · ${esc(DZ.c.title).toUpperCase()}</div><div class="dzbig"><span class="dzbn">${pc}%</span> de constância</div><div class="hS dzsub">${Math.max(0,Math.min(n,len))} de ${len} dias · ${done} ${done===1?'missão':'missões'} · ${rl} ${rl===1?'resgate':'resgates'} disponíveis</div></div></div>`;
   if(n>=len||dzPhase()==='fim')b+=dzFinal();
+  b+=dzVaral();if(DZ.c.private)b+=bodyCard(true);
   P.forEach((p,i)=>{const st=n>p.to?'ok':i===ci?'on':'lock',dn=p.ms.filter(dzMissionDone).length;
     b+=`<div class="dzfase ${st}"><div class="dzfh"><span class="dzfn">${st==='ok'?ic('check',14,2.6):i+1}</span><div class="grow"><small>FASE ${i+1} · DIAS ${p.from}–${p.to}</small><b>${esc(p.name)}</b></div><span class="small muted">${dn}/${p.ms.length}</span></div><div class="dzpath">`;
     p.ms.forEach((m,j)=>{const d=m.day,ok=dzMissionDone(m),cls=ok?'ok':d===n?'today':d<n?(d===n-1?'late':'miss'):'fut',off=[0,1,2,1][j%4];
@@ -3046,10 +3134,11 @@ function dzJornada(){
     return `<div class="dzbrow"><div class="dzbal">${esc(lb)}</div><div class="dzbap"><button data-a="sheet" data-s="dzProof" data-kind="antes" data-p="${esc(lb)}" class="${a?'has':''}">${ua?`<img src="${ua}" alt="">`:`${ic('camera',18)}<small>antes</small>`}</button><button ${depOn?`data-a="sheet" data-s="dzProof" data-kind="depois" data-p="${esc(lb)}"`:'disabled'} class="${d?'has':''}">${ud?`<img src="${ud}" alt="">`:depOn?`${ic('camera',18)}<small>depois</small>`:`${ic('lock',14)}<small>no fim</small>`}</button></div></div>`}).join('')}</div>`;
   // carta
   const sealed=today()<DZ.c.end_date;
-  b+=`<h2 class="sec">carta para a eu do futuro</h2>${DZ.letter?(sealed?`<div class="card dzletter"><span class="dzwax">${ic('heart',18)}</span><div class="grow"><b>Carta selada</b><small>abre em ${dateLabel(DZ.c.end_date).toLowerCase()} · escrita em ${fmtD((DZ.letter.created_at||'').slice(0,10))}</small></div><button class="lnk" data-a="sheet" data-s="dzLetter">editar</button></div>`:`<div class="card dzletter open"><small>VOCÊ ESCREVEU PARA VOCÊ:</small><div class="dzlt">${esc(DZ.letter.text).replace(/\n/g,'<br>')}</div></div>`):`<button class="card dzrow dzy" data-a="sheet" data-s="dzLetter"><span class="dzic">${ic('edit',18)}</span><div class="grow"><b>Escrever minha carta</b><div class="small muted">O que você quer que a eu do dia ${len} lembre?</div></div>${ic('chevR',16)}</button>`}`;
+  b+=`<h2 class="sec">carta para a eu do futuro</h2>${DZ.letter?(sealed?`<div class="card dzletter"><span class="dzwax">${ic('heart',18)}</span><div class="grow"><b>Carta selada</b><small>abre em ${dateLabel(DZ.c.end_date).toLowerCase()} · escrita em ${fmtD((DZ.letter.created_at||'').slice(0,10))}</small></div><button class="lnk" data-a="sheet" data-s="dzLetter">editar</button></div>`:`<div class="card dzletter open"><small>VOCÊ ESCREVEU PARA VOCÊ:</small><div class="dzlt">${esc(DZ.letter.text).replace(/\n/g,'<br>')}</div></div>${DZ.letter.reply?`<div class="card dzletter open dzreply"><small>A CARTA QUE A SUA JORNADA ESCREVEU:</small><div class="dzlt">${esc(DZ.letter.reply).replace(/\n/g,'<br>')}</div><div class="script" style="font-size:22px;color:var(--rose-d);margin-top:10px">com carinho, Claude 💛</div></div>`:''}`):`<button class="card dzrow dzy" data-a="sheet" data-s="dzLetter"><span class="dzic">${ic('edit',18)}</span><div class="grow"><b>Escrever minha carta</b><div class="small muted">O que você quer que a eu do dia ${len} lembre?</div></div>${ic('chevR',16)}</button>`}`;
   // recados
   const NL=(DZ.notes||[]).slice().sort((a,c)=>a.day-c.day);
-  if(NL.length)b+=`<h2 class="sec">recados da nutri</h2><div class="card" style="margin-top:0">${NL.map(x=>x.day<=n?`<button class="row dznl" data-a="sheet" data-s="dzNote" data-id="${x.id}"><span class="dznq sm">${ic('heart',13)}</span><div class="grow rt">${esc(x.title)}<div class="small muted">dia ${x.day}${dzNotesSeen()[x.id]?'':' · novo'}</div></div>${ic('chevR',15)}</button>`:`<div class="row dznl lock"><span class="dznq sm">${ic('lock',12)}</span><div class="grow rt muted">Libera no dia ${x.day}</div></div>`).join('')}</div>`;
+  if(NL.length)b+=`<h2 class="sec">${DZ.c.private?'recados da jornada':'recados da nutri'}</h2><div class="card" style="margin-top:0">${NL.map(x=>x.day<=n?`<button class="row dznl" data-a="sheet" data-s="dzNote" data-id="${x.id}"><span class="dznq sm">${ic('heart',13)}</span><div class="grow rt">${esc(x.title)}<div class="small muted">dia ${x.day}${dzNotesSeen()[x.id]?'':' · novo'}</div></div>${ic('chevR',15)}</button>`:`<div class="row dznl lock"><span class="dznq sm">${ic('lock',12)}</span><div class="grow rt muted">Libera no dia ${x.day}</div></div>`).join('')}</div>`;
+  if(DZ.c.private)return b;
   // caixinha
   const mineQ=DZ.qs.filter(q=>q.user_id===dzUid()),ans=DZ.qs.filter(q=>q.answer);
   b+=`<h2 class="sec">caixinha de perguntas <button class="btn sm soft" data-a="sheet" data-s="dzAsk">${ic('plus',13)} Perguntar</button></h2><div class="small muted" style="margin:-4px 2px 10px">Pergunte pra nutri. As respostas aparecem aqui pra todas, sem o seu nome.</div>
@@ -3067,11 +3156,11 @@ function dzFinal(){
 SH.dzNode=d=>{const n=+d.n,m=dzMission(n),now=dzDayN();if(!m)return '<div class="empty">Sem missão nesse dia.</div>';const ok=dzMissionDone(m),dt=dzDateOf(n);
   const act=ok?`<div class="dzdone" style="background:var(--rbg);color:var(--rose-d)">${ic('check',16,2.4)} Missão cumprida</div><button class="btn soft full" style="margin-top:10px" data-a="dzShareDay" data-n="${n}">${ic('send',14)} Card para os stories</button>`
     :n>now?`<div class="note">Essa missão abre em ${dateLabel(dt).toLowerCase()}.</div>`
-    :n>=now-1?`${m.auto?`<button class="btn primary full" data-a="dzAutoGo" data-k="${m.auto}">${dzAutoBtn(m.auto)}</button><div class="small muted" style="margin:8px 0">${dzAutoTxt(m.auto)}</div>`:''}<button class="btn ${m.auto?'ghost':'primary'} full" data-a="sheet" data-s="dzProof" data-m="${m.id}">${ic('camera',15)} Comprovar com foto</button>`
+    :n>=now-1?`${m.auto?`<button class="btn primary full" data-a="dzAutoGo" data-k="${m.auto}">${dzAutoBtn(m.auto)}</button><div class="small muted" style="margin:8px 0">${dzAutoTxt(m.auto)}</div>`:''}<button class="btn ${m.auto?'ghost':'primary'} full" data-a="sheet" data-s="dzProof" data-m="${m.id}">${m.proof==='texto'?ic('edit',15)+' Escrever minha resposta':ic('camera',15)+' Comprovar com foto'}</button>`
     :dzRescLeft()?`<button class="btn primary full" data-a="sheet" data-s="dzProof" data-m="${m.id}" data-r="1">${ic('refresh',15)} Usar um dia de resgate</button><div class="small muted" style="margin-top:8px;text-align:center">Você tem ${dzRescLeft()} ${dzRescLeft()===1?'resgate':'resgates'}.</div>`:`<div class="note">Essa ficou pra trás e seus resgates acabaram. Tudo bem: o que importa é o próximo passo 💛</div>`;
   return `<div class="small" style="color:var(--rose-d);letter-spacing:.12em;text-transform:uppercase;font-size:11px">dia ${n} · ${esc(m.pillar||'')} · +${m.points} pts</div><h3 style="margin-top:4px">${esc(m.title)}</h3>${m.description?`<div style="font-size:14.5px;line-height:1.6;margin-bottom:16px">${esc(m.description)}</div>`:''}${act}`};
 SH.dzNote=d=>{const x=(DZ.notes||[]).find(y=>y.id===d.id);if(!x)return '';try{const s_=dzNotesSeen();s_[x.id]=1;localStorage.setItem('go-dz-notes',JSON.stringify(s_))}catch(e){}setTimeout(render,50);
-  return `<div class="small" style="color:var(--rose-d);letter-spacing:.12em;text-transform:uppercase;font-size:11px">recado da nutri · dia ${x.day}</div><h3 style="margin-top:4px">${esc(x.title)}</h3><div class="dznb">${esc(x.body||'').replace(/\n/g,'<br>')}</div><div class="script" style="font-size:22px;color:var(--rose-d);margin-top:14px">com carinho, ${esc(DZ.members[DZ.c.owner_id]?DZ.members[DZ.c.owner_id].nickname:'sua nutri')} 💛</div><button class="btn soft full" style="margin-top:14px" data-a="sheet" data-s="dzAsk">Ficou com dúvida? Pergunte</button>`};
+  return `<div class="small" style="color:var(--rose-d);letter-spacing:.12em;text-transform:uppercase;font-size:11px">${x.author==='claude'?'recado da jornada':'recado da nutri'} · dia ${x.day}</div><h3 style="margin-top:4px">${esc(x.title)}</h3><div class="dznb">${esc(x.body||'').replace(/\n/g,'<br>')}</div><div class="script" style="font-size:22px;color:var(--rose-d);margin-top:14px">com carinho, ${x.author==='claude'?'Claude':esc(DZ.members[DZ.c.owner_id]?DZ.members[DZ.c.owner_id].nickname:'sua nutri')} 💛</div>${DZ.c.private?'':`<button class="btn soft full" style="margin-top:14px" data-a="sheet" data-s="dzAsk">Ficou com dúvida? Pergunte</button>`}`};
 SH.dzLetter=()=>`<h3>carta para a eu do futuro</h3><div class="small muted" style="margin:-6px 0 14px;line-height:1.5">Escreva para a você do dia ${dzLen()}. Por que começou, o que espera sentir, o que quer lembrar nos dias difíceis. Só você lê, e ela fica selada até o fim.</div><form data-f="dzLetter"><textarea name="t" rows="9" maxlength="3000" placeholder="Querida eu do futuro…">${esc(DZ.letter?DZ.letter.text:'')}</textarea><button class="btn primary full" style="margin-top:12px">${DZ.letter?'Salvar':'Selar a carta'} ${ic('heart',14)}</button></form>`;
 SH.dzAsk=()=>`<h3>pergunte pra nutri</h3><div class="small muted" style="margin:-6px 0 14px">Sobre alimentação, treino, rotina… A resposta aparece pra todas, sem o seu nome.</div><form data-f="dzAsk"><textarea name="t" rows="4" maxlength="600" required placeholder="Ex.: posso trocar o arroz por batata?"></textarea><button class="btn primary full" style="margin-top:12px">Enviar pergunta</button></form>`;
 function dzBeforeAfterSheet(kind){const lb=DZ._baP||DZBA[0][0],cur=dzBAFor(kind,lb);return `<h3>${kind==='antes'?'foto do antes':'foto do depois'}</h3><div class="small muted" style="margin:-6px 0 14px">${esc(lb)}${kind==='depois'?' · mesmo ângulo da foto de antes, se der':''}</div>${cur?`<div class="note" style="margin:-4px 0 12px">Você já tem essa foto. Enviar outra substitui.</div>`:''}${dzPicker('Tirar ou escolher foto')}<form data-f="dzBA" style="margin-top:14px">${hid('k',kind)}${hid('p',lb)}<label class="dztog"><input type="checkbox" name="pub" ${lb.includes('só você')?'disabled':''}><span><b>Mostrar na comunidade</b><small>Desmarcado: só você e a organizadora veem.</small></span></label><button class="btn primary full" ${DZ.busy?'disabled':''}>${DZ.busy?'Enviando…':'Salvar foto'}</button></form>`}
@@ -3081,7 +3170,7 @@ function dzBeforeAfterSheet(kind){const lb=DZ._baP||DZBA[0][0],cur=dzBAFor(kind,
 Object.assign(A,{
   dzAutoGo:d=>{closeSheet();const k=d.k;if(k==='planejar'){A.dpOpen();return}if(k==='planejar_amanha'){A.dpTomorrow();return}if(k==='semana'){ui.planMode='semana';ui.screen='semana';render();return}
     if(k==='treino'){ui.screen='treinos';ui.gymTab='hoje';render();return}if(k==='leitura'){ui.screen='leitura';render();return}if(k==='devocional'){ui.screen='devocional';render();return}
-    if(k==='humor'){ui.screen='home';render();openSheet('moodPick',{});return}ui.screen='home';render();window.scrollTo(0,0)},
+    if(k==='humor'){ui.screen='home';render();openSheet('moodPick',{});return}if(k==='peso'){openSheet('bodyW',{});return}ui.screen='home';render();window.scrollTo(0,0)},
   dzCheer:async()=>{const bd=DZ.me&&DZ.me.buddy;if(!bd)return;const {data,error}=await sb.from('dz_cheers').insert({challenge_id:DZ.c.id,to_user:bd}).select('*').single();if(error){toast(dzErr(error));return}DZ.cheers.unshift(data);if(navigator.vibrate)navigator.vibrate(15);toast('Força enviada 💪');render()},
   dzShareDay:d=>{closeSheet();dzShareCard(+d.n)},
   dzCert:()=>dzCertCard()
