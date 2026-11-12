@@ -894,13 +894,19 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .evmv.on{font-size:11.5px;color:var(--rose-d);border:1px solid var(--line);border-radius:12px;padding:3px 10px;background:var(--card)}
 
 .htile.hwater .hwv{position:absolute;left:0;top:50%;transform:translateY(-50%);white-space:nowrap;font-weight:600;font-size:15px;color:var(--ink);background:rgba(255,255,255,.92);padding:5px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:3;opacity:0;pointer-events:none;transition:opacity .15s}
-.htile.hwater.drag .hwv{opacity:1}.htile.hwater.drag .htx,.htile.hwater.drag .hplus{opacity:.08}
+.htile.hwater.drag .hwv{opacity:1}.htile.hwater.drag .htx,.htile.hwater.drag .hplus,.htile.hwater.drag .hpw{opacity:.08}
 .htile.hwater.drag .hfill{background:linear-gradient(90deg,rgba(150,190,220,.35),rgba(110,160,205,.55))}
 .wbig{text-align:center;margin:6px 0 12px}.wbig b{display:block;font-family:var(--serif);font-size:44px;font-weight:400;line-height:1.1;color:var(--ink)}.wbig small{color:var(--muted);font-size:13px}
 .wrange{-webkit-appearance:none;appearance:none;width:100%;height:14px;border-radius:999px;margin:8px 0 4px;background:linear-gradient(90deg,#9cc3e0 var(--p),var(--line) var(--p));outline:none}
 .wrange::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid #7fb0d6;box-shadow:0 3px 10px rgba(0,0,0,.15)}
 .wrange::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid #7fb0d6}
 .wscale{position:relative;height:18px;font-size:11px;color:var(--muted)}.wscale span{position:absolute;left:0;top:0;transform:none}.wscale span[style*="left:"]{transform:translateX(-50%)}
+
+.htile.hwater .hsub2{flex-wrap:nowrap;white-space:nowrap}.hwq{font-size:12.5px;color:var(--muted)}.hwq b{font-weight:600;color:var(--ink)}
+.hpw{flex:none;position:relative;z-index:2;margin-right:6px;font:inherit;font-size:12px;font-weight:600;color:var(--rose-d);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 10px;line-height:1}
+.hpw:active{transform:scale(.94)}
+.htile.hwater .hfill{background:linear-gradient(90deg,rgba(173,206,229,.28),rgba(140,186,220,.42))}
+.htile.hwater.done .hfill{background:linear-gradient(90deg,rgba(232,208,198,.35),rgba(196,146,127,.5))}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -2203,7 +2209,7 @@ function habitIcon(h){const n=norm(h.name||'');const R=[[/agua|hidrat/,'drop'],[
 function hTile(x,t,extra=''){const dn=hDone(x,t),sk=hStreak(x),jd=ui.justDone===x.id;const nm=esc(x.name),gt=habitGoalTxt(x,t),wt=isWater(x);
   const area=x.cat?`<span class="harea">${esc(x.cat)}</span>`:'';
   if(wt){const g=waterGoalH(x),w=state.water[t]||0,pc=Math.min(100,Math.round(w/g*100)),c=state.settings.cup||250,L=wL;
-    return `<div class="htile hp hwater ${dn?'done':''} ${jd?'pop':''}" data-hid="${x.id}" data-g="${g}" data-w="${w}" role="button" tabindex="0" aria-label="${nm}: ${L(w)} de ${L(g)}. Arraste para ajustar a quantidade"><span class="hfill" style="width:${pc}%"></span><span class="hknob">${dn?ic('check',17,2.6):ic('drop',18)}</span><span class="hwv"></span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span><span class="hsub2">${area}<b>${L(w)}</b> de ${L(g)} · <button class="hcup" data-a="sheet" data-s="cup">copo ${L(c)}</button></span></span><button class="hplus" data-a="water" data-n="${c}" aria-label="Somar um copo">${ic('plus',17,2.4)}</button></div>`}
+    return `<div class="htile hp hwater ${dn?'done':''} ${jd?'pop':''}" data-hid="${x.id}" data-g="${g}" data-w="${w}" role="button" tabindex="0" aria-label="${nm}: ${L(w)} de ${L(g)}. Arraste para ajustar a quantidade"><span class="hfill" style="width:${pc}%"></span><span class="hknob">${dn?ic('check',17,2.6):ic('drop',18)}</span><span class="hwv"></span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span><span class="hsub2">${area}<span class="hwq"><b>${L(w)}</b> de ${L(g)}</span></span></span><button class="hpw" data-a="water" data-n="${c}" aria-label="Somar um copo de ${L(c)}">+${c>=1000?L(c):c}</button></div>`}
   if(dn)return `<div class="htile hp done ${jd?'pop':''}" data-hid="${x.id}" role="button" tabindex="0" aria-label="${nm} concluído. Deslize para a esquerda para desfazer"><span class="hfill"></span><span class="hknob">${ic('check',17,2.6)}</span><span class="htx"><span class="hname">${nm}</span>${gt?`<span class="hgoal">${ic('target',11)} ${esc(gt)}</span>`:`<span class="hmot">${esc(habitMot(x))}</span>`}</span><span class="hmeta">${isQty(x)?`<button class="hqv dn" data-a="sheet" data-s="hQty" data-id="${x.id}">${fmtQ(hAmt(x,t),x.unit)}</button>`:hTime(x,t)}${extra}</span></div>`;
   if(isQty(x)){const a=hAmt(x,t),q=x.qty,pc=Math.min(100,Math.round(a/q*100)),st=STEPU[x.unit]||1;
     return `<div class="htile hp hqty" data-hid="${x.id}" role="button" tabindex="0" aria-label="${nm}: ${fmtQ(a,x.unit)} de ${fmtQ(q,x.unit)}"><span class="hfill" style="width:${pc}%"></span><span class="hknob">${ic(habitIcon(x),18)}</span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span><span class="hsub2">${area}<button class="hqv" data-a="sheet" data-s="hQty" data-id="${x.id}"><b>${fmtQ(a)}</b> de ${fmtQ(q,x.unit)}</button>${gt?`<span class="hgoal">${ic('target',11)} ${esc(gt)}</span>`:''}</span></span><button class="hplus" data-a="hQtyAdd" data-id="${x.id}" data-n="${st}" aria-label="Somar ${fmtQ(st,x.unit)}">+${fmtQ(st)}</button></div>`}
@@ -2450,7 +2456,7 @@ SH.waterSet=o=>{const d=o.d||today(),w=state.water[d]||0,goal=state.settings.wat
   <input type="range" class="wrange" name="ml" min="0" max="${max}" step="50" value="${w}" style="--p:${w/max*100}%;--g:${goal/max*100}%" oninput="const v=+this.value;document.getElementById('wsv').textContent=wL(v);document.getElementById('wsp').textContent=Math.round(v/${goal}*100)+'% da meta'+(v>=${goal}?' ✓':'');this.style.setProperty('--p',v/${max}*100+'%')">
   <div class="wscale"><span>0</span><span style="left:${goal/max*100}%">meta</span><span style="right:0;left:auto">${wL(max)}</span></div>
   <div class="pchips" style="justify-content:center;margin:14px 0 16px">${[-c,c,500].map(n=>`<button type="button" class="pchip" onclick="const r=this.form.ml;r.value=Math.max(0,+r.value+${n});r.dispatchEvent(new Event('input'))">${n>0?'+':'−'}${wL(Math.abs(n))}</button>`).join('')}<button type="button" class="pchip" onclick="const r=this.form.ml;r.value=0;r.dispatchEvent(new Event('input'))">zerar</button></div>
-  <button class="btn primary full">Salvar</button></form>`};
+  <button class="btn primary full">Salvar</button></form><button class="btn full" style="margin-top:6px;background:none;color:var(--muted);font-size:13px" data-a="sheet" data-s="cup">Tamanho do copo do botão +: ${wL(c)}</button>`};
 F.waterSet=v=>{closeSheet();setWater(v.d,+v.ml,true)};
 /* ---------- agenda: concluir e adiar ---------- */
 const evIsDone=(e,d)=>!!(state.evDone&&state.evDone[e.id+'|'+d]);
