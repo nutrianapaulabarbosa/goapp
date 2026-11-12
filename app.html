@@ -875,6 +875,17 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .dzq small{font-size:10px;letter-spacing:.12em;color:var(--rose-d)}.dzq.wait{opacity:.8;border-style:dashed!important}.dzqq{margin-top:4px;font-weight:500}.dzqa{margin-top:8px;font-size:14px;line-height:1.6;padding-top:8px;border-top:1px dashed var(--line)}
 .dzfinal{text-align:center}.dzfs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 14px}.dzfs>div{background:var(--bg);border-radius:16px;padding:12px 6px}.dzfs b{display:block;font-family:var(--serif);font-weight:400;font-size:26px}.dzfs span{font-size:11px;color:var(--muted)}
 .dzoffer .dzmt{font-size:22px}
+
+.mcard{text-align:center;padding:4px 2px 2px}.mcard .mce{font-size:44px;line-height:1;margin-bottom:6px}
+.mcard h3{font-family:var(--serif);font-size:24px;margin:4px 0 8px;text-transform:lowercase}
+.mcard p{font-size:14.5px;line-height:1.6;color:var(--ink);margin:0 4px 14px}
+.mver{background:var(--rose-l);border-radius:18px;padding:14px 16px;margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
+.mver span{font-family:var(--serif);font-size:14px;line-height:1.5}.mver i{font-family:var(--script);font-style:normal;font-weight:600;color:var(--rose-d);font-size:15px}
+.mper{display:flex;gap:8px;align-items:flex-start;text-align:left;font-size:12.5px;line-height:1.5;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:0 0 14px}
+.mcris p{font-size:14px}.mcris a.btn{text-decoration:none;display:flex;justify-content:center}.mcris .small{color:var(--muted)}
+.mbr{text-align:center}.mbc{position:relative;height:230px;display:grid;place-items:center;margin:8px 0}
+.mbo{position:absolute;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--deep-hi),var(--deep) 70%);opacity:.85;box-shadow:0 0 0 14px var(--rose-l),0 10px 30px var(--deep-sh)}
+.mbc b{position:relative;color:#fff;font-weight:500;font-size:15px;letter-spacing:.06em;text-shadow:0 1px 3px rgba(0,0,0,.2)}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1573,7 +1584,7 @@ const F={
     else state.habits.push(v.type==='quit'?{id:uid(),name:v.name,type:'quit',since:v.since||today(),best:0,created:today(),days:[],log:{}}:{id:uid(),name:v.name,cat:v.cat,type:'do',days,created:today(),log:{},unit:un,qty:un?qn:0});
     if(v.type!=='quit'&&'goal' in v){const hh=v.id?state.habits.find(x=>x.id===v.id):state.habits[state.habits.length-1];(state.goals||[]).forEach(g=>{if(g.hab===hh.id&&g.id!==v.goal){g.hab='';g.per=''}});const g=(state.goals||[]).find(x=>x.id===v.goal);if(g&&g.hab!==hh.id){g.base=goalCur(g);g.hab=hh.id;g.per=g.per||'mes';g.since=today()}}
     closeSheet();save();toast('Hábito salvo')},
-  moodWhy:(v,f)=>{const t=today(),tags=new FormData(f).getAll('tg'),why=(v.why||'').trim();if(tags.length||why)state.moodNote[t]={why,tags};else delete state.moodNote[t];closeSheet();save();toast('Anotado 💛')},
+  moodWhy:(v,f)=>{const t=today(),tags=new FormData(f).getAll('tg'),why=(v.why||'').trim();if(tags.length||why)state.moodNote[t]={why,tags};else delete state.moodNote[t];save();openSheet('moodCard')},
   sleep:v=>{const m=(parseInt(v.h)||0)*60+(parseInt(v.m)||0);state.sleep[v.date||today()]=m;closeSheet();save();toast('Sono registrado: '+fmtDur(m))},
   med:v=>{state.meds.push({id:uid(),name:v.name,time:v.time});closeSheet();save()},
   list:v=>{if(v.id)Object.assign(state.lists.find(x=>x.id===v.id),{name:v.name,type:v.type});else{const l={id:uid(),name:v.name,type:v.type,pinned:false,items:[]};state.lists.push(l);ui.openList=l.id;ui.screen='lista'}closeSheet();save()},
@@ -2408,6 +2419,93 @@ document.addEventListener('input',ev=>{const el=ev.target;if(!el||!el.dataset)re
 SH.gLog=d=>{const g=gym(),l=g.logs.find(x=>x.id===d.id);if(!l)return '';const min=l.end&&l.start?Math.round((l.end-l.start)/60000):0;
   return `<h3>${esc(l.name)}</h3><div class="small muted" style="margin:-6px 0 14px">${fmtD(l.date)}${min?` · ${min} min`:''} · ${gKg(gVol(l))} kg no total</div><div class="card" style="margin-top:0">${l.ex.map(e=>{const ok=e.sets.filter(x=>x.ok);return `<div class="row"><div class="grow rt">${esc(e.name)}<div class="small muted">${ok.length?ok.map(x=>`${x.kg||'–'}kg × ${x.r||'–'}`).join(' · '):'nenhuma série marcada'}</div></div></div>`}).join('')}</div><button class="btn full" style="margin-top:12px;background:var(--rose-l);color:var(--rose-d)" data-a="gymLogDel" data-id="${l.id}">Apagar este registro</button>`};
 Object.assign(A,{gymLogDel:d=>{const g=gym(),s_=snap();g.logs=g.logs.filter(x=>x.id!==d.id);if(g.active===d.id)g.active=null;closeSheet();save();toast('Registro de treino apagado',s_)}});
+
+/* ---------- humor: card de apoio ---------- */
+const MV={
+ 'Isaías 41:10':'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus; eu te fortaleço, e te ajudo.',
+ 'Mateus 11:28':'Vinde a mim, todos os que estais cansados e sobrecarregados, e eu vos aliviarei.',
+ '1 Pedro 5:7':'Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós.',
+ 'Salmos 34:18':'Perto está o Senhor dos que têm o coração quebrantado.',
+ 'Lamentações 3:22-23':'As misericórdias do Senhor são a causa de não sermos consumidos; renovam-se cada manhã.',
+ 'Gálatas 6:9':'E não nos cansemos de fazer o bem, porque a seu tempo ceifaremos, se não desfalecermos.',
+ 'Salmos 118:24':'Este é o dia que fez o Senhor; regozijemo-nos e alegremo-nos nele.',
+ 'Salmos 4:8':'Em paz também me deitarei e dormirei, porque só tu, Senhor, me fazes habitar em segurança.',
+ 'Provérbios 16:3':'Confia ao Senhor as tuas obras, e teus pensamentos serão estabelecidos.',
+ 'Salmos 103:2':'Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum de seus benefícios.'
+};
+const MACT={breathe:['respirar 1 minuto comigo','data-a="sheet" data-s="breathe"'],plan:['deixar o amanhã pronto','data-a="dpTomorrow" data-close="1"'],
+ water:['beber um copo de água','data-a="water" data-n="250" data-close="1"'],sleep:['registrar meu sono','data-a="sheet" data-s="sleep"'],
+ devo:['abrir o devocional','data-a="go" data-to="devocional"'],gym:['ver meus treinos','data-a="go" data-to="treinos"'],
+ fin:['olhar minhas finanças','data-a="go" data-to="financas"'],hab:['ver meus hábitos','data-a="go" data-to="habitos"']};
+const MMSG={
+ _:{lo:['dia pesado também conta','Você não precisa resolver tudo hoje. Escolha uma coisa pequena que te faça bem e deixe o resto para amanhã. Registrar como você está já é se cuidar.','breathe','Lamentações 3:22-23'],
+    mid:['dia comum é dia de construir','Nem todo dia vai ser incrível, e tudo bem. São os dias normais, feitos com constância, que mudam o resultado lá na frente.','hab','Gálatas 6:9'],
+    hi:['guarde esse dia','Repare no que fez hoje dar certo. Isso é pista do que funciona para você, e vale repetir.','plan','Salmos 118:24']},
+ Ansiedade:{lo:['uma coisa de cada vez','A ansiedade faz tudo parecer urgente ao mesmo tempo. Vamos voltar para o agora: um minuto de respiração lenta já avisa o corpo que está tudo bem.','breathe','1 Pedro 5:7'],
+    hi:['você deu conta','Mesmo com a cabeça a mil, você seguiu. Anote o que te ajudou hoje para lembrar nos dias mais difíceis.','breathe','1 Pedro 5:7']},
+ Cansaço:{lo:['descansar também é produtivo','Seu corpo está pedindo pausa, escute. Hoje, o mínimo bem feito já é suficiente. Amanhã você retoma com mais energia.','sleep','Mateus 11:28'],
+    hi:['cansaço de quem fez','Cansaço bom, de dia bem vivido. Agora é hora de descansar de verdade, sem culpa.','sleep','Salmos 4:8']},
+ Sono:{lo:['o sono muda o dia inteiro','Dormir mal mexe com a fome, o humor e a paciência. Hoje, tente desligar as telas 30 minutos antes e deitar um pouco mais cedo.','sleep','Salmos 4:8'],
+    hi:['noite boa, dia melhor','Repare no que você fez ontem à noite que ajudou. Vale virar rotina.','sleep','Salmos 4:8']},
+ Trabalho:{lo:['o trabalho não é você','Dia puxado pesa, mas não define o seu valor. Antes de dormir, deixe as 3 prioridades de amanhã anotadas: a cabeça descansa quando sabe o que vem.','plan','Provérbios 16:3'],
+    hi:['você está mandando bem','Aproveite o embalo e deixe o amanhã organizado para manter esse ritmo.','plan','Provérbios 16:3']},
+ Dinheiro:{lo:['um passo de cada vez','Preocupação com dinheiro tira a paz de qualquer uma. Olhar os números com calma já alivia: entender é o primeiro passo para resolver.','fin','Isaías 41:10'],
+    hi:['as contas agradecem','Organização financeira também é autocuidado. Que tal já separar um pouquinho para a sua reserva?','fin','Salmos 103:2']},
+ Relacionamento:{lo:['seu coração importa','Quando a relação balança, tudo parece fora do lugar. Antes de responder ou decidir qualquer coisa, respire. Conversa difícil rende mais com a cabeça calma.','breathe','Salmos 34:18'],
+    hi:['que bom te ver assim','Relação leve faz bem para o corpo todo. Aproveite e diga para essa pessoa o quanto ela importa.','plan','Salmos 118:24']},
+ Família:{lo:['família também cansa','Dá para amar muito e mesmo assim se sentir esgotada. Respeite seu limite hoje: cuidar de você também é cuidar deles.','breathe','Mateus 11:28'],
+    hi:['momentos que ficam','Os melhores dias quase sempre têm quem a gente ama por perto. Guarde isso.','plan','Salmos 103:2']},
+ Amizades:{lo:['nem toda fase é de multidão','Amizades mudam, e isso dói. Mande uma mensagem hoje para alguém que te faz bem. Um simples "lembrei de você" já aproxima.','breathe','Salmos 34:18'],
+    hi:['amizade boa é remédio','Gente que soma faz a vida ficar mais leve. Cultive quem te faz bem.','plan','Salmos 103:2']},
+ Saúde:{lo:['devagar também é caminho','Quando o corpo não está bem, a prioridade é se cuidar, não render. Se algo te preocupa, não deixe de procurar seu médico.','water','Isaías 41:10'],
+    hi:['corpo agradecendo','Saúde em dia é a base de todo o resto. Continue cuidando do básico: água, sono e comida de verdade.','water','Salmos 103:2']},
+ Alimentação:{lo:['uma refeição não define nada','Saiu do plano? Sem culpa e sem compensar. A próxima refeição é a chance de voltar ao seu ritmo, e é isso que importa.','water','Gálatas 6:9'],
+    hi:['comer bem, com prazer','É assim que fica sustentável: comida boa, sem culpa e sem extremos.','water','Salmos 103:2']},
+ Treino:{lo:['treino ruim ainda é treino','Não rendeu hoje? Faz parte. O que muda o corpo é a soma das semanas, não um treino perfeito.','gym','Gálatas 6:9'],
+    hi:['orgulho de você 💪','Constância é isso. Registre o treino para acompanhar sua evolução.','gym','Salmos 118:24']},
+ Estudos:{lo:['aprender leva tempo','Travar faz parte de aprender. Divida em blocos de 25 minutos e comemore cada um. Feito é melhor que perfeito.','plan','Provérbios 16:3'],
+    hi:['cabeça a mil (do jeito bom)','Aproveite esse foco e deixe a próxima sessão de estudo já marcada.','plan','Provérbios 16:3']},
+ Fé:{lo:['Deus não se cansa de você','Mesmo quando a fé parece pequena, ela continua aí. Separe 5 minutinhos para ler, orar ou só ficar em silêncio.','devo','Isaías 41:10'],
+    hi:['coração grato','Gratidão muda o olhar sobre o dia. Que tal registrar no devocional o que você agradece hoje?','devo','Salmos 103:2']},
+ Conquista:{lo:['mesmo assim, você conquistou','Num dia difícil, você ainda chegou em algum lugar. Isso conta, e conta muito.','hab','Gálatas 6:9'],
+    hi:['comemore!','Você chegou lá. Pare um segundo e reconheça o caminho que te trouxe até aqui.','hab','Salmos 118:24']},
+ Descanso:{lo:['descansar sem culpa','Pausa não é preguiça, é manutenção. Seu corpo e sua cabeça agradecem.','sleep','Mateus 11:28'],
+    hi:['pausa bem feita','Descanso de verdade recarrega. Guarde esse momento como lembrete de que você também merece pausa.','sleep','Salmos 4:8']},
+ Clima:{lo:['dia cinza por fora','O tempo mexe com o humor mais do que a gente imagina. Luz natural, um chá quente e uma música boa ajudam a virar o dia.','water','Lamentações 3:22-23'],
+    hi:['aproveite o dia bonito','Que tal uma caminhada ou um tempinho ao ar livre? Sol e movimento fazem bem para o humor.','gym','Salmos 118:24']}
+};
+const MPRI=['Ansiedade','Cansaço','Sono','Trabalho','Dinheiro','Relacionamento','Família','Amizades','Saúde','Alimentação','Treino','Estudos','Fé','Conquista','Descanso','Clima'];
+const MKW=[
+ [/(não|nao) (tem|têm|tá|ta|está|esta)( dado| dando)? certo|nada (dá|da|deu) certo|frustrad|chatead|desanimad|decepcionad/i,['quando nada parece andar','Frustração costuma aparecer quando a gente se importa muito. Isso não é fracasso, é sinal de que você quer muito. Escolha uma única coisa pequena para fazer dar certo amanhã e comece por ela.','plan','Gálatas 6:9']],
+ [/sozinh|solid[aã]o/i,['você não está sozinha','Às vezes a gente se sente só mesmo cercada de gente. Mande uma mensagem para alguém de confiança hoje. Conexão começa pequena.','breathe','Salmos 34:18']],
+ [/ansios|preocupad|nervos/i,MMSG.Ansiedade.lo],
+ [/cansad|exaust|esgotad/i,MMSG.Cansaço.lo]
+];
+const MCRISIS=/suic[ií]d|me matar|tirar (a )?minha (pr[oó]pria )?vida|n[aã]o quero mais viver|quero morrer|me machucar|me cortar|acabar com (tudo|a minha vida)/i;
+function moodMsg(d){const mv=state.mood[d]||3,n=state.moodNote[d]||{tags:[],why:''},lvl=mv<=2?'lo':mv>=4?'hi':'mid',why=n.why||'';
+  if(MCRISIS.test(why))return {crisis:true};
+  const tg=MPRI.find(t=>n.tags.includes(t)&&MMSG[t]),kw=lvl==='hi'?null:(MKW.find(([re])=>re.test(why))||[])[1];let m;
+  if(kw)m=kw;
+  else if(lvl==='hi')m=tg?MMSG[tg].hi:MMSG._.hi;
+  else if(lvl==='lo')m=tg?MMSG[tg].lo:MMSG._.lo;
+  else m=tg&&['Ansiedade','Cansaço','Sono'].includes(tg)?MMSG[tg].lo:tg?[MMSG._.mid[0],MMSG._.mid[1],MMSG[tg].lo[2],MMSG._.mid[3]]:MMSG._.mid;
+  let low=0;for(let i=0;i<7;i++){const v=state.mood[addDays(d,-i)];if(v&&v<=2)low++}
+  return {lvl,mv,t:m[0],msg:m[1],act:MACT[m[2]],vref:m[3],persist:low>=3};
+}
+SH.moodCard=()=>{const t=today(),r=moodMsg(t),faces=['😣','😕','😐','🙂','😄'];
+  if(r.crisis)return `<div class="mcard mcris"><div class="mce">🤍</div><h3>obrigada por contar</h3><p>O que você está sentindo importa, e você não precisa passar por isso sozinha. Converse agora com alguém de confiança ou ligue para o <b>CVV, no 188</b>. A ligação é gratuita e eles atendem 24 horas, também pelo chat em cvv.org.br.</p><p class="small">Se estiver em perigo agora, ligue para o <b>192 (SAMU)</b>.</p><a class="btn primary full" href="tel:188">Ligar para o CVV (188)</a><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Fechar</button></div>`;
+  const useV=(state.settings.inspo||'versiculo')==='versiculo'||(state.moodNote[t]||{tags:[]}).tags.includes('Fé');
+  return `<div class="mcard m${r.lvl}"><div class="mce">${faces[r.mv-1]}</div><h3>${esc(r.t)}</h3><p>${esc(r.msg)}</p>
+  ${useV&&MV[r.vref]?`<div class="mver"><span>“${esc(MV[r.vref])}”</span><i>${esc(r.vref)}</i></div>`:''}
+  ${r.persist?`<div class="mper">${ic('heart',13)} Faz alguns dias que está pesado. Conversar com alguém de confiança ou com um psicólogo pode ajudar muito, e pedir ajuda é força.</div>`:''}
+  ${r.act?`<button class="btn primary full" ${r.act[1]}>${esc(r.act[0])}</button>`:''}<button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Obrigada 💛</button></div>`};
+let mBT=null;
+SH.breathe=()=>{setTimeout(breatheRun,60);return `<div class="mbr"><h3>respira comigo</h3><div class="small muted">Inspire pelo nariz, solte devagar pela boca.</div><div class="mbc"><div class="mbo" id="mbo"></div><b id="mbt">prepare-se</b></div><div class="small muted" id="mbn">4 ciclos · cerca de 1 minuto</div><button class="btn ghost full" style="margin-top:14px" data-a="closeSheet">Parar</button></div>`};
+function breatheRun(){clearTimeout(mBT);const o=document.getElementById('mbo');if(!o)return;let c=0;const ph=[['inspira',4,1.6],['segura',4,1.6],['solta',6,1]];let i=0;
+  const step=()=>{const el=document.getElementById('mbo'),tx=document.getElementById('mbt'),nn=document.getElementById('mbn');if(!el)return;
+    if(i===0)c++;if(c>4){tx.textContent='pronto 💛';el.style.transition='transform 1s';el.style.transform='scale(1.2)';nn.textContent='Como você se sente agora?';return}
+    const [w,s,sc]=ph[i];tx.textContent=w;nn.textContent=`ciclo ${c} de 4`;el.style.transition=`transform ${s}s ease-in-out`;el.style.transform=`scale(${sc})`;i=(i+1)%3;mBT=setTimeout(step,s*1000)};
+  mBT=setTimeout(step,600)}
 
 /* ---------- tela acesa no treino ---------- */
 let gWL=null,gWLBusy=false;
