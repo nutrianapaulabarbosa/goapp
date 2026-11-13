@@ -926,6 +926,7 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .vmarcos{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}.vm{font-size:11.5px;padding:5px 10px;border-radius:999px;border:1px dashed var(--line);color:var(--muted);display:inline-flex;align-items:center;gap:4px}
 .vm.ok{border:0;color:#7a5a22;background:linear-gradient(135deg,#f7e3b5,#e8c983);font-weight:600}
 .dzopt{margin-top:14px}.dzopt summary{list-style:none;cursor:pointer;color:var(--muted);font-size:13px;display:flex;gap:6px;align-items:center;justify-content:center;padding:6px}.dzopt summary::-webkit-details-marker{display:none}.dzopt[open] summary{margin-bottom:10px}
+.mitem.danger{color:#b4574f}
 .dzreply{background:linear-gradient(160deg,var(--card),var(--rbg))}
 
 .bizc .bizrow{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.bizc .bizrow:first-of-type{border-top:0}
@@ -2592,6 +2593,16 @@ function evMoveDo(id,od,nd,nt){const s_=snap(),e=state.events.find(x=>x.id===id)
   closeSheet();save();toast(`Reagendado para ${nd===today()?'hoje':dateLabel(nd).toLowerCase()}${nt?' às '+nt:''}`,s_)}
 A.evMoveTo=d=>evMoveDo(d.id,d.d,d.nd,d.nt);
 F.evMove=v=>evMoveDo(v.id,v.d,v.nd,v.nt);
+
+/* ---------- toque no hábito: ações rápidas ---------- */
+SH.habitAct=d=>{const h=state.habits.find(x=>x.id===d.id);if(!h)return '';const t=today(),dn=hDone(h,t),st=hStreak(h),au=h.auto==='water',q=isQty(h);
+  const it=(icn,lbl,attrs,cls='')=>`<button class="mitem ${cls}" ${attrs}>${ic(icn,17)}<div class="grow">${lbl}</div></button>`;
+  return `<h3>${esc(h.name)}</h3><div class="small muted" style="margin:-6px 0 14px">${st?`${ic('flame',12)} ${st} ${st===1?'dia':'dias'} seguidos · `:''}${dn?'feito hoje ✓':'ainda não feito hoje'}</div>
+  ${au||isWater(h)?it('drop','Ajustar a água de hoje','data-a="sheet" data-s="waterSet"'):q?it('plus','Registrar quantidade','data-a="sheet" data-s="hQty" data-id="'+h.id+'"'):it(dn?'x':'check',dn?'Desmarcar hoje':'Concluir hoje',`data-a="habitDone" data-id="${h.id}" data-close="1"`)}
+  ${it('cal','Marcar ontem ou outro dia',`data-a="sheet" data-s="habitDayPick" data-d="${addDays(today(),-1)}"`)}
+  ${it('edit','Editar hábito','data-a="sheet" data-s="habit" data-id="'+h.id+'"')}
+  ${it('trash','Apagar hábito',`data-a="delHabit" data-id="${h.id}" data-close="1"`,'danger')}
+  <div class="small muted" style="text-align:center;margin-top:12px">Dica: deslize o hábito pra direita pra concluir mais rápido ✨</div>`};
 /* ---------- humor: card de apoio ---------- */
 const MV={
  'Isaías 41:10':'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus; eu te fortaleço, e te ajudo.',
@@ -2754,7 +2765,7 @@ document.addEventListener('input',ev=>{const el=ev.target;if(el&&el.dataset&&el.
     else{const d=Math.max(-g.w*.7,Math.min(dx,0));g.d=d;el.style.transform=`translateX(${d}px)`;el.classList.toggle('ready',d<-g.w*.35)}},{passive:false});
   const end=()=>{if(!g)return;const {el,on,done,id,w}=g,G=g;g=null;
     if(G.wt){if(!on){A.sheet({s:'waterSet',d:today()});return}el.classList.remove('drag');if(G.ml!=null&&G.ml!==G.w0)setWater(today(),G.ml,true);else reset(el);return}
-    if(!on){if(!done){el.classList.remove('nudge');void el.offsetWidth;el.classList.add('nudge');if(!state.settings.swipeTip){state.settings.swipeTip=1;save(1);toast('Deslize pra direita pra concluir ✨')}}return}
+    if(!on){reset(el);A.sheet({s:'habitAct',id});return}
     el.classList.remove('drag');
     if(el.classList.contains('ready')){if(!done){el.querySelector('.hknob').style.transform=`translateX(${w}px)`;el.querySelector('.hfill').style.width='100%';if(navigator.vibrate)navigator.vibrate(15);setTimeout(()=>A.habitDone({id}),240)}else{el.style.transform='translateX(-104%)';setTimeout(()=>{const s_=snap();A.habitDone({id});toast('Hábito desmarcado',s_)},220)}}
     else reset(el)};
