@@ -2764,7 +2764,7 @@ document.addEventListener('input',ev=>{const el=ev.target;if(el&&el.dataset&&el.
     if(!g.done){const d=Math.max(0,Math.min(dx,g.w));g.d=d;el.querySelector('.hknob').style.transform=`translateX(${d}px)`;el.querySelector('.hfill').style.width=(d+KN)+'px';const pr=d/g.w;if(el.classList.contains('hwater'))el.querySelector('.hfill').style.width=Math.max(d+KN,el._fw||0)+'px';el.querySelector('.htx').style.opacity=Math.max(0,1-pr*1.6);el.querySelector('.hmeta').style.opacity=Math.max(0,1-pr*1.6);const r=d>g.w*.6;if(r&&!el.classList.contains('ready')&&navigator.vibrate)navigator.vibrate(8);el.classList.toggle('ready',r)}
     else{const d=Math.max(-g.w*.7,Math.min(dx,0));g.d=d;el.style.transform=`translateX(${d}px)`;el.classList.toggle('ready',d<-g.w*.35)}},{passive:false});
   const end=()=>{if(!g)return;const {el,on,done,id,w}=g,G=g;g=null;
-    if(G.wt){if(!on){A.sheet({s:'waterSet',d:today()});return}el.classList.remove('drag');if(G.ml!=null&&G.ml!==G.w0)setWater(today(),G.ml,true);else reset(el);return}
+    if(G.wt){if(!on){A.sheet({s:'habitAct',id:G.id});return}el.classList.remove('drag');if(G.ml!=null&&G.ml!==G.w0)setWater(today(),G.ml,true);else reset(el);return}
     if(!on){reset(el);A.sheet({s:'habitAct',id});return}
     el.classList.remove('drag');
     if(el.classList.contains('ready')){if(!done){el.querySelector('.hknob').style.transform=`translateX(${w}px)`;el.querySelector('.hfill').style.width='100%';if(navigator.vibrate)navigator.vibrate(15);setTimeout(()=>A.habitDone({id}),240)}else{el.style.transform='translateX(-104%)';setTimeout(()=>{const s_=snap();A.habitDone({id});toast('Hábito desmarcado',s_)},220)}}
