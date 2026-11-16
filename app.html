@@ -450,16 +450,16 @@ nav.bar button.on svg{color:var(--plum)!important}
 .tday .tgrp:last-child{margin-bottom:0}
 .tday .tgh{padding:2px 0 6px;color:var(--rose-d)}
 .tday .tgrp .trow:last-child,.tday .tgrp .htile:last-child{border-bottom:0}
-.tday .htile.done{background:linear-gradient(90deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 30%,rgba(232,208,198,.32) 58%,rgba(196,146,127,.4) 100%)}
+.tday .htile.done{background:linear-gradient(90deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 30%,color-mix(in srgb,var(--ringg) 14%,transparent) 58%,color-mix(in srgb,var(--ringg) 40%,transparent) 100%)}
 [data-theme=dark] .tday .tgrp{background:rgba(255,255,255,.035)}
-[data-theme=dark] .tday .htile.done{background:linear-gradient(90deg,rgba(255,255,255,.07),rgba(196,146,127,.22))}
+[data-theme=dark] .tday .htile.done{background:linear-gradient(90deg,rgba(255,255,255,.07),color-mix(in srgb,var(--ringg) 22%,transparent))}
 
 
 /* hábitos: pílulas com deslizar */
 .htile.hp{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;min-height:58px;padding:6px 14px 6px 6px;margin:0 0 8px;border-radius:999px;border:1px solid var(--hair)!important;background:#fffdfc;background:color-mix(in srgb,#fff 72%,var(--bg));touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s;outline:0}
 .htile.hp:focus-visible{box-shadow:0 0 0 2px var(--rose)}
 .tday .tgrp .htile.hp:last-child{margin-bottom:6px}
-.htile.hp .hfill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:linear-gradient(90deg,rgba(232,208,198,.35),rgba(196,146,127,.5));z-index:0;transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.htile.hp .hfill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--ringg) 16%,transparent),color-mix(in srgb,var(--ringg) 50%,transparent));z-index:0;transition:width .35s cubic-bezier(.2,.8,.2,1)}
 .htile.hp .hknob{position:relative;z-index:2;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--rbg);color:var(--rose-d);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 3px 8px rgba(92,70,62,.12);transition:transform .35s cubic-bezier(.2,.9,.3,1.15),background .25s,color .25s}
 .htile.hp .htx,.htile.hp .hmeta,.htile.hp .hhint{position:relative;z-index:1}
 .htile.hp .hhint{display:flex;color:var(--rose);opacity:.5;margin-left:-4px}
@@ -471,7 +471,7 @@ nav.bar button.on svg{color:var(--plum)!important}
 .htile.hp.ready .hknob{background:var(--deep);color:#fff;transform-origin:center}
 .htile.hp.nudge .hknob{animation:knudge .6s ease}
 @keyframes knudge{30%{transform:translateX(16px)}60%{transform:translateX(-3px)}100%{transform:none}}
-.htile.hp.done{background:linear-gradient(90deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 30%,rgba(232,208,198,.32) 58%,rgba(196,146,127,.4) 100%)!important;padding-top:6px;padding-bottom:6px}
+.htile.hp.done{background:linear-gradient(90deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 30%,color-mix(in srgb,var(--ringg) 14%,transparent) 58%,color-mix(in srgb,var(--ringg) 40%,transparent) 100%)!important;padding-top:6px;padding-bottom:6px}
 .htile.hp.done .hknob{background:linear-gradient(145deg,var(--deep-hi),var(--deep));color:#fff;box-shadow:0 3px 10px rgba(92,70,62,.25)}
 .htile.hp.done.pop .hknob{animation:kpop .55s cubic-bezier(.2,.9,.3,1.3)}
 @keyframes kpop{0%{transform:scale(.6)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
@@ -484,7 +484,7 @@ nav.bar button.on svg{color:var(--plum)!important}
 .htile.hp .htx,.htile.hp .hmeta{transition:opacity .2s}
 .tkt{font-size:12px;color:var(--rose-d);font-weight:500;margin-right:8px;font-variant-numeric:tabular-nums}
 [data-theme=dark] .htile.hp{background:rgba(255,255,255,.04)}
-[data-theme=dark] .htile.hp.done{background:linear-gradient(90deg,rgba(255,255,255,.07),rgba(196,146,127,.22))!important}
+[data-theme=dark] .htile.hp.done{background:linear-gradient(90deg,rgba(255,255,255,.07),color-mix(in srgb,var(--ringg) 22%,transparent))!important}
 @media (prefers-reduced-motion:reduce){.htile.hp .hhint,.htile.hp.done.pop:after{animation:none}}
 /* botão + menor e no tom do card */
 @media (max-width:899px){
@@ -539,7 +539,7 @@ form.phgrid{grid-template-columns:1fr 1fr}
 
 /* metas ligadas a hábitos */
 .pmeta{border:1px solid var(--line);border-radius:16px;padding:10px 10px 10px 12px;margin-bottom:8px;background:var(--bg)}
-.pmeta.ok{border-color:var(--hair);background:linear-gradient(90deg,rgba(255,255,255,.6),rgba(196,146,127,.18))}
+.pmeta.ok{border-color:var(--hair);background:linear-gradient(90deg,rgba(255,255,255,.6),color-mix(in srgb,var(--ringg) 18%,transparent))}
 .pmrow{display:flex;align-items:center;gap:10px}
 .pmpct{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:12.5px;font-weight:600;color:var(--rose-d);background:var(--rbg)}
 .pmeta.ok .pmpct{background:linear-gradient(145deg,var(--deep-hi),var(--deep));color:#fff}
@@ -567,7 +567,7 @@ form.phgrid{grid-template-columns:1fr 1fr}
 .mrings.dk{margin-top:14px}.mrings.dk span{color:#fff;opacity:.9}.mrings.dk .ring{color:#fff}
 .mpills{display:flex;flex-direction:column;gap:7px;margin-top:10px}
 .mpill{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--hair);font-size:13.5px}
-.mpill>i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,rgba(232,208,198,.45),rgba(196,146,127,.5));z-index:0}
+.mpill>i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--ringg) 20%,transparent),color-mix(in srgb,var(--ringg) 50%,transparent));z-index:0}
 .mpill.ok>i{background:linear-gradient(90deg,var(--deep-hi),var(--deep))}.mpill.ok{color:#fff}
 .mpill span,.mpill b{position:relative;z-index:1}.mpill b{font-size:12px;font-weight:600;color:var(--rose-d)}.mpill.ok b{color:#fff}
 
@@ -638,7 +638,7 @@ form.phgrid{grid-template-columns:1fr 1fr}
 /* treinos */
 .gses{margin-bottom:14px}.gses .hT{font-size:24px}
 .gsbar{height:6px;border-radius:3px;background:rgba(255,255,255,.25);overflow:hidden}.gsbar i{display:block;height:100%;background:#fff;border-radius:3px;transition:width .4s}
-.gex{padding:14px}.gex.done{background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(196,146,127,.16))}
+.gex{padding:14px}.gex.done{background:linear-gradient(90deg,rgba(255,255,255,.7),color-mix(in srgb,var(--ringg) 16%,transparent))}
 .gexh{display:flex;align-items:flex-start;gap:8px}.gexh b{display:block;font-weight:500;font-size:15.5px}.gexh small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
 .gsets{margin-top:10px;display:flex;flex-direction:column;gap:6px}
 .gsr{display:grid;grid-template-columns:44px 1fr 1fr 44px;gap:8px;align-items:center}
@@ -693,7 +693,7 @@ form.phgrid{grid-template-columns:1fr 1fr}
 .hdp{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;margin-bottom:8px;border-radius:999px;border:1px solid var(--line);background:none;font:inherit;color:var(--ink);text-align:left}
 .hdp small{display:block;font-size:11px;color:var(--muted)}
 .hdp .hdk,.hsr .hdk{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--rbg);color:var(--rose-d)}
-.hdp.on{background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(196,146,127,.3));border-color:var(--hair)}
+.hdp.on{background:linear-gradient(90deg,rgba(255,255,255,.7),color-mix(in srgb,var(--ringg) 30%,transparent));border-color:var(--hair)}
 .hdp.on .hdk{background:linear-gradient(145deg,var(--deep-hi),var(--deep));color:#fff}
 .hsr{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.hsr:last-of-type{border-bottom:0}
 .hsr .ib:disabled{opacity:.25}
@@ -712,7 +712,7 @@ form.phgrid{grid-template-columns:1fr 1fr}
 .grcfg{margin-top:10px;border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:999px;padding:5px 11px;font:inherit;font-size:11.5px;display:inline-flex;align-items:center;gap:5px}
 
 /* hábitos com quantidade */
-.htile.hp.hqty .hfill{background:linear-gradient(90deg,rgba(232,208,198,.45),rgba(196,146,127,.45))}
+.htile.hp.hqty .hfill{background:linear-gradient(90deg,color-mix(in srgb,var(--deep) 12%,transparent),color-mix(in srgb,var(--deep) 30%,transparent))}
 .hqv{background:none;border:0;padding:0;font:inherit;font-size:11.5px;color:var(--muted);text-decoration:underline dotted;text-underline-offset:3px}.hqv b{color:var(--ink);font-weight:600}
 .hqv.dn{font-size:12px;color:var(--rose-d);text-decoration:none;font-weight:500}
 .htile.hp .hplus{font-size:12.5px;font-weight:600;width:auto;min-width:44px;padding:0 10px;border-radius:999px}
@@ -865,7 +865,7 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .dznode.miss .dzn{border-style:dashed;color:var(--muted)}.dznode.late .dzn{border-color:var(--rose-d);border-style:dashed}
 .dznode.fut .dzn{background:var(--bg);color:#cbbdb7;border-color:var(--line)}
 .dzmark{display:flex;align-items:center;gap:10px;margin:10px 0 0;padding:10px 12px;border-radius:16px;background:var(--rbg);border:1px solid var(--hair)}.dzmark>span{color:var(--rose-d)}.dzmark b{display:block;font-weight:500;font-size:13.5px}.dzmark small{display:block;font-size:11.5px;color:var(--muted)}
-.dzmark.ok{background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(196,146,127,.3))}.dzmark.lock{opacity:.75}
+.dzmark.ok{background:linear-gradient(90deg,rgba(255,255,255,.7),color-mix(in srgb,var(--ringg) 30%,transparent))}.dzmark.lock{opacity:.75}
 .dzba{display:flex;flex-direction:column;gap:12px}.dzbal{font-size:12.5px;color:var(--rose-d);margin:0 2px 6px}
 .dzbap{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dzbap button{aspect-ratio:4/5;border-radius:18px;border:1.5px dashed var(--hair);background:var(--card,#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--rose-d);font:inherit;overflow:hidden;padding:0}
 .dzbap button small{font-size:11.5px}.dzbap button.has{border-style:solid}.dzbap button img{width:100%;height:100%;object-fit:cover}.dzbap button:disabled{opacity:.55}
@@ -926,6 +926,7 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .vmarcos{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}.vm{font-size:11.5px;padding:5px 10px;border-radius:999px;border:1px dashed var(--line);color:var(--muted);display:inline-flex;align-items:center;gap:4px}
 .vm.ok{border:0;color:#7a5a22;background:linear-gradient(135deg,#f7e3b5,#e8c983);font-weight:600}
 .dzopt{margin-top:14px}.dzopt summary{list-style:none;cursor:pointer;color:var(--muted);font-size:13px;display:flex;gap:6px;align-items:center;justify-content:center;padding:6px}.dzopt summary::-webkit-details-marker{display:none}.dzopt[open] summary{margin-bottom:10px}
+.segsc{overflow-x:auto;scrollbar-width:none;max-width:100%}.segsc::-webkit-scrollbar{display:none}.segsc button{flex:1 0 auto!important;white-space:nowrap;padding-left:12px!important;padding-right:12px!important}
 .mitem.danger{color:#b4574f}
 .dzreply{background:linear-gradient(160deg,var(--card),var(--rbg))}
 
@@ -1056,7 +1057,7 @@ function defaultState(){
     lists:[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}],
     activeDays:{},openDays:{},quickLog:[],books:[],devo:{entries:{}}};
 }
-function migrate(s){if(s.onboarded===undefined)s.onboarded=!!(s.updatedAt||(s.name&&s.habits&&s.habits.length));const d=defaultState();for(const k in d)if(s[k]===undefined)s[k]=d[k];for(const k in d.settings)if(s.settings[k]===undefined)s.settings[k]=d.settings[k];if(!s.fin.paid)s.fin.paid={};(s.fin.entries||[]).forEach(e=>{if(e.type==='out'&&!e.cat)e.cat=guessCat(e.desc)});return s}
+function migrate(s){if(s.onboarded===undefined)s.onboarded=!!(s.updatedAt||(s.name&&s.habits&&s.habits.length));const d=defaultState();for(const k in d)if(s[k]===undefined)s[k]=d[k];for(const k in d.settings)if(s.settings[k]===undefined)s.settings[k]=d.settings[k];if(!s.fin.paid)s.fin.paid={};(s.fin.entries||[]).forEach(e=>{if(e.type==='out'&&!e.cat)e.cat=guessCat(e.desc)});try{const mw=(s.habits||[]).find(h=>h.type!=='quit'&&/\bagua\b|hidrat/.test(norm(h.name||''))&&(h.unit==='ml'&&h.qty>=1000||h.unit==='L'&&h.qty>=1));if(mw){const ml=mw.unit==='L'?mw.qty*1000:+mw.qty;if(ml&&s.settings.waterGoal!==ml)s.settings.waterGoal=ml}}catch(e){}return s}
 let state=null;
 try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 state=migrate(state&&state.v?state:defaultState());
@@ -1307,7 +1308,7 @@ S.saude=()=>{
   const t=today(),w=state.water[t]||0,g=state.settings.waterGoal,last=state.sleep[t]??state.sleep[addDays(t,-1)],ml=state.medLog[t]||{};
   const cons=eventsBetween(t,addDays(t,60)).filter(e=>e.cat==='saude').length;
   const tabs=[['geral','Geral','heart'],['ciclo','Ciclo','petal'],['agua','Água','drop'],['rem','Remédios','pill']];
-  let b=`<div class="seg" style="margin-bottom:16px">${tabs.map(([k,l,i])=>`<button class="${ui.healthTab===k?'on':''}" data-a="healthTab" data-v="${k}">${ic(i,15)} ${l}</button>`).join('')}</div>`;
+  let b=`<div class="seg segsc" style="margin-bottom:16px">${tabs.map(([k,l,i])=>`<button class="${ui.healthTab===k?'on':''}" data-a="healthTab" data-v="${k}">${ic(i,15)} ${l}</button>`).join('')}</div>`;
   if(ui.healthTab==='ciclo')return {h:titleHdr('heart','Saúde',C.health),b:b+cycleScreen()};
   b+=`<div class="hero"><div class="hmain">${ring(w/g,'var(--sage)',pctBig(Math.round(Math.min(1,w/g)*100)),'água')}<div><div class="hk g">Seu corpo hoje</div><div class="hT">${(w/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L de ${(g/1000).toLocaleString('pt-BR')} L de água</div><div class="hS">Cuidar de você também entra na rotina.</div></div></div>${stats([[fmtDur(last),'última noite'],[`${state.meds.filter(m=>ml[m.id]).length}/${state.meds.length}`,'remédios hoje'],[cons,cons===1?'consulta':'consultas']])}</div>`;
   if(ui.healthTab==='geral')b+=bodyCard()+waterCard()+sleepCard()+medsCard();
@@ -1658,6 +1659,7 @@ const F={
     if(v.id){const h=state.habits.find(x=>x.id===v.id);h.name=v.name;if(h.type==='quit')h.since=v.since;else{h.cat=v.cat;h.days=days;h.unit=un;h.qty=un?qn:0}}
     else state.habits.push(v.type==='quit'?{id:uid(),name:v.name,type:'quit',since:v.since||today(),best:0,created:today(),days:[],log:{}}:{id:uid(),name:v.name,cat:v.cat,type:'do',days,created:today(),log:{},unit:un,qty:un?qn:0});
     if(v.type!=='quit'&&'goal' in v){const hh=v.id?state.habits.find(x=>x.id===v.id):state.habits[state.habits.length-1];(state.goals||[]).forEach(g=>{if(g.hab===hh.id&&g.id!==v.goal){g.hab='';g.per=''}});const g=(state.goals||[]).find(x=>x.id===v.goal);if(g&&g.hab!==hh.id){g.base=goalCur(g);g.hab=hh.id;g.per=g.per||'mes';g.since=today()}}
+    {const hh=v.id?state.habits.find(x=>x.id===v.id):state.habits[state.habits.length-1];if(hh&&isWater(hh)&&hMl(hh)>=1000){state.settings.waterGoal=hMl(hh);waterSync(today())}}
     closeSheet();save();toast('Hábito salvo')},
   moodWhy:(v,f)=>{const t=today(),tags=new FormData(f).getAll('tg'),why=(v.why||'').trim();if(tags.length||why)state.moodNote[t]={why,tags};else delete state.moodNote[t];save();openSheet('moodCard')},
   sleep:v=>{const m=(parseInt(v.h)||0)*60+(parseInt(v.m)||0);state.sleep[v.date||today()]=m;closeSheet();save();toast('Sono registrado: '+fmtDur(m))},
@@ -2258,17 +2260,19 @@ const HINTS=[
 const FRASES=["Constância é mais bonita que perfeição.", "Um passo de cada vez ainda é caminhar.", "Feito é melhor que perfeito.", "Você não precisa dar conta de tudo hoje.", "Cuidar de si também é produtividade.", "Pequenos hábitos, grandes viradas.", "Devagar também chega.", "Hoje é um ótimo dia pra recomeçar.", "Disciplina é amor-próprio em ação.", "Seu ritmo é válido.", "Faça o simples bem feito.", "O progresso mora nos detalhes.", "Descansar faz parte do plano.", "Escolha uma coisa e faça com carinho.", "Você está construindo quem quer ser.", "Menos pressa, mais presença.", "Organizar a rotina é abrir espaço pra viver.", "Não espere motivação, crie o hábito.", "Gentileza com você mesma também conta.", "A versão que você quer ser começa hoje.", "Seja leve, mas seja firme.", "Pequenas vitórias merecem ser celebradas.", "Seu futuro agradece o que você faz agora.", "Um dia bom é feito de escolhas pequenas.", "Foco no que depende de você.", "Respira. Recomeça. Continua.", "Ordem por fora, paz por dentro.", "Sua constância vai falar por você.", "Faça por você, não pra provar nada.", "O básico bem feito transforma.", "Hoje, só o próximo passo.", "Dias imperfeitos também contam.", "Você é a prioridade da sua agenda.", "Rotina boa é rotina possível.", "Cresça no seu tempo.", "Celebre o quanto você já caminhou.", "Energia boa se cultiva todo dia.", "Seja a sua melhor companhia.", "Mais intenção, menos culpa.", "Tudo começa com um check."];
 function hsDots(el){const i=Math.round(el.scrollLeft/el.clientWidth);if(i!==ui.hsIdx){ui.hsIdx=i;el.parentNode.querySelectorAll('.hdots i').forEach((d,j)=>d.classList.toggle('on',j===i))}}
 function hTime(x,t){const v=x.log[t];if(typeof v==='number'){const d_=new Date(v);return String(d_.getHours()).padStart(2,'0')+':'+String(d_.getMinutes()).padStart(2,'0')}return x.auto==='water'&&!v?'meta batida':''}
-const isWater=h=>h.auto==='water'||(!(h.unit&&h.qty)&&/\bagua\b|hidrat/.test(norm(h.name||'')));
-const isWaterQty=h=>!!(h&&h.unit==='ml'&&h.qty&&h.auto!=='water'&&/\bagua\b|hidrat/.test(norm(h.name||'')));
-function waterGoalH(h){if(h.ml)return h.ml;const m=norm(h.name||'').match(/(\d+(?:[.,]\d+)?)\s*(ml|l|litros?)\b/);if(m){const n=parseFloat(m[1].replace(',','.'));return m[2]==='ml'?n:n*1000}return state.settings.waterGoal||2000}
+const isWaterName=h=>/\bagua\b|hidrat/.test(norm(h.name||''));
+const hMl=h=>h.unit==='ml'?+h.qty||0:h.unit==='L'?(+h.qty||0)*1000:0;
+const isWaterQty=h=>!!(h&&h.auto!=='water'&&isWaterName(h)&&hMl(h)>0&&hMl(h)<1000);
+const isWater=h=>h.auto==='water'||(isWaterName(h)&&!isWaterQty(h)&&!(h.unit&&h.unit!=='ml'&&h.unit!=='L'&&h.qty));
+function waterGoalH(h){if(h.ml)return h.ml;if(hMl(h)>=1000)return hMl(h);const m=norm(h.name||'').match(/(\d+(?:[.,]\d+)?)\s*(ml|l|litros?)\b/);if(m){const n=parseFloat(m[1].replace(',','.'));return m[2]==='ml'?n:n*1000}return state.settings.waterGoal||2000}
 function habitIcon(h){const n=norm(h.name||'');const R=[[/agua|hidrat/,'drop'],[/leit|\bler\b|livro|pagina/,'book'],[/devoc|orar|oracao|biblia|\bora\b|deus|culto/,'devo'],[/cardio|esteira|eliptic|spinning|bike|corr|caminh|pedal|nata/,'heart'],[/trein|academ|muscul|exerc|pilates|yoga|along/,'dumb'],[/skin|pele|beleza|cabelo|unha|maqui|cuidad/,'spark'],[/dorm|sono|deitar|23h|22h/,'moon'],[/acord|cedo|manha/,'sun'],[/remed|vitam|suplem|creat|whey/,'pill'],[/medit|respir|gratid|diario|journal/,'smile'],[/cafe|aliment|comer|refei|fruta|salada|marmita|lanche/,'heart'],[/estud|curso|ingles|idioma/,'book'],[/dinheiro|gasto|financ|econom/,'wallet']];const x=R.find(r=>r[0].test(n));return x?x[1]:'sprout'}
 function hTile(x,t,extra=''){const dn=hDone(x,t),sk=hStreak(x),jd=ui.justDone===x.id;const nm=esc(x.name),gt=habitGoalTxt(x,t),wt=isWater(x);
   const area=x.cat?`<span class="harea">${esc(x.cat)}</span>`:'';
   if(wt){const g=waterGoalH(x),w=state.water[t]||0,pc=Math.min(100,Math.round(w/g*100)),c=state.settings.cup||250,L=wL;
     return `<div class="htile hp hwater ${dn?'done':''} ${jd?'pop':''}" data-hid="${x.id}" data-g="${g}" data-w="${w}" role="button" tabindex="0" aria-label="${nm}: ${L(w)} de ${L(g)}. Arraste para ajustar a quantidade"><span class="hfill" style="width:${pc}%"></span><span class="hknob">${dn?ic('check',17,2.6):ic('drop',18)}</span><span class="hwv"></span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span><span class="hsub2">${area}<span class="hwq"><b>${L(w)}</b> de ${L(g)}</span></span></span><button class="hpw" data-a="water" data-n="${c}" aria-label="Somar um copo de ${L(c)}">+${c>=1000?L(c):c}</button></div>`}
   if(dn)return `<div class="htile hp done ${jd?'pop':''}" data-hid="${x.id}" role="button" tabindex="0" aria-label="${nm} concluído. Deslize para a esquerda para desfazer"><span class="hfill"></span><span class="hknob">${ic('check',17,2.6)}</span><span class="htx"><span class="hname">${nm}</span>${gt?`<span class="hgoal">${ic('target',11)} ${esc(gt)}</span>`:`<span class="hmot">${esc(habitMot(x))}</span>`}</span><span class="hmeta">${isQty(x)?`<button class="hqv dn" data-a="sheet" data-s="hQty" data-id="${x.id}">${fmtQ(hAmt(x,t),x.unit)}</button>`:hTime(x,t)}${extra}</span></div>`;
-  if(isQty(x)){const a=hAmt(x,t),q=x.qty,pc=Math.min(100,Math.round(a/q*100)),st=isWaterQty(x)&&q<=1000?q:(STEPU[x.unit]||1);
-    return `<div class="htile hp hqty" data-hid="${x.id}" role="button" tabindex="0" aria-label="${nm}: ${fmtQ(a,x.unit)} de ${fmtQ(q,x.unit)}"><span class="hfill" style="width:${pc}%"></span><span class="hknob">${ic(habitIcon(x),18)}</span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span><span class="hsub2">${area}<button class="hqv" data-a="sheet" data-s="hQty" data-id="${x.id}"><b>${fmtQ(a)}</b> de ${fmtQ(q,x.unit)}</button>${gt?`<span class="hgoal">${ic('target',11)} ${esc(gt)}</span>`:''}</span></span><button class="hplus" data-a="hQtyAdd" data-id="${x.id}" data-n="${st}" aria-label="Somar ${fmtQ(st,x.unit)}">+${fmtQ(st)}</button></div>`}
+  if(isQty(x)){const a=hAmt(x,t),q=x.qty,pc=Math.min(100,Math.round(a/q*100)),st=isWaterQty(x)?q:(STEPU[x.unit]||1);
+    return `<div class="htile hp hqty" data-hid="${x.id}" role="button" tabindex="0" aria-label="${nm}: ${fmtQ(a,x.unit)} de ${fmtQ(q,x.unit)}"><span class="hfill" style="width:${pc}%"></span><span class="hknob">${ic(habitIcon(x),18)}</span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span><span class="hsub2">${area}<button class="hqv" data-a="sheet" data-s="hQty" data-id="${x.id}"><b>${fmtQ(a)}</b> de ${fmtQ(q,x.unit)}</button>${gt?`<span class="hgoal">${ic('target',11)} ${esc(gt)}</span>`:''}</span></span><button class="hpw" data-a="hQtyAdd" data-id="${x.id}" data-n="${st}" aria-label="Somar ${fmtQ(st,x.unit)}">+${fmtQ(st)}</button></div>`}
   return `<div class="htile hp" data-hid="${x.id}" role="button" tabindex="0" aria-label="${nm}. Deslize para a direita para concluir"><span class="hfill"></span><span class="hknob">${ic(habitIcon(x),18)}</span><span class="htx"><span class="hname">${nm}${x.when?`<span class="hwhen">${x.when}</span>`:''}</span>${extra&&!sched(x,t)?'<span class="hsub">folga hoje</span>':(area||gt)?`<span class="hsub2">${area}${gt?`<span class="hgoal">${ic('target',11)} ${esc(gt)}</span>`:''}</span>`:''}</span><span class="hmeta">${sk?ic('flame',11)+' '+sk:''}</span>${/planej/.test(norm(x.name))&&on('semana')?`<button class="hgo" data-a="dpOpen">planejar ›</button>`:''}<span class="hhint" aria-hidden="true">${ic('chevR',13,2)}${ic('chevR',13,2)}</span></div>`}
 const MOTS=[[/agua|beber|hidrat/,'hidratada e brilhando'],[/trein|academia|muscula|crossfit|funcional/,'seu corpo agradece'],[/caminh|corr|cardio|bike|pedal/,'um passo de cada vez'],[/along|yoga|pilates|mobilid/,'leve por dentro e por fora'],[/devoc|oracao|orar|biblia|palavra|deus|culto/,'alma em paz'],[/leitura|\bler\b|livro/,'mente alimentada'],[/medit|respira/,'respira, você está aqui'],[/skin|pele|cuidado/,'pele feliz, eu também'],[/dorm|sono|deitar/,'descanso também é produtivo'],[/celular|tela|rede/,'presença vale mais'],[/fruta|salada|verdura|legume|aliment|marmita|refeic/,'nutrindo quem você é'],[/vitamin|suplement|remedio|creatina/,'cuidado em dia'],[/estud|curso|aula|ingles|idioma/,'um pouquinho todo dia'],[/planej|organiz|agenda/,'dia com direção'],[/escrev|diario|journal|gratid/,'gratidão anotada'],[/limp|arrum|casa|louca/,'casa leve, mente leve'],[/financ|gasto|dinheiro|econom/,'futuro agradece']];
 const MOTG=['feito é melhor que perfeito','orgulho de você','constância é o segredo','mais um voto pra quem você é'];
@@ -3179,7 +3183,7 @@ navOf.desafioAdmin='desafio';
   if(['desafio','desafioAdmin'].includes(ui.screen))nav.querySelectorAll('button.on').forEach(x=>{if(x.dataset.to!=='desafio')x.classList.remove('on')});
   if(!show&&DZ.c&&!nav.querySelector('button.dsk[data-to="desafio"]')){const sep=nav.querySelector('.side-sep');if(sep){const b=document.createElement('button');b.className='dsk'+(['desafio','desafioAdmin'].includes(ui.screen)?' on':'');b.dataset.a='go';b.dataset.to='desafio';b.innerHTML=ic('trophy',20)+'<span>Desafio</span>';sep.after(b)}}
 }catch(e){}}}
-{const _menu=S.menu;S.menu=()=>{const r=_menu();if(DZ.c){const k=`<button class="mitem" data-a="go" data-to="desafio"><div class="tic" style="background:${C.rose};width:40px;height:40px">${ic('trophy',19)}</div><div class="grow"><b style="font-weight:500">Desafio ${esc(DZ.c.title)}</b><div class="small muted">Missões, comunidade e ranking</div></div>${ic('chevR',18)}</button>`,i=r.b.indexOf('<button class="mitem"');r.b=i>=0?r.b.slice(0,i)+k+r.b.slice(i):k+r.b}return r}}
+{const _menu=S.menu;S.menu=()=>{const r=_menu();if(DZ.c){const k=`<button class="mitem" data-a="go" data-to="desafio"><div class="tic" style="background:${C.rose};width:40px;height:40px">${ic('trophy',19)}</div><div class="grow"><b style="font-weight:500">Desafio ${esc(DZ.c.title)}</b><div class="small muted">${DZ.c.private?'Missões, varal e jornada':'Missões, comunidade e ranking'}</div></div>${ic('chevR',18)}</button>`,i=r.b.indexOf('<button class="mitem"');r.b=i>=0?r.b.slice(0,i)+k+r.b.slice(i):k+r.b}return r}}
 
 /* =========================================================
    DESAFIO · JORNADA (fases, missões automáticas, resgate,
