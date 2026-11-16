@@ -938,6 +938,22 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 
 .tsep{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:10px 0 2px}
 .tkst{color:#b8892e}
+
+.cyintro{text-align:center;padding:26px 20px}.cyintro h3{font-family:var(--serif);font-size:26px;margin:8px 0}.cyintro p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 16px}
+.cyflower{width:64px;height:64px;border-radius:50%;margin:0 auto;display:grid;place-items:center;background:var(--rbg);color:var(--rose-d)}
+.cyhero{text-align:center}.cyrw{position:relative;width:190px;height:190px;margin:0 auto}.cyring{width:100%;height:100%}
+.cyc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}.cyc small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.cyc b{font-family:var(--serif);font-weight:400;font-size:48px;line-height:1}.cyc span{font-family:var(--script);font-size:20px;color:var(--rose-d)}
+.cyvibe{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:color-mix(in srgb,var(--pc) 22%,transparent);color:var(--ink);margin:6px 0 8px}
+.cynext{font-size:15px;margin-bottom:2px}.cylate{display:flex;gap:8px;text-align:left;font-size:12.5px;line-height:1.5;margin-top:12px;padding:10px 12px;border-radius:14px;background:var(--rbg)}
+.cystrip{display:flex;gap:6px;overflow-x:auto;padding:12px 2px 4px;scrollbar-width:none;scroll-behavior:smooth}.cystrip::-webkit-scrollbar{display:none}
+.cyd{flex:none;width:42px;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:6px 0 4px;display:flex;flex-direction:column;align-items:center;font:inherit;color:var(--ink)}
+.cyd small{font-size:9.5px;color:var(--muted)}.cyd b{font-weight:500;font-size:15px}.cyd i{font-style:normal;height:10px;line-height:8px;color:var(--rose-d)}
+.cyd.per{background:#d9708f;border-color:#d9708f;color:#fff}.cyd.per small,.cyd.per i{color:#fff}.cyd.pred{border:1.5px dashed #d9708f}.cyd.fer{box-shadow:inset 0 -3px 0 #e3b75a}.cyd.tod{outline:2px solid var(--deep);outline-offset:1px}
+.cyleg{display:flex;gap:14px;font-size:11px;color:var(--muted);margin:6px 4px 4px;flex-wrap:wrap}.cyleg span{display:flex;align-items:center;gap:5px}.cyleg i{width:10px;height:10px;border-radius:4px;display:inline-block}.cyleg .per{background:#d9708f}.cyleg .pred{border:1.5px dashed #d9708f}.cyleg .fer{background:#e3b75a}
+.cytips{border-left:4px solid var(--pc)}.cytip{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.cytip:first-child{border-top:0;padding-top:2px}.cytip>span{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--pc) 25%,transparent);color:var(--ink)}
+.cytip b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-d);font-weight:600}.cytip p{margin:2px 0 0;font-size:13.5px;line-height:1.55}
+.cyev{font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.cydot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:2px}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -977,6 +993,7 @@ const I={
 clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
 settings:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
 chevU:'<path d="M6 15l6-6 6 6"/>',
+petal:'<path d="M12 4c2.2 2.2 2.2 5 0 7.2C9.8 9 9.8 6.2 12 4zM12 20c-2.2-2.2-2.2-5 0-7.2 2.2 2.2 2.2 5 0 7.2zM4 12c2.2-2.2 5-2.2 7.2 0-2.2 2.2-5 2.2-7.2 0zM20 12c-2.2 2.2-5 2.2-7.2 0 2.2-2.2 5-2.2 7.2 0z"/>',
 sort:'<path d="M7 4v16M3.5 7.5 7 4l3.5 3.5M17 20V4M13.5 16.5 17 20l3.5-3.5"/>',
 link:'<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/>',
 play:'<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/>',
@@ -1163,7 +1180,7 @@ S.home=()=>{
   const slM=on('semana')&&mStyle()==='card'&&_mt.length?`<div class="hsl"><div class="hk">metas da semana</div><div class="mrings dk">${_mt.map(({f,g})=>{const pc=g?Math.round(g.pct*100):f.done?100:0;return `<div class="mring">${ring(pc/100,'#f3e2da',pc>=100?ic('check',18,2.6):pctBig(pc),'',62)}<span>${esc(f.text)}</span></div>`}).join('')}</div></div>`:'';
   const SL=[sl1,slM,on('habitos')&&sl2,on('saude')&&sl3,on('financas')&&sl4].filter(Boolean);if((ui.hsIdx||0)>=SL.length)ui.hsIdx=0;
   const hero=`<div class="gcard"><span class="deco" aria-hidden="true"></span><div class="hslider" id="hsl" onscroll="hsDots(this)">${SL.join('')}</div>${SL.length>1?`<div class="hdots">${SL.map((_,i)=>`<i class="${(ui.hsIdx||0)===i?'on':''}"></i>`).join('')}</div>`:''}</div>
-  <div class="hchips"><span class="chip">${ic('flame',13)} ${st} ${st===1?'dia':'dias'} de constância</span>${on('saude')?`<button class="chip" data-a="water" data-n="${state.settings.cup||250}">${ic('drop',13)} ${(water/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L de água <b style="color:var(--rose-d);font-weight:500">+</b></button>`:''}${on('humor')?`<button class="chip" data-a="sheet" data-s="${mv?'moodWhy':'moodPick'}">${mv?faces[mv-1]+' '+(mn&&mn.tags&&mn.tags.length?esc(mn.tags.slice(0,2).join(' · ')):'humor de hoje'):'como você está?'}</button>`:''}${bizOn()&&biz().home!==false?`<button class="chip" data-a="sheet" data-s="bizConv">${ic('spark',13)} ${bizWeek()} de ${biz().conv} conversas <b style="color:var(--rose-d);font-weight:500">+</b></button>`:''}</div>`;
+  <div class="hchips"><span class="chip">${ic('flame',13)} ${st} ${st===1?'dia':'dias'} de constância</span>${on('saude')?`<button class="chip" data-a="water" data-n="${state.settings.cup||250}">${ic('drop',13)} ${(water/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L de água <b style="color:var(--rose-d);font-weight:500">+</b></button>`:''}${on('humor')?`<button class="chip" data-a="sheet" data-s="${mv?'moodWhy':'moodPick'}">${mv?faces[mv-1]+' '+(mn&&mn.tags&&mn.tags.length?esc(mn.tags.slice(0,2).join(' · ')):'humor de hoje'):'como você está?'}</button>`:''}${cyChip()}${bizOn()&&biz().home!==false?`<button class="chip" data-a="sheet" data-s="bizConv">${ic('spark',13)} ${bizWeek()} de ${biz().conv} conversas <b style="color:var(--rose-d);font-weight:500">+</b></button>`:''}</div>`;
   const mk=state.lists.length;
   const area=(icon,bg,name,to)=>(['tarefas','relatorios'].includes(to)||on(to))?`<button class="ar" data-a="go" data-to="${to}"><div class="tic" style="background:${bg}">${ic(icon,20)}</div><span>${name}</span></button>`:'';
   const areas=`<div class="arow" style="margin-top:18px">${area('task',C.sky,'Tarefas','tarefas')}${area('wallet',C.sand,'Finanças','financas')}${area('dumb',C.rose,'Treinos','treinos')}${area('heart',C.health,'Saúde','saude')}${area('list',C.lav,'Listas','listas')}${area('book',C.sand,'Leitura','leitura')}${area('devo','#f3ead2','Devocional','devocional')}${area('target',C.rose,'Metas','metas')}${area('chart',C.rose,'Relatórios','relatorios')}</div>`;
@@ -1289,8 +1306,9 @@ function medsCard(){
 S.saude=()=>{
   const t=today(),w=state.water[t]||0,g=state.settings.waterGoal,last=state.sleep[t]??state.sleep[addDays(t,-1)],ml=state.medLog[t]||{};
   const cons=eventsBetween(t,addDays(t,60)).filter(e=>e.cat==='saude').length;
-  const tabs=[['geral','Visão geral','heart'],['agua','Água e sono','drop'],['rem','Remédios','pill']];
+  const tabs=[['geral','Geral','heart'],['ciclo','Ciclo','petal'],['agua','Água','drop'],['rem','Remédios','pill']];
   let b=`<div class="seg" style="margin-bottom:16px">${tabs.map(([k,l,i])=>`<button class="${ui.healthTab===k?'on':''}" data-a="healthTab" data-v="${k}">${ic(i,15)} ${l}</button>`).join('')}</div>`;
+  if(ui.healthTab==='ciclo')return {h:titleHdr('heart','Saúde',C.health),b:b+cycleScreen()};
   b+=`<div class="hero"><div class="hmain">${ring(w/g,'var(--sage)',pctBig(Math.round(Math.min(1,w/g)*100)),'água')}<div><div class="hk g">Seu corpo hoje</div><div class="hT">${(w/1000).toLocaleString('pt-BR',{maximumFractionDigits:2})} L de ${(g/1000).toLocaleString('pt-BR')} L de água</div><div class="hS">Cuidar de você também entra na rotina.</div></div></div>${stats([[fmtDur(last),'última noite'],[`${state.meds.filter(m=>ml[m.id]).length}/${state.meds.length}`,'remédios hoje'],[cons,cons===1?'consulta':'consultas']])}</div>`;
   if(ui.healthTab==='geral')b+=bodyCard()+waterCard()+sleepCard()+medsCard();
   else if(ui.healthTab==='agua'){
@@ -2481,6 +2499,83 @@ Object.assign(A,{gymLogDel:d=>{const g=gym(),s_=snap();g.logs=g.logs.filter(x=>x
 
 
 
+/* ---------- ciclo menstrual ---------- */
+const CYP={m:{n:'menstrual',v:'recolhimento',c:'#d9708f'},f:{n:'folicular',v:'energia subindo',c:'#f0bfa0'},o:{n:'ovulatória',v:'seu pico',c:'#e3b75a'},l:{n:'lútea',v:'desacelerar com carinho',c:'#bfa0d6'}};
+const CYTIPS={
+ m:[['prato','Capriche no ferro (feijão, lentilha, carne, folhas escuras) com uma fonte de vitamina C junto, que ajuda a absorver.'],['treino','Treine se tiver vontade: a diferença de desempenho entre as fases é pequena. Com cólica, caminhada e mobilidade já contam.'],['cuidado','Calor na barriga, água e descanso. Cólica que te tira da rotina merece uma consulta com a ginecologista.']],
+ f:[['prato','A fome costuma ficar mais estável: fase ótima pra firmar o plano e testar receitas novas.'],['treino','Se a energia vier, aproveite pra progredir carga e encarar os treinos mais puxados.'],['cuidado','Boa hora pra começar projetos, gravar conteúdo e ter conversas importantes.']],
+ o:[['prato','Proteína em todas as refeições e água em dia seguram a energia lá em cima.'],['treino','Muitas mulheres se sentem no auge. Aproveite, com aquecimento bem feito.'],['cuidado','Janela fértil estimada. O GO! não é método contraceptivo: se não quer engravidar, use um.']],
+ l:[['prato','Fome e vontade de doce costumam aumentar. Deixe lanches com proteína e fibra prontos e um docinho já previsto, sem culpa.'],['treino','Se render menos, ajuste o volume em vez de pular o treino. Constância vale mais que intensidade.'],['cuidado','Retenção de líquido pode subir a balança por alguns dias: é água, não gordura. Compare pesagens no mesmo ponto do ciclo.']]};
+const CYSYM=['cólica','inchaço','dor de cabeça','seios sensíveis','acne','vontade de doce','mais fome','cansaço','insônia','irritada','ansiosa','sensível'];
+const CYFLOW=[['e','escape'],['l','leve'],['m','médio'],['i','intenso']];
+function cyc(){const c=state.cycle=state.cycle||{};c.cfg=c.cfg||{len:28,per:5,horm:false,chip:true};c.p=c.p||[];c.d=c.d||{};return c}
+const cyOn=()=>!!(state.cycle&&state.cycle.on&&state.cycle.p&&state.cycle.p.length);
+function cyStats(){const c=cyc(),P=c.p.slice().sort((a,b)=>a.s<b.s?-1:1),L=[];for(let i=1;i<P.length;i++){const g=daysBetween(P[i-1].s,P[i].s);if(g>=15&&g<=60)L.push(g)}
+  const lastL=L.slice(-6),len=lastL.length?Math.round(lastL.reduce((a,b)=>a+b,0)/lastL.length):c.cfg.len,durs=P.filter(p=>p.e).map(p=>daysBetween(p.s,p.e)+1).filter(x=>x>0&&x<12).slice(-6),per=durs.length?Math.round(durs.reduce((a,b)=>a+b,0)/durs.length):c.cfg.per;
+  const var_=lastL.length>=2?Math.max(...lastL)-Math.min(...lastL):0;return {P,L,len,per,var_}}
+function cyInfo(d){d=d||today();const c=cyc(),{P,len,per,var_}=cyStats(),past=P.filter(p=>p.s<=d);if(!past.length)return null;const last=past[past.length-1],day=daysBetween(last.s,d)+1,open=!last.e&&daysBetween(last.s,today())<12;
+  const ov=len-14,ph=c.cfg.horm?null:(day<=(last.e?daysBetween(last.s,last.e)+1:open?Math.max(per,day):per)?'m':day<ov-1?'f':day<=ov+1?'o':'l');
+  const next=addDays(last.s,len),late=daysBetween(next,d),fert=c.cfg.horm?null:[addDays(last.s,ov-6),addDays(last.s,ov)];
+  return {last,day,len,per,ph:day>len+0&&!c.cfg.horm?'l':ph,next,late,fert,open,var_,horm:c.cfg.horm}}
+function cyPhaseOf(d){const i=cyInfo(d);return i&&!i.horm&&i.day<=i.len+10?i.ph:null}
+function cyRing(i){const R=74,C=2*Math.PI*R,len=Math.max(i.len,i.day),ov=i.len-14,segs=i.horm?[['m',i.per],['x',len-i.per]]:[['m',i.per],['f',Math.max(0,ov-2-i.per)],['o',3],['l',Math.max(0,len-ov-1)]];let off=0;
+  const arcs=segs.map(([k,n])=>{const L=n/len*C,a=`<circle r="${R}" cx="90" cy="90" fill="none" stroke="${k==='x'?'var(--line)':CYP[k].c}" stroke-width="14" stroke-dasharray="${Math.max(0,L-3)} ${C}" stroke-dashoffset="${-off}" stroke-linecap="round" opacity="${k==='x'?1:.9}"/>`;off+=L;return a}).join('');
+  const ang=((Math.min(i.day,len)-.5)/len)*2*Math.PI-Math.PI/2,mx=90+R*Math.cos(ang),my=90+R*Math.sin(ang);
+  return `<svg class="cyring" viewBox="0 0 180 180"><g transform="rotate(-90 90 90)">${arcs}</g><circle cx="${mx}" cy="${my}" r="11" fill="#fff" stroke="var(--deep)" stroke-width="3"/><circle cx="${mx}" cy="${my}" r="4" fill="var(--deep)"/></svg>`}
+function cyStrip(i){const t=today(),c=cyc(),from=addDays(t,-10),out=[];for(let k=0;k<28;k++){const d=addDays(from,k),log=c.d[d],per=c.p.some(p=>d>=p.s&&d<=(p.e||(p.s===i.last.s&&i.open?t:addDays(p.s,i.per-1))))&&d<=t,pred=!per&&d>t&&d>=i.next&&d<addDays(i.next,i.per),fer=i.fert&&d>=i.fert[0]&&d<=i.fert[1]&&!per,dt=parseISO(d);
+    out.push(`<button class="cyd ${d===t?'tod':''} ${per?'per':''} ${pred?'pred':''} ${fer?'fer':''}" data-a="sheet" data-s="cyLog" data-d="${d}"><small>${'DSTQQSS'[dt.getDay()]}</small><b>${dt.getDate()}</b><i>${log&&log.sym&&log.sym.length?'•':''}</i></button>`)}
+  return `<div class="cystrip" id="cystrip">${out.join('')}</div><div class="cyleg"><span><i class="per"></i>menstruação</span><span><i class="pred"></i>previsão</span>${i.horm?'':'<span><i class="fer"></i>fértil (estimativa)</span>'}</div>`}
+function cyPatterns(){const c=cyc(),{P}=cyStats();if(P.length<2)return '';const by={};let en={m:[],f:[],o:[],l:[]};
+  Object.entries(c.d).forEach(([d,v])=>{const past=P.filter(p=>p.s<=d);if(!past.length)return;const day=daysBetween(past[past.length-1].s,d)+1;if(day>45)return;(v.sym||[]).forEach(s=>{(by[s]=by[s]||[]).push(day)});const ph=cyPhaseOf(d);if(ph&&v.en)en[ph].push(v.en)});
+  const L=Object.entries(by).filter(([,a])=>a.length>=3).sort((a,b)=>b[1].length-a[1].length).slice(0,4).map(([s,a])=>{a.sort((x,y)=>x-y);const lo=a[Math.floor(a.length*.2)],hi=a[Math.floor(a.length*.8)];return `<div class="row"><div class="grow rt">${esc(s)}<div class="small muted">costuma aparecer ${lo===hi?'no dia '+lo:`entre os dias ${lo} e ${hi}`} do ciclo</div></div><span class="small muted">${a.length}x</span></div>`});
+  const avg=k=>en[k].length>=2?en[k].reduce((a,b)=>a+b,0)/en[k].length:null,best=Object.keys(en).filter(k=>avg(k)!=null).sort((a,b)=>avg(b)-avg(a))[0];
+  if(!L.length&&!best)return '';
+  return `<div class="card"><div class="cardHead"><h4>${ic('spark',15)} O seu padrão</h4></div><div class="small muted" style="margin:2px 0 6px;line-height:1.5">Os estudos mostram que cada mulher reage diferente ao ciclo. Por isso o GO! aprende com os seus registros.</div>${L.join('')}${best?`<div class="small" style="margin-top:10px">${ic('flame',12)} Sua energia costuma ser mais alta na fase <b>${CYP[best].n}</b>.</div>`:''}</div>`}
+function cycleScreen(){const c=cyc();if(!cyOn())return `<div class="card cyintro"><div class="cyflower">${ic('petal',30)}</div><h3>seu ciclo, do seu jeito</h3><p>Acompanhe a menstruação, entenda em que fase você está e veja como isso conversa com a sua fome, o seu treino, o seu humor e a balança. Tudo fica só no seu GO!.</p><button class="btn primary full" data-a="sheet" data-s="cySetup">Começar</button></div>`;
+  const i=cyInfo(),t=today();let b='';
+  const ph=i.ph&&!i.horm?CYP[i.ph]:null,lateTxt=!i.horm&&i.late>0&&!i.open?`<div class="cylate">${ic('clock',13)} Atraso de ${i.late} ${i.late===1?'dia':'dias'}. Estresse, mudanças no peso, treino intenso e outras causas podem mexer no ciclo. Se passar de uma semana, vale um teste ou uma conversa com a sua ginecologista.</div>`:'';
+  b+=`<div class="card cyhero"><div class="cyrw">${cyRing(i)}<div class="cyc"><small>dia</small><b>${i.day}</b><span>${ph?ph.n:i.horm?'do ciclo':''}</span></div></div>
+   <div class="cyhx">${ph?`<div class="cyvibe" style="--pc:${ph.c}">${ph.v}</div>`:''}<div class="cynext">${i.open?`Menstruação: dia ${i.day}`:i.late>0?`Menstruação prevista para ${fmtD(i.next)}`:`Próxima menstruação em <b>~${-i.late} ${-i.late===1?'dia':'dias'}</b> · ${fmtD(i.next)}`}</div>${i.fert&&!i.open&&t<=i.fert[1]?`<div class="small muted">janela fértil estimada: ${fmtD(i.fert[0])} a ${fmtD(i.fert[1])}</div>`:''}${i.var_>7?`<div class="small muted">seus ciclos variam ${i.var_} dias, então as previsões são aproximadas</div>`:''}</div>
+   <div class="btnrow" style="margin-top:12px">${i.open?`<button class="btn primary" data-a="cyEnd">${ic('check',15)} Terminou</button>`:`<button class="btn primary" data-a="cyStart">${ic('drop',15)} Menstruação veio</button>`}<button class="btn ghost" data-a="sheet" data-s="cyLog" data-d="${t}">Como estou hoje</button></div>${lateTxt}</div>`;
+  b+=cyStrip(i);
+  if(ph){const tips=CYTIPS[i.ph];b+=`<h2 class="sec">fase ${ph.n}</h2><div class="card cytips" style="--pc:${ph.c}">${tips.map(([k,txt])=>`<div class="cytip"><span>${ic(k==='prato'?'sprout':k==='treino'?'dumb':'heart',15)}</span><div><b>${k==='prato'?'no prato':k==='treino'?'no treino':'autocuidado'}</b><p>${txt}</p></div></div>`).join('')}
+    ${i.ph==='l'?`<div class="cyev">${ic('book',12)} O metabolismo de repouso tende a subir um pouco na fase lútea, um efeito pequeno (revisão de 26 estudos, Benton et al., 2020). ${i.len-i.day<=6?'Para os sintomas de TPM, o cálcio tem o melhor respaldo entre os suplementos: num ensaio com 466 mulheres reduziu os sintomas (Thys-Jacobs et al., 1998). Converse com a sua nutri ou médica antes de suplementar.':''}</div>`:''}
+    ${i.ph==='m'||i.ph==='f'?`<div class="cyev">${ic('book',12)} Uma meta-análise de 78 estudos achou diferença trivial de desempenho entre as fases e recomenda olhar como você responde (McNulty et al., 2020). Seu registro de energia mostra isso.</div>`:''}</div>`}
+  else if(i.horm)b+=`<div class="card"><div class="small" style="line-height:1.55">Com anticoncepcional hormonal, o sangramento da pausa não é uma menstruação natural e não há fases ou ovulação para prever. O GO! acompanha os dias de sangramento e os seus sintomas.</div></div>`;
+  b+=cyPatterns();
+  const {P}=cyStats(),hist=P.slice().reverse().slice(0,6);
+  b+=`<div class="card"><div class="cardHead"><h4>Histórico</h4><button class="lnk" data-a="sheet" data-s="cySetup">ajustes</button></div>${hist.map((p,k)=>{const nx=P[P.length-1-k+1],len=nx?daysBetween(p.s,nx.s):null;return `<div class="row"><div class="grow rt">${fmtD(p.s)}${p.e?' a '+fmtD(p.e):''}<div class="small muted">${p.e?(daysBetween(p.s,p.e)+1)+' dias de menstruação':'em andamento'}${len?' · ciclo de '+len+' dias':''}</div></div><button class="ib sm" data-a="sheet" data-s="cyPer" data-s2="${p.s}">${ic('edit',15)}</button></div>`}).join('')}<button class="btn soft full" style="margin-top:10px" data-a="sheet" data-s="cyPer">${ic('plus',14)} Adicionar menstruação passada</button></div>
+  <div class="small muted" style="text-align:center;margin:10px 20px 4px;line-height:1.5">${ic('lock',11)} Só você vê. Previsões são estimativas e não servem como método contraceptivo.</div>`;
+  setTimeout(()=>{const s=document.getElementById('cystrip');if(s)s.scrollLeft=Math.max(0,8*48-s.clientWidth/2+24)},30);
+  return b}
+SH.cySetup=()=>{const c=cyc(),last=c.p.length?c.p.slice().sort((a,b)=>a.s<b.s?-1:1).pop():null;return `<h3>${cyOn()?'ajustes do ciclo':'vamos começar'}</h3><form data-f="cySetup">${cyOn()?'':fld('Quando começou a sua última menstruação?',`<input type="date" name="s" required max="${today()}" value="${last?last.s:''}">`)}<div class="two">${fld('Ciclo costuma ter',`<input name="len" inputmode="numeric" value="${c.cfg.len}"> `)}${fld('Menstruação dura',`<input name="per" inputmode="numeric" value="${c.cfg.per}">`)}</div><div class="small muted" style="margin:-6px 0 12px">em dias · depois de 2 ciclos o GO! calcula sozinho a partir dos seus registros</div>
+  <label class="dztog"><input type="checkbox" name="horm" ${c.cfg.horm?'checked':''}><span><b>Uso anticoncepcional hormonal</b><small>Pílula, injeção, adesivo, anel ou DIU hormonal. Aí o GO! não prevê fases nem ovulação.</small></span></label>
+  <label class="dztog"><input type="checkbox" name="chip" ${c.cfg.chip!==false?'checked':''}><span><b>Mostrar na tela inicial</b><small>Uma bolinha discreta com o dia e a fase.</small></span></label><button class="btn primary full">Salvar</button></form>${cyOn()?`<button class="btn full" style="margin-top:8px;background:none;color:var(--muted);font-size:13px" data-a="cyOff">Desligar o acompanhamento</button>`:''}`};
+SH.cyLog=o=>{const d=o.d||today(),c=cyc(),v=c.d[d]||{},i=cyInfo(d),ph=i&&i.ph&&!i.horm?CYP[i.ph]:null,isPer=c.p.some(p=>d>=p.s&&d<=(p.e||addDays(p.s,(i?i.per:5)-1)));
+  const chip=(name,val,on,lbl,type='checkbox')=>`<label class="pchip ${on?'on':''}"><input type="${type}" name="${name}" value="${val}" ${on?'checked':''} style="display:none" onchange="${type==='radio'?`this.closest('.pchips').querySelectorAll('.pchip').forEach(e=>e.classList.toggle('on',e.contains(this)&&this.checked))`:`this.parentNode.classList.toggle('on',this.checked)`}">${lbl}</label>`;
+  return `<h3>${d===today()?'como estou hoje':dateLabel(d).toLowerCase()}</h3><div class="small muted" style="margin:-6px 0 14px">${i?`dia ${i.day} do ciclo${ph?' · fase '+ph.n:''}`:''}</div><form data-f="cyLog">${hid('d',d)}
+  <div class="fld"><span>Fluxo</span><div class="pchips">${chip('flow','',!v.flow,'nenhum','radio')}${CYFLOW.map(([k,l])=>chip('flow',k,v.flow===k,l,'radio')).join('')}</div></div>
+  <div class="fld"><span>Sintomas</span><div class="pchips">${CYSYM.map(s=>chip('sym',s,(v.sym||[]).includes(s),s)).join('')}</div></div>
+  <div class="fld"><span>Energia</span><div class="pchips">${[[1,'baixa'],[2,'ok'],[3,'alta']].map(([k,l])=>chip('en',k,v.en==k,l,'radio')).join('')}</div></div>
+  ${fld('Nota (opcional)',`<input name="note" maxlength="120" value="${esc(v.note||'')}">`)}<button class="btn primary full">Salvar</button></form>`};
+SH.cyPer=o=>{const c=cyc(),p=o.s2?c.p.find(x=>x.s===o.s2):null;return `<h3>${p?'editar menstruação':'menstruação passada'}</h3><form data-f="cyPer">${hid('old',p?p.s:'')}<div class="two">${fld('Começou',`<input type="date" name="s" required max="${today()}" value="${p?p.s:''}">`)}${fld('Terminou',`<input type="date" name="e" max="${today()}" value="${p&&p.e?p.e:''}">`)}</div><button class="btn primary full">Salvar</button></form>${p?`<button class="btn ghost full" style="margin-top:8px" data-a="cyPerDel" data-s2="${p.s}">Apagar</button>`:''}`};
+Object.assign(F,{
+ cySetup:v=>{const c=cyc();c.cfg.len=Math.max(18,Math.min(60,parseInt(v.len)||28));c.cfg.per=Math.max(1,Math.min(12,parseInt(v.per)||5));c.cfg.horm=!!v.horm;c.cfg.chip=!!v.chip;if(v.s&&!c.p.some(p=>p.s===v.s)){c.p.push({s:v.s,e:daysBetween(v.s,today())>=c.cfg.per?addDays(v.s,c.cfg.per-1):null})}c.on=true;closeSheet();ui.healthTab='ciclo';ui.screen='saude';save();toast('Ciclo configurado 🌸')},
+ cyLog:(v,f)=>{const c=cyc(),d=v.d,sym=new FormData(f).getAll('sym').filter(Boolean),en=parseInt(v.en)||0,rec={};if(v.flow)rec.flow=v.flow;if(sym.length)rec.sym=sym;if(en)rec.en=en;if((v.note||'').trim())rec.note=v.note.trim().slice(0,120);
+   if(Object.keys(rec).length)c.d[d]=rec;else delete c.d[d];
+   if(v.flow&&v.flow!=='e'&&!c.p.some(p=>d>=p.s&&d<=(p.e||addDays(p.s,11)))){const prev=c.p.find(p=>p.e&&daysBetween(p.e,d)===1);if(prev)prev.e=d;else c.p.push({s:d,e:d<today()?d:null})}
+   closeSheet();save();toast('Anotado 🌸')},
+ cyPer:v=>{const c=cyc();if(!v.s)return;if(v.e&&v.e<v.s){toast('O fim vem depois do início');return}c.p=c.p.filter(p=>p.s!==v.old&&p.s!==v.s);c.p.push({s:v.s,e:v.e||null});c.on=true;closeSheet();save();toast('Salvo')}});
+Object.assign(A,{
+ cyStart:()=>{const c=cyc(),t=today();const o=c.p.find(p=>!p.e);if(o)o.e=addDays(t,-1);if(!c.p.some(p=>p.s===t))c.p.push({s:t,e:null});c.d[t]=Object.assign({},c.d[t],{flow:(c.d[t]&&c.d[t].flow)||'m'});save();toast('Anotado. Se cuida hoje 🌸');openSheet('cyLog',{d:t})},
+ cyEnd:()=>{const c=cyc(),o=c.p.filter(p=>!p.e).pop();if(o){o.e=today();save();toast(`Menstruação de ${daysBetween(o.s,o.e)+1} dias registrada`)}},
+ cyPerDel:d=>{const c=cyc(),s_=snap();c.p=c.p.filter(p=>p.s!==d.s2);if(!c.p.length)c.on=false;closeSheet();save();toast('Apagado',s_)},
+ cyOff:()=>{cyc().on=false;closeSheet();save()},
+ cyGo:()=>{ui.screen='saude';ui.healthTab='ciclo';render();scrollTo(0,0)}});
+function cyChip(){if(!cyOn()||cyc().cfg.chip===false)return '';const i=cyInfo();if(!i)return '';const ph=i.ph&&!i.horm?CYP[i.ph]:null;
+  const txt=i.open?`menstruação · dia ${i.day}`:!i.horm&&i.late>0?`atraso de ${i.late}d`:-i.late<=3&&-i.late>=0?`menstruação em ~${-i.late}d`:`dia ${i.day}${ph?' · '+ph.n:''}`;
+  return `<button class="chip" data-a="cyGo"><i class="cydot" style="background:${ph?ph.c:'var(--rose)'}"></i>${txt}</button>`}
+
 /* ---------- nutri em movimento: conversas e vendas ---------- */
 const BIZDEF={goal:3000,conv:5,plans:[['Start',350],['Prime',680],['Elite',1350]]};
 function biz(){const b=state.biz=state.biz||{};b.goal=b.goal||BIZDEF.goal;b.conv=b.conv||BIZDEF.conv;b.plans=b.plans||BIZDEF.plans.map(x=>x.slice());b.c=b.c||{};b.sales=b.sales||[];return b}
@@ -2524,7 +2619,7 @@ function bodyCard(inDz){const {ws,cms,start,cur,goal,until}=bodyData();
   return `<div class="card bodyc"><div class="cardHead"><h4>${ic('target',15)} Minha meta</h4><button class="lnk" data-a="sheet" data-s="bodyGoal">editar</button></div>
   <div class="bnums"><div><b>${cur?kgF(cur.kg):'–'}</b><span>agora</span></div><div><b>${lost>0?'−'+kgF(lost):kgF(0)}</b><span>desde ${start?fmtD(start.d):'o início'}</span></div><div><b>${goal?kgF(goal):'–'}</b><span>meta</span></div>${cm1?`<div><b>${cm1[1]}${dcm>0?`<i> −${dcm}</i>`:''}</b><span>cintura</span></div>`:''}</div>
   ${goal?`<div class="bar bbar"><i style="width:${pc*100}%"></i></div><div class="small muted" style="margin:6px 0 2px">${Math.round(pc*100)}% do caminho${cur&&goal&&cur.kg>goal?` · faltam ${kgF(cur.kg-goal)} kg`:''}</div>`:''}
-  ${sp}${pace}<div class="btnrow" style="margin-top:12px"><button class="btn primary" data-a="sheet" data-s="bodyW">${ic('plus',15)} Pesagem</button>${ws.length?`<button class="btn ghost" data-a="sheet" data-s="bodyHist">Histórico</button>`:''}</div>
+  ${sp}${pace}${(()=>{const p=cyOn()?cyPhaseOf(today()):null;return p==='l'||p==='m'?`<div class="bpace">${ic('petal',13)} <span>Fase ${CYP[p].n}: a retenção de líquido pode subir a balança por uns dias. Compare com pesagens do mesmo ponto do ciclo.</span></div>`:''})()}<div class="btnrow" style="margin-top:12px"><button class="btn primary" data-a="sheet" data-s="bodyW">${ic('plus',15)} Pesagem</button>${ws.length?`<button class="btn ghost" data-a="sheet" data-s="bodyHist">Histórico</button>`:''}</div>
   <div class="small muted" style="margin-top:8px">${ic('lock',11)} Só você vê. A balança é um dado, não uma sentença.</div></div>`}
 SH.bodyW=o=>{const {cur}=bodyData(),d=o.d||today();return `<h3>pesagem</h3><div class="small muted" style="margin:-6px 0 14px;line-height:1.5">Pese em jejum, depois do banheiro, sempre no mesmo dia da semana. Oscilar 0,5 a 1 kg de um dia pro outro é normal (água e intestino).</div>
   <form data-f="bodyW"><div class="two">${fld('Peso (kg)',`<input name="kg" inputmode="decimal" required placeholder="${cur?kgF(cur.kg):'65,5'}" autofocus>`)}${fld('Cintura (cm)',`<input name="cm" inputmode="decimal" placeholder="opcional">`)}</div>${fld('Data',`<input type="date" name="d" value="${d}" max="${today()}">`)}<button class="btn primary full">Salvar</button></form>`};
@@ -2687,13 +2782,15 @@ function moodMsg(d){const mv=state.mood[d]||3,n=state.moodNote[d]||{tags:[],why:
   else if(lvl==='lo')m=tg?MMSG[tg].lo:MMSG._.lo;
   else m=tg&&['Ansiedade','Cansaço','Sono'].includes(tg)?MMSG[tg].lo:tg?[MMSG._.mid[0],MMSG._.mid[1],MMSG[tg].lo[2],MMSG._.mid[3]]:MMSG._.mid;
   let low=0;for(let i=0;i<7;i++){const v=state.mood[addDays(d,-i)];if(v&&v<=2)low++}
-  return {lvl,mv,t:m[0],msg:m[1],act:MACT[m[2]],vref:m[3],persist:low>=3};
+  const cph=typeof cyPhaseOf==='function'&&cyOn()?cyPhaseOf(d):null;
+  return {lvl,mv,t:m[0],msg:m[1],act:MACT[m[2]],vref:m[3],persist:low>=3,cph:lvl!=='hi'&&(cph==='l'||cph==='m')?cph:null};
 }
 SH.moodCard=()=>{const t=today(),r=moodMsg(t),faces=['😣','😕','😐','🙂','😄'];
   if(r.crisis)return `<div class="mcard mcris"><div class="mce">🤍</div><h3>obrigada por contar</h3><p>O que você está sentindo importa, e você não precisa passar por isso sozinha. Converse agora com alguém de confiança ou ligue para o <b>CVV, no 188</b>. A ligação é gratuita e eles atendem 24 horas, também pelo chat em cvv.org.br.</p><p class="small">Se estiver em perigo agora, ligue para o <b>192 (SAMU)</b>.</p><a class="btn primary full" href="tel:188">Ligar para o CVV (188)</a><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Fechar</button></div>`;
   const useV=(state.settings.inspo||'versiculo')==='versiculo'||(state.moodNote[t]||{tags:[]}).tags.includes('Fé');
   return `<div class="mcard m${r.lvl}"><div class="mce">${faces[r.mv-1]}</div><h3>${esc(r.t)}</h3><p>${esc(r.msg)}</p>
   ${useV&&MV[r.vref]?`<div class="mver"><span>“${esc(MV[r.vref])}”</span><i>${esc(r.vref)}</i></div>`:''}
+  ${r.cph?`<div class="mper">${ic('petal',13)} Você está na fase ${CYP[r.cph].n}. Oscilações de humor, cansaço e mais fome são comuns agora e passam. Seja gentil com você.</div>`:''}
   ${r.persist?`<div class="mper">${ic('heart',13)} Faz alguns dias que está pesado. Conversar com alguém de confiança ou com um psicólogo pode ajudar muito, e pedir ajuda é força.</div>`:''}
   ${r.act?`<button class="btn primary full" ${r.act[1]}>${esc(r.act[0])}</button>`:''}<button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Obrigada 💛</button></div>`};
 let mBT=null;
