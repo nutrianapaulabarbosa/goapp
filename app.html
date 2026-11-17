@@ -927,6 +927,7 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .vm.ok{border:0;color:#7a5a22;background:linear-gradient(135deg,#f7e3b5,#e8c983);font-weight:600}
 .dzopt{margin-top:14px}.dzopt summary{list-style:none;cursor:pointer;color:var(--muted);font-size:13px;display:flex;gap:6px;align-items:center;justify-content:center;padding:6px}.dzopt summary::-webkit-details-marker{display:none}.dzopt[open] summary{margin-bottom:10px}
 .segsc{overflow-x:auto;scrollbar-width:none;max-width:100%}.segsc::-webkit-scrollbar{display:none}.segsc button{flex:1 0 auto!important;white-space:nowrap;padding-left:12px!important;padding-right:12px!important}
+.dznote.seen{opacity:.85}
 .mitem.danger{color:#b4574f}
 .dzreply{background:linear-gradient(160deg,var(--card),var(--rbg))}
 
@@ -3252,8 +3253,8 @@ async function dzAutoSync(){
 function dzPhaseBar(){const P=dzPhases(),i=dzCurPhase();if(i<0)return '';const p=P[i],n=dzDayN();
   return `<button class="dzphb" data-a="dzTab" data-v="jornada"><div class="dzphs">${P.map((x,j)=>`<i class="${j<i?'ok':j===i?'on':''}"><b style="width:${j<i?100:j===i?Math.round((n-x.from+1)/(x.to-x.from+1)*100):0}%"></b></i>`).join('')}</div><div class="dzpht"><span>FASE ${i+1} · ${esc(p.name).toUpperCase()}</span><span>dia ${n-p.from+1} de ${p.to-p.from+1} ›</span></div></button>`}
 const dzNotesSeen=()=>{try{return JSON.parse(localStorage.getItem('go-dz-notes')||'{}')}catch(e){return {}}};
-function dzNoteNew(){const n=dzDayN(),L=(DZ.notes||[]).filter(x=>x.day<=n),last=L[L.length-1];if(!last||dzNotesSeen()[last.id])return '';
-  return `<button class="card dznote" data-a="sheet" data-s="dzNote" data-id="${last.id}"><span class="dznq">${ic('heart',16)}</span><div class="grow"><small>${last.author==='claude'?'RECADO DA JORNADA':'RECADO DA NUTRI'} · NOVO</small><b>${esc(last.title)}</b></div>${ic('chevR',16)}</button>`}
+function dzNoteNew(){const n=dzDayN(),L=(DZ.notes||[]).filter(x=>x.day<=n),last=L[L.length-1];if(!last)return '';const seen=!!dzNotesSeen()[last.id];if(seen&&n-last.day>2)return '';
+  return `<button class="card dznote ${seen?'seen':''}" data-a="sheet" data-s="dzNote" data-id="${last.id}"><span class="dznq">${ic('heart',16)}</span><div class="grow"><small>${last.author==='claude'?'RECADO DA JORNADA':'RECADO DA NUTRI'} · ${seen?'RELER':'NOVO'}</small><b>${esc(last.title)}</b></div>${ic('chevR',16)}</button>`}
 function dzHojeExtras(){
   const n=dzDayN(),len=dzLen(),t=today();let b='';
   // dupla
