@@ -928,6 +928,8 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .dzopt{margin-top:14px}.dzopt summary{list-style:none;cursor:pointer;color:var(--muted);font-size:13px;display:flex;gap:6px;align-items:center;justify-content:center;padding:6px}.dzopt summary::-webkit-details-marker{display:none}.dzopt[open] summary{margin-bottom:10px}
 .segsc{overflow-x:auto;scrollbar-width:none;max-width:100%}.segsc::-webkit-scrollbar{display:none}.segsc button{flex:1 0 auto!important;white-space:nowrap;padding-left:12px!important;padding-right:12px!important}
 .dznote.seen{opacity:.85}
+.seg.bfmt label{padding:8px 10px;border-radius:24px;font-size:13.5px;color:var(--muted);cursor:pointer}.seg.bfmt label.on{background:var(--plum);color:var(--on);font-weight:500}
+.kbadge{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:6px;background:var(--rose-l);color:var(--rose-d);font-weight:600;margin-right:2px}
 .mitem.danger{color:#b4574f}
 .dzreply{background:linear-gradient(160deg,var(--card),var(--rbg))}
 
@@ -1102,7 +1104,7 @@ function defaultState(){
     lists:[{id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]},{id:uid(),name:'Lista de desejos',type:'wishlist',pinned:false,items:[]}],
     activeDays:{},openDays:{},quickLog:[],books:[],devo:{entries:{}}};
 }
-function migrate(s){if(s.onboarded===undefined)s.onboarded=!!(s.updatedAt||(s.name&&s.habits&&s.habits.length));const d=defaultState();for(const k in d)if(s[k]===undefined)s[k]=d[k];for(const k in d.settings)if(s.settings[k]===undefined)s.settings[k]=d.settings[k];if(!s.fin.paid)s.fin.paid={};(s.fin.entries||[]).forEach(e=>{if(e.type==='out'&&!e.cat)e.cat=guessCat(e.desc)});try{const mw=(s.habits||[]).find(h=>h.type!=='quit'&&/\bagua\b|hidrat/.test(norm(h.name||''))&&(h.unit==='ml'&&h.qty>=1000||h.unit==='L'&&h.qty>=1));if(mw){const ml=mw.unit==='L'?mw.qty*1000:+mw.qty;if(ml&&s.settings.waterGoal!==ml)s.settings.waterGoal=ml}}catch(e){}return s}
+function migrate(s){if(s.onboarded===undefined)s.onboarded=!!(s.updatedAt||(s.name&&s.habits&&s.habits.length));const d=defaultState();for(const k in d)if(s[k]===undefined)s[k]=d[k];for(const k in d.settings)if(s.settings[k]===undefined)s.settings[k]=d.settings[k];if(!s.fin.paid)s.fin.paid={};(s.fin.entries||[]).forEach(e=>{if(e.type==='out'&&!e.cat)e.cat=guessCat(e.desc)});(s.books||[]).forEach(b=>{if(!b.fmt&&(b.pages||0)>3000)b.fmt='kindle'});try{const mw=(s.habits||[]).find(h=>h.type!=='quit'&&/\bagua\b|hidrat/.test(norm(h.name||''))&&(h.unit==='ml'&&h.qty>=1000||h.unit==='L'&&h.qty>=1));if(mw){const ml=mw.unit==='L'?mw.qty*1000:+mw.qty;if(ml&&s.settings.waterGoal!==ml)s.settings.waterGoal=ml}}catch(e){}return s}
 let state=null;
 try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 state=migrate(state&&state.v?state:defaultState());
@@ -1576,7 +1578,7 @@ function quick(text){
   if((cmd==='conquista'||cmd==='conquistas'||cmd==='vitoria')){const tx=capT(rest());if(tx)return {out:`Conquista · ${tx}`,run:()=>{dEntry(t).wins.push({id:uid(),text:tx});devoMarkHabit(t)}}}
   if(cmd==='versiculo'){const tx=text.trim().split(/\s+/).slice(1).join(' ').replace(/^[:\-–\s]+/,'');if(tx)return {out:`Versículo do dia · ${tx}`,run:()=>{const e=dEntry(t);e.ref=tx;const k=Object.keys(VTXT).find(k=>norm(k)===norm(tx));if(k&&!e.verse){e.ref=k;e.verse=VTXT[k]}devoMarkHabit(t)}}}
   // leitura
-  if(['li','lendo','leitura'].includes(cmd)&&amount!=null){const bk=state.books.find(b=>b.status==='lendo');if(bk)return {out:`Leitura +${Math.round(amount)} páginas · ${bk.title}`,run:()=>readPages(bk,amount)}}
+  if(['li','lendo','leitura'].includes(cmd)&&amount!=null){const bk=state.books.find(b=>b.status==='lendo');if(bk)return {out:`Leitura +${Math.round(amount)} páginas · ${bk.title}`,run:()=>readPages(bk,bFmt(bk)==='pag'?amount:amount/ppu(bk))}}
   // hábito
   if(['fiz','feito','treinei','li','meditei','orei','marcar'].includes(cmd)){
     const words=nt.slice(1).filter(w=>w.length>2&&!STOP.includes(w));
@@ -1728,23 +1730,29 @@ document.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTo
 /* ---------- leitura ---------- */
 const catSel=sel=>fld('Categoria',`<select name="cat">${CATS.map(([c])=>`<option ${c===sel?'selected':''}>${c}</option>`).join('')}</select>`);
 const BOOKC=['var(--rose)','#9cc5a1','#a9c6d3','#c9b38f','#b9a7d1','#e5b58f'];
-const pagesOn=d=>state.books.reduce((s,b)=>s+((b.log||{})[d]||0),0);
+const bFmt=b=>b.fmt||'pag';
+const bPP=b=>bFmt(b)==='kindle'?(b.pp||Math.round((b.pages||0)/18)||0):bFmt(b)==='pct'?(b.pp||0):(b.pages||0);
+const ppu=b=>bFmt(b)==='kindle'?(b.pages?bPP(b)/b.pages:1/18):bFmt(b)==='pct'?((b.pp||300)/100):1;
+const pagesOn=d=>Math.round(state.books.reduce((s,b)=>s+((b.log||{})[d]||0)*ppu(b),0));
+const bTot=b=>bFmt(b)==='pct'?100:(b.pages||0);
+const bPct=b=>bTot(b)?Math.min(100,Math.round((b.current||0)/bTot(b)*100)):0;
+const bWhere=b=>bFmt(b)==='kindle'?`posição ${(b.current||0).toLocaleString('pt-BR')}${b.pages?' de '+b.pages.toLocaleString('pt-BR')+' · '+bPct(b)+'%':''}`:bFmt(b)==='pct'?`${bPct(b)}% lido`:`p. ${b.current||0}${b.pages?' de '+b.pages+' · '+bPct(b)+'%':''}`;
 function readStreak(){let d=today(),n=0;if(!pagesOn(d))d=addDays(d,-1);while(pagesOn(d)>0){n++;d=addDays(d,-1)}return n}
 function readPages(bk,n){
   const t=today();n=Math.max(0,Math.round(n));if(!n)return false;
-  bk.log=bk.log||{};bk.log[t]=(bk.log[t]||0)+n;bk.current=Math.min(bk.pages||1e6,(bk.current||0)+n);
+  bk.log=bk.log||{};bk.log[t]=(bk.log[t]||0)+n;bk.current=Math.min(bTot(bk)||1e6,(bk.current||0)+n);
   if(bk.status!=='lido')bk.status='lendo';if(!bk.started)bk.started=t;
   const h=doHabits().find(h=>/leitur|\bler\b|livro/.test(norm(h.name)));if(h)h.log[t]=true;
-  if(bk.pages&&bk.current>=bk.pages&&bk.status!=='lido'){bk.status='lido';bk.finished=t;return true}
+  if(bTot(bk)&&bk.current>=bTot(bk)&&bk.status!=='lido'){bk.status='lido';bk.finished=t;return true}
   return false;
 }
 function spineH(b,col){col=col||BOOKC[(b.title.charCodeAt(0)||0)%BOOKC.length];return b.cover?`<div class="spine cov"><img src="${esc(b.cover)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('cov');this.parentNode.style.background='${col}';this.replaceWith(document.createTextNode('${esc(b.title.charAt(0).toUpperCase()).replace(/'/g,'')}'))"></div>`:`<div class="spine" style="background:${col}">${esc(b.title.charAt(0).toUpperCase())}</div>`}
 function bookCard(b){
-  const col=BOOKC[(b.title.charCodeAt(0)||0)%BOOKC.length],pct=b.pages?Math.min(100,Math.round((b.current||0)/b.pages*100)):0;
+  const col=BOOKC[(b.title.charCodeAt(0)||0)%BOOKC.length],pct=bPct(b);
   let mid='';
-  if(b.status==='lendo')mid=`<div class="bar" style="margin-top:10px;height:7px"><i style="width:${pct}%;background:var(--rose)"></i></div><div class="small muted" style="margin-top:5px">p. ${b.current||0}${b.pages?' de '+b.pages+' · '+pct+'%':''}</div>`;
-  if(b.status==='lido')mid=`<div class="stars">${'★'.repeat(b.rating||0)}<span style="color:#e6d9c4">${'★'.repeat(5-(b.rating||0))}</span></div><div class="small muted">Terminado ${b.finished?dateLabel(b.finished).toLowerCase():''}${b.pages?' · '+b.pages+' páginas':''}</div>`;
-  if(b.status==='quero')mid=`<div class="small muted" style="margin-top:6px">${b.pages?b.pages+' páginas':''}</div>`;
+  if(b.status==='lendo')mid=`<div class="bar" style="margin-top:10px;height:7px"><i style="width:${pct}%;background:var(--rose)"></i></div><div class="small muted" style="margin-top:5px">${bFmt(b)==='kindle'?'<span class="kbadge">Kindle</span> ':''}${bWhere(b)}</div>`;
+  if(b.status==='lido')mid=`<div class="stars">${'★'.repeat(b.rating||0)}<span style="color:#e6d9c4">${'★'.repeat(5-(b.rating||0))}</span></div><div class="small muted">Terminado ${b.finished?dateLabel(b.finished).toLowerCase():''}${bPP(b)?' · '+(bFmt(b)==='pag'?'':'~')+bPP(b)+' páginas':''}</div>`;
+  if(b.status==='quero')mid=`<div class="small muted" style="margin-top:6px">${bPP(b)?(bFmt(b)==='pag'?'':'~')+bPP(b)+' páginas':''}</div>`;
   const main=b.status==='lendo'?`<button class="btn sm primary" data-a="sheet" data-s="readlog" data-id="${b.id}">Registrar leitura</button>`:b.status==='quero'?`<button class="btn sm soft" data-a="startBook" data-id="${b.id}">Começar a ler</button>`:`<button class="btn sm ghost" data-a="sheet" data-s="rate" data-id="${b.id}">${b.rating?'Mudar nota':'Avaliar'}</button>`;
   return `<div class="bcard">${spineH(b,col)}<div class="grow" style="min-width:0"><b style="font-weight:500">${esc(b.title)}</b>${b.author?`<div class="small muted">${esc(b.author)}</div>`:''}${mid}<div class="brow">${main}<span style="flex:1"></span><button class="ib sm" data-a="sheet" data-s="book" data-id="${b.id}">${ic('edit',15)}</button><button class="ib sm" data-a="delBook" data-id="${b.id}">${ic('trash',15)}</button></div></div></div>`;
 }
@@ -1764,30 +1772,35 @@ S.leitura=()=>{
 Object.assign(SH,{
   book:d=>{const k=state.books.find(x=>x.id===d.id)||{};const st=k.status||(ui.bookTab==='lido'?'lido':ui.bookTab==='quero'?'quero':'lendo');
     ui.coverDraft=k.cover||'';ui.coverRes=null;
-    return `<h3>${k.id?'editar livro':'novo livro'}</h3><div class="covbox"><div id="covPrev">${spineH({title:k.title||'?',cover:ui.coverDraft})}</div><div class="grow"><div class="small muted" style="margin-bottom:8px">Capa do livro</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="btn sm soft" data-a="coverSearch">${ic('search',14)} Buscar capa</button><label class="btn sm ghost" style="cursor:pointer">${ic('edit',14)} Foto<input type="file" id="coverIn" accept="image/*" style="display:none"></label><button type="button" class="btn sm" style="background:none;color:var(--muted);padding-left:6px;padding-right:6px" data-a="coverClear">Sem capa</button></div></div></div><div id="covRes"></div><form data-f="book">${hid('id',k.id)}${fld('Título',`<input name="title" required value="${esc(k.title)}" placeholder="Ex.: Hábitos Atômicos">`)}${fld('Autor(a)',`<input name="author" value="${esc(k.author)}" placeholder="Opcional">`)}<div class="two">${fld('Total de páginas',`<input name="pages" inputmode="numeric" value="${k.pages||''}" placeholder="Ex.: 320">`)}${fld('Estou na página',`<input name="current" inputmode="numeric" value="${k.current||''}" placeholder="0">`)}</div>${fld('Status',`<select name="status"><option value="lendo" ${st==='lendo'?'selected':''}>Lendo</option><option value="quero" ${st==='quero'?'selected':''}>Quero ler</option><option value="lido" ${st==='lido'?'selected':''}>Lido</option></select>`)}<button class="btn primary full">Salvar</button></form>`},
+    return `<h3>${k.id?'editar livro':'novo livro'}</h3><div class="covbox"><div id="covPrev">${spineH({title:k.title||'?',cover:ui.coverDraft})}</div><div class="grow"><div class="small muted" style="margin-bottom:8px">Capa do livro</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="btn sm soft" data-a="coverSearch">${ic('search',14)} Buscar capa</button><label class="btn sm ghost" style="cursor:pointer">${ic('edit',14)} Foto<input type="file" id="coverIn" accept="image/*" style="display:none"></label><button type="button" class="btn sm" style="background:none;color:var(--muted);padding-left:6px;padding-right:6px" data-a="coverClear">Sem capa</button></div></div></div><div id="covRes"></div><form data-f="book">${hid('id',k.id)}${fld('Título',`<input name="title" required value="${esc(k.title)}" placeholder="Ex.: Hábitos Atômicos">`)}${fld('Autor(a)',`<input name="author" value="${esc(k.author)}" placeholder="Opcional">`)}${(()=>{const fm=k.fmt||'pag';return `<div class="fld"><span>Como você acompanha</span><div class="seg bfmt" style="width:100%">${[['pag','Páginas'],['kindle','Kindle'],['pct','Porcentagem']].map(([v,l])=>`<label class="${fm===v?'on':''}" style="flex:1;text-align:center"><input type="radio" name="fmt" value="${v}" ${fm===v?'checked':''} style="display:none" onchange="const f=this.form;f.querySelectorAll('.bfmt label').forEach(e=>e.classList.toggle('on',e.contains(this)));f.querySelectorAll('[data-fm]').forEach(e=>e.style.display=e.dataset.fm.split(' ').includes(this.value)?'':'none')">${l}</label>`).join('')}</div></div>
+  <div class="two" data-fm="pag" style="${fm==='pag'?'':'display:none'}">${fld('Total de páginas',`<input name="pages" inputmode="numeric" value="${fm==='pag'?k.pages||'':''}" placeholder="Ex.: 320">`)}${fld('Estou na página',`<input name="current" inputmode="numeric" value="${fm==='pag'?k.current||'':''}" placeholder="0">`)}</div>
+  <div class="two" data-fm="kindle" style="${fm==='kindle'?'':'display:none'}">${fld('Total de posições',`<input name="kpos" inputmode="numeric" value="${fm==='kindle'?k.pages||'':''}" placeholder="Ex.: 8385">`)}${fld('Estou na posição',`<input name="kcur" inputmode="numeric" value="${fm==='kindle'?k.current||'':''}" placeholder="0">`)}</div>
+  <div data-fm="pct" style="${fm==='pct'?'':'display:none'}">${fld('Já li (%)',`<input name="pcur" inputmode="numeric" value="${fm==='pct'?k.current||'':''}" placeholder="0">`)}</div>
+  <div data-fm="kindle pct" style="${fm!=='pag'?'':'display:none'}">${fld('Páginas do livro impresso (opcional)',`<input name="pp" inputmode="numeric" value="${k.pp||''}" placeholder="${fm==='kindle'&&k.pages?'~'+Math.round(k.pages/18)+' (estimado)':'Ex.: 432'}">`)}<div class="small muted" style="margin:-6px 0 12px;line-height:1.45">Serve pra contar as páginas na sua meta e no desafio. Sem isso, o GO! estima: no Kindle, umas 18 posições por página.</div></div>`})()}${fld('Status',`<select name="status"><option value="lendo" ${st==='lendo'?'selected':''}>Lendo</option><option value="quero" ${st==='quero'?'selected':''}>Quero ler</option><option value="lido" ${st==='lido'?'selected':''}>Lido</option></select>`)}<button class="btn primary full">Salvar</button></form>`},
   readlog:d=>{const k=state.books.find(x=>x.id===d.id);if(!k)return '';
-    return `<h3>registrar leitura</h3><div class="small muted" style="margin:-6px 0 14px">${esc(k.title)} · você estava na página ${k.current||0}</div><div class="chips" style="margin:0 0 16px">${[5,10,20,30,50].map(n=>`<button class="chip" data-a="readQuick" data-id="${k.id}" data-n="${n}">+${n} páginas</button>`).join('')}</div><form data-f="readlog">${hid('id',k.id)}${fld('Ou: parei na página',`<input name="page" inputmode="numeric" required value="${k.current||''}">`)}<button class="btn primary full">Salvar</button></form>`},
+    const fm=bFmt(k),unit=fm==='kindle'?Math.max(1,Math.round((k.pages||100)/100)):1,chips=fm==='pag'?[5,10,20,30,50].map(n=>[n,`+${n} páginas`]):[1,2,5,10].map(n=>[n*unit,`+${n}%`]);
+    return `<h3>registrar leitura</h3><div class="small muted" style="margin:-6px 0 14px">${esc(k.title)} · ${fm==='kindle'?'você estava na '+bWhere(k):fm==='pct'?'você estava em '+bPct(k)+'%':'você estava na página '+(k.current||0)}</div><div class="chips" style="margin:0 0 16px">${chips.map(([n,l])=>`<button class="chip" data-a="readQuick" data-id="${k.id}" data-n="${n}">${l}</button>`).join('')}</div><form data-f="readlog">${hid('id',k.id)}${fld(fm==='kindle'?'Ou: parei na posição':fm==='pct'?'Ou: estou em (%)':'Ou: parei na página',`<input name="page" inputmode="numeric" required value="${k.current||''}">`)}${fm==='kindle'?'<div class="small muted" style="margin:-6px 0 12px">No Kindle: toque no meio da página e veja "Posição" embaixo.</div>':''}<button class="btn primary full">Salvar</button></form>`},
   rate:d=>{const k=state.books.find(x=>x.id===d.id);if(!k)return '';
     return `<h3>${d.fin?'livro terminado! 🎉':'sua nota'}</h3><div class="small muted" style="margin:-6px 0 6px">${esc(k.title)}</div><div class="starpick">${[1,2,3,4,5].map(n=>`<button data-a="rateBook" data-id="${k.id}" data-v="${n}">${n<=(k.rating||0)?'★':'☆'}</button>`).join('')}</div><button class="btn ghost full" data-a="closeSheet">Depois</button>`},
   readgoal:()=>`<h3>meta de leitura</h3><form data-f="readgoal">${fld('Quantos livros você quer ler este ano?',`<input name="g" inputmode="numeric" value="${state.settings.readGoal||12}">`)}<button class="btn primary full">Salvar</button></form>`
 });
 Object.assign(F,{
-  book:v=>{const pages=parseInt(v.pages)||0,cur=Math.min(parseInt(v.current)||0,pages||1e6),t=today();let k;
-    if(v.id){k=state.books.find(x=>x.id===v.id);Object.assign(k,{title:v.title.trim(),author:v.author.trim(),pages,current:cur,status:v.status})}
-    else{k={id:uid(),title:v.title.trim(),author:v.author.trim(),pages,current:cur,status:v.status,log:{},started:v.status!=='quero'?t:null,finished:null,rating:0};state.books.push(k)}
+  book:v=>{const fmt=v.fmt||'pag',pages=fmt==='kindle'?parseInt(v.kpos)||0:fmt==='pct'?0:parseInt(v.pages)||0,cap=fmt==='pct'?100:(pages||1e6),cur=Math.min(parseInt(fmt==='kindle'?v.kcur:fmt==='pct'?v.pcur:v.current)||0,cap),pp=fmt!=='pag'?parseInt(v.pp)||0:0,t=today();let k;
+    if(v.id){k=state.books.find(x=>x.id===v.id);if((k.fmt||'pag')!==fmt&&Object.keys(k.log||{}).length){const f0=ppu(k);k.log=Object.fromEntries(Object.entries(k.log).map(([d,n])=>[d,n*f0]))}Object.assign(k,{title:v.title.trim(),author:v.author.trim(),pages,current:cur,status:v.status,fmt,pp});if((k.fmt||'pag')!==fmt){}}
+    else{k={id:uid(),title:v.title.trim(),author:v.author.trim(),pages,current:cur,status:v.status,fmt,pp,log:{},started:v.status!=='quero'?t:null,finished:null,rating:0};state.books.push(k)}
     if(ui.coverDraft)k.cover=ui.coverDraft;else delete k.cover;
-    if(k.status==='lido'&&!k.finished)k.finished=t;if(k.status==='lido'&&pages)k.current=pages;if(k.status!=='lido')k.finished=null;
+    if(k.status==='lido'&&!k.finished)k.finished=t;if(k.status==='lido'&&bTot(k))k.current=bTot(k);if(k.status!=='lido')k.finished=null;
     ui.bookTab=k.status;closeSheet();save();toast(v.id?'Livro atualizado':'Livro adicionado 📚')},
   readlog:v=>{const k=state.books.find(x=>x.id===v.id),np=parseInt(v.page)||0,diff=np-(k.current||0);
     if(diff<=0){k.current=np;closeSheet();save();return}
-    const fin=readPages(k,diff);closeSheet();save();toast(`+${diff} páginas 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
+    const fin=readPages(k,diff);closeSheet();save();toast(bFmt(k)==='pag'?`+${diff} páginas 📖`:`+${Math.round(diff*ppu(k))} páginas (~) · ${bPct(k)}% 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
   readgoal:v=>{state.settings.readGoal=Math.max(1,parseInt(v.g)||12);closeSheet();save(1)}
 });
 Object.assign(A,{
   bookTab:d=>{ui.bookTab=d.v;render()},
   startBook:d=>{const k=state.books.find(x=>x.id===d.id);k.status='lendo';k.started=today();ui.bookTab='lendo';save();toast('Boa leitura! 📖')},
   delBook:d=>{const s=snap();state.books=state.books.filter(x=>x.id!==d.id);save();toast('Livro removido',s)},
-  readQuick:d=>{const k=state.books.find(x=>x.id===d.id);const fin=readPages(k,+d.n);closeSheet();save();toast(`+${d.n} páginas 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
+  readQuick:d=>{const k=state.books.find(x=>x.id===d.id);const fin=readPages(k,+d.n);closeSheet();save();toast(bFmt(k)==='pag'?`+${d.n} páginas 📖`:`${bPct(k)}% lido · +${Math.round(+d.n*ppu(k))} páginas (~) 📖`);if(fin){ui.bookTab='lido';render();openSheet('rate',{id:k.id,fin:1})}},
   rateBook:d=>{const k=state.books.find(x=>x.id===d.id);k.rating=+d.v;closeSheet();save()},
   repP:d=>{ui.repPeriod=d.v;ui.repOff=0;render()},
   repOff:d=>{ui.repOff=Math.min(0,ui.repOff+ +d.n);render()},
@@ -2201,7 +2214,7 @@ if(!CLOUD||state._uid)applyTheme();
 /* ---------- selos de conquista ---------- */
 I.target='<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.2"/>';
 function maxRun(dates){const s=[...new Set(dates)].sort();let best=0,cur=0,prev=null;s.forEach(d=>{cur=prev&&addDays(prev,1)===d?cur+1:1;best=Math.max(best,cur);prev=d});return best}
-const totalPages=()=>state.books.reduce((s,b)=>s+Object.values(b.log||{}).reduce((a,v)=>a+(+v||0),0),0);
+const totalPages=()=>Math.round(state.books.reduce((s,b)=>s+Object.values(b.log||{}).reduce((a,v)=>a+(+v||0),0)*ppu(b),0));
 const prevMonthBlue=()=>{const m=shiftMonth(ym(today()),-1),f=finMonth(m);return f.totIn>0&&f.left>0};
 const BADGES=[
   {id:'primeiro-passo',e:'🌱',n:'Primeiro passo',d:'Marcar o primeiro hábito',t:()=>state.habits.some(h=>Object.keys(h.log||{}).length)},
