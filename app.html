@@ -1002,6 +1002,17 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 [data-pal=itroxo] .hdots i.on{background:#fff}
 
 [data-pal=itgirl]{--lg-bg:#ffe4ee;--lg-g:#4b2635;--lg-x:#e27aa5}[data-pal=itroxo]{--lg-bg:#efe4ff;--lg-g:#30264b;--lg-x:#a57ae2}[data-pal=lavanda]{--lg-bg:#efeafd;--lg-g:#2c2640;--lg-x:#9a86de}[data-pal=oliva]{--lg-bg:#ebeadf;--lg-g:#2f3324;--lg-x:#7d8a5e}[data-pal=bege]{--lg-bg:#f2ede6;--lg-g:#3a3128;--lg-x:#b39b78}[data-pal=pb]{--lg-bg:#1d1c1c;--lg-g:#fff;--lg-x:#bdbdbd}
+
+.cday.tod{outline:2px solid var(--deep)!important;outline-offset:-2px}.cmeal{display:flex;flex-direction:column;padding:6px 0;border-top:1px solid var(--line)}.cmeal:first-of-type{border-top:0}.cmeal small{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-d)}.cmeal span{font-size:14px}
+.cshop{display:flex;gap:10px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line);font-size:14.5px}.cshop input{width:20px;height:20px;accent-color:var(--deep)}
+.hardc{text-align:left}.hardt{display:flex;gap:8px;align-items:center;font-family:var(--serif);font-size:24px;color:var(--ink)}.hardc p{color:var(--muted);font-size:14px;line-height:1.55;margin:6px 0 12px}
+.hstep{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.hstep>span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--rbg);color:var(--rose-d);flex:none}.hstep.ok>span{background:var(--sage);color:#fff}.hstep.ok .grow{text-decoration:line-through;color:var(--muted)}.hstep small{display:block;color:var(--muted);font-size:12px}
+.rhero{padding:26px 22px!important}.rbig{font-family:var(--serif);font-size:64px;line-height:1;color:#fff;margin:6px 0}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.rtile{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 14px;display:flex;flex-direction:column;gap:2px}.rtile b{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.1}.rtile span{font-size:13px;color:var(--ink)}.rtile small{font-size:11.5px;color:var(--muted)}
+.idc{display:flex;gap:12px;align-items:flex-start}.idbtns{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}
+.wcard{display:flex;gap:10px;align-items:center}
+.ptc .cardHead h4{text-transform:none}.qaddf input{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--card);font:inherit;color:var(--ink);min-width:0}
+.ptrenew{display:flex;gap:6px;align-items:center;font-size:12.5px;margin-top:10px;padding:8px 10px;border-radius:12px;background:var(--rbg);color:var(--ink)}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1041,6 +1052,7 @@ const I={
 clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
 settings:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
 chevU:'<path d="M6 15l6-6 6 6"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',
 petal:'<path d="M12 4c2.2 2.2 2.2 5 0 7.2C9.8 9 9.8 6.2 12 4zM12 20c-2.2-2.2-2.2-5 0-7.2 2.2 2.2 2.2 5 0 7.2zM4 12c2.2-2.2 5-2.2 7.2 0-2.2 2.2-5 2.2-7.2 0zM20 12c-2.2 2.2-5 2.2-7.2 0 2.2-2.2 5-2.2 7.2 0z"/>',
 sort:'<path d="M7 4v16M3.5 7.5 7 4l3.5 3.5M17 20V4M13.5 16.5 17 20l3.5-3.5"/>',
 link:'<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/>',
@@ -1577,6 +1589,7 @@ function quick(text){
   // devocional
   if((cmd==='conquista'||cmd==='conquistas'||cmd==='vitoria')){const tx=capT(rest());if(tx)return {out:`Conquista · ${tx}`,run:()=>{dEntry(t).wins.push({id:uid(),text:tx});devoMarkHabit(t)}}}
   if(cmd==='versiculo'){const tx=text.trim().split(/\s+/).slice(1).join(' ').replace(/^[:\-–\s]+/,'');if(tx)return {out:`Versículo do dia · ${tx}`,run:()=>{const e=dEntry(t);e.ref=tx;const k=Object.keys(VTXT).find(k=>norm(k)===norm(tx));if(k&&!e.verse){e.ref=k;e.verse=VTXT[k]}devoMarkHabit(t)}}}
+  if(cmd==='ideia'||cmd==='ideias'){const tx=capT(rest().replace(/^[:\-–\s]+/,''));if(tx)return {out:`Ideia de conteúdo · ${tx}`,run:()=>{(state.ideas=state.ideas||[]).push({id:uid(),t:tx,st:'ideia',d:today()})}}}
   // leitura
   if(['li','lendo','leitura'].includes(cmd)&&amount!=null){const bk=state.books.find(b=>b.status==='lendo');if(bk)return {out:`Leitura +${Math.round(amount)} páginas · ${bk.title}`,run:()=>readPages(bk,bFmt(bk)==='pag'?amount:amount/ppu(bk))}}
   // hábito
@@ -3463,6 +3476,140 @@ function dzCertCard(){const nick=DZ.me?DZ.me.nickname:'',act=new Set(DZ.checks.m
     const st=[[`${dzPct()}%`,'constância'],[`${act}`,'dias ativos'],[`${dn}`,'missões']];st.forEach(([a,b],i)=>{const X=240+i*300;x.fillStyle='#fff';x.font="400 90px Gazpacho";x.fillText(a,X,1080);x.font="400 30px Poppins";x.fillStyle='rgba(255,255,255,.8)';x.fillText(b,X,1130)});
     x.fillStyle='#fff';x.font="400 60px 'Dancing Script'";x.fillText('constância não é nunca falhar,',540,1330);x.fillText('é sempre voltar.',540,1405);
     x.font="400 30px Poppins";x.fillStyle='rgba(255,255,255,.8)';x.fillText(`${fmtD(DZ.c.start_date)} a ${fmtD(DZ.c.end_date)}`,540,1580)},'certificado-constancia.png')}
+
+const capF=x=>String(x).charAt(0).toUpperCase()+String(x).slice(1);
+/* ====================== NOVAS FERRAMENTAS ====================== */
+const MONTHS=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const mLabel=m=>MONTHS[+m.slice(5,7)-1]+(m.slice(0,4)!==today().slice(0,4)?' de '+m.slice(0,4):'');
+const prevM=m=>{const [y,mo]=m.split('-').map(Number);return mo===1?`${y-1}-12`:`${y}-${String(mo-1).padStart(2,'0')}`};
+const mDays=m=>{const out=[];let d=m+'-01';while(ym(d)===m&&d<=today()){out.push(d);d=addDays(d,1)}return out};
+
+/* ---------- 1. fim de livro: resenha + card ---------- */
+SH.bookEnd=d=>{const k=state.books.find(x=>x.id===d.id);if(!k)return '';return `<h3>livro terminado! 🎉</h3><div class="small muted" style="margin:-6px 0 12px">${esc(k.title)}</div><div class="starpick">${[1,2,3,4,5].map(n=>`<button data-a="rateBook" data-id="${k.id}" data-v="${n}" data-keep="1">${n<=(k.rating||0)?'★':'☆'}</button>`).join('')}</div>
+  <form data-f="bookEnd">${hid('id',k.id)}${fld('Uma frase que ficou com você',`<textarea name="q" rows="2" maxlength="220" placeholder="Copie do livro ou escreva do seu jeito">${esc(k.quote||'')}</textarea>`)}${fld('O que eu levo desse livro',`<textarea name="tk" rows="3" maxlength="300" placeholder="Em uma ou duas frases">${esc(k.take||'')}</textarea>`)}<button class="btn primary full">Salvar</button></form>${k.quote||k.take?`<button class="btn soft full" style="margin-top:8px" data-a="bookCardShare" data-id="${k.id}">${ic('spark',15)} Card para os stories</button>`:''}`};
+F.bookEnd=v=>{const k=state.books.find(x=>x.id===v.id);if(!k)return;k.quote=(v.q||'').trim();k.take=(v.tk||'').trim();save();openSheet('bookEnd',{id:k.id});toast('Resenha salva 📚')};
+A.bookCardShare=d=>{const k=state.books.find(x=>x.id===d.id);if(!k)return;dzCanvas((x,P)=>{x.textAlign='center';x.fillStyle=P.rose;x.font="500 34px Poppins";x.fillText('TERMINEI DE LER',540,300);
+  x.fillStyle=P.ink;x.font="400 84px Gazpacho";let y=dzWrap(x,k.title,540,430,880,96);x.font="400 40px Poppins";x.fillStyle=P.rose;if(k.author)x.fillText(k.author,540,y+80);
+  x.font="400 64px Poppins";x.fillStyle=P.deep;x.fillText('★'.repeat(k.rating||0)+'☆'.repeat(5-(k.rating||0)),540,y+190);
+  let yy=y+300;if(k.quote){dzGloss(x,P,110,yy,860,420);x.fillStyle='#fff';x.font="400 46px Gazpacho";const e=dzWrap(x,'“'+k.quote+'”',540,yy+120,740,62);yy=Math.max(yy+480,e+120)}
+  if(k.take){x.fillStyle=P.rose;x.font="500 30px Poppins";x.fillText('O QUE EU LEVO',540,yy+40);x.fillStyle=P.ink;x.font="400 42px Poppins";dzWrap(x,k.take,540,yy+110,840,58)}},'livro.png')};
+{const _r=A.rateBook;A.rateBook=d=>{if(d.keep){const k=state.books.find(x=>x.id===d.id);if(k){k.rating=+d.v;save();openSheet('bookEnd',{id:k.id})}return}_r(d)}}
+{const _o=SH.rate;SH.rate=d=>d.fin?SH.bookEnd(d):_o(d)}
+
+/* ---------- 2. cardápio da semana -> lista de mercado ---------- */
+const MEALS=[['cafe','Café da manhã'],['almoco','Almoço'],['lanche','Lanche'],['jantar','Jantar']];
+const SECS=[['🥬','Hortifrúti',/^(alface|tomate|cebola|alho|cenoura|batata|abobrinha|brocolis|banana|maca|mamao|morango|limao|salada|folhas?|couve|espinafre|pepino|abacate|laranja|uva|manga|melancia|melao|beterraba|mandioca|aipim|inhame|chuchu|pimentao|cheiro|cebolinha|salsinha|frutas?|legumes?|verduras?|rucula|agriao|repolho|abobora|kiwi|pera|ameixa|mirtilo|berinjela|vagem|quiabo|gengibre|hortela)/],
+ ['🍗','Proteínas',/^(frango|peito|carne|patinho|alcatra|acem|musculo|file|ovos?|peixe|tilapia|salmao|atum|sardinha|porco|lombo|peru|camarao|tofu|hamburguer|linguica|presunto|blanquet)/],
+ ['🧀','Frios e laticínios',/^(leite|iogurte|queijo|requeijao|manteiga|cottage|ricota|whey|kefir|nata|creme de leite|mussarela|muçarela|parmesao)/],
+ ['🍞','Padaria',/^(pao|paes|torrada|bisnaguinha|wrap|rap10|bolo)/],
+ ['🥫','Mercearia',/^(arroz|feijao|macarrao|massa|aveia|granola|tapioca|farinha|azeite|oleo|cafe|cha|acucar|mel|castanhas?|nozes|amendoim|pasta de amendoim|lentilha|grao|milho|molho|sal|tempero|chocolate|cacau|cuscuz|quinoa|chia|linhaca|gelatina|atum em lata|ervilha|polvilho|biscoito|bolacha|vinagre|extrato)/],
+ ['🧃','Bebidas',/^(suco|agua de coco|refrigerante|kombucha|cha gelado|agua com gas)/]];
+function secOf(s){const n=norm(s);const f=SECS.find(([, ,re])=>re.test(n));return f||['🛒','Outros',null]}
+const cardW=()=>{state.cardapio=state.cardapio||{};const w=weekStart(ui.cardWk||today());state.cardapio[w]=state.cardapio[w]||{};return [w,state.cardapio[w]]};
+S.cardapio=()=>{const [w,C_]=cardW(),days=[0,1,2,3,4,5,6].map(i=>addDays(w,i)),t=today();
+  let b=`<div class="navrow" style="margin-top:0"><div class="seg" style="align-items:center"><button data-a="cardWk" data-n="-7">${ic('chevL',16)}</button><span style="padding:0 10px;font-size:14px">semana de ${fmtD(w)}</span><button data-a="cardWk" data-n="7">${ic('chevR',16)}</button></div></div>
+  <div class="note" style="margin:8px 2px 12px;line-height:1.5">Escreva cada refeição listando os alimentos, separados por vírgula. Ex.: <i>ovos, pão integral, mamão</i>. O GO! transforma tudo na lista do mercado.</div>`;
+  b+=days.map(d=>{const dt=parseISO(d),r=C_[d]||{};return `<div class="card cday ${d===t?'tod':''}"><div class="cardHead"><h4>${WDS[dt.getDay()]} <span class="small muted" style="font-weight:400">${dt.getDate()}/${dt.getMonth()+1}</span></h4><button class="lnk" data-a="sheet" data-s="cardDay" data-d="${d}">${Object.values(r).some(Boolean)?'editar':'preencher'}</button></div>${MEALS.map(([k,l])=>r[k]?`<div class="cmeal"><small>${l}</small><span>${esc(r[k])}</span></div>`:'').join('')||'<div class="small muted">Nada planejado ainda.</div>'}</div>`}).join('');
+  b+=`<button class="btn primary full" style="margin-top:14px" data-a="sheet" data-s="cardShop">${ic('cart',16)} Gerar lista do mercado</button><button class="btn ghost full" style="margin-top:8px" data-a="cardCopy">Repetir o cardápio da semana passada</button>`;
+  return {h:backHdr('Cardápio da semana','listas'),b}};
+SH.cardDay=o=>{const [w,C_]=cardW(),r=C_[o.d]||{},dt=parseISO(o.d);return `<h3>${WDS[dt.getDay()].toLowerCase()}, ${dt.getDate()}/${dt.getMonth()+1}</h3><form data-f="cardDay">${hid('d',o.d)}${MEALS.map(([k,l])=>fld(l,`<input name="${k}" value="${esc(r[k]||'')}" placeholder="${{cafe:'ovos, pão integral, café',almoco:'arroz, feijão, frango, salada',lanche:'iogurte, granola, banana',jantar:'omelete, legumes'}[k]}">`)).join('')}<button class="btn primary full">Salvar</button></form>`};
+F.cardDay=v=>{const [w,C_]=cardW();const r={};MEALS.forEach(([k])=>{if((v[k]||'').trim())r[k]=v[k].trim()});if(Object.keys(r).length)C_[v.d]=r;else delete C_[v.d];closeSheet();save()};
+function cardItems(){const [w,C_]=cardW(),m=new Map();Object.values(C_).forEach(r=>Object.values(r).forEach(txt=>String(txt).split(/,|\+|;|\/|\be\b|\bcom\b/i).map(s=>s.trim().replace(/^\d+\s*(g|kg|ml|un|fatias?|colheres?|xicaras?)?\s*(de\s+)?/i,'')).filter(s=>s.length>1).forEach(s=>{const k=norm(s);if(!m.has(k))m.set(k,capF(s))})));
+  return [...m.values()].map(s=>({s,sec:secOf(s)})).sort((a,b)=>SECS.findIndex(x=>x[1]===a.sec[1])-SECS.findIndex(x=>x[1]===b.sec[1])||a.s.localeCompare(b.s))}
+SH.cardShop=()=>{const L=cardItems();if(!L.length)return `<h3>lista do mercado</h3><div class="empty">Preencha pelo menos uma refeição do cardápio primeiro.</div>`;let last='';
+  return `<h3>lista do mercado</h3><div class="small muted" style="margin:-6px 0 12px">Desmarque o que você já tem em casa.</div><form data-f="cardShop">${L.map((x,i)=>{const h=x.sec[1]!==last?`<div class="psub2" style="margin:12px 0 4px">${x.sec[0]} ${x.sec[1]}</div>`:'';last=x.sec[1];return h+`<label class="cshop"><input type="checkbox" name="i" value="${i}" checked><span>${esc(x.s)}</span></label>`}).join('')}<button class="btn primary full" style="margin-top:14px">Mandar para a lista do mercado</button></form>`};
+F.cardShop=(v,f)=>{const L=cardItems(),sel=new FormData(f).getAll('i').map(Number);let l=state.lists.find(x=>x.type==='mercado'&&x.pinned)||state.lists.find(x=>x.type==='mercado');if(!l){l={id:uid(),name:'Mercado da semana',type:'mercado',pinned:true,items:[]};state.lists.push(l)}
+  const have=new Set(l.items.filter(i=>!i.done).map(i=>norm(i.text.replace(/^\S+\s/,''))));let n=0;sel.forEach(i=>{const x=L[i];if(!x||have.has(norm(x.s)))return;l.items.push({id:uid(),text:x.sec[0]+' '+x.s,done:false});n++});closeSheet();save();ui.openList=l.id;ui.screen='lista';render();toast(`${n} ${n===1?'item':'itens'} na lista 🛒`)};
+Object.assign(A,{cardWk:d=>{ui.cardWk=addDays(weekStart(ui.cardWk||today()),+d.n);render()},cardCopy:()=>{const [w,C_]=cardW(),pw=state.cardapio[addDays(w,-7)];if(!pw||!Object.keys(pw).length){toast('A semana passada está vazia');return}const s_=snap();Object.entries(pw).forEach(([d,r])=>{const nd=addDays(d,7);if(!C_[nd])C_[nd]={...r}});save();toast('Cardápio copiado',s_)}});
+
+/* ---------- 3. modo dia difícil ---------- */
+const hardOn=()=>state.hardDay===today();
+Object.assign(A,{hardOn:()=>{state.hardDay=today();closeSheet();ui.screen='home';save();scrollTo(0,0);toast('Hoje só o mínimo. Tudo bem 🤍')},hardOff:()=>{state.hardDay=null;save();toast('Voltando ao normal 💛')}});
+{const _h=S.home;S.home=()=>{const r=_h();if(!hardOn())return r;const t=today(),w=state.water[t]||0,g=state.settings.waterGoal||2000,dp=(state.dayPlans||{})[t],pr=(plan(weekStart(t)).days||{})[t];
+  const tk=state.tasks.find(x=>!x.done&&(dp&&dp.top||[]).includes(x.id))||state.tasks.find(x=>!x.done&&x.date===t);const hb=doHabits().filter(h=>sched(h,t)&&!isWater(h));const h1=hb.find(h=>!hDone(h,t))||hb[0];
+  const step=(ok,icon,txt,btn)=>`<div class="hstep ${ok?'ok':''}"><span>${ok?ic('check',16,2.6):ic(icon,16)}</span><div class="grow">${txt}</div>${ok?'':btn}</div>`;
+  return {h:r.h,b:`<div class="card hardc"><div class="hardt">${ic('heart',18)} modo dia difícil</div><p>Hoje não precisa dar conta de tudo. Só estes três já contam como um dia vencido.</p>
+   ${step(w>=g*.6,'drop',`Beber água <small>${wL(w)} de ${wL(g)}</small>`,`<button class="btn sm soft" data-a="water" data-n="${state.settings.cup||250}">+${wL(state.settings.cup||250)}</button>`)}
+   ${tk||pr?step(tk?tk.done:false,'task',esc(pr&&!tk?pr:tk.title),tk?`<button class="btn sm soft" data-a="toggleTask" data-id="${tk.id}">feito</button>`:''):''}
+   ${h1?step(hDone(h1,t),'sprout',esc(h1.name),`<button class="btn sm soft" data-a="sheet" data-s="habitAct" data-id="${h1.id}">feito</button>`):''}
+   <button class="btn ghost full" style="margin-top:12px" data-a="sheet" data-s="breathe">respirar 1 minuto</button><button class="btn full" style="margin-top:6px;background:none;color:var(--muted);font-size:13px" data-a="hardOff">Estou melhor, mostrar tudo</button></div>`}}}
+{const _mc=SH.moodCard;SH.moodCard=()=>{const h=_mc();const r=moodMsg(today());return r&&!r.crisis&&r.lvl==='lo'&&!hardOn()?h.replace('<button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Obrigada 💛</button>','<button class="btn soft full" style="margin-top:8px" data-a="hardOn">Ativar o modo dia difícil</button><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Obrigada 💛</button>'):h}}
+
+/* ---------- 4. retrospectiva do mês ---------- */
+function retroData(m){const D=mDays(m);let s=0,dn=0;const hb=doHabits();D.forEach(d=>hb.forEach(h=>{if(sched(h,d)){s++;if(hDone(h,d))dn++}}));
+  const best=hb.map(h=>{let c=0,b=0;D.forEach(d=>{if(hDone(h,d)){c++;b=Math.max(b,c)}else if(sched(h,d))c=0});return [h.name,b]}).sort((a,b)=>b[1]-a[1])[0];
+  const logs=(gym().logs||[]).filter(l=>l.end&&ym(l.date)===m),pages=D.reduce((a,d)=>a+pagesOn(d),0),books=state.books.filter(b=>b.status==='lido'&&ym(b.finished||'')===m);
+  const wd=D.filter(d=>state.water[d]),wavg=wd.length?wd.reduce((a,d)=>a+state.water[d],0)/wd.length:0,wgoal=wd.filter(d=>state.water[d]>=(state.settings.waterGoal||2000)).length;
+  const md=D.map(d=>state.mood[d]).filter(Boolean),mc={};md.forEach(v=>mc[v]=(mc[v]||0)+1);const mtop=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0];
+  const B=state.body&&state.body.w?Object.entries(state.body.w).filter(([d])=>ym(d)===m).sort():[];const dkg=B.length>1?B[B.length-1][1]-B[0][1]:null;
+  const devo=D.filter(d=>hasDevo(d)).length,bz=state.biz&&state.biz.on?bizMonth(m):null;
+  return {m,pct:s?Math.round(dn/s*100):0,best,gym:logs.length,ton:logs.reduce((a,l)=>a+gVol(l),0)/1000,pages,books,wavg,wgoal,mood:mtop?+mtop[0]:null,dkg,devo,bz,days:D.length}}
+S.retro=()=>{const m=ui.retroM||prevM(ym(today())),R=retroData(m),faces=['😣','😕','😐','🙂','😄'],cur=m===ym(today());
+  const tile=(big,lbl,sub='')=>`<div class="rtile"><b>${big}</b><span>${lbl}</span>${sub?`<small>${sub}</small>`:''}</div>`;
+  let b=`<div class="navrow" style="margin-top:0"><div class="seg" style="align-items:center"><button data-a="retroM" data-n="-1">${ic('chevL',16)}</button><span style="padding:0 10px;font-size:14px">${mLabel(m)}</span><button data-a="retroM" data-n="1" ${cur?'disabled style="opacity:.3"':''}>${ic('chevR',16)}</button></div></div>
+  <div class="gcard rhero"><span class="deco"></span><div class="hk">seu ${mLabel(m)}${cur?' até agora':''}</div><div class="rbig">${R.pct}%</div><div class="hS">dos hábitos cumpridos${R.best&&R.best[1]>1?` · maior sequência: ${esc(R.best[0])} (${R.best[1]} dias)`:''}</div></div>
+  <div class="rgrid">${tile(R.gym,'treinos',R.ton?gKg(R.ton)+' toneladas':'')}${tile(R.pages,'páginas lidas',R.books.length?R.books.length+(R.books.length===1?' livro terminado':' livros terminados'):'')}${tile(R.wavg?wL(R.wavg):'–','de água por dia',R.wgoal?R.wgoal+' dias na meta':'')}${tile(R.devo,'momentos com Deus')}${R.mood?tile(faces[R.mood-1],'humor mais frequente'):''}${R.dkg!=null?tile((R.dkg>0?'+':R.dkg<0?'−':'')+kgF(Math.abs(R.dkg))+' kg','na balança','é dado, não sentença'):''}${R.bz?tile(R.bz.conv,'conversas pela nutri',R.bz.S.length?R.bz.S.length+(R.bz.S.length===1?' paciente':' pacientes'):''):''}</div>
+  ${R.books.length?`<div class="card"><div class="cardHead"><h4>${ic('book',15)} livros do mês</h4></div>${R.books.map(k=>`<div class="row"><div class="grow rt">${esc(k.title)}<div class="small muted">${'★'.repeat(k.rating||0)}</div></div></div>`).join('')}</div>`:''}
+  <button class="btn primary full" style="margin-top:14px" data-a="retroShare">${ic('spark',15)} Card para os stories</button>`;
+  return {h:backHdr('Retrospectiva','home'),b}};
+Object.assign(A,{retroM:d=>{let m=ui.retroM||prevM(ym(today()));if(+d.n<0)m=prevM(m);else{const [y,mo]=m.split('-').map(Number);m=mo===12?`${y+1}-01`:`${y}-${String(mo+1).padStart(2,'0')}`;if(m>ym(today()))return}ui.retroM=m;render()},
+  retroShare:()=>{const R=retroData(ui.retroM||prevM(ym(today())));dzCanvas((x,P)=>{x.textAlign='center';x.fillStyle=P.rose;x.font="500 34px Poppins";x.fillText('MEU '+mLabel(R.m).toUpperCase(),540,260);dzGloss(x,P,110,330,860,420);x.fillStyle='#fff';x.font="400 170px Gazpacho";x.fillText(R.pct+'%',540,560);x.font="400 40px Poppins";x.fillText('dos meus hábitos cumpridos',540,650);
+   const it=[[R.gym,'treinos'],[R.pages,'páginas lidas'],[R.devo,'momentos com Deus'],[R.wgoal,'dias na meta de água']].filter(([v])=>v);it.slice(0,4).forEach(([v,l],i)=>{const X=i%2?740:340,Y=880+Math.floor(i/2)*330;x.fillStyle='rgba(255,255,255,.75)';dzRR(x,X-200,Y,400,270,40);x.fill();x.fillStyle=P.ink;x.font="400 96px Gazpacho";x.fillText(v,X,Y+140);x.fillStyle=P.rose;x.font="400 34px Poppins";x.fillText(l,X,Y+210)})},'retrospectiva.png')}});
+function retroBanner(){const d=+today().slice(8);if(d>5||state.retroSeen===ym(today()))return '';const m=prevM(ym(today()));return `<button class="card dznote" data-a="retroOpen"><span class="dznq">${ic('spark',16)}</span><div class="grow"><small>RETROSPECTIVA</small><b>Seu ${mLabel(m)} está pronto ✨</b></div>${ic('chevR',16)}</button>`}
+A.retroOpen=()=>{state.retroSeen=ym(today());ui.retroM=prevM(ym(today()));save(1);ui.screen='retro';render();scrollTo(0,0)};
+
+/* ---------- 5. banco de ideias de conteúdo ---------- */
+const IFMT=['Reels','Carrossel','Stories','TikTok','Post'];const IST=[['ideia','Ideias'],['gravado','Gravados'],['postado','Postados']];
+S.ideias=()=>{const I=state.ideas=state.ideas||[],tab=ui.ideaTab||'ideia',L=I.filter(x=>x.st===tab).slice().reverse(),wk=I.filter(x=>x.st==='postado'&&x.dp>=weekStart(today())).length;
+  let b=`<div class="card" style="margin-top:0"><form data-f="idea" class="qaddf" style="display:flex;gap:8px"><input name="t" placeholder="nova ideia: mito do jejum…" autocomplete="off" enterkeyhint="done" style="flex:1"><button class="btn primary" aria-label="Adicionar">${ic('plus',16)}</button></form><div class="small muted" style="margin-top:8px">${wk?`${wk} ${wk===1?'conteúdo postado':'conteúdos postados'} esta semana 💜`:'Dica: na adição rápida, escreva “ideia: …”'}</div></div>
+  <div class="seg" style="margin:14px 0 6px">${IST.map(([k,l])=>`<button class="${tab===k?'on':''}" data-a="ideaTab" data-v="${k}">${l} <span style="opacity:.6">${I.filter(x=>x.st===k).length||''}</span></button>`).join('')}</div>`;
+  b+=L.length?L.map(x=>`<div class="card idc"><div class="grow"><div class="rt">${esc(x.t)}</div><div class="pchips" style="margin-top:8px">${IFMT.map(f=>`<button class="pchip ${x.f===f?'on':''}" data-a="ideaFmt" data-id="${x.id}" data-v="${f}">${f}</button>`).join('')}</div>${x.dp?`<div class="small muted" style="margin-top:6px">postado ${dateLabel(x.dp).toLowerCase()}</div>`:''}</div><div class="idbtns">${x.st!=='postado'?`<button class="btn sm primary" data-a="ideaNext" data-id="${x.id}">${x.st==='ideia'?'gravei':'postei'} ${ic('chevR',13)}</button>`:''}${x.st!=='ideia'?`<button class="lnk" data-a="ideaBack" data-id="${x.id}">voltar</button>`:''}<button class="ib sm" data-a="ideaDel" data-id="${x.id}">${ic('trash',14)}</button></div></div>`).join(''):`<div class="card empty">${{ideia:'Anote aqui toda ideia que aparecer. Ideia anotada é conteúdo que não se perde.',gravado:'Quando gravar, o conteúdo vem pra cá esperando ser postado.',postado:'Seus conteúdos no ar aparecem aqui.'}[tab]}</div>`;
+  return {h:backHdr('Banco de ideias','menu'),b}};
+F.idea=v=>{const t=(v.t||'').trim();if(!t)return;(state.ideas=state.ideas||[]).push({id:uid(),t:capF(t),st:'ideia',d:today()});ui.ideaTab='ideia';save();setTimeout(()=>{const i=document.querySelector('form[data-f=idea] input');if(i)i.focus()},50)};
+Object.assign(A,{ideaTab:d=>{ui.ideaTab=d.v;render()},ideaFmt:d=>{const x=state.ideas.find(i=>i.id===d.id);x.f=x.f===d.v?null:d.v;save()},
+  ideaNext:d=>{const x=state.ideas.find(i=>i.id===d.id);if(x.st==='ideia'){x.st='gravado';toast('Gravado! Agora é só postar 🎬')}else{x.st='postado';x.dp=today();toast('No ar! 💜');bizNutriHabit()}save()},
+  ideaBack:d=>{const x=state.ideas.find(i=>i.id===d.id);x.st=x.st==='postado'?'gravado':'ideia';delete x.dp;save()},
+  ideaDel:d=>{const s_=snap();state.ideas=state.ideas.filter(i=>i.id!==d.id);save();toast('Ideia apagada',s_)}});
+
+/* ---------- 6. dia de pesagem ---------- */
+function weighCard(){const B=state.body;if(!B||!B.goal)return '';const t=today(),dw=parseISO(t).getDay();if(dw!==1||(B.w||{})[t]||state.weighSkip===t)return '';const ph=cyOn()?cyPhaseOf(t):null;
+  return `<div class="card wcard"><div class="grow"><b>${ic('target',15)} dia de pesagem</b><div class="small muted" style="margin-top:4px;line-height:1.45">Em jejum, depois do banheiro.${ph==='l'||ph==='m'?` Você está na fase ${CYP[ph].n}: se subir um pouco, é retenção.`:''}</div></div><button class="btn sm primary" data-a="sheet" data-s="bodyW">pesar</button><button class="ib sm" data-a="weighSkip" aria-label="Hoje não">${ic('x',14)}</button></div>`}
+A.weighSkip=()=>{state.weighSkip=today();save()};
+
+/* ---------- 7. pacientes ---------- */
+const PTN={Start:1,Prime:3,Elite:6};
+const pts=()=>state.pts=state.pts||[];
+function ptNext(p){const t=today();return state.events.filter(e=>e.pid===p.id&&e.date>=t&&!evIsDone(e,e.date)).sort((a,b)=>(a.date+(a.time||''))<(b.date+(b.time||''))?-1:1)[0]}
+function ptDone(p){return state.events.filter(e=>e.pid===p.id&&evIsDone(e,e.date)).length+(p.prev||0)}
+S.pacientes=()=>{const P=pts().filter(p=>!p.arch),t=today(),wk=state.events.filter(e=>e.pid&&e.date>=weekStart(t)&&e.date<addDays(weekStart(t),7)).length;
+  let b=`<div class="hero"><div class="hmain"><div><div class="hk">sua agenda de pacientes</div><div class="hT">${P.length} ${P.length===1?'paciente ativa':'pacientes ativas'}</div><div class="hS">${wk} ${wk===1?'consulta':'consultas'} nesta semana</div></div></div></div><button class="btn primary full" style="margin-top:14px" data-a="sheet" data-s="ptNew">${ic('plus',15)} Nova paciente</button>`;
+  b+=P.length?P.map(p=>{const n=PTN[p.plan]||0,dn=ptDone(p),nx=ptNext(p),renew=n&&dn>=n;return `<div class="card ptc"><div class="cardHead"><h4>${esc(p.name)}</h4>${p.plan?`<span class="tag">${esc(p.plan)}</span>`:''}</div>
+    ${n?`<div class="bar" style="height:6px;margin:8px 0 4px"><i style="width:${Math.min(100,dn/n*100)}%;background:var(--rose)"></i></div><div class="small muted">${dn} de ${n} ${n===1?'consulta':'consultas'}</div>`:`<div class="small muted">${dn} ${dn===1?'consulta feita':'consultas feitas'}</div>`}
+    <div class="small" style="margin-top:8px">${nx?`${ic('cal',12)} próxima: ${dateLabel(nx.date).toLowerCase()}${nx.time?' às '+nx.time:''}`:`<span class="muted">sem consulta marcada</span>`}</div>
+    ${renew?`<div class="ptrenew">${ic('spark',13)} Plano concluído: hora de conversar sobre a renovação.</div>`:''}
+    <div class="btnrow" style="margin-top:10px"><button class="btn sm soft" data-a="sheet" data-s="ptEv" data-id="${p.id}">${ic('plus',13)} consulta</button>${nx?'':`<button class="btn sm ghost" data-a="ptRet" data-id="${p.id}">retorno em 15 dias</button>`}<span style="flex:1"></span><button class="ib sm" data-a="sheet" data-s="ptNew" data-id="${p.id}">${ic('edit',14)}</button></div></div>`}).join(''):`<div class="card empty" style="line-height:1.6">Cadastre suas pacientes para ver as consultas, o andamento do plano e quando chamar para renovar.</div>`;
+  const ar=pts().filter(p=>p.arch);if(ar.length)b+=`<div class="small muted" style="text-align:center;margin-top:12px">${ar.length} ${ar.length===1?'paciente arquivada':'pacientes arquivadas'}</div>`;
+  b+=`<div class="note" style="margin-top:12px;line-height:1.5">Marque a consulta como feita na agenda (a bolinha) e o andamento do plano atualiza sozinho.</div>`;
+  return {h:backHdr('Pacientes','menu'),b}};
+SH.ptNew=o=>{const p=o.id?pts().find(x=>x.id===o.id):null,plans=biz().plans;return `<h3>${p?'editar paciente':'nova paciente'}</h3><form data-f="ptNew">${hid('id',p?p.id:'')}${fld('Nome',`<input name="name" required value="${esc(p?p.name:'')}">`)}<div class="fld"><span>Plano</span><div class="pchips">${[['','Avulsa']].concat(plans.map(([n])=>[n,n])).map(([v,l])=>`<label class="pchip ${(p?p.plan||'':'Prime')===v?'on':''}"><input type="radio" name="plan" value="${v}" ${(p?p.plan||'':'Prime')===v?'checked':''} style="display:none" onchange="this.closest('.pchips').querySelectorAll('.pchip').forEach(e=>e.classList.toggle('on',e.contains(this)))">${l}</label>`).join('')}</div></div>
+  ${p?fld('Consultas feitas antes do GO!',`<input name="prev" inputmode="numeric" value="${p.prev||0}">`):`<div class="two">${fld('1ª consulta (opcional)',`<input type="date" name="d">`)}${fld('Horário',`<input type="time" name="h">`)}</div><label class="dztog"><input type="checkbox" name="sale" checked><span><b>Registrar a venda</b><small>Entra em "nutri em movimento", nas pacientes do mês.</small></span></label>`}
+  ${fld('Notas (opcional)',`<input name="note" maxlength="140" value="${esc(p&&p.note||'')}">`)}<button class="btn primary full">Salvar</button></form>${p?`<button class="btn ghost full" style="margin-top:8px" data-a="ptArch" data-id="${p.id}">${p.arch?'Reativar':'Arquivar'} paciente</button>`:''}`};
+SH.ptEv=o=>{const p=pts().find(x=>x.id===o.id);if(!p)return '';return `<h3>consulta · ${esc(p.name)}</h3><form data-f="ptEv">${hid('id',p.id)}<div class="two">${fld('Data',`<input type="date" name="d" required value="${addDays(today(),1)}">`)}${fld('Horário',`<input type="time" name="h">`)}</div><button class="btn primary full">Marcar na agenda</button></form>`};
+function ptAddEv(p,d,h){state.events.push({id:uid(),title:'Consulta · '+p.name,date:d,time:h||'',cat:'trabalho',pid:p.id})}
+Object.assign(F,{ptNew:v=>{const name=(v.name||'').trim();if(!name)return;let p=v.id?pts().find(x=>x.id===v.id):null;
+   if(p){p.name=name;p.plan=v.plan||'';p.prev=parseInt(v.prev)||0;p.note=(v.note||'').trim()}
+   else{p={id:uid(),name,plan:v.plan||'',start:today(),note:(v.note||'').trim(),prev:0};pts().push(p);if(v.d)ptAddEv(p,v.d,v.h);
+     if(v.sale&&p.plan){const b=biz(),pl=b.plans.find(x=>x[0]===p.plan);if(pl){b.on=true;b.sales.push({id:uid(),d:today(),p:pl[0],v:pl[1],who:name})}bizNutriHabit()}}
+   closeSheet();save();toast(v.id?'Paciente atualizada':'Paciente cadastrada 💜')},
+ ptEv:v=>{const p=pts().find(x=>x.id===v.id);ptAddEv(p,v.d,v.h);closeSheet();save();toast('Consulta marcada na agenda')}});
+Object.assign(A,{ptRet:d=>{const p=pts().find(x=>x.id===d.id);ptAddEv(p,addDays(today(),15),'');save();toast('Retorno marcado para daqui a 15 dias')},ptArch:d=>{const p=pts().find(x=>x.id===d.id);p.arch=!p.arch;closeSheet();save()}});
+{const _ed=A.evDone;A.evDone=d=>{_ed(d);const e=state.events.find(x=>x.id===d.id);if(e&&e.pid&&evIsDone(e,d.d)){const p=pts().find(x=>x.id===e.pid);if(p){const n=PTN[p.plan]||0,dn=ptDone(p);if(n&&dn===n)setTimeout(()=>toast(`${p.name} concluiu o plano. Hora de oferecer a renovação ✨`),400);else if(!ptNext(p))setTimeout(()=>{toast('Consulta feita. Quer marcar o retorno?');},400)}}}}
+
+/* ---------- menu e início ---------- */
+{const _m=S.menu;S.menu=()=>{const r=_m();const it=(icon,bg,name,sub,to)=>`<button class="mitem" data-a="go" data-to="${to}"><div class="tic" style="background:${bg};width:40px;height:40px">${ic(icon,19)}</div><div class="grow"><b style="font-weight:500">${name}</b><div class="small muted">${sub}</div></div>${ic('chevR',18)}</button>`;
+  const k=`<h2 class="sec">sua nutri</h2><div class="card" style="margin-top:0;padding:4px 14px">${it('user',C.rose,'Pacientes','Consultas, plano e renovação','pacientes')}${it('spark',C.lav,'Banco de ideias','Ideias, gravados e postados','ideias')}${it('cart',C.sage,'Cardápio da semana','Vira a lista do mercado','cardapio')}${it('chart',C.sand,'Retrospectiva','O resumo do seu mês','retro')}</div>`;
+  const i=r.b.indexOf('<h2 class="sec">');r.b=i>=0?r.b.slice(0,i)+k+r.b.slice(i):r.b+k;return r}}
+{const _h2=S.home;S.home=()=>{const r=_h2();if(hardOn())return r;const extra=retroBanner()+weighCard();if(!extra)return r;const i=r.b.indexOf('<div class="hero');if(i<0)return {h:r.h,b:extra+r.b};const j=r.b.indexOf('</div>',r.b.indexOf('class="hchips"')>=0?r.b.indexOf('class="hchips"'):i);return {h:r.h,b:r.b.replace('<div class="hchips"',extra+'<div class="hchips"')}}}
 
 </script>
 </body>
