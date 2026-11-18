@@ -1,5 +1,5 @@
 // GO! · service worker: notificações + funcionamento sem internet
-const V = 'go-v61';
+const V = 'go-v62';
 const SHELL = ['/', '/app', '/config.js', '/manifest.webmanifest', '/logo.svg', '/icon-180.png', '/icon-192.png', '/fonts/Gazpacho-Regular.otf'];
 
 self.addEventListener('install', (e) => {
