@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<script>try{var L=JSON.parse(localStorage.getItem('go-look')||'null');if(L){if(L.p&&L.p!=='rose')document.documentElement.dataset.pal=L.p;var d=['itgirl','nudeit'].indexOf(L.p)<0&&(L.t==='dark'||(L.t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=d?'dark':'light'}}catch(e){}</script>
+<script>try{var L=JSON.parse(localStorage.getItem('go-look')||'null');if(L){if(L.p&&L.p!=='rose')document.documentElement.dataset.pal=L.p;var d=['itgirl','itroxo','nudeit'].indexOf(L.p)<0&&(L.t==='dark'||(L.t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=d?'dark':'light'}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#fcf9f8">
@@ -956,6 +956,48 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .cytip b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-d);font-weight:600}.cytip p{margin:2px 0 0;font-size:13.5px;line-height:1.55}
 .cyev{font-size:11.5px;line-height:1.5;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 .cydot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:2px}
+
+/* tema It girl lilás */
+/* ===== tema it girl 🎀 ===== */
+[data-pal=itroxo]{--bg:#f9f6ff;--rbg:#efe4ff;--rose:#c6a6f4;--rose-d:#8b60d6;--rose-l:#f2e8ff;--line:#e5ddfb;--deep:#a57ae2;--deep-hi:#d1b9f9;--deep-lo:#7f55c8;--deep-sh:rgba(139,96,214,.32);--hair:rgba(139,96,214,.38);--ink:#30264b;--plum:#8b60d6;--plum2:#7a4fc2;--ringg:#b38bf0;--muted:#9d8bbb;--glow:#ece0ff;--on:#fff}
+[data-pal=itroxo] body{background-color:var(--bg);background-image:radial-gradient(rgba(179,139,240,.20) 1.6px,transparent 1.8px),radial-gradient(rgba(179,139,240,.12) 1.6px,transparent 1.8px);background-size:26px 26px;background-position:0 0,13px 13px}
+[data-pal=itroxo] .gcard{background:linear-gradient(140deg,#b58dec 0%,#8f62d0 50%,#683ea8 100%)!important;text-shadow:0 1px 2px rgba(80,40,150,.25)}
+[data-pal=itroxo] .sec{justify-content:flex-start}
+[data-pal=itroxo] .sec>button,[data-pal=itroxo] .sec>a{margin-left:auto}
+[data-pal=itroxo] .gcard:before{background:radial-gradient(120% 80% at 12% -10%,rgba(255,255,255,.3) 0%,rgba(255,255,255,.06) 38%,transparent 60%),radial-gradient(rgba(255,255,255,.14) 1.5px,transparent 1.7px) 0 0/18px 18px}
+[data-pal=itroxo] .deco{display:block;position:absolute;top:10px;right:14px;width:46px;height:32px;z-index:2;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 44'%3E%3Cg fill='%23fff' fill-opacity='.92' stroke='%23fff' stroke-linejoin='round'%3E%3Cpath d='M32 20C24 8 8 2 5 9s3 22 27 15z'/%3E%3Cpath d='M32 20c8-12 24-18 27-11s-3 22-27 15z'/%3E%3Cpath d='M29 22l-8 20 7-3 3 5 1-21zM35 22l8 20-7-3-3 5-1-21z'/%3E%3C/g%3E%3Ccircle cx='32' cy='21' r='5' fill='%23ffd2e2' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 2px 3px rgba(160,50,90,.25));pointer-events:none}
+[data-pal=itroxo] .deco:after{content:'✦ ✧';position:absolute;right:52px;top:6px;color:#fff;font-size:12px;letter-spacing:4px;opacity:.85;white-space:nowrap}
+[data-pal=itroxo] .card,[data-pal=itroxo] .tday .tgrp,[data-pal=itroxo] .rbk,[data-pal=itroxo] .pstep,[data-pal=itroxo] .pcard,[data-pal=itroxo] .quick{outline:1.5px dashed rgba(179,139,240,.45);outline-offset:-6px}
+[data-pal=itroxo] .card,[data-pal=itroxo] .tday .tgrp,[data-pal=itroxo] .pcard{border-radius:24px;background:#fcfaff}
+[data-pal=itroxo] .tday .tgrp{background:#f6f0ff}
+[data-pal=itroxo] .sec:before{content:'';display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23a37ae0' d='M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.6 4.5c2.2 0 3.6 1.3 5.4 3.3 1.8-2 3.2-3.3 5.4-3.3 3.6 0 5.7 3.9 4.2 7.3C19.5 16.4 12 21 12 21z'/%3E%3C/svg%3E") center/contain no-repeat}
+[data-pal=itroxo] .sec{color:var(--rose-d)}
+[data-pal=itroxo] h1.hi{color:var(--ink)}
+[data-pal=itroxo] h1.hi .script{color:var(--rose-d);font-size:1.15em}
+[data-pal=itroxo] .htile.hp{background:#fff;border-color:rgba(179,139,240,.4)!important}
+[data-pal=itroxo] .htile.hp .hknob{background:#efe4ff;color:#8b60d6}
+[data-pal=itroxo] .htile.hp.done{background:linear-gradient(90deg,#fff 0%,#f8f3ff 35%,#e6d8ff 70%,#cfb5f8 100%)!important}
+[data-pal=itroxo] .htile.hp.done .hknob{background:linear-gradient(145deg,#d1b9f9,#a57ae2);box-shadow:0 3px 10px rgba(139,96,214,.35)}
+[data-pal=itroxo] .htile.hp.done:before{content:'♡';position:absolute;right:62px;top:8px;color:#a57ae2;font-size:12px;z-index:1;opacity:.7}
+[data-pal=itroxo] .harea{background:#efe4ff;color:#8b60d6}
+[data-pal=itroxo] .btn.primary,[data-pal=itroxo] .btn.p{background:linear-gradient(145deg,#b894ef,#8b60d6);color:#fff;box-shadow:0 6px 14px rgba(139,96,214,.3)}
+[data-pal=itroxo] nav.bar{background:#fcfaff;border-top:1.5px dashed rgba(179,139,240,.5)}
+[data-pal=itroxo] nav.bar button.on:after{content:'♥';background:none!important;color:#a57ae2;font-size:9px;width:auto!important;height:auto!important;line-height:1}
+[data-pal=itroxo] nav.bar .fab{background:linear-gradient(145deg,#d1b9f9,#a57ae2 55%,#7f55c8)!important;box-shadow:0 6px 16px rgba(139,96,214,.4),0 0 0 3px #fff!important}
+[data-pal=itroxo] .vmini{background:#f6f0ff}
+[data-pal=itroxo],[data-pal=nudeit],[data-pal=lavanda]{--hk-on:#ffe6a6;--gold-t:#a87d2a}
+[data-pal=itroxo] .wbars i.on,[data-pal=itroxo] .mbar i,[data-pal=itroxo] .hdots i.on{background:#ffe6a6}
+[data-pal=itroxo] .gcard .hk{text-shadow:0 1px 3px rgba(60,30,120,.35)}
+[data-pal=itroxo] .gcard .ring svg circle:last-child{stroke:#ffe6a6}
+[data-pal=itroxo] .gcard .hS{color:rgba(255,255,255,.9)}
+[data-pal=itroxo] .gcard .ring small{color:rgba(255,255,255,.85)}
+[data-pal=itroxo] .vmini:before{content:'💜';margin-right:4px}
+[data-pal=itroxo] .chip{background:#fff;border-color:rgba(179,139,240,.45)!important}
+[data-pal=itroxo] .ar .tic{background:#fff;border:1.5px solid #dfd0fb;color:#8b60d6}
+[data-pal=itroxo] .toast,[data-pal=itroxo] #toastBox>div{background:#8b60d6;color:#fff}
+[data-pal=itroxo] .psum{background:linear-gradient(140deg,#d9c6fb,#b48fec 50%,#8f64d4)}
+[data-pal=itroxo] .phead .pnum{background:#efe4ff}
+[data-pal=itroxo] .hdots i.on{background:#fff}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -2114,11 +2156,11 @@ A.sres=d=>{closeSheet();const t=d.t;
 A.openSearch=()=>{openSheet('search');setTimeout(()=>{const i=document.getElementById('gsearch');if(i)i.focus()},50)};
 
 /* ---------- modo escuro ---------- */
-const LIGHTPALS=['itgirl','nudeit'];
+const LIGHTPALS=['itgirl','itroxo','nudeit'];
 function applyTheme(){let pl=(state.settings&&state.settings.palette)||'rose';try{if(!CLOUD||state._uid)localStorage.setItem('go-look',JSON.stringify({p:pl,t:(state.settings&&state.settings.theme)||'auto'}))}catch(e){}if(!PALS.some(x=>x[0]===pl))pl='rose';if(pl==='rose')delete document.documentElement.dataset.pal;else document.documentElement.dataset.pal=pl;const t=(state.settings&&state.settings.theme)||'auto';const dark=!LIGHTPALS.includes(pl)&&(t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#1d1719':getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#fcf9f8'}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 A.theme=d=>{state.settings.theme=d.v;applyTheme();save(1)};
-const PALS=[['rose','Nude','#c4927f','#f4e9e5'],['bege','Bege','#b39b78','#f2ede6'],['oliva','Oliva','#7d8a5e','#ebeadf'],['pb','Preto e branco','#1d1c1c','#f5f1f0'],['lavanda','Lavanda','#9a86de','#efeafd'],['nudeit','Nude delicado 🎀','#7d6157','#f4e9e5'],['itgirl','It girl 🎀','#e07aa3','#ffe1ec']];
+const PALS=[['rose','Nude','#c4927f','#f4e9e5'],['bege','Bege','#b39b78','#f2ede6'],['oliva','Oliva','#7d8a5e','#ebeadf'],['pb','Preto e branco','#1d1c1c','#f5f1f0'],['lavanda','Lavanda','#9a86de','#efeafd'],['nudeit','Nude delicado 🎀','#7d6157','#f4e9e5'],['itgirl','It girl 🎀','#e07aa3','#ffe1ec'],['itroxo','It girl lilás 💜','#a37ae0','#ece1ff']];
 A.inspo=d=>{state.settings.inspo=d.v;save(1);render()};
 A.palette=d=>{state.settings.palette=d.v;applyTheme();save(1)};
 const modsCard=()=>`<h2 class="sec">Seu GO!</h2><div class="card" style="margin-top:0"><div class="small muted" style="margin-bottom:12px;line-height:1.5">Mostre só o que faz sentido pra sua rotina agora. Agenda e tarefas ficam sempre. Nada é apagado ao esconder: é só ligar de novo.</div><div class="mods">${MODS.map(([k,l,i,d])=>`<button class="mod ${on(k)?'on':''}" data-a="mod" data-k="${k}" aria-pressed="${on(k)}"><span class="mi">${ic(i,17)}</span><span class="grow"><b>${l}</b><small>${d}</small></span><span class="sw ${on(k)?'on':''}"><i></i></span></button>`).join('')}</div></div>`;
