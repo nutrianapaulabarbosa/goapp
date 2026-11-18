@@ -1043,6 +1043,13 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .pmk{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-d);font-weight:600}.pmt{font-family:var(--serif);font-size:19px;line-height:1.45;color:#3a2f2f;margin-top:6px}.pmr{font-family:var(--script);font-size:20px;color:var(--rose-d);margin-top:6px}
 .hdinv{display:flex;align-items:center;gap:6px;width:100%;background:none;border:0;padding:0;text-align:left;color:var(--muted);font-style:italic}
 .hjar{display:flex;gap:6px;align-items:center;padding:10px 14px 10px 4px}.hjbtn{flex:none;background:none;border:0;padding:0;cursor:pointer}.hjbtn .jarsvg{width:96px;height:114px}.hjbtn.wiggle{animation:jarw 3.2s ease-in-out infinite}.hjt{font-family:var(--serif);font-size:16.5px;line-height:1.42;margin-top:4px;color:var(--ink)}
+
+/* home mais leve */
+.hchips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:2px 16px 4px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 22px),transparent)}.hchips::-webkit-scrollbar{display:none}.hchips .chip{flex:none;white-space:nowrap;font-size:12px;padding:6px 11px}
+.hdevo{padding:14px 14px 12px}.hdevo .hdv{font-size:15px;margin:10px 2px 0}.hdevo .hdv span{font-size:15px}.hdevo .hdinv{font-size:13.5px}
+.hdrow{gap:6px;margin-top:10px}.hdjar{border:0;background:none;padding:4px 2px;font-size:12.5px;color:var(--rose-d);flex:none;gap:5px}.hdjar svg{width:15px;height:15px}.hdrow .hdjar+.hdjar{margin-left:auto}
+.hjar{padding:8px 14px 8px 6px;gap:10px}.hjbtn .jarsvg{width:58px;height:70px}.hjt{font-size:15px;line-height:1.38;margin-top:2px}.hjar .pmk{font-size:10px}
+[data-pal=itroxo] .gcard{background:linear-gradient(140deg,#cbb0f2 0%,#ad8ae3 55%,#9471d2 100%)!important;text-shadow:0 1px 2px rgba(80,40,150,.18)}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -3871,7 +3878,7 @@ Object.assign(A,{promDraw:()=>{const P=prom(),t=today();if(P.day&&P.day.d===t){t
   return r}}
 /* início: potinho de mensagens + promessa no card de Deus */
 function homeJarCard(){const J=jar(),t=today(),d=J.day&&J.day.d===t?J.day:null;
-  return `<div class="card hjar"><button class="hjbtn ${d?'':'wiggle'}" data-a="${d?'sheet':'homeJarDraw'}" data-s="jarOwn" aria-label="Potinho de mensagens">${jarSVG(jarPool().length)}</button><div class="grow">${d?`<div class="pmk">mensagem de hoje</div><div class="hjt">“${esc(d.t)}”</div><div class="jpb" style="justify-content:flex-start"><button class="lnk" data-a="jarFav">${J.fav.some(f=>f.t===d.t)?'♥ guardada':'♡ guardar'}</button><button class="lnk" data-a="jarShare">compartilhar</button></div>`:`<div class="pmk">potinho de mensagens</div><div class="hjt" style="color:var(--muted)">Toque no potinho e tire a sua mensagem de hoje ✨</div>`}</div></div>`}
+  return `<div class="card hjar"><button class="hjbtn ${d?'':'wiggle'}" data-a="${d?'sheet':'homeJarDraw'}" data-s="jarOwn" aria-label="Potinho de mensagens">${jarSVG(jarPool().length)}</button><div class="grow">${d?`<div class="pmk">mensagem de hoje</div><div class="hjt">“${esc(d.t)}”</div><div class="jpb" style="justify-content:flex-start"><button class="lnk" data-a="jarFav">${J.fav.some(f=>f.t===d.t)?'♥ guardada':'♡ guardar'}</button><button class="lnk" data-a="jarShare">compartilhar</button></div>`:`<div class="pmk">potinho de mensagens</div><div class="hjt" style="color:var(--muted)">Toque e tire a sua mensagem de hoje ✨</div>`}</div></div>`}
 A.homeJarDraw=()=>{A.jarDraw();setTimeout(render,750)};
 {const _h5=S.home;S.home=()=>{const r=_h5();if(hardOn())return r;
   // card do devocional: promessa no lugar do potinho
