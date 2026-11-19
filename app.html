@@ -1050,6 +1050,12 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 .hdrow{gap:6px;margin-top:10px}.hdjar{border:0;background:none;padding:4px 2px;font-size:12.5px;color:var(--rose-d);flex:none;gap:5px}.hdjar svg{width:15px;height:15px}.hdrow .hdjar+.hdjar{margin-left:auto}
 .hjar{padding:8px 14px 8px 6px;gap:10px}.hjbtn .jarsvg{width:58px;height:70px}.hjt{font-size:15px;line-height:1.38;margin-top:2px}.hjar .pmk{font-size:10px}
 [data-pal=itroxo] .gcard{background:linear-gradient(140deg,#cbb0f2 0%,#ad8ae3 55%,#9471d2 100%)!important;text-shadow:0 1px 2px rgba(80,40,150,.18)}
+
+.ckin{padding:14px 14px 12px}.ckq{font-family:var(--serif);font-size:18px;line-height:1.2;margin:0 2px 10px;color:var(--ink)}
+.ckf{display:flex;justify-content:space-between;gap:4px}.ckf button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--rbg);border:0;border-radius:16px;padding:9px 0 7px;font:inherit;cursor:pointer;transition:transform .15s}.ckf button:active{transform:scale(.92)}.ckf span{font-size:25px;line-height:1}.ckf small{font-size:10.5px;color:var(--muted)}
+.ckdone{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;font:inherit;text-align:left;color:var(--ink);cursor:pointer}.cke{font-size:28px;width:44px;height:44px;border-radius:14px;background:var(--rbg);display:grid;place-items:center;flex:none}.ckdone b{display:block;font-family:var(--serif);font-weight:400;font-size:16.5px;line-height:1.25}.ckdone small{font-size:11.5px;color:var(--muted)}.ckdone>svg,.ckcy>svg{color:var(--muted);flex:none}
+.ckcy{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;border-top:1px dashed var(--line);margin-top:12px;padding:10px 2px 0;font:inherit;font-size:12.5px;line-height:1.4;text-align:left;color:var(--muted);cursor:pointer}.ckcy b{color:var(--ink);font-weight:500}.ckcy .cydot{flex:none}.ckin>.ckcy:first-child{border-top:0;margin-top:0;padding-top:0}
+.hfl{white-space:nowrap}.hfl svg{vertical-align:-1px}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -3887,6 +3893,23 @@ A.homeJarDraw=()=>{A.jarDraw();setTimeout(render,750)};
   r.b=r.b.replace(/<div class="hdv">[\s\S]*?<\/div>/,pd?`<div class="hdv">“${esc(pd.t)}”<span>${esc(pd.r)}</span></div>`:`<button class="hdv hdinv" data-a="homeProm">Abra a caixinha e receba a promessa de hoje ${ic('chevR',14)}</button>`);
   const jc=homeJarCard(),k=r.b.indexOf('<form class="quick"');r.b=k>=0?r.b.slice(0,k)+jc+r.b.slice(k):r.b+jc;return r}}
 A.homeProm=()=>{ui.screen='devocional';ui.devoTab='hoje';ui.devoDate=null;render();scrollTo(0,0);setTimeout(()=>{const e=document.querySelector('.boxc');if(e)e.scrollIntoView({behavior:'smooth',block:'center'})},80)};
+/* ====================== CHECK-IN DO DIA (substitui as etiquetas do início) ====================== */
+const CYTIP={m:'energia mais baixa é normal, pega leve no treino',f:'energia subindo, ótimo dia pra treino mais pesado',o:'seu pico de energia, aproveita',l:'mais fome e retenção são normais, capricha na proteína e na fibra'};
+function ckCycle(){if(typeof cyOn!=='function'||!cyOn())return '';const i=cyInfo();if(!i)return '';const ph=i.ph&&!i.horm?CYP[i.ph]:null;
+  let txt;if(i.open)txt=`<b>dia ${i.day} da menstruação</b> · ${CYTIP.m}`;else if(!i.horm&&i.late>0)txt=`<b>atraso de ${i.late} ${i.late===1?'dia':'dias'}</b> · anota aqui quando descer`;else if(-i.late<=3&&-i.late>=0)txt=`<b>menstruação em ~${-i.late} ${-i.late===1?'dia':'dias'}</b> · ${CYTIP.l}`;else txt=`<b>dia ${i.day}${ph?' · fase '+ph.n:''}</b>${ph&&CYTIP[i.ph]?' · '+CYTIP[i.ph]:''}`;
+  return `<button class="ckcy" data-a="cyGo"><i class="cydot" style="background:${ph?ph.c:'var(--rose)'}"></i><span>${txt}</span>${ic('chevR',14)}</button>`}
+function ckCard(){const t=today(),hr=new Date().getHours(),mOn=on('humor'),mv=state.mood[t],faces=['😣','😕','😐','🙂','😄'],lb=['difícil','pra baixo','neutra','bem','ótima'];
+  const cy=ckCycle();if(!mOn&&!cy)return '';let top='';
+  if(mOn&&!mv){const q=hr>=4&&hr<12?'como você acordou?':hr>=18||hr<4?'como foi o seu dia?':'como você está agora?';
+    top=`<div class="ckq">${q}</div><div class="ckf">${faces.map((f,i)=>`<button data-a="ckMood" data-v="${i+1}" aria-label="${lb[i]}"><span>${f}</span><small>${lb[i]}</small></button>`).join('')}</div>`}
+  else if(mOn){const r=moodMsg(t),nt=state.moodNote[t];
+    top=`<button class="ckdone" data-a="sheet" data-s="moodCard"><span class="cke">${faces[mv-1]}</span><span class="grow"><b>${r&&!r.crisis?esc(r.t):'obrigada por contar'}</b><small>${nt&&nt.tags&&nt.tags.length?esc(nt.tags.slice(0,3).join(' · '))+' · ':''}toque pra ver sua mensagem</small></span>${ic('chevR',14)}</button>`}
+  return `<div class="card ckin">${top}${cy}</div>`}
+A.ckMood=d=>{const t=today(),v=+d.v,hr=new Date().getHours();state.mood[t]=v;if(hr>=4&&hr<12){(state.energy=state.energy||{})[t]=v}if(navigator.vibrate)navigator.vibrate(12);save();openSheet('moodWhy')};
+{const _hc=S.home;S.home=()=>{const r=_hc();if(hardOn())return r;
+  r.b=r.b.replace(/<div class="hchips">[\s\S]*?<\/div>/,ckCard());
+  const st=appStreak();if(st)r.b=r.b.replace(/(<div class="gcard">[\s\S]*?<div class="hS">)([^<]*)(<\/div>)/,(m,a,b,c)=>a+b+` · <span class="hfl">${ic('flame',12)} ${st} ${st===1?'dia':'dias'}</span>`+c);
+  return r}}
 </script>
 </body>
 </html>
