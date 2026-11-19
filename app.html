@@ -1052,10 +1052,12 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 [data-pal=itroxo] .gcard{background:linear-gradient(140deg,#cbb0f2 0%,#ad8ae3 55%,#9471d2 100%)!important;text-shadow:0 1px 2px rgba(80,40,150,.18)}
 
 .ckin{padding:14px 14px 12px}.ckq{font-family:var(--serif);font-size:18px;line-height:1.2;margin:0 2px 10px;color:var(--ink)}
-.ckf{display:flex;justify-content:space-between;gap:4px}.ckf button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--rbg);border:0;border-radius:16px;padding:9px 0 7px;font:inherit;cursor:pointer;transition:transform .15s}.ckf button:active{transform:scale(.92)}.ckf span{font-size:25px;line-height:1}.ckf small{font-size:10.5px;color:var(--muted)}
+.ckf{display:flex;justify-content:space-between;gap:4px}.ckf button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--rbg);border:0;border-radius:16px;padding:9px 0 7px;font:inherit;cursor:pointer;transition:transform .15s}.ckf button:active{transform:scale(.92)}.ckf .mface{font-size:32px;display:block}.ckf small{font-size:10.5px;color:var(--muted)}
 .ckdone{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;font:inherit;text-align:left;color:var(--ink);cursor:pointer}.cke{font-size:28px;width:44px;height:44px;border-radius:14px;background:var(--rbg);display:grid;place-items:center;flex:none}.ckdone b{display:block;font-family:var(--serif);font-weight:400;font-size:16.5px;line-height:1.25}.ckdone small{font-size:11.5px;color:var(--muted)}.ckdone>svg,.ckcy>svg{color:var(--muted);flex:none}
 .ckcy{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;border-top:1px dashed var(--line);margin-top:12px;padding:10px 2px 0;font:inherit;font-size:12.5px;line-height:1.4;text-align:left;color:var(--muted);cursor:pointer}.ckcy b{color:var(--ink);font-weight:500}.ckcy .cydot{flex:none}.ckin>.ckcy:first-child{border-top:0;margin-top:0;padding-top:0}
 .hfl{white-space:nowrap}.hfl svg{vertical-align:-1px}
+
+.mface{display:inline-block;vertical-align:-.15em;flex:none}.cke .mface{font-size:32px}.ckf button{transition:transform .15s,background .2s}.ckf button:hover{background:color-mix(in srgb,var(--rose) 22%,var(--rbg))}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1273,7 +1275,7 @@ S.home=()=>{
   const hasWaterHabit=hs.some(x=>x.auto==='water');
   const total=tk.length+hs.length+(hasWaterHabit?0:1),done=tk.filter(x=>x.done).length+hd+(!hasWaterHabit&&water>=state.settings.waterGoal?1:0);
   const p=total?done/total:0,nx=ev.find(e=>e.time&&e.time>=nowHM())||ev.find(e=>!e.time);
-  const mv=state.mood[t],faces=['😣','😕','😐','🙂','😄'],mn=state.moodNote[t];
+  const mv=state.mood[t],faces=MFX(),mn=state.moodNote[t];
   const wd=[0,1,2,3,4,5,6].map(i=>addDays(weekStart(t),i)),wr=wd.map(d=>d>t?null:dayRatio(d)),wv=wr.filter(v=>v!=null),wavg=wv.length?Math.round(wv.reduce((a,b)=>a+b,0)/wv.length*100):0;
   const slp=state.sleep[t]??state.sleep[addDays(t,-1)],wg=state.settings.waterGoal||2000,fm=finMonth(ym(t));
   const sl1=`<div class="hsl"><div class="rrow1">${ring(p,'#efd9cc',pctBig(Math.round(p*100)),'',84)}<div class="grow" style="min-width:0"><div class="hk">${nx?'próximo':'hoje'}</div><div class="hT">${nx?esc(nx.title):'Dia sem compromissos'}</div><div class="hS">${nx?(nx.time?nx.time:'o dia todo')+' · ':''}${done} de ${total} ${total===1?'feito':'feitos'}</div></div></div></div>`;
@@ -1563,9 +1565,9 @@ const SH={
     const cats=['Saúde','Corpo','Mente','Espiritual','Beleza','Rotina','Trabalho'];
     return `<h3>${h.id?'Editar hábito':type==='quit'?'Novo desapego':'Novo hábito'}</h3><form data-f="habit">${hid('id',h.id)}${hid('type',type)}${fld(type==='quit'?'O que você quer parar?':'Hábito',`<input name="name" required value="${esc(h.name)}" placeholder="${type==='quit'?'Ex.: refrigerante':'Ex.: alongar 10 min'}">`)}${type==='quit'?fld('Desde quando você está sem?',`<input type="date" name="since" value="${h.since||today()}">`):fld('Categoria',`<select name="cat">${cats.map(c=>`<option ${c===(h.cat||'Saúde')?'selected':''}>${c}</option>`).join('')}</select>`)+((state.goals||[]).filter(g=>!g.done||g.per==='mes'||g.per==='semana').length?fld('Ligar a uma meta (opcional)',`<select name="goal"><option value="">Nenhuma</option>${(state.goals||[]).filter(g=>!g.done||g.per==='mes'||g.per==='semana').map(g=>`<option value="${g.id}" ${h.id&&g.hab===h.id?'selected':''}>${esc(g.title)} (${fmtVal(g,g.target)})</option>`).join('')}</select>`):'')+`<div class="fld"><span>Dias</span><div class="days">${[1,2,3,4,5,6,0].map(i=>`<label><input type="checkbox" name="days" value="${i}" ${days.includes(i)?'checked':''}><span>${WDS[i]}</span></label>`).join('')}</div></div>`+`<div class="two qtyf">${fld('Medir quantidade?',`<select name="unit">${UNITS.map(([u,l])=>`<option value="${u}" ${(h.unit||'')===u?'selected':''}>${l}</option>`).join('')}</select>`)}${fld('Meta por dia',`<input name="qty" inputmode="decimal" value="${h.qty?String(h.qty).replace('.',','):''}" placeholder="ex.: 50">`)}</div><div class="small muted qtyh" style="margin:-4px 0 12px">Ex.: Cardio · minutos · 50. Aí você registra quanto fez e as metas somam a quantidade.</div>`}<button class="btn primary full">Salvar</button></form>`},
   relapse:d=>{const h=state.habits.find(x=>x.id===d.id);return `<h3>Tudo bem, recomeça hoje</h3><div class="small muted" style="margin:-6px 0 16px;line-height:1.5">Recaída faz parte do processo. O contador de “${esc(h?.name)}” volta pra zero e seu recorde fica guardado.</div><button class="btn primary full" data-a="doRelapse" data-id="${d.id}">Zerar contador</button><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Cancelar</button>`},
-  moodPick:()=>{const faces=['😣','😕','😐','🙂','😄'],lbl=['difícil','pra baixo','neutra','bem','ótima'];return `<h3>como você está hoje?</h3><div class="mpick">${faces.map((f,i)=>`<button data-a="mood" data-v="${i+1}"><span>${f}</span><small>${lbl[i]}</small></button>`).join('')}</div>`},
-  moodWhy:()=>{const t=today(),mv=state.mood[t],nt=state.moodNote[t]||{why:'',tags:[]},faces=['😣','😕','😐','🙂','😄'],lbl=['Difícil','Pra baixo','Neutra','Bem','Ótima'];
-    return `<div style="text-align:center;margin:-4px 0 14px"><div style="font-size:42px;line-height:1">${mv?faces[mv-1]:'🙂'}</div><h3 style="margin:8px 0 2px">o que te deixou assim?</h3><div class="small muted">${mv?'Hoje você está: '+lbl[mv-1]+'. ':''}Opcional, mas ajuda a enxergar padrões.</div></div>
+  moodPick:()=>{const faces=MFX(),lbl=['difícil','pra baixo','neutra','bem','ótima'];return `<h3>como você está hoje?</h3><div class="mpick">${faces.map((f,i)=>`<button data-a="mood" data-v="${i+1}"><span>${f}</span><small>${lbl[i]}</small></button>`).join('')}</div>`},
+  moodWhy:()=>{const t=today(),mv=state.mood[t],nt=state.moodNote[t]||{why:'',tags:[]},faces=MFX(),lbl=['Difícil','Pra baixo','Neutra','Bem','Ótima'];
+    return `<div style="text-align:center;margin:-4px 0 14px"><div style="font-size:42px;line-height:1">${mv?faces[mv-1]:faces[3]}</div><h3 style="margin:8px 0 2px">o que te deixou assim?</h3><div class="small muted">${mv?'Hoje você está: '+lbl[mv-1]+'. ':''}Opcional, mas ajuda a enxergar padrões.</div></div>
     <form data-f="moodWhy"><div class="small" style="color:var(--rose-d);font-weight:500;margin-bottom:8px">Tem a ver com…</div><div class="pick">${MOODTAGS.map(g=>`<label><input type="checkbox" name="tg" value="${g}" ${nt.tags.includes(g)?'checked':''}><span>${g}</span></label>`).join('')}</div>
     <label class="fld" style="margin-top:14px"><span>Quer escrever um pouquinho?</span><textarea name="why" rows="3" maxlength="500" placeholder="Ex.: dormi mal e o dia no trabalho foi puxado">${esc(nt.why||'')}</textarea></label>
     <button class="btn primary full">Salvar</button><button type="button" class="btn full" style="margin-top:6px;background:none;color:var(--muted)" data-a="closeSheet">Agora não</button></form>`},
@@ -1915,7 +1917,7 @@ function repHealth(r){
   const days=daysIn(r.a,r.e),g=state.settings.waterGoal,sg=state.settings.sleepGoal;
   const wv=days.map(d=>state.water[d]).filter(v=>v>0),sv=days.map(d=>state.sleep[d]).filter(v=>v!=null),mv=days.map(d=>state.mood[d]).filter(Boolean);
   const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0,hit=days.filter(d=>(state.water[d]||0)>=g).length;
-  const faces=['😣','😕','😐','🙂','😄'],cnt=[1,2,3,4,5].map(n=>mv.filter(v=>v===n).length);
+  const faces=MFX(),cnt=[1,2,3,4,5].map(n=>mv.filter(v=>v===n).length);
   const L=v=>(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+' L';
   return rcard('heart',C.health,'saúde','água, sono e humor',
     `<div class="rsub" style="margin-top:0">água</div>${kpis([[wv.length?L(avg(wv)):'—','média por dia'],[hit+'/'+days.length,'dias na meta'],[L(g),'meta diária']])}${bars(series(r,d=>state.water[d]||null),'var(--sky)',g)}
@@ -2911,7 +2913,7 @@ function moodMsg(d){const mv=state.mood[d]||3,n=state.moodNote[d]||{tags:[],why:
   const cph=typeof cyPhaseOf==='function'&&cyOn()?cyPhaseOf(d):null;
   return {lvl,mv,t:m[0],msg:m[1],act:MACT[m[2]],vref:m[3],persist:low>=3,cph:lvl!=='hi'&&(cph==='l'||cph==='m')?cph:null};
 }
-SH.moodCard=()=>{const t=today(),r=moodMsg(t),faces=['😣','😕','😐','🙂','😄'];
+SH.moodCard=()=>{const t=today(),r=moodMsg(t),faces=MFX();
   if(r.crisis)return `<div class="mcard mcris"><div class="mce">🤍</div><h3>obrigada por contar</h3><p>O que você está sentindo importa, e você não precisa passar por isso sozinha. Converse agora com alguém de confiança ou ligue para o <b>CVV, no 188</b>. A ligação é gratuita e eles atendem 24 horas, também pelo chat em cvv.org.br.</p><p class="small">Se estiver em perigo agora, ligue para o <b>192 (SAMU)</b>.</p><a class="btn primary full" href="tel:188">Ligar para o CVV (188)</a><button class="btn ghost full" style="margin-top:8px" data-a="closeSheet">Fechar</button></div>`;
   const useV=(state.settings.inspo||'versiculo')==='versiculo'||(state.moodNote[t]||{tags:[]}).tags.includes('Fé');
   return `<div class="mcard m${r.lvl}"><div class="mce">${faces[r.mv-1]}</div><h3>${esc(r.t)}</h3><p>${esc(r.msg)}</p>
@@ -3588,7 +3590,7 @@ function retroData(m){const D=mDays(m);let s=0,dn=0;const hb=doHabits();D.forEac
   const B=state.body&&state.body.w?Object.entries(state.body.w).filter(([d])=>ym(d)===m).sort():[];const dkg=B.length>1?B[B.length-1][1]-B[0][1]:null;
   const devo=D.filter(d=>hasDevo(d)).length,bz=state.biz&&state.biz.on?bizMonth(m):null;
   return {m,pct:s?Math.round(dn/s*100):0,best,gym:logs.length,ton:logs.reduce((a,l)=>a+gVol(l),0)/1000,pages,books,wavg,wgoal,mood:mtop?+mtop[0]:null,dkg,devo,bz,days:D.length}}
-S.retro=()=>{const m=ui.retroM||prevM(ym(today())),R=retroData(m),faces=['😣','😕','😐','🙂','😄'],cur=m===ym(today());
+S.retro=()=>{const m=ui.retroM||prevM(ym(today())),R=retroData(m),faces=MFX(),cur=m===ym(today());
   const tile=(big,lbl,sub='')=>`<div class="rtile"><b>${big}</b><span>${lbl}</span>${sub?`<small>${sub}</small>`:''}</div>`;
   let b=`<div class="navrow" style="margin-top:0"><div class="seg" style="align-items:center"><button data-a="retroM" data-n="-1">${ic('chevL',16)}</button><span style="padding:0 10px;font-size:14px">${mLabel(m)}</span><button data-a="retroM" data-n="1" ${cur?'disabled style="opacity:.3"':''}>${ic('chevR',16)}</button></div></div>
   <div class="gcard rhero"><span class="deco"></span><div class="hk">seu ${mLabel(m)}${cur?' até agora':''}</div><div class="rbig">${R.pct}%</div><div class="hS">dos hábitos cumpridos${R.best&&R.best[1]>1?` · maior sequência: ${esc(R.best[0])} (${R.best[1]} dias)`:''}</div></div>
@@ -3898,7 +3900,7 @@ const CYTIP={m:'energia mais baixa é normal, pega leve no treino',f:'energia su
 function ckCycle(){if(typeof cyOn!=='function'||!cyOn())return '';const i=cyInfo();if(!i)return '';const ph=i.ph&&!i.horm?CYP[i.ph]:null;
   let txt;if(i.open)txt=`<b>dia ${i.day} da menstruação</b> · ${CYTIP.m}`;else if(!i.horm&&i.late>0)txt=`<b>atraso de ${i.late} ${i.late===1?'dia':'dias'}</b> · anota aqui quando descer`;else if(-i.late<=3&&-i.late>=0)txt=`<b>menstruação em ~${-i.late} ${-i.late===1?'dia':'dias'}</b> · ${CYTIP.l}`;else txt=`<b>dia ${i.day}${ph?' · fase '+ph.n:''}</b>${ph&&CYTIP[i.ph]?' · '+CYTIP[i.ph]:''}`;
   return `<button class="ckcy" data-a="cyGo"><i class="cydot" style="background:${ph?ph.c:'var(--rose)'}"></i><span>${txt}</span>${ic('chevR',14)}</button>`}
-function ckCard(){const t=today(),hr=new Date().getHours(),mOn=on('humor'),mv=state.mood[t],faces=['😣','😕','😐','🙂','😄'],lb=['difícil','pra baixo','neutra','bem','ótima'];
+function ckCard(){const t=today(),hr=new Date().getHours(),mOn=on('humor'),mv=state.mood[t],faces=MFX(),lb=['difícil','pra baixo','neutra','bem','ótima'];
   const cy=ckCycle();if(!mOn&&!cy)return '';let top='';
   if(mOn&&!mv){const q=hr>=4&&hr<12?'como você acordou?':hr>=18||hr<4?'como foi o seu dia?':'como você está agora?';
     top=`<div class="ckq">${q}</div><div class="ckf">${faces.map((f,i)=>`<button data-a="ckMood" data-v="${i+1}" aria-label="${lb[i]}"><span>${f}</span><small>${lb[i]}</small></button>`).join('')}</div>`}
@@ -3910,6 +3912,14 @@ A.ckMood=d=>{const t=today(),v=+d.v,hr=new Date().getHours();state.mood[t]=v;if(
   r.b=r.b.replace(/<div class="hchips">[\s\S]*?<\/div>/,ckCard());
   const st=appStreak();if(st)r.b=r.b.replace(/(<div class="gcard">[\s\S]*?<div class="hS">)([^<]*)(<\/div>)/,(m,a,b,c)=>a+b+` · <span class="hfl">${ic('flame',12)} ${st} ${st===1?'dia':'dias'}</span>`+c);
   return r}}
+
+/* carinhas desenhadas (clean, na cor do tema) */
+function MFX(){return [1,2,3,4,5].map(mFace)}
+function mFace(v){const st='style="stroke:var(--rose-d)"',ey=v===5?`<path d="M11.5 18.5q2.5-3 5 0M23.5 18.5q2.5-3 5 0" ${st} stroke-width="2" fill="none" stroke-linecap="round"/>`:`<circle cx="14.5" cy="17.5" r="1.9" style="fill:var(--rose-d)"/><circle cx="25.5" cy="17.5" r="1.9" style="fill:var(--rose-d)"/>`;
+ const br=v===1?`<path d="M11 13.6l4.6-1.8M29 13.6l-4.6-1.8" ${st} stroke-width="1.8" stroke-linecap="round"/>`:'';
+ const mo=[,'<path d="M13.5 29q6.5-6 13 0" S fill="none"/>','<path d="M14.5 27.5q5.5-3 11 0" S fill="none"/>','<path d="M15 26.5h10" S/>','<path d="M14 24.5q6 5 12 0" S fill="none"/>','<path d="M13 23.5q7 9 14 0z" style="fill:var(--rose-d);stroke:var(--rose-d)" stroke-width="1.6" stroke-linejoin="round"/>'][v].replace(' S ',` ${st} stroke-width="2" stroke-linecap="round" `);
+ const ck=v>=4?'<ellipse cx="10.5" cy="23.5" rx="2.6" ry="1.6" fill="#f6a9bf" opacity=".5"/><ellipse cx="29.5" cy="23.5" rx="2.6" ry="1.6" fill="#f6a9bf" opacity=".5"/>':'';
+ return `<svg class="mface" viewBox="0 0 40 40" width="1em" height="1em" aria-hidden="true"><circle cx="20" cy="20" r="17" style="fill:color-mix(in srgb,var(--rose) ${10+v*4}%,#fff);stroke:var(--rose-d)" stroke-width="1.6"/>${ck}${br}${ey}${mo}</svg>`}
 </script>
 </body>
 </html>
