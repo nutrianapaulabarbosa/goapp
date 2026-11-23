@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<script>try{var L=JSON.parse(localStorage.getItem('go-look')||'null');if(L){var IC=['itgirl','itroxo','lavanda','oliva','bege','pb'];if(IC.indexOf(L.p)>=0){var ai=document.getElementById('appleIcon');if(ai)ai.href='icons/icon-'+L.p+'-180.png'}if(L.p&&L.p!=='rose')document.documentElement.dataset.pal=L.p;var d=['itgirl','itroxo','nudeit'].indexOf(L.p)<0&&(L.t==='dark'||(L.t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=d?'dark':'light'}}catch(e){}</script>
+<script>try{var L=JSON.parse(localStorage.getItem('go-look')||'null');if(L){var IC=['itgirl','itroxo','lavanda','oliva','bege','pb','bordo'];if(IC.indexOf(L.p)>=0){var ai=document.getElementById('appleIcon');if(ai)ai.href='icons/icon-'+L.p+'-180.png'}if(L.p&&L.p!=='rose')document.documentElement.dataset.pal=L.p;var d=['itgirl','itroxo','nudeit','bordo'].indexOf(L.p)<0&&(L.t==='dark'||(L.t!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=d?'dark':'light'}}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#fcf9f8">
@@ -1061,6 +1061,57 @@ html:not([data-theme=dark]) .chip.on{background:var(--plum)!important;border-col
 
 .hpw{font-size:10.5px;padding:3px 7px;margin-right:4px;letter-spacing:-.01em}
 .htile.hp.done:has(.hpw):before{right:34px!important;top:3px!important}
+
+/* ===== tema BORDÔ & OURO — mulher adulta, dona de si ===== */
+[data-pal=bordo]{--bg:#f8f3ee;--rbg:#f2e7df;--rose:#b8915a;--rose-d:#7a2237;--rose-l:#f6ede5;--line:#e8dcd1;--deep:#6e1e31;--deep-hi:#8f2f46;--deep-lo:#45101e;--deep-sh:rgba(80,16,32,.34);--hair:rgba(122,34,55,.30);--ink:#2a1519;--plum:#6e1e31;--plum2:#5a1727;--ringg:#c9a46a;--muted:#93807b;--glow:#efe2d6;--on:#fff;--track:#fff;--hk-on:#e8cf98;--gold-t:#9a7330;--gold:#c9a46a;--script:'Gazpacho','Playfair Display',Georgia,serif;--lg-bg:#5e1a2a;--lg-g:#f1e2c6;--lg-x:#c9a46a}
+[data-pal=bordo] body{background-color:var(--bg);background-image:radial-gradient(130% 60% at 100% -10%,rgba(201,164,106,.13),transparent 60%),radial-gradient(90% 50% at -10% 110%,rgba(110,30,49,.06),transparent 60%);background-attachment:fixed}
+[data-pal=bordo] .script,[data-pal=bordo] .hi em,[data-pal=bordo] .htile .hmot,[data-pal=bordo] .vday .vref,[data-pal=bordo] .vmini .vref,[data-pal=bordo] .psid,[data-pal=bordo] .htile.hp.done .hgoal,[data-pal=bordo] .dzscript,[data-pal=bordo] .dpint span,[data-pal=bordo] .dpintS{font-style:italic;font-weight:400;letter-spacing:-.005em}
+[data-pal=bordo] h1.hi{color:var(--ink);letter-spacing:-.01em}
+[data-pal=bordo] h1.hi .script{color:var(--rose-d);font-size:1.05em}
+/* card principal: vinho profundo com filete dourado */
+[data-pal=bordo] .gcard{background:linear-gradient(150deg,#8a2a41 0%,#6a1c2f 48%,#3f0e1b 100%)!important;color:#f8efe4;box-shadow:0 18px 38px rgba(70,14,30,.32),inset 0 0 0 1px rgba(232,207,152,.35)!important;text-shadow:none}
+[data-pal=bordo] .gcard:before{background:radial-gradient(110% 70% at 100% 0%,rgba(232,207,152,.20) 0%,transparent 55%),linear-gradient(115deg,transparent 62%,rgba(232,207,152,.07) 62.2%,transparent 75%)}
+[data-pal=bordo] .gcard:after{content:'';position:absolute;inset:8px;border:1px solid rgba(232,207,152,.22);border-radius:22px;pointer-events:none;z-index:0}
+[data-pal=bordo] .gcard .hk{color:#e8cf98;letter-spacing:.22em}
+[data-pal=bordo] .gcard .ring svg circle:last-child{stroke:#e8cf98}
+[data-pal=bordo] .gcard .hS,[data-pal=bordo] .gcard .ring small{color:rgba(248,239,228,.85)}
+[data-pal=bordo] .wbars i.on,[data-pal=bordo] .mbar i,[data-pal=bordo] .hdots i.on{background:#e8cf98}
+[data-pal=bordo] .deco{display:none!important}
+/* cartões: marfim, linhas finas, cantos mais sóbrios */
+[data-pal=bordo] .card,[data-pal=bordo] .tday .tgrp,[data-pal=bordo] .pcard,[data-pal=bordo] .rbk,[data-pal=bordo] .pstep,[data-pal=bordo] .quick{outline:none!important;border-radius:20px;background:#fffcf8;border:1px solid var(--line)!important;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 8px 22px rgba(60,20,30,.05)}
+[data-pal=bordo] .tday .tgrp{background:#fbf6f0}
+[data-pal=bordo] .sec{color:var(--gold-t);letter-spacing:.2em;font-weight:600}
+[data-pal=bordo] .sec:before{content:'';display:inline-block;width:14px;height:1px;background:var(--gold);margin-right:8px;vertical-align:middle}
+[data-pal=bordo] .sec svg{display:none}
+/* hábitos */
+[data-pal=bordo] .htile.hp{background:#fffcf8;border-color:#e6d6c8!important}
+[data-pal=bordo] .htile.hp .hknob{background:#f4e9e0;color:#7a2237}
+[data-pal=bordo] .htile.hp.done{background:linear-gradient(90deg,#fffcf8 0%,#f8eee6 40%,#efdccd 75%,#e5c9b3 100%)!important}
+[data-pal=bordo] .htile.hp.done .hknob{background:linear-gradient(145deg,#8f2f46,#5e1a2a);color:#e8cf98;box-shadow:0 4px 12px rgba(94,26,42,.35)}
+[data-pal=bordo] .htile.hp.done:before{content:'✦';position:absolute;right:62px;top:7px;color:var(--gold);font-size:10px;z-index:1;opacity:.9}
+[data-pal=bordo] .harea{background:#f4e9e0;color:#7a2237;letter-spacing:.08em}
+/* botões, chips, navegação */
+[data-pal=bordo] .btn.primary,[data-pal=bordo] .btn.p{background:linear-gradient(145deg,#8a2a41,#5e1a2a);color:#f8efe4;box-shadow:0 6px 16px rgba(94,26,42,.28)}
+[data-pal=bordo] .btn.soft{background:#f4e9e0;color:#7a2237}
+[data-pal=bordo] .chip{background:#fffcf8;border-color:#e2d2c4!important}
+[data-pal=bordo] nav.bar{background:rgba(255,252,248,.96);border-top:1px solid #e6d6c8;box-shadow:0 -8px 26px rgba(60,20,30,.07)}
+[data-pal=bordo] nav.bar button.on{color:#7a2237}
+[data-pal=bordo] nav.bar button.on:after{content:'';background:var(--gold)!important;width:14px!important;height:2px!important;border-radius:2px}
+[data-pal=bordo] nav.bar .fab{background:linear-gradient(145deg,#8f2f46,#5e1a2a 60%,#45101e)!important;color:#e8cf98;box-shadow:0 8px 20px rgba(94,26,42,.38),0 0 0 3px #fffcf8,0 0 0 4px rgba(201,164,106,.55)!important}
+[data-pal=bordo] .ar .tic{background:#fffcf8;border:1.5px solid #e2cfbd;color:#7a2237}
+[data-pal=bordo] .toast,[data-pal=bordo] #toastBox>div{background:#4a1220;color:#f8efe4}
+[data-pal=bordo] .psum{background:linear-gradient(150deg,#8a2a41,#5e1a2a 60%,#3f0e1b);color:#f8efe4}
+[data-pal=bordo] .vmini{background:#fbf6f0}
+[data-pal=bordo] .bar i,[data-pal=bordo] .pbar i{background:linear-gradient(90deg,#c9a46a,#a6803f)}
+[data-pal=bordo] .kbadge{background:#f4e9e0;color:#7a2237}
+[data-pal=bordo] .mface circle:first-child{fill:#fbf3ea!important}
+[data-pal=bordo] .ckf button{background:#f6ede5}
+[data-pal=bordo] .promcard{border-top-color:var(--gold)!important}
+[data-pal=bordo] input:focus,[data-pal=bordo] textarea:focus,[data-pal=bordo] select:focus{border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(201,164,106,.18)}
+[data-pal=bordo] .sec{justify-content:flex-start}[data-pal=bordo] .sec>button,[data-pal=bordo] .sec>a{margin-left:auto;letter-spacing:0;color:#7a2237}
+[data-pal=bordo] .htile.hwater .hfill,[data-pal=bordo] .htile.hp.hwater .hfill{background:linear-gradient(90deg,rgba(232,213,178,.45),rgba(212,180,128,.55))!important}
+[data-pal=bordo] .htile.hwater.drag .hfill{background:linear-gradient(90deg,rgba(220,192,140,.5),rgba(190,150,90,.6))!important}
+[data-pal=bordo] .htile.hp.hwater .hknob{background:#f3e6cf;color:#9a7330}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -2233,13 +2284,13 @@ A.sres=d=>{closeSheet();const t=d.t;
 A.openSearch=()=>{openSheet('search');setTimeout(()=>{const i=document.getElementById('gsearch');if(i)i.focus()},50)};
 
 /* ---------- modo escuro ---------- */
-const LIGHTPALS=['itgirl','itroxo','nudeit'];
-const ICONPALS=['itgirl','itroxo','lavanda','oliva','bege','pb'];
+const LIGHTPALS=['itgirl','itroxo','nudeit','bordo'];
+const ICONPALS=['itgirl','itroxo','lavanda','oliva','bege','pb','bordo'];
 function setAppIcon(pl){try{const ai=document.getElementById('appleIcon');if(ai)ai.href=ICONPALS.includes(pl)?`icons/icon-${pl}-180.png`:'icon-180.png'}catch(e){}}
 function applyTheme(){let pl=(state.settings&&state.settings.palette)||'rose';try{if(!CLOUD||state._uid)localStorage.setItem('go-look',JSON.stringify({p:pl,t:(state.settings&&state.settings.theme)||'auto'}))}catch(e){}if(!PALS.some(x=>x[0]===pl))pl='rose';setAppIcon(pl);if(pl==='rose')delete document.documentElement.dataset.pal;else document.documentElement.dataset.pal=pl;const t=(state.settings&&state.settings.theme)||'auto';const dark=!LIGHTPALS.includes(pl)&&(t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#1d1719':getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#fcf9f8'}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
 A.theme=d=>{state.settings.theme=d.v;applyTheme();save(1)};
-const PALS=[['rose','Nude','#c4927f','#f4e9e5'],['bege','Bege','#b39b78','#f2ede6'],['oliva','Oliva','#7d8a5e','#ebeadf'],['pb','Preto e branco','#1d1c1c','#f5f1f0'],['lavanda','Lavanda','#9a86de','#efeafd'],['nudeit','Nude delicado 🎀','#7d6157','#f4e9e5'],['itgirl','It girl 🎀','#e07aa3','#ffe1ec'],['itroxo','It girl lilás 💜','#a37ae0','#ece1ff']];
+const PALS=[['rose','Nude','#c4927f','#f4e9e5'],['bege','Bege','#b39b78','#f2ede6'],['oliva','Oliva','#7d8a5e','#ebeadf'],['pb','Preto e branco','#1d1c1c','#f5f1f0'],['lavanda','Lavanda','#9a86de','#efeafd'],['nudeit','Nude delicado 🎀','#7d6157','#f4e9e5'],['itgirl','It girl 🎀','#e07aa3','#ffe1ec'],['itroxo','It girl lilás 💜','#a37ae0','#ece1ff'],['bordo','Bordô & ouro ✦','#6e1e31','#c9a46a']];
 A.inspo=d=>{state.settings.inspo=d.v;save(1);render()};
 A.palette=d=>{state.settings.palette=d.v;applyTheme();save(1)};
 const modsCard=()=>`<h2 class="sec">Seu GO!</h2><div class="card" style="margin-top:0"><div class="small muted" style="margin-bottom:12px;line-height:1.5">Mostre só o que faz sentido pra sua rotina agora. Agenda e tarefas ficam sempre. Nada é apagado ao esconder: é só ligar de novo.</div><div class="mods">${MODS.map(([k,l,i,d])=>`<button class="mod ${on(k)?'on':''}" data-a="mod" data-k="${k}" aria-pressed="${on(k)}"><span class="mi">${ic(i,17)}</span><span class="grow"><b>${l}</b><small>${d}</small></span><span class="sw ${on(k)?'on':''}"><i></i></span></button>`).join('')}</div></div>`;
