@@ -1812,7 +1812,7 @@ const A={
   ex:d=>{const i=$('#main .quick input');i.value=d.t;i.focus()},
   copyBackup:async()=>{try{await navigator.clipboard.writeText(JSON.stringify(state));toast('Backup copiado. Cole num lugar seguro (ex.: Notas).')}catch(e){openSheet('import');$('#sheet textarea').value=JSON.stringify(state);$('#sheet h3').textContent='Seu backup';toast('Selecione e copie o texto')}}
 };
-document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const fn=A[el.dataset.a];if(fn){e.preventDefault();fn(el.dataset,el)}});
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const fn=A[el.dataset.a];if(fn){e.preventDefault();try{const r=fn(el.dataset,el);if(r&&r.catch)r.catch(err=>goErr(err,'acao '+el.dataset.a))}catch(err){goErr(err,'acao '+el.dataset.a)}}});
 
 /* ---------- formulários ---------- */
 const F={
@@ -4024,6 +4024,15 @@ A.invCopy=async()=>{const c=ui.invCur;if(!c){toast('Crie um código primeiro');r
 /* mês/ano em que terminou o livro */
 function bSetFin(k,fin){if(!fin||!/^\d{4}-\d{2}$/.test(fin))return;const cur=ym(today());if(fin>cur)fin=cur;if(k.finished&&ym(k.finished)===fin)return;if(fin===cur){k.finished=today();delete k.finM}else{k.finished=fin+'-01';k.finM=true}if(k.started&&k.started>k.finished)k.started=k.finished}
 function bFinTxt(b){if(b.finM){const d=new Date(b.finished+'T12:00');return 'em '+d.toLocaleDateString('pt-BR',{month:'long',year:'numeric'})}return dateLabel(b.finished).toLowerCase()}
+
+/* registro de erros (para a Claude conseguir corrigir) + recuperação sem travar */
+let _errN=0;const _errSeen={};
+function goErr(err,where){try{console.error(err);const msg=String(err&&err.message||err),key=msg+'|'+where;if(_errSeen[key]||_errN>=6)return;_errSeen[key]=1;_errN++;
+  const txt=('[erro] '+where+' · tela '+ui.screen+(ui.sheet?' · folha '+ui.sheet:'')+' · tema '+((state.settings||{}).palette||'')+'\n'+msg+'\n'+String(err&&err.stack||'').slice(0,1500)+'\n'+navigator.userAgent).slice(0,3900);
+  if(CLOUD&&typeof sb!=='undefined'&&sb&&typeof session!=='undefined'&&session&&session.user)sb.from('feedback').insert({user_id:session.user.id,email:session.user.email,kind:'erro',text:txt}).then(()=>{},()=>{})}catch(e){}}
+window.addEventListener('error',e=>goErr(e.error||e.message,'global'));
+window.addEventListener('unhandledrejection',e=>goErr(e.reason,'promessa'));
+{const _r0=render;render=function(){try{return _r0.apply(this,arguments)}catch(err){goErr(err,'render');if(ui.screen!=='home'){ui.screen='home';try{_r0()}catch(e2){}toast('Essa tela deu um erro. Já ficou registrado pra corrigir 🛠️')}}}}
 </script>
 </body>
 </html>
